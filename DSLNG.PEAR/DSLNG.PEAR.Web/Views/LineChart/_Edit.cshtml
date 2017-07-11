@@ -39,17 +39,30 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    @{
-                            //if (i != 0)
-                            //{
-                            //    Model.LineChart.ValueAxes.Where(x => x.Value == Model.LineChart.Series[i].ValueAxis).First().Selected = true;
-                            //}
+                    @{      
                         <div class="form-group value-axis form-list">
                             @Html.LabelFor(model => Model.LineChart.Series[i].ValueAxis)
                             @Html.DropDownListFor(model => model.LineChart.Series[i].ValueAxis, new SelectList(Model.LineChart.ValueAxes, "Value","Text",Model.LineChart.Series[i].ValueAxis), new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.LineChart.Series[i].ValueAxis)
                         </div>
                     }
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.LineChart.Series[i].LineType)                        
+                        @Html.DropDownListFor(model => model.LineChart.Series[i].LineType, new SelectList(Model.LineChart.LineTypes, "Value", "Text", Model.LineChart.Series[i].LineType), new { @class = "form-control", style = "width:180px" })                        
+                        @Html.ValidationMessageFor(model => model.LineChart.Series[i].KpiId)
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.LineChart.Series[i].MarkerColor)
+                        <div class="input-group colorpicker">
+                            @Html.TextBoxFor(model => model.LineChart.Series[i].MarkerColor, new { @class = "form-control" })
+                            <span class="input-group-addon"><i style="background-color:@Model.LineChart.Series[i].MarkerColor"></i></span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.LineChart.Series[i].MarkerColor)
+                    </div>
                 </div>
             </div>
             <input type="button" value="Remove" class="remove" />

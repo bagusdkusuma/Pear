@@ -1,6 +1,5 @@
 //using DSLNG.PEAR.Data.Installer;
 
-using DSLNG.PEAR.Data.Installer;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Web.App_Start;
 using DSLNG.PEAR.Web.AutoMapper;
@@ -9,10 +8,7 @@ using DSLNG.PEAR.Web.Scheduler;
 using FluentScheduler;
 using StructureMap;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -59,5 +55,29 @@ namespace DSLNG.PEAR.Web
             Exception exception = System.Web.HttpContext.Current.Server.GetLastError();
             //TODO: Handle Exception
         }
+        //protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        //{
+        //    HttpCookie authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+
+        //    if (authCookie != null)
+        //    {
+        //        FormsAuthenticationTicket authTicket = FormsAuthentication.Decrypt(authCookie.Value);
+
+        //        if (authTicket.UserData != null)
+        //        {
+        //            JavaScriptSerializer serializer = new JavaScriptSerializer();
+        //            UserViewModel serializeModel = serializer.Deserialize<UserViewModel>(authTicket.UserData);
+        //            CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
+        //            newUser.Id = serializeModel.Id;
+        //            newUser.Username = serializeModel.Username;
+        //            newUser.RoleName = serializeModel.RoleName;
+        //            newUser.IsSuperAdmin = serializeModel.IsSuperAdmin;
+        //            newUser.Email = serializeModel.Email;
+        //            HttpContext.Current.User = newUser;
+        //        }
+                
+
+        //    }
+        //}
     }
 }

@@ -292,22 +292,103 @@ Number.prototype.format = function (n, x) {
         //}, 1000);
 
     }
-    Der.Artifact.multiaxis = function (data, container) {
+    Der.Artifact.multiaxis = function (data, container, opt, type) {
         var symbol = i % 2 == 0 ? 'triangle' : 'square';
         var fillColor = i % 2 == 0 ? '#31587f' : '#fff000';
         var converted = false;
         var decimal = 0;
-        if (data.MultiaxisChart.Title.toLowerCase().indexOf('cds') > -1) {
+        var title = data.MultiaxisChart.Title.toLowerCase();
+        var options = {
+            legend: {
+                enabled: false,
+                itemStyle: { "fontSize": "9px", "fontWeight": "normal" },
+                verticalAlign: "bottom" 
+            },
+            gridLineColor: '#e6e6e6'
+        };
+        var plotOpt = {};
+        if (opt !== undefined) {
+            if (opt.hasOwnProperty('legend')) {
+                Object.assign(options.legend, opt.legend);
+            }
+        }
+        
+        if (container.hasClass('row1col0')) {
+            if (options.legend.hasOwnProperty('enabled')) {
+                options.legend.enabled = true;
+            }
+        }
+        else if (container.hasClass('row1col3')) {
             symbol = 'triangle';
             converted = true;
-        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('thermal') > -1) {
+        }
+        else if (container.hasClass('row1col4')) {
             symbol = 'square';
             converted = true;
             decimal = 1;
-        } else if (data.MultiaxisChart.Title.toLowerCase().indexOf('loss') > -1) {
+        }
+        else if (container.hasClass('row1col5')) {
             fillColor = '#403152';
             converted = true;
             decimal = 2;
+        }
+        else if (container.hasClass('row5col2')) {
+            options.gridLineColor = 'transparent';
+            decimal = 2;
+            plotOpt['line'] = {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.2f}',
+                    style: {
+                        fontWeight: 'normal',
+                        fontSize: '10px'
+                    }
+                }
+            }
+        }
+        else if (container.hasClass('row5col3')) {
+            options.gridLineColor = 'transparent';
+            decimal = 2;
+            plotOpt['line'] = {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.2f}',
+                    style: {
+                        fontWeight: 'normal',
+                        fontSize: '10px'
+                    }
+                }
+            }
+        }
+        else if (container.hasClass('row5col4')) {
+            options.gridLineColor = 'transparent';      
+            decimal = 2;
+            plotOpt['line'] = {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.2f}',
+                    style: {
+                        fontWeight: 'normal',
+                        fontSize: '10px'
+                    }
+                }
+            }
+        }
+        else if (container.hasClass('row15col4')) {
+            options.gridLineColor = 'transparent';
+            plotOpt['line'] = {
+                dataLabels: {
+                    enabled: true,
+                    format: '{y:.2f}',
+                    style: {
+                        fontWeight: 'normal',
+                        fontSize: '10px'
+                    }
+                }
+            }
+        }
+        else if (container.hasClass('row15col5')) {
+            options.gridLineColor = 'transparent';
         }
 
         var yAxes = [];
@@ -324,11 +405,99 @@ Number.prototype.format = function (n, x) {
                 animation: false
             }
         };
+        var getMarkerConfig = function (j) {            
+            var marker = {
+                symbol: 'square',
+                fillColor: '#ffc000',
+                enabled: true,
+                radius: 3
+            };
+            if (container.hasClass('row1col0')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: j == 0 ? 'triangle' : 'square',
+                    fillColor: j == 0 ? '#0d0d0d' : '#fbf405'
+                };
+            }
+            else if (container.hasClass('row1col1')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'triangle',
+                    fillColor: '#ff0000'
+                };
+            }
+            else if (container.hasClass('row1col2')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'square',
+                    fillColor: '#ff0000'
+                };
+            }
+            else if (container.hasClass('row1col3')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'circle',
+                    fillColor: '#401352'
+                };
+            }
+            else if (container.hasClass('row5col2')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'triangle',
+                    fillColor: '#7e131b'
+                };
+            }
+            else if (container.hasClass('row5col3')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'square',
+                    fillColor: '#ffc000'
+                };
+            }
+            else if (container.hasClass('row5col4')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'circle',
+                    fillColor: '#048304'
+                };
+            }
+            else if (container.hasClass('row15col4')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: 'triangle',
+                    fillColor: '#ffc000'
+                };
+            }
+            else if (container.hasClass('row15col5')) {
+                marker = {
+                    enabled: true,
+                    radius: 3,
+                    symbol: j == 0 ? 'triangle' : 'diamond',
+                    fillColor: j == 0 ? '#f90406' : '#002060'
+                };
+            }
+
+            return marker;
+        }
         var series = [];
         for (var i in data.MultiaxisChart.Charts) {
             yAxes.push({
+                gridLineWidth: container.hasClass('row15col4') ? 0 : 1,
+                minorGridLineWidth: container.hasClass('row15col4') ? 0 : 1,
+                minorGridLineWidth: container.hasClass('row15col4') ? 0 : 1,
+                lineColor: container.hasClass('row15col4') ? 'transparent' : '#ccd6eb',
+                visble:false,
                 title: {
-                    text: data.MultiaxisChart.Charts[i].Measurement,
+                    enabled: container.is('.row15col4') ? false : true,       
+                    text: null,//data.MultiaxisChart.Charts[i].Measurement,
                     align: 'high',
                     rotation: 0,
                     y: -10,
@@ -343,8 +512,10 @@ Number.prototype.format = function (n, x) {
                 tickInterval: data.MultiaxisChart.Charts[i].FractionScale == 0 ? container.data('fraction') : data.MultiaxisChart.Charts[i].FractionScale,
                 max: data.MultiaxisChart.Charts[i].MaxFractionScale == 0 ? null : data.MultiaxisChart.Charts[i].MaxFractionScale,
                 labels: {
+                    enabled: container.is('.row15col4') ? false : true,                    
                     style: {
-                        fontSize: '7px'
+                        fontSize: '7px',
+                        color: container.is('.row5col3, .row5col4, .row5col2') ? '#fff' : '#666666'
                     },
                     formatter: function () {
                         var x = this.value;
@@ -359,7 +530,8 @@ Number.prototype.format = function (n, x) {
                     }
                 },
                 min: container.data('min') != '' && container.data('min') != null ? container.data('min') : null,
-                lineWidth: 1
+                lineWidth: 1,
+                gridLineColor: options.gridLineColor,
             });
             if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'line') {
                 //var symbol = i % 2 == 0 ? 'triangle' : 'square';
@@ -377,8 +549,8 @@ Number.prototype.format = function (n, x) {
                         }
                     }
                 };
+                Object.assign(plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]], plotOpt[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]]);
             } else if (chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType] === 'area' && data.MultiaxisChart.Charts[i].SeriesType === 'multi-stack') {
-
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = {
                     stacking: 'normal',
                     lineColor: '#666666',
@@ -402,8 +574,7 @@ Number.prototype.format = function (n, x) {
                 plotOptions[chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType]] = { stacking: 'normal' };
             }
             for (var j in data.MultiaxisChart.Charts[i].Series) {
-
-
+                
                 if (seriesNames.indexOf(data.MultiaxisChart.Charts[i].Series[j].name) < 0) {
                     if (converted === false) {
                         seriesNames.push(data.MultiaxisChart.Charts[i].Series[j].name);
@@ -415,12 +586,13 @@ Number.prototype.format = function (n, x) {
                     data.MultiaxisChart.Charts[i].Series[j].showInLegend = false;
                 }
                 data.MultiaxisChart.Charts[i].Series[j].type = chartTypeMap[data.MultiaxisChart.Charts[i].GraphicType];
-                data.MultiaxisChart.Charts[i].Series[j].marker = {
-                    enabled: true,
-                    radius: 3,
-                    symbol: symbol,
-                    fillColor: fillColor
-                };
+                //data.MultiaxisChart.Charts[i].Series[j].marker = {
+                //    enabled: true,
+                //    radius: 3,
+                //    symbol: getSymbol(container, j),
+                //    fillColor: fillColor
+                //};
+                data.MultiaxisChart.Charts[i].Series[j].marker = getMarkerConfig(i);
                 if (data.MultiaxisChart.Charts[i].Series[j].type != 'spline' && data.MultiaxisChart.Charts[i].SeriesType == 'single-stack') {
                     data.MultiaxisChart.Charts[i].Series[j].stack = data.MultiaxisChart.Charts[i].Series[j].name;
                 }
@@ -429,6 +601,7 @@ Number.prototype.format = function (n, x) {
                     valueDecimals: decimal,
                     valueSuffix: ' ' + data.MultiaxisChart.Charts[i].Measurement
                 }
+                //data.MultiaxisChart.Charts[i].Series[j].dataLabels = { enabled: showLegends, style: { "fontSize": "9px", "fontWeight": "normal" }, verticalAlign: "bottom" };
                 series.push(data.MultiaxisChart.Charts[i].Series[j]);
             }
         }
@@ -461,7 +634,7 @@ Number.prototype.format = function (n, x) {
             credits: {
                 enabled: false
             },
-            //plotOptions: plotOptions,
+            plotOptions: plotOptions,
             xAxis: [{
                 categories: data.MultiaxisChart.Periodes,
                 crosshair: true,
@@ -478,10 +651,35 @@ Number.prototype.format = function (n, x) {
                 },
 
             },
-            series: series
+            legend: options.legend,
+            series: series,
+            
         });
     };
-
+    Der.Artifact.jccMonthlyTrend = function (data, container) {
+        var options = {}
+        options.legend = {
+            layout: 'horizontal',
+            align: 'left',
+            x: 70,
+            verticalAlign: 'bottom',
+            y: -30,
+            floating: true,
+            enabled: true,
+        };
+        Der.Artifact.multiaxis(data, container, options, 'jcc-monthly-trend');
+        var chart = $('.row15col5').highcharts();
+        if (chart.yAxis.length > 1) {
+            chart.yAxis[1].update({
+                labels: {
+                    enabled: false
+                },
+                title: {
+                    text: null
+                }
+            });
+        }        
+    };
     Der.Artifact.speedometer = function (data, container) {
         //console.log(data.SpeedometerChart);
         var $this = container;
@@ -614,7 +812,6 @@ Number.prototype.format = function (n, x) {
         $this.find('.canvas-container').append('<span class="half-val">50%</span>');
         $this.find('.canvas-container').append('<span class="full-val">100%</span>');
     };
-
     Der.Artifact.altspeedometer = function (data, container) {
         var $this = container;
         $this.append('<h5>MCHE Rundown</h5>');

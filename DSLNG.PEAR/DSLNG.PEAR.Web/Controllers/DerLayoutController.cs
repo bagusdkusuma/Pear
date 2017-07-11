@@ -158,6 +158,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "line":
                     case "multiaxis":
+                    case "jcc-monthly-trend":
                         {
                             var multiaxisChart = new MultiaxisChartViewModel();
                             editViewModel.MultiaxisChart = response.Artifact.MapPropertiesToInstance<MultiaxisChartViewModel>(multiaxisChart);
@@ -234,19 +235,20 @@ namespace DSLNG.PEAR.Web.Controllers
                         break;
                     case "termometer":
                     case "person-on-board":
+                    case "total-commitment":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
                             break;
-                        }
-                    case "hhv":
+                        }                    
                     case "procurement":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
                             break;
                         }
+                    case "hhv":
                     case "mgdp":                    
                     case "dafwc":
-                    case "job-pmts":
+                    case "job-pmts":                    
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
@@ -342,16 +344,15 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "speedometer";
                             break;
                         }
-                    case "1-and-0":
-                        {
-                            viewModel.Type = "multiaxis";
-                            break;
-                        }
+                    case "1-and-0":                        
                     case "1-and-1":
                     case "1-and-2":
                     case "1-and-3":
+                    case "15-and-4":                 
+                    case "5-and-2":
+                    case "5-and-3":
+                    case "5-and-4":
                         {
-                            //viewModel.Type = "line";
                             viewModel.Type = "multiaxis";
                             break;
                         }
@@ -425,19 +426,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "5-and-0":
                         {
-                            viewModel.Type = "job-pmts";
+                            viewModel.Type = "hhv";
                             break;
                         }
                     case "5-and-1":
                         {
-                            viewModel.Type = "mgdp";
+                            viewModel.Type = "total-commitment";
                             break;
-                        }
-                    case "5-and-2":
-                        {
-                            viewModel.Type = "hhv";
-                            break;
-                        }
+                        }                    
                     case "6-and-0":
                         {
                             viewModel.Type = "total-feed-gas";
@@ -554,6 +550,11 @@ namespace DSLNG.PEAR.Web.Controllers
                             viewModel.Type = "person-on-board";
                             break;
                         }
+                    case "15-and-5":
+                        {
+                            viewModel.Type = "jcc-monthly-trend";
+                            break;
+                        }
                 }
                 return View("LayoutItem", viewModel);
                 #endregion
@@ -564,21 +565,6 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             switch (type.ToLowerInvariant())
             {
-                //case "line":
-                //    {
-                //        var viewModel = new DerLayoutItemViewModel();
-                //        viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
-                //        viewModel.Artifact.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
-                //        {
-                //            Take = -1,
-                //            SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
-                //        }).Measurements
-                //    .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
-                //        viewModel.LineChart = new LineChartViewModel();
-                //        var series = new LineChartViewModel.SeriesViewModel();
-                //        viewModel.LineChart.Series.Add(series);
-                //        return PartialView("LayoutType/_Line", viewModel);
-                //    }
                 case "barmeter":
                 case "speedometer":
                     {
@@ -597,6 +583,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 case "line":
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.Artifact = new DerLayoutItemViewModel.DerLayoutItemArtifactViewModel();
@@ -729,7 +716,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "hhv":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(2);
+                        viewModel.KpiInformations = GetKpiInformations(3);
                         return PartialView("LayoutType/_HHV", viewModel);
                     }
                 case "lng-and-cds-production":
@@ -812,15 +799,21 @@ namespace DSLNG.PEAR.Web.Controllers
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_LoadingDuration", viewModel);
-
                     }
                 case "person-on-board":
                     {
                         var viewModel = new DerLayoutItemViewModel();
                         viewModel.KpiInformations = GetKpiInformations(1);
                         return PartialView("LayoutType/_PersonOnBoard", viewModel);
+                    }
+                case "total-commitment":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(1);
+                        return PartialView("LayoutType/_TotalCommitment", viewModel);
 
                     }
+
             }
 
             return Content("Error");
@@ -843,18 +836,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = new SaveLayoutItemResponse();
             switch (layoutItemViewModel.Type.ToLowerInvariant())
             {
-                case "line":
-                    //{
-                    //    request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
-                    //    request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
-                    //    //request.Artifact.LineChart = layoutItemViewModel.LineChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactLine>();
-                    //    request.Artifact.MultiAxis = layoutItemViewModel.MultiaxisChart.MapTo<SaveLayoutItemRequest.LayoutItemArtifactMultiAxis>();
-                    //    response = _derService.SaveLayoutItem(request);
-
-                    //    break;
-                    //}
-
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.Artifact = layoutItemViewModel.Artifact.MapTo<SaveLayoutItemRequest.LayoutItemArtifact>();
@@ -930,6 +913,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "loading-duration":
                 case "person-on-board":
                 case "flare":
+                case "total-commitment":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();

@@ -1,5 +1,5 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Template.TemplateViewModel
-
+@using DSLNG.PEAR.Web.ViewModels
 <div class="template-view">
     <div class="row">
         <div class="col-md-12">
@@ -14,12 +14,56 @@
             @foreach (var col in row.LayoutColumns)
             { 
                 <div class="layout-column" style="width:@col.Width%;">
-                    <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })">
-                    </div>
+                    @{ UserProfileSessionData user = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"]; }
+                    
+                    @if (col.ColumnType == "Artifact")
+                    {
+                        if (user.IsSuperAdmin)
+                        {
+                            <a href="@Url.Action("Edit", "Artifact", new { id = col.ArtifactId })">Edit</a>
+                        }
+                        <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })" data-artifact-id="@col.ArtifactId">
+                        </div>
+                    }
+                    else
+                    {
+                        if (user.IsSuperAdmin)
+                        {
+                            <a href="@Url.Action("View", "Highlight", new { id = col.HighlightTypeId })">Edit</a>
+                        }
+                        <div class="whitebox highlight-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Highlight", new { typeId=col.HighlightTypeId, periodeType = col.HighlightPeriodeType })">
+                        </div>
+                    }
                 </div>
             }
         </div>
     }
+</div>
+
+
+<div class="modal fade" id="graphic-setting" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <form action="@Url.Action("GraphicSetting", "Artifact")" method="post" id="graphic-setting-form">
+                    <div class="graphic-setting-content">
+                        <p>Some text in the modal.</p>
+                    </div>
+                    <input type="submit" class="btn btn-default" value="Save" /> 
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+        </div>
+
+    </div>
 </div>
 
 

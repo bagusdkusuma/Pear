@@ -3,7 +3,7 @@
         //console.log(options);
         var id = "tank_" + options.Id + Date.now();
         
-        this.html('<svg class="svg" id="' + id + '" style="margin:auto;display:block"></svg>');
+        this.html('<svg class="svg highcharts-container" id="' + id + '" style="margin:auto;display:block"></svg>');
 
         var s = Snap('#' + id).attr({
             width: dimension.width - 40,
@@ -257,6 +257,7 @@
             font: "14px Open Sans, sans-serif",
             fill: "#fff",
             textAnchor: "middle",
+            class: "tank-subtitle"
         });
         
         return this;

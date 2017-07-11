@@ -804,6 +804,15 @@ h2 {
     border: none;
 }
 
+.template-view .highlight-holder {
+    color:#fff;
+}
+.template-view .dashboard-highlight-title {
+    margin-bottom:38px;
+}
+.template-view .dashboard-highlight-message {
+    text-align:justify;
+}
 .column-properties {
     width: 225px;
     display: inline-block;
@@ -3465,5 +3474,11 @@ table.choosen-schedules tr td a {
 
 .der-transaction-error,
 tr.der-transaction-error {
-    border:2px solid red !important;
+    border: 2px solid red !important;
+}
+
+
+.artifact-holder .tank-subtitle,
+.artifact-holder .highcharts-subtitle {
+    cursor: pointer;
 }

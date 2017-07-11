@@ -38,6 +38,7 @@
                     break;
                 case "line":
                 case "multiaxis":
+                case "jcc-monthly-trend":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_Multiaxis.Edit.cshtml", Model);
                     break;
                 case "speedometer":
@@ -120,6 +121,9 @@
                 case "person-on-board":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_PersonOnBoard.Edit.cshtml", Model);
                     break;
+                case "total-commitment":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_TotalCommitment.Edit.cshtml", Model);
+                    break;
             }
         }
     </div>
@@ -154,6 +158,7 @@
             var type = that.val().toLowerCase();
             switch (type) {
                 case 'multiaxis':
+                case 'jcc-monthly-trend':
                     $.ajax({
                         url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
                         success: function (data) {
@@ -284,6 +289,7 @@
                     break;
                 }
             case "multiaxis":
+            case "jcc-monthly-trend":
                 {
                     var $hiddenFields = $('#hidden-fields');
                     var chartTemplate = $hiddenFields.find('.chart-template.original');
@@ -352,6 +358,7 @@
             case "loading-duration":
             case "person-on-board":
             case "flare":
+            case "total-commitment":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

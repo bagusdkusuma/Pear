@@ -89,7 +89,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Value = x.Id.ToString()
             }).ToList();
             return View("Input");
-        }
+        }       
 
         public ActionResult EconomicIndicator(string date)
         {
@@ -624,6 +624,77 @@ namespace DSLNG.PEAR.Web.Controllers
                 var resp = _weatherService.SaveWeather(request);
                 return Json(resp);
             }
+        }
+
+        public ActionResult Activity()
+        {
+            var viewModel = new ActivityViewModel();
+            return View(viewModel);
+        }
+
+        public ActionResult DerInputFileGrid(GridParams gridParams)
+        {
+            var derInputFiles = _derTransactionService.GetDerInputFiles(new Services.Requests.Der.GetDerInputFilesRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                SortingDictionary = gridParams.SortingDictionary,
+                Search = gridParams.Search
+            });
+
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = derInputFiles.TotalRecords,
+                iTotalRecords = derInputFiles.DerInputFiles.Count,
+                aaData = derInputFiles.DerInputFiles
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CreateActivity()
+        {
+            var viewModel = new CreateActivityViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        //[AuthorizeUser(AccessLevel = "AllowUpload")]
+        public ActionResult UploadActivity(HttpPostedFileBase file, string date)
+        {
+            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            var ext = file.FileName.Split('.');
+            var title = Path.GetFileNameWithoutExtension(file.FileName) + "_" + theDate.ToString("dd-MMM-yyyy") + "_" + new Random().Next(1, 100) + Path.GetExtension(file.FileName);
+            string filename = title.Replace('/', '-');
+
+            if (!Directory.Exists(Server.MapPath(PathConstant.DerInputFile)))
+            {
+                Directory.CreateDirectory(Server.MapPath(PathConstant.DerInputFile));
+            }
+
+            if (file.ContentLength > 0)
+            {
+                var path = Path.Combine(Server.MapPath(PathConstant.DerInputFile), filename);
+                file.SaveAs(path);
+
+                var response = _derTransactionService.CreateDerInputFile(new CreateDerInputFileRequest
+                {
+                    FileName = PathConstant.DerInputFile + "/" + filename,                    
+                    Date = theDate,
+                    Title = file.FileName,
+                    CreatedBy = UserProfile().UserId
+                });
+            }
+            return RedirectToAction("Activity");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteActivity(int id)
+        {
+            var response = _derTransactionService.DeleteDerInputFile(id);
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Activity");
         }
 
         private DerValuesViewModel GetDerValuesPerSection(string date, int[] actualKpiIds, int[] targetKpiIds, int[] highlightTypeIds)

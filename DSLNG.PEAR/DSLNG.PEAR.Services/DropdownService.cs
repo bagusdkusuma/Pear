@@ -287,7 +287,6 @@ namespace DSLNG.PEAR.Services
             var dropdowns =  new List<Dropdown>()
                 {
                     new Dropdown {Text = "Highlight", Value = "highlight"},
-                    new Dropdown {Text = "Line", Value = "line"},
                     new Dropdown {Text = "Multi Axis", Value = "multiaxis"},
                     new Dropdown {Text = "Speedometer", Value = "speedometer"},
                     new Dropdown {Text = "Barmeter", Value = "barmeter"},
@@ -322,7 +321,9 @@ namespace DSLNG.PEAR.Services
                     new Dropdown {Text = "Termometer", Value = "termometer" },
                     new Dropdown {Text = "Loading Duration", Value = "loading-duration" },
                     new Dropdown {Text = "Person On Board", Value = "person-on-board" },
-                     new Dropdown {Text = "Flare", Value = "flare"},
+                    new Dropdown {Text = "Flare", Value = "flare"},
+                    new Dropdown {Text = "JCC Monthly Trend", Value = "jcc-monthly-trend"},
+                    new Dropdown {Text = "Total Commitment", Value = "total-commitment"},
                 };
 
             return dropdowns.OrderBy(x => x.Text);

@@ -25,6 +25,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
     using DSLNG.PEAR.Web.Controllers;
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
+    using ViewModels.User;
 
     public class DefaultRegistry : Registry {
         #region Constructors and Destructors
@@ -101,6 +102,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<IDerLoadingScheduleService>().Use<DerLoadingScheduleService>();
             For<ICustomFormulaService>().Use<CustomFormulaService>();
             For<HelpController>().Use(ctx => new HelpController());
+            For<ICustomPrincipal>().Use<CustomPrincipal>();
         }
 
         #endregion

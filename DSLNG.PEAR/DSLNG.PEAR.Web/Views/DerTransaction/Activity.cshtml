@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Activity Attachment Files";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DER Input Files</h2>
+@Html.Partial("_MessageResponse")
+<div class="add-button-wrapper pull-left">
+    @*@if (Session["DER"] != null)
+    {
+        var privilege = Session["DER"] as List<string>;        
+        if (privilege.Contains("AllowUpload"))
+        {
+            <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#activity-upload-modal">Upload</a>
+        }
+    }*@
+    <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#activity-upload-modal">Upload</a>
+</div>
+
+@*@Html.Action("IndexPartial")*@
+<table id="activity-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Date</th>            
+            <th>File Name</th>
+            <th>Created By</th>            
+            <th>Action</th>
+        </tr>
+    </thead>
+</table>
+
+<div id="activity-upload-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <form name="upload-activity-form" action="@Url.Action("UploadActivity", "DerTransaction")" enctype="multipart/form-data" method="post">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Upload Activity File</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group form-list">
+                        <label>File</label>
+                        <input class="form-control" type="file" name="file" required>
+                        <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group form-list">
+                        <label>Date</label>
+                        <input name="date" class="form-control datepicker" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Upload" />
+                    <button type="button" class="btn btn-darkblue" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#activity-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "columnDefs": [
+                    { "visible": false, "targets": 0 }
+                ],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("DerInputFileGrid", "DerTransaction")',
+                //"order": [[3, "asc"]],
+                "aoColumns": [
+                    
+                    {
+                        "mDataProp": "Date", "name": "Date", "className": "text-align-left",
+                        "mRender": function (data, type, row) {
+                            return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY');
+                        }
+                    },
+                    {
+                        "mDataProp": "FileName", "name": "FileName", "className": "text-align-left",
+                        "mRender": function (data, type, row) {
+                            var files = row.FileName.split(';');
+                            if (files.length) {
+                                return '<a href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">' + row.Title +'</a>'
+                            }
+                            return '';
+                        }
+                    },
+                    {
+                        "mDataProp": "CreatedBy", "name": "CreatedBy", "className": "text-align-left"
+                    },
+
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            return deleteLink;
+                        }
+                    }
+                ],
+                "drawCallback": function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({ page: 'current' }).nodes();
+                    var last = null;
+
+                    api.column(0, { page: 'current' }).data().each(function (group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="group" style="background: transparent"><td colspan="5" style="text-align: left;font-weight: bold;">' + moment(new Date(group.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + '</td></tr>'
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+
+            $('#activity-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("DeleteActivity", "DerTransaction")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            });
+
+
+        });
+    </script>
+}

@@ -6,7 +6,7 @@
 </div>
 
 <div class="hidden-fields">
-     @for (var i = 0; i < Model.Series.Count; i++)
+    @for (var i = 0; i < Model.Series.Count; i++)
     {
         var original = i == 0 ? "original" : "";
         var dataSeriesPos = original == "" ? "data-series-pos=" + i : "";
@@ -17,9 +17,12 @@
                 <div class="col-sm-6">
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.Series[i].Label)
-                        @Html.TextBoxFor(model => model.Series[i].Label, new { @class = "form-control",
-                       @Name="MultiaxisChart.Charts["+@ViewData["ChartIndex"]+"].LineChart.Series["+i+"].Label",
-                   id="MultiaxisChart_Charts_"+@ViewData["ChartIndex"]+"__LineChart_Series_"+i+"__Label"})
+                        @Html.TextBoxFor(model => model.Series[i].Label, new
+                   {
+                       @class = "form-control",
+                       @Name = "MultiaxisChart.Charts[" + @ViewData["ChartIndex"] + "].LineChart.Series[" + i + "].Label",
+                       id = "MultiaxisChart_Charts_" + @ViewData["ChartIndex"] + "__LineChart_Series_" + i + "__Label"
+                   })
                         @Html.ValidationMessageFor(model => model.Series[i].Label)
                     </div>
                 </div>
@@ -27,9 +30,12 @@
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.Series[i].Color)
                         <div class="input-group colorpicker">
-                            @Html.TextBoxFor(model => model.Series[i].Color, new { @class = "form-control",
-                           @Name="MultiaxisChart.Charts["+@ViewData["ChartIndex"]+"].LineChart.Series["+i+"].Color",
-                       id="MultiaxisChart_Charts_"+@ViewData["ChartIndex"]+"__LineChart_Series_"+i+"__Color"})
+                            @Html.TextBoxFor(model => model.Series[i].Color, new
+                       {
+                           @class = "form-control",
+                           @Name = "MultiaxisChart.Charts[" + @ViewData["ChartIndex"] + "].LineChart.Series[" + i + "].Color",
+                           id = "MultiaxisChart_Charts_" + @ViewData["ChartIndex"] + "__LineChart_Series_" + i + "__Color"
+                       })
                             <span class="input-group-addon"><i style="background-color:@Model.Series[i].Color"></i></span>
                         </div>
                         @Html.ValidationMessageFor(model => model.Series[i].Color)
@@ -38,36 +44,66 @@
                 <div class="col-sm-6">
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.Series[i].KpiId)
-                        @Html.DropDownListFor(model => model.Series[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.Series[i].KpiId.ToString(), Text = Model.Series[i].KpiName } }, 
-                        new { @class = "kpi-list form-control", style = "width:180px",
-                            @Name="MultiaxisChart.Charts["+@ViewData["ChartIndex"]+"].LineChart.Series["+i+"].KpiId",
-                        id="MultiaxisChart_Charts_"+@ViewData["ChartIndex"]+"__LineChart_Series_"+i+"__KpiId"})
+                        @Html.DropDownListFor(model => model.Series[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.Series[i].KpiId.ToString(), Text = Model.Series[i].KpiName } },
+                        new
+                        {
+                            @class = "kpi-list form-control",
+                            style = "width:180px",
+                            @Name = "MultiaxisChart.Charts[" + @ViewData["ChartIndex"] + "].LineChart.Series[" + i + "].KpiId",
+                            id = "MultiaxisChart_Charts_" + @ViewData["ChartIndex"] + "__LineChart_Series_" + i + "__KpiId"
+                        })
                         @Html.ValidationMessageFor(model => model.Series[i].KpiId)
                     </div>
                 </div>
                 <div class="col-sm-6">
                     @{
-                            //if (i != 0)
-                            //{
-                            //    Model.ValueAxes.Where(x => x.Value == Model.Series[i].ValueAxis).First().Selected = true;
-                            //}
                         <div class="form-group value-axis form-list">
                             @Html.LabelFor(model => Model.Series[i].ValueAxis)
-                            @Html.DropDownListFor(model => model.Series[i].ValueAxis, new SelectList(Model.ValueAxes,"Value","Text",Model.Series[i].ValueAxis), new { @class = "form-control",
-                           @Name="MultiaxisChart.Charts["+@ViewData["ChartIndex"]+"].LineChart.Series["+i+"].ValueAxis",
-                       id="MultiaxisChart_Charts_"+@ViewData["ChartIndex"]+"__LineChart_Series_"+i+"__ValueAxis"})
+                            @Html.DropDownListFor(model => model.Series[i].ValueAxis, new SelectList(Model.ValueAxes, "Value", "Text", Model.Series[i].ValueAxis), new
+                       {
+                           @class = "form-control",
+                           @Name = "MultiaxisChart.Charts[" + @ViewData["ChartIndex"] + "].LineChart.Series[" + i + "].ValueAxis",
+                           id = "MultiaxisChart_Charts_" + @ViewData["ChartIndex"] + "__LineChart_Series_" + i + "__ValueAxis"
+                       })
                             @Html.ValidationMessageFor(model => model.Series[i].ValueAxis)
                         </div>
                     }
                 </div>
+                @if (@ViewContext.RouteData.GetRequiredString("action").ToLowerInvariant() != "layoutitem")
+                {
+                    <div class="col-sm-6">
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.Series[i].LineType)
+                            @Html.DropDownListFor(model => model.Series[i].LineType, new SelectList(Model.LineTypes, "Value", "Text", Model.Series[i].LineType), new
+                   {
+                       @class = "form-control",
+                       style = "width:180px",
+                       @Name = "MultiaxisChart.Charts[" + @ViewData["ChartIndex"] + "].LineChart.Series[" + i + "].LineType",
+                       id = "MultiaxisChart_Charts_" + @ViewData["ChartIndex"] + "__LineChart_Series_" + i + "__LineType"
+                   })
+                            @Html.ValidationMessageFor(model => model.Series[i].KpiId)
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-list">
+                            @Html.LabelFor(model => model.Series[i].MarkerColor)
+                            <div class="input-group colorpicker">
+                                @Html.TextBoxFor(model => model.Series[i].MarkerColor, new
+                       {
+                           @class = "form-control",
+                           @Name = "MultiaxisChart.Charts[" + @ViewData["ChartIndex"] + "].LineChart.Series[" + i + "].MarkerColor",
+                           id = "MultiaxisChart_Charts_" + @ViewData["ChartIndex"] + "__LineChart_Series_" + i + "__MarkerColor"
+                       })
+                                <span class="input-group-addon"><i style="background-color:@Model.Series[i].MarkerColor"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Series[i].MarkerColor)
+                        </div>
+                    </div>
+                }
+                
             </div>
             <input type="button" value="Remove" class="remove" />
         </div>
-    }
+                        }
 
 </div>
-
-
-
-
-

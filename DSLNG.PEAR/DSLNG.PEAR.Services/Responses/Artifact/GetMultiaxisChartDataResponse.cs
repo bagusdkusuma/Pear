@@ -6,7 +6,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
 {
     public class GetMultiaxisChartDataResponse : BaseResponse
     {
-        public GetMultiaxisChartDataResponse() {
+        public GetMultiaxisChartDataResponse()
+        {
             Charts = new List<ChartResponse>();
         }
         public string Title { get; set; }
@@ -16,7 +17,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public IList<ChartResponse> Charts { get; set; }
         public class ChartResponse
         {
-            public ChartResponse() {
+            public ChartResponse()
+            {
                 Series = new List<SeriesViewModel>();
             }
             public string ValueAxisTitle { get; set; }
@@ -35,6 +37,14 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
                 public IList<double?> data { get; set; }
                 public string stack { get; set; }
                 public string color { get; set; }
+                public string dashStyle { get; set; }
+                public MarkerViewModel marker { get; set; }
+
+                public class MarkerViewModel
+                {
+                    public string fillColor { get; set; }
+                    public string lineColor { get; set; }
+                }
             }
         }
     }

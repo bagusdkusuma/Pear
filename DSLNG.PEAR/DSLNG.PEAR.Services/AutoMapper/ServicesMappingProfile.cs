@@ -382,13 +382,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<LayoutRow, GetTemplateResponse.RowResponse>();
             Mapper.CreateMap<LayoutColumn, GetTemplateResponse.ColumnResponse>()
                 .ForMember(d => d.ArtifactId, o => o.MapFrom(s => s.Artifact.Id))
-                .ForMember(d => d.ArtifactName, o => o.MapFrom(s => s.Artifact.GraphicName));
+                .ForMember(d => d.ArtifactName, o => o.MapFrom(s => s.Artifact.GraphicName))
+                .ForMember(d => d.HighlightTypeId, o => o.MapFrom(s => s.HighlightType.Id));
             Mapper.CreateMap<GetMultiaxisChartDataRequest, GetCartesianChartDataRequest>();
             Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest, GetCartesianChartDataRequest>();
             Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<GetMultiaxisChartDataRequest.ChartRequest.StackRequest, GetCartesianChartDataRequest.StackRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse, GetMultiaxisChartDataResponse.ChartResponse>();
-            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel>()
+                .ForMember(x => x.marker, y => y.MapFrom(z => new GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor }))
+                .ForMember(x => x.dashStyle, y => y.MapFrom(z => z.LineType)); ;
             Mapper.CreateMap<GetArtifactResponse, GetMultiaxisChartDataRequest>();
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetMultiaxisChartDataRequest.ChartRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetMultiaxisChartDataRequest.ChartRequest.SeriesRequest>();
@@ -399,7 +402,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<GetComboChartDataRequest.ChartRequest.SeriesRequest, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<GetComboChartDataRequest.ChartRequest.StackRequest, GetCartesianChartDataRequest.StackRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse, GetComboChartDataResponse.ChartResponse>();
-            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetComboChartDataResponse.ChartResponse.SeriesViewModel>();
+            Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, GetComboChartDataResponse.ChartResponse.SeriesViewModel>()
+                .ForMember(x => x.marker, y => y.MapFrom(z => new GetComboChartDataResponse.ChartResponse.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor }))
+                .ForMember(x => x.dashStyle, y => y.MapFrom(z => z.LineType));
             Mapper.CreateMap<GetArtifactResponse, GetComboChartDataRequest>();
             Mapper.CreateMap<GetArtifactResponse.ChartResponse, GetComboChartDataRequest.ChartRequest>();
             Mapper.CreateMap<GetArtifactResponse.SeriesResponse, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
@@ -824,6 +829,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile>();
             Mapper.CreateMap<UpdateFilePrivilegeRequest, FileManagerRolePrivilege>();
             Mapper.CreateMap<FilePrivilegeRequest, FileManagerRolePrivilege>();
+
+            Mapper.CreateMap<DerInputFile, GetDerInputFilesResponse.DerInputFile>()
+                .ForMember(x => x.CreatedBy, y => y.MapFrom(z => z.CreatedBy.Username));
         }
 
         private void ConfigureEconomicSummary()

@@ -1,585 +1,623 @@
 ﻿body {
-            font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-            font-size: 10px;
-            line-height: 1;
-            color: #000;
-            background-color: #fff;
-            
-            -webkit-font-smoothing: antialiased;
-	        -moz-osx-font-smoothing: grayscale;
-            /*font-weight:600;*/
-        }
-         @media print{
-            @page {
-              size: A3;
-            }
-          }
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size: 10px;
+    line-height: 1;
+    color: #000;
+    background-color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /*font-weight:600;*/
+}
+
+@media print {
+    @page {
+        size: A3;
+    }
+}
+
 h5 {
     margin-top: 0px;
     margin-bottom: 4px;
-    font-size:13px;
+    font-size: 13px;
 }
-.header-left h5 {
-    margin-top:5px;
-    font-size:14px;
-     font-weight:bold;
-}
-.header-left h4 {
-    font-size:20px;
-    font-weight:bold;
-}
-h6 {
-    margin-top:5px;
-    margin-bottom:5px;
-}
-        .container.preview {
-            /*zoom:0.815;*/
-            margin-top:73px;
-        }
-        .control {
-            height: 73px;
-            text-align: center;
-            padding-top: 19px;
-            background:#01A9E7;
-            position:fixed;
-            top:0;
-            width:100%;
-            z-index:9999;
-        }
-            .control form {
-                display:inline;
-            }
-        .row {
-            margin: 0;
-        }
-        
-        .row > div {
-            padding: 0 !important;
-        }
-        
-        .container {
-            width: 100%;
-            height: 2000px;
-            overflow: hidden;
-            padding: 0;
-        }
-        .container.a3-ratio,
-        body.der-image{
-            height: 2245px;
-            width:1532px;
-            /*width:1170px;
-            width:98%;*/
 
-            /*width:1686px;
+.header-left h5 {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.header-left h4 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+h6 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.container.preview {
+    /*zoom:0.815;*/
+    margin-top: 73px;
+}
+
+.control {
+    height: 73px;
+    text-align: center;
+    padding-top: 19px;
+    background: #01A9E7;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+    .control form {
+        display: inline;
+    }
+
+.row {
+    margin: 0;
+}
+
+    .row > div {
+        padding: 0 !important;
+    }
+
+.container {
+    width: 100%;
+    height: 2300px;
+    overflow: hidden;
+    padding: 0;
+}
+
+    .container.a3-ratio,
+    body.der-image {
+        height: 2442px;
+        width: 1532px;
+        /*width:1170px;
+            width:98%;*/
+        /*width:1686px;
             height:2385px;*/
-            
-            /*width: 1101px;
+        /*width: 1101px;
             height: 1556px;*/
-            /*zoom:0.815;*/
-        }
-        body.der-image {
-            letter-spacing:0.8px;
-        }
-        
-        .header {
-            color: #fff;
-            margin: 0;
-        }
-        
-        .header .header-left {
-            background-color: #002060;
-            height: 90px;
-        }
-        
-        .header .header-right {
-            background-color: #0D0D0D;
-            background-image: url(images/header-logo.png);
-             height: 90px;
-            background-size: 91% 99%;
-            background-repeat: no-repeat;
-            background-position:1% 0;
-        }
-        
-        .table {
-            margin-bottom: 0;
-        }
-        
-        .table-bordered {
-            border: 1px solid #0D0D0D;
-        }
-        
-        .table-bordered>tbody>tr>td,
-        .table-bordered>tbody>tr>th,
-        .table-bordered>tfoot>tr>td,
-        .table-bordered>tfoot>tr>th,
-        .table-bordered>thead>tr>td,
-        .table-bordered>thead>tr>th {
-            border: 1px solid #0D0D0D;
-        }
-        
-        .table>tbody>tr>td,
-        .table>tbody>tr>th,
-        .table>tfoot>tr>td,
-        .table>tfoot>tr>th,
-        .table>thead>tr>td,
-        .table>thead>tr>th {
-            padding: 2px;
-            line-height: 1;
-            vertical-align: top;
-            border-top: 1px solid #0D0D0D;
-        }
-        
-        .avg-stats > tbody > tr > td {
-            border: none;
-        }
-        
-        .bordered {
-            border: 1px solid #0D0D0D;
-        }
-        
-        .row > div.proper {
-            padding: 2px !important;
-        }
-        
-        .avg-stats {
-            border-right: 1px solid #0D0D0D;
-        }
-        
-        .avg-stats thead tr td {
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .comparison .fa-arrow-up {
-            color: #3A8A43;
-        }
-        .comparison .fa-minus {
-            color: #FDCB1D;
-        }
-        .comparison .fa-arrow-down {
-            color: #EB6264;
-        }
-        .comparison.absolute{
-            position: absolute;
-            left:4px;
-        }
-        .comparison.left-side{
-            margin-right: 4px;
-        }
-         .comparison.absolute{
-             position: absolute;
-             left: 4px;
-         }
-        .avg-stats-value {
-            /*background-color: #92D050;*/
-        }
-        
-        .row.border-top-none {
-            border-top: none;
-        }
-        
-        .safty-management {
-            background-color: #8DB4E2;
-        }
-        
-        .table.borderless>tbody>tr>td {
-            border: none;
-        }
-        
-        /*.dafwc,
+        /*zoom:0.815;*/
+    }
+
+body.der-image {
+    letter-spacing: 0.8px;
+}
+
+.header {
+    color: #fff;
+    margin: 0;
+}
+
+    .header .header-left {
+        background-color: #002060;
+        height: 90px;
+    }
+
+    .header .header-right {
+        background-color: #0D0D0D;
+        background-image: url(images/header-logo.png);
+        height: 90px;
+        background-size: 91% 99%;
+        background-repeat: no-repeat;
+        background-position: 1% 0;
+    }
+
+.table {
+    margin-bottom: 0;
+}
+
+.table-bordered {
+    border: 1px solid #0D0D0D;
+}
+
+    .table-bordered > tbody > tr > td,
+    .table-bordered > tbody > tr > th,
+    .table-bordered > tfoot > tr > td,
+    .table-bordered > tfoot > tr > th,
+    .table-bordered > thead > tr > td,
+    .table-bordered > thead > tr > th {
+        border: 1px solid #0D0D0D;
+    }
+
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
+    padding: 2px;
+    line-height: 1;
+    vertical-align: top;
+    border-top: 1px solid #0D0D0D;
+}
+
+.avg-stats > tbody > tr > td {
+    border: none;
+}
+
+.bordered {
+    border: 1px solid #0D0D0D;
+}
+
+.row > div.proper {
+    padding: 2px !important;
+}
+
+.avg-stats {
+    border-right: 1px solid #0D0D0D;
+}
+
+    .avg-stats thead tr td {
+        border-bottom: 1px solid #0D0D0D;
+    }
+
+.comparison .fa-arrow-up {
+    color: #3A8A43;
+}
+
+.comparison .fa-minus {
+    color: #FDCB1D;
+}
+
+.comparison .fa-arrow-down {
+    color: #EB6264;
+}
+
+.comparison.absolute {
+    position: absolute;
+    left: 4px;
+}
+
+.comparison.left-side {
+    margin-right: 4px;
+}
+
+.comparison.absolute {
+    position: absolute;
+    left: 4px;
+}
+
+.avg-stats-value {
+    /*background-color: #92D050;*/
+}
+
+.row.border-top-none {
+    border-top: none;
+}
+
+.safty-management {
+    background-color: #8DB4E2;
+}
+
+.table.borderless > tbody > tr > td {
+    border: none;
+}
+
+/*.dafwc,
         .weather {
             border-right: 1px solid #0D0D0D;
         }*/
-        
-        .weather,
-        .tide-wave {
-            height: 42px;
-        }
-        
-        .tide-wave tbody tr:first-child,
-        .weather tbody tr:first-child {
-            height: 33px;
-        }
-        .weather tbody tr:last-child td,
-        .weather tbody tr:last-child td img,
-        .tide-wave tbody tr:last-child td,
-        .tide-wave tbody tr:last-child img
-        {
-            vertical-align:bottom;
-        }
-            .tide-wave tbody tr:last-child {
-               height:30px; 
-            }
-        
-        
-        label {
-            margin-bottom: 0;
-        }
-        
-        .safty-management-row .col-md-5 {
-            width: 36%
-        }
-        
-        .safty-management-row .col-md-3,
-        .safty-management-row .col-md-4 {
-            width: 32%
-        }
-        
-        .table.table-bordered {
-            border: none;
-        }
-        
-        .table.table-bordered tr td:first-child {
-            border-left: none;
-        }
-        
-        .table.table-bordered tr td:last-child {
-            border-right: none;
-        }
-        
-        .table.table-bordered tbody tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .table thead tr td {
-            font-weight: bold;
-        }
-        
-        .table.kpi-fatality {
-            /*border-right: 1px solid #0D0D0D;*/
-            text-align: center;
-        }
-        
-        .table.kpi-fatality thead td {
-            background-color: #B8CCE4;
-        }
-        
-        .table.table.kpi-fatality thead td:first-child {
-            width: 92px;
-        }
-        
-        /*.table.qhse-remark {
+
+.weather,
+.tide-wave {
+    height: 42px;
+}
+
+    .tide-wave tbody tr:first-child,
+    .weather tbody tr:first-child {
+        height: 33px;
+    }
+
+    .weather tbody tr:last-child td,
+    .weather tbody tr:last-child td img,
+    .tide-wave tbody tr:last-child td,
+    .tide-wave tbody tr:last-child img {
+        vertical-align: bottom;
+    }
+
+    .tide-wave tbody tr:last-child {
+        height: 30px;
+    }
+
+
+label {
+    margin-bottom: 0;
+}
+
+.safty-management-row .col-md-5 {
+    width: 36%;
+}
+
+.safty-management-row .col-md-3,
+.safty-management-row .col-md-4 {
+    width: 32%;
+}
+
+.table.table-bordered {
+    border: none;
+}
+
+    .table.table-bordered tr td:first-child {
+        border-left: none;
+    }
+
+    .table.table-bordered tr td:last-child {
+        border-right: none;
+    }
+
+    .table.table-bordered tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+.table thead tr td {
+    font-weight: bold;
+}
+
+.table.kpi-fatality {
+    /*border-right: 1px solid #0D0D0D;*/
+    text-align: center;
+}
+
+    .table.kpi-fatality thead td {
+        background-color: #B8CCE4;
+    }
+
+.table.table.kpi-fatality thead td:first-child {
+    width: 92px;
+}
+
+/*.table.qhse-remark {
             height: 72px;
         }*/
-        
-        .table.qhse-remark thead td,
-        .table.weekly-alarm thead td,
-        .table.pie thead td {
-            background-color: #B7DEE8;
-        }
-        
-        .table.qhse-remark tbody td {
-            vertical-align: middle;
-            text-align: center;
-             padding: 0;
-            height: 103px;
-        }
-        
-        .table.weekly-alarm thead td {
-            border-top: 1px solid #0D0D0D !important;
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .table.qhse-remark,
-        .table.weekly-alarm {
-            /*border-right: 1px solid #0D0D0D;*/
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-        
-        .table.weekly-alarm > tbody > tr:last-child > td {
-            /*height: 145px   ;*/
-        }
-        
-        .table.weekly-alarm > tbody > tr > td table {
-            width: 100% !important;
-            height: auto !important;
-        }
-        
-        .table.weekly-alarm > tbody > tr > td p {
-            padding: 4px;
-        }
-        
-        .table.weekly-alarm > tbody > tr > td table td {
-            padding: 4px;
-        }
-        
-        .table.pie tbody tr td {
-            height: 250px;
-        }
-        
-        .table.security-incident tbody tr td {
-            border: 1px solid #444;
-            border-top:none;
-            border-bottom:none;
-        }
-        
-        .table.table.security-incident tbody tr td {
-            background-color: #DAEEF3;
-        }
-        
-        .table.table.security-incident tbody tr td:first-child {
-            width: 80px;
-            background-color: #92CDDC;
-        }
-        
+
+.table.qhse-remark thead td,
+.table.weekly-alarm thead td,
+.table.pie thead td {
+    background-color: #B7DEE8;
+}
+
+.table.qhse-remark tbody td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 0;
+    height: 103px;
+}
+
+.table.weekly-alarm thead td {
+    border-top: 1px solid #0D0D0D !important;
+    border-bottom: 1px solid #0D0D0D;
+}
+
+.table.qhse-remark,
+.table.weekly-alarm {
+    /*border-right: 1px solid #0D0D0D;*/
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+    .table.weekly-alarm > tbody > tr:last-child > td {
+        /*height: 145px   ;*/
+    }
+
+    .table.weekly-alarm > tbody > tr > td table {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .table.weekly-alarm > tbody > tr > td p {
+        padding: 4px;
+    }
+
+    .table.weekly-alarm > tbody > tr > td table td {
+        padding: 4px;
+    }
+
+.table.pie tbody tr td {
+    height: 250px;
+}
+
+.table.security-incident tbody tr td {
+    border: 1px solid #444;
+    border-top: none;
+    border-bottom: none;
+}
+
+.table.table.security-incident tbody tr td {
+    background-color: #DAEEF3;
+}
+
+    .table.table.security-incident tbody tr td:first-child {
+        width: 80px;
+        background-color: #92CDDC;
+    }
+
         .table.table.security-incident tbody tr td:first-child + td {
             width: 42%;
         }
-        
-        .table.security-incident ul {
-            margin: 0;
-        }
-        
-        .table.security-incident ul li {
-            padding: 3px 0;
-        }
-        
-        /*.table.alert-condition {
+
+.table.security-incident ul {
+    margin: 0;
+}
+
+    .table.security-incident ul li {
+        padding: 3px 0;
+    }
+
+/*.table.alert-condition {
             border-left: 1px solid #0D0D0D;
         }*/
-        
-        .table.alert-condition thead tr td {
-            background-color: #92CDDC;
-        }
-        
-        .table.alert-condition tbody tr td {
-            background-color: #00FF00;
-            font-size: 16px;
-            vertical-align: middle;
-            height: 42px;
-            font-weight: bold;
-        }
-            .the-alert.low {
-                background-color: #00FF00 !important;
-            }
-            .the-alert.elevated {
-                background-color: yellow !important;
-            }
-            .the-alert.high {
-                background-color: orange !important;
-            }
-            .the-alert.severe {
-                background-color: red !important;
-            }
-        
-        .commercial-operation {
-            background-color: #8DB4E2;
-        }
-        
-        .feed-gas {
-            background-color: #92CDDC;
-        }
-        
-        .table.job-pmts {
-            border-right: 1px solid #0D0D0D;
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .table.job-pmts thead tr:first-child td,
-        .table.mgdp thead tr:first-child td {
-            background-color: #CCC0DA;
-        }
-        
-        .table.job-pmts thead tr td,
-        .table.mgdp thead tr td {
-            background-color: #DCE6F1;
-        }
-        
-        .table.job-pmts thead {
-            text-align: center;
-        }
-        .table.job-pmts tbody tr td{
-            text-align: right;
-        }
-        
-        .table.mgdp {
-            border-left: 1px solid #0D0D0D;
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .table.mgdp thead {
-            text-align: center;
-        }
 
-        .table.mgdp tbody tr td:not(.text-center){
-            text-align: right;
-        }
-        
-        .feed-gas-row > .col-md-6:first-child {
-            padding-right: 2.5px !important;
-        }
-        
-        .feed-gas-row > .col-md-6:last-child {
-            padding-left: 2.5px !important;
-        }
-        
-        .table.hhv {
-            text-align: center;
-            border-left: 1px solid #0D0D0D;
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .table.hhv thead tr td {
-            background-color: #C4D79B;
-        }
-        
-        .table.hhv tbody tr:first-child td {
-            height: 42px;
-        }
-            .table.hhv .special-height {
-                height:23px;
-               
-            }
-        
-        .vertical-space {
-            margin-bottom: 10px;
-        }
-        
-        .table.top-bottom-border {
-            border-top: 1px solid #0D0D0D;
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .table.total-feed-gas thead tr td {
-            height: 50px;
-            vertical-align: middle;
-            background-color: #DCE6F1;
-        }
-        .table.total-feed-gas thead tr td{
-            text-align: center;
-        }
-        .table.total-feed-gas thead tr td:first-child {
-            background-color: #92CDDC;
-        }
-        .table.total-feed-gas tbody tr td{
-            text-align: right;
-        }
-        .table.total-feed-gas tbody tr:last-child td,
-         .table.total-feed-gas tbody tr td:first-child{
-            text-align: left;
-        }
-        .impurities {
-            width: 100%;
-            background-color: #215967;
-            height: 158px;
-            border: 1px solid #0D0D0D;
-            color:#fff;
-        }
-        
-        .table.plant-availability {
-            border-left: 1px solid #0D0D0D;
-             border-right: 1px solid #0D0D0D;
-            margin-bottom: 12px;
-        }
-        
-        .table.plant-availability thead tr td {
-            height: 50px;
-            vertical-align: middle;
-            background-color: #DAEEF3;
-            text-align: center;
-        }
-        
-        .table td.desc {
-            width: 12%;
-        }
-        
-        .table td.refrigerant {
-            width: 16%;
-        }
-        
-        .table.plant-availability td.second-header {
-            background-color: #92CDDC;
-        }
-        
-        .table.plant-availability td.left-header {
-            background-color: #DCE6F1;
-            text-align: left;
-        }
-        .table.plant-availability tbody tr td:not(.text-center):not(.left-header){
-            text-align: right;
-        }
-        
-        .table.production {
-            border-right: 1px solid #0D0D0D;
-        }
-        
-        .table.production thead tr td {
-            background-color: #92CDDC;
-            text-align: center;
-        }
-        
+.table.alert-condition thead tr td {
+    background-color: #92CDDC;
+}
+
+.table.alert-condition tbody tr td {
+    background-color: #00FF00;
+    font-size: 16px;
+    vertical-align: middle;
+    height: 42px;
+    font-weight: bold;
+}
+
+.the-alert.low {
+    background-color: #00FF00 !important;
+}
+
+.the-alert.elevated {
+    background-color: yellow !important;
+}
+
+.the-alert.high {
+    background-color: orange !important;
+}
+
+.the-alert.severe {
+    background-color: red !important;
+}
+
+.commercial-operation {
+    background-color: #8DB4E2;
+}
+
+.feed-gas {
+    background-color: #92CDDC;
+}
+
+.table.job-pmts {
+    border-right: 1px solid #0D0D0D;
+    border-bottom: 1px solid #0D0D0D;
+}
+
+    .table.job-pmts thead tr:first-child td,
+    .table.mgdp thead tr:first-child td {
+        background-color: #CCC0DA;
+    }
+
+    .table.job-pmts thead tr td,
+    .table.mgdp thead tr td {
+        background-color: #DCE6F1;
+    }
+
+    .table.job-pmts thead {
+        text-align: center;
+    }
+
+    .table.job-pmts tbody tr td {
+        text-align: right;
+    }
+
+.table.mgdp {
+    border-left: 1px solid #0D0D0D;
+    border-bottom: 1px solid #0D0D0D;
+}
+
+    .table.mgdp thead {
+        text-align: center;
+    }
+
+    .table.mgdp tbody tr td:not(.text-center) {
+        text-align: right;
+    }
+
+.feed-gas-row > .col-md-6:first-child {
+    padding-right: 2.5px !important;
+}
+
+.feed-gas-row > .col-md-6:last-child {
+    padding-left: 2.5px !important;
+}
+
+.table.hhv {
+    text-align: center;
+    border: 1px solid #0D0D0D;
+}
+
+    .table.hhv thead tr td {
+        background-color: #C4D79B;
+    }
+
+    .table.hhv tbody tr:first-child td {
+        /*height: 42px;*/
+    }
+
+    .table.hhv .special-height {
+        height: 23px;
+    }
+
+.table.total-commitment,
+.table.total-commitment tr td:last-child {
+    border: 1px solid #0D0D0D;
+}
+
+.vertical-space {
+    margin-bottom: 10px;
+}
+
+.table.top-bottom-border {
+    border-top: 1px solid #0D0D0D;
+    border-bottom: 1px solid #0D0D0D;
+}
+
+.table.total-feed-gas thead tr td {
+    height: 50px;
+    vertical-align: middle;
+    background-color: #DCE6F1;
+}
+
+.table.total-feed-gas thead tr td {
+    text-align: center;
+}
+
+    .table.total-feed-gas thead tr td:first-child {
+        background-color: #92CDDC;
+    }
+
+.table.total-feed-gas tbody tr td {
+    text-align: right;
+}
+
+    .table.total-feed-gas tbody tr:last-child td,
+    .table.total-feed-gas tbody tr td:first-child {
+        text-align: left;
+    }
+
+.impurities {
+    width: 100%;
+    background-color: #215967;
+    height: 158px;
+    border: 1px solid #0D0D0D;
+    color: #fff;
+}
+
+.table.plant-availability {
+    border-left: 1px solid #0D0D0D;
+    border-right: 1px solid #0D0D0D;
+    margin-bottom: 12px;
+}
+
+    .table.plant-availability thead tr td {
+        height: 50px;
+        vertical-align: middle;
+        background-color: #DAEEF3;
+        text-align: center;
+    }
+
+.table td.desc {
+    width: 12%;
+}
+
+.table td.refrigerant {
+    width: 16%;
+}
+
+.table.plant-availability td.second-header {
+    background-color: #92CDDC;
+}
+
+.table.plant-availability td.left-header {
+    background-color: #DCE6F1;
+    text-align: left;
+}
+
+.table.plant-availability tbody tr td:not(.text-center):not(.left-header) {
+    text-align: right;
+}
+
+.table.production {
+    border-right: 1px solid #0D0D0D;
+}
+
+    .table.production thead tr td {
+        background-color: #92CDDC;
+        text-align: center;
+    }
+
         .table.production thead tr td:last-child {
             background-color: #95B3D7;
         }
-         .table.production tbody tr td {
-            text-align:right;
-         }
-         .table.production tbody tr td:first-child{
-             text-align: left;
-         } 
-         .table.production tbody tr:last-child td:nth-child(odd){
-             text-align: left;
-         }
-        
-        .table.tank {
-            border-right: 1px solid #0D0D0D;
-            /*border-bottom: 1px solid #0D0D0D;*/
+
+    .table.production tbody tr td {
+        text-align: right;
+    }
+
+        .table.production tbody tr td:first-child {
+            text-align: left;
         }
-        
-        .table.tank thead tr td {
-            height: 111px;
-            background-color: #DBEEF4;
-            text-align: center;
+
+    .table.production tbody tr:last-child td:nth-child(odd) {
+        text-align: left;
+    }
+
+.table.tank {
+    border-right: 1px solid #0D0D0D;
+    /*border-bottom: 1px solid #0D0D0D;*/
+}
+
+    .table.tank thead tr td {
+        height: 111px;
+        background-color: #DBEEF4;
+        text-align: center;
+    }
+
+.table.tank-table {
+    border-right: 1px solid #444;
+    border-bottom: 1px solid #444;
+}
+
+    .table.tank-table tbody tr:first-child td {
+        background-color: #95B3D7;
+        text-align: center;
+    }
+
+    .table.tank-table tbody tr td {
+        text-align: right;
+    }
+
+        .table.tank-table tbody tr td:nth-child(2),
+        .table.tank-table tbody tr td:nth-child(3),
+        .table.tank-table tbody tr td:nth-child(5) {
+            text-align: left;
         }
-        .table.tank-table {
-            border-right:1px solid #444;
-            border-bottom:1px solid #444;
-        }
-        
-        .table.tank-table tbody tr:first-child td {
-            background-color: #95B3D7;
-            text-align: center;
-        }
-         .table.tank-table tbody tr td{
-             text-align: right;
-         }
-          .table.tank-table tbody tr td:nth-child(2),
-          .table.tank-table tbody tr td:nth-child(3),
-          .table.tank-table tbody tr td:nth-child(5){
-              text-align: left;
-          }
-        
-        .table.cds-loaded,
-        .table.lng-loaded {
-            border-left: 1px solid #0D0D0D;
-        }
-        
-        .table.cds-loaded {
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .table.cds-loaded thead tr td,
-        .table.lng-loaded thead tr td {
-            background-color: #92CDDC;
-            text-align: center;
-        }
-        
-        .table.cds-loaded td.cargo,
-        .table.lng-loaded td.cargo,
-        .table.cds-loaded td.vertical-header,
-        .table.lng-loaded td.vertical-header {
-            background-color: #DCE6F1;
-        }
-        
-        .table.cds-loaded td.right-header,
-        .table.lng-loaded td.right-header {
-            background-color: #DAEEF3;
-        }
-        .table.cds-loaded tbody tr td,
-        .table.lng-loaded tbody tr td {
-            text-align: right;
-        }
-         .table.cds-loaded tbody tr td:first-child,
+
+.table.cds-loaded,
+.table.lng-loaded {
+    border-left: 1px solid #0D0D0D;
+}
+
+.table.cds-loaded {
+    border-bottom: 1px solid #0D0D0D;
+}
+
+    .table.cds-loaded thead tr td,
+    .table.lng-loaded thead tr td {
+        background-color: #92CDDC;
+        text-align: center;
+    }
+
+    .table.cds-loaded td.cargo,
+    .table.lng-loaded td.cargo,
+    .table.cds-loaded td.vertical-header,
+    .table.lng-loaded td.vertical-header {
+        background-color: #DCE6F1;
+    }
+
+    .table.cds-loaded td.right-header,
+    .table.lng-loaded td.right-header {
+        background-color: #DAEEF3;
+    }
+
+    .table.cds-loaded tbody tr td,
+    .table.lng-loaded tbody tr td {
+        text-align: right;
+    }
+
+        .table.cds-loaded tbody tr td:first-child,
         .table.lng-loaded tbody tr td:first-child,
         .table.cds-loaded tbody tr td:nth-child(6),
         .table.lng-loaded tbody tr td:nth-child(6),
@@ -588,354 +626,384 @@ h6 {
             text-align: left;
             vertical-align: middle;
         }
-        .table.nls {
-            border-left: 1px solid #0D0D0D;
-        }
-        
-        .table.nls thead tr td {
-            background-color: #B7DEE8;
-            text-align: center;
-        }
-        
+
+.table.nls {
+    border-left: 1px solid #0D0D0D;
+}
+
+    .table.nls thead tr td {
+        background-color: #B7DEE8;
+        text-align: center;
+    }
+
         .table.nls thead tr td:first-child {
             background-color: #92CDDC;
             text-align: left;
         }
-         .table.nls tbody tr td:nth-child(3),
-         .table.nls tbody tr td:nth-child(4),
-         .table.nls tbody tr td:nth-child(5){
-             text-align: center;
-         }
-         
-        
-        .table.key-equipment {
-            border-left: 1px solid #0D0D0D;
-        }
-        
-        .table.key-equipment thead tr td {
-            background-color: #92CDDC;
-        }
-        
-        .table.key-equipment td.power {
-            background-color: #FABF8F;
-        }
-        
-        .table.key-equipment td.process-train {
-            background-color: #538DD5;
-        }
-        
-        .table.key-equipment td.utilities {
-            background-color: #E26B0A;
-        }
-        
-        .table.key-equipment td.support {
-            background-color: #948A54;
-        }
-        
-        .table.key-equipment thead tr td {
-            text-align: center;
+
+    .table.nls tbody tr td:nth-child(3),
+    .table.nls tbody tr td:nth-child(4),
+    .table.nls tbody tr td:nth-child(5) {
+        text-align: center;
+    }
+
+
+.table.key-equipment {
+    border-left: 1px solid #0D0D0D;
+}
+
+    .table.key-equipment thead tr td {
+        background-color: #92CDDC;
+    }
+
+    .table.key-equipment td.power {
+        background-color: #FABF8F;
+    }
+
+    .table.key-equipment td.process-train {
+        background-color: #538DD5;
+    }
+
+    .table.key-equipment td.utilities {
+        background-color: #E26B0A;
+    }
+
+    .table.key-equipment td.support {
+        background-color: #948A54;
+    }
+
+    .table.key-equipment thead tr td {
+        text-align: center;
+    }
+
+    .table.key-equipment td.tripped {
+        background-color: yellow;
+    }
+
+    .table.key-equipment td.running,
+    .table.key-equipment td.normal-ops {
+        background-color: #00B050;
+    }
+
+.table.table.key-equipment td.standby {
+    background-color: #BFBFBF;
+}
+
+.table.table.key-equipment td.not-running {
+    background-color: #00B0F0;
+}
+
+.table.table.key-equipment td.not-available {
+    background-color: red;
+}
+
+.loading-duration {
+    background-color: #B8CCE4;
+}
+
+.standard-loading {
+    background-color: #FFC000;
+}
+
+.ttl-terminal {
+    background-color: #F2DCDB;
+}
+
+.table.weekly-maintenance {
+    border-right: 1px solid #0D0D0D;
+    text-align: center;
+    border-bottom: none;
+}
+
+.table.weekly-critical {
+    border-right: 1px solid #0D0D0D;
+    border-bottom: 1px solid #0D0D0D;
+    border-top: 1px solid #444;
+    text-align: center;
+}
+
+    .table.weekly-maintenance thead td,
+    .table.weekly-critical thead td {
+        background-color: #B7DEE8;
+    }
+
+    .table.weekly-maintenance thead tr:first-child td,
+    .table.weekly-critical thead tr:first-child td {
+        text-align: center;
+        background-color: #92CDDC;
+    }
+
+    .table.weekly-maintenance tr td:first-child,
+    .table.weekly-critical tr td:first-child {
+        text-align: left;
+    }
+
+.plant-mode {
+    color: #00B050;
+    ;
+}
+
+.row > .support {
+    background-color: #8DB4E2;
+}
+
+.table.procurement,
+.table.indicative {
+    border-bottom: 1px solid #0D0D0D;
+}
+
+.table.commodities {
+    border-left: 1px solid #0D0D0D;
+    /*border-right: 1px solid #0D0D0D;*/
+}
+
+    .table.commodities tr td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+        .table.commodities tr td:last-child {
+            text-align: left;
         }
 
-        .table.key-equipment td.tripped {
-            background-color: yellow;
-        }
-        
-        .table.key-equipment td.running,
-        .table.key-equipment td.normal-ops {
-            background-color: #00B050;
-        }
-        
-        .table.table.key-equipment td.standby {
-            background-color: #BFBFBF;
-        }
-        
-        .table.table.key-equipment td.not-running {
-            background-color: #00B0F0;
-        }
-        .table.table.key-equipment td.not-available {
-            background-color: red;
-        }
-        
-        .loading-duration {
-            background-color: #B8CCE4;
-        }
-        
-        .standard-loading {
-            background-color: #FFC000;
-        }
-        
-        .ttl-terminal {
-            background-color: #F2DCDB;
-        }
-        
-        .table.weekly-maintenance {
-            border-right: 1px solid #0D0D0D;
-            text-align: center;
-            border-bottom:none;
-        }
-        
-        .table.weekly-critical {
-            border-right: 1px solid #0D0D0D;
-            border-bottom: 1px solid #0D0D0D;
-                border-top: 1px solid #444;
-            text-align: center;
-        }
-        
-        .table.weekly-maintenance thead td,
-        .table.weekly-critical thead td {
-            background-color: #B7DEE8;
-        }
-        
-        .table.weekly-maintenance thead tr:first-child td,
-        .table.weekly-critical thead tr:first-child td {
-            text-align: center;
-            background-color: #92CDDC;
-        }
-        
-        .table.weekly-maintenance tr td:first-child,
-        .table.weekly-critical tr td:first-child {
-            text-align: left;
-        }
-        
-        .plant-mode {
-            color: #00B050;
-            ;
-        }
-        
-        .row > .support {
-            background-color: #8DB4E2;
-        }
-        
-        .table.procurement,
-        .table.indicative {
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .table.commodities {
-            border-left: 1px solid #0D0D0D;
-            /*border-right: 1px solid #0D0D0D;*/
-        }
-        .table.commodities tr td{
-            text-align: center;
-             vertical-align:middle;
-        }
-        .table.commodities tr td:last-child{
-            text-align: left;
-        }
-        .table.commodities tbody tr:last-child td:first-child{
-            text-align: right;
-        }
-        .table.commodities tbody tr:not(:last-child) td:nth-child(2){
-            text-align: left;
-            padding-left: 40px;
-        }
-        
-        .table.procurement thead tr td {
-            background-color: #B7DEE8;
-            text-align: center;
-            vertical-align:middle;
-        }
-        .table.procurement tbody tr td{
-            text-align: center;
-        }
-        .table.procurement tbody tr td:first-child{
-            text-align: left;
-        }
-        
-        .table.procurement thead tr td:first-child {
-            background-color: #92CDDC;
-        }
-        
-        .table.procurement tbody tr:first-child td {
-            height: 31px;
-        }
-        
-        .table.commodities thead tr td,
-        .table.indicative thead tr td {
-            background-color: #92CDDC;
-        }
-        
-        .table.indicative thead tr td {
-            height: 29px;
-            text-align: center;
-            vertical-align: middle;
-        }
-         .table.indicative tbody tr td{
-             text-align: center;
-         }
-          .table.indicative tbody tr td:first-child{
-              text-align: left;
-          }
-        
-        .table.global-stock {
-            border: 1px solid #0D0D0D;
-            border-bottom: none;
-            border-right:none;
-        }
-        
-        .table.global-stock thead tr td {
-            background-color: #66FF99;
-            text-align: center;
-        }
-        
-        .table.global-stock thead tr:first-child td:first-child {
-            background-color: #B7DEE8;
-        }
-        
-        .table.global-stock thead tr:first-child td {
-            background-color: #66CCFF;
-        }
-        .table.global-stock tbody tr td:not(:last-child){
-            text-align: right;
-        }
-        .table.ict-infra {
-            /*border-bottom: 1px solid #0D0D0D;*/
-            /*margin-top:26px;*/
-        }
-        
-        .table.ict-infra td,
-        .table.gs-fm td {
-            vertical-align: middle;
-        }
-        
-        .table.ict-infra img,
-        .table.gs-fm img {
-            height: 20px;
-            width: auto;
-        }
-        
-        h5 {
-           
-            font-weight: bold;
-        }
-        
-        .row.header h5 {
-            font-size: 14px;
-        }
-        
-        .community {
-            height: 70px;
-        }
-        
-        .community img {
-            height: 29px;
-            margin-top: -3px;
-            width: auto;
-        }
-        
-        .market-tone {
-            float: right;
-            margin-top: 4px;
-            margin-right: 30px;
-        }
-        
-        .fa {
-            font-size: 11px;
-        }
-        
-        .market-tone label {
-            margin-right: 30px;
-        }
-        
-        .co-macro-eco {
-            padding: 5px;
-            height: 270.5px;
-            border-bottom: 1px solid #0D0D0D;
-        }
-        
-        .table.signature thead tr td {
-            background-color: #DAEEF3;
-        }
-        
-        .table.signature > tbody > tr > td {
-            height: 84px;
-            text-align: center;
-            margin-top:7px;
-        }
-        
-        .table.signature td img {
-            height: 83%;
-        }
-        
-        .table.signature td.signature {
-            width: 25%
-        }
-        
-        .table.signature td.signature img {
-            height: 30px;
-            width: auto;
-            margin-top:7px;
-        }
-        
-        .table.table.signature label,
-        .table.table.signature .nothing {
-            margin: 8px 0;
-            display: block;
-        }
+    .table.commodities tbody tr:last-child td:first-child {
+        text-align: right;
+    }
 
-        .na-value {
-            background-color: #a6a6a6;
-        }
+    .table.commodities tbody tr:not(:last-child) td:nth-child(2) {
+        text-align: left;
+        padding-left: 40px;
+    }
 
-        span.indicator .fa-circle,
-        span.indicator.green fa-circle{
-            color: #5bbb75;
-        } 
-        /*td > span > .fa-circle, td > span > .fa-times-circle, td > span > .fa-exclamation-circle {
+.table.procurement thead tr td {
+    background-color: #B7DEE8;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table.procurement tbody tr td {
+    text-align: center;
+}
+
+    .table.procurement tbody tr td:first-child {
+        text-align: left;
+    }
+
+.table.procurement thead tr td:first-child {
+    background-color: #92CDDC;
+}
+
+.table.procurement tbody tr:first-child td {
+    height: 31px;
+}
+
+.table.commodities thead tr td,
+.table.indicative thead tr td {
+    background-color: #92CDDC;
+}
+
+.table.indicative thead tr td {
+    height: 29px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table.indicative tbody tr td {
+    text-align: center;
+}
+
+    .table.indicative tbody tr td:first-child {
+        text-align: left;
+    }
+
+.table.global-stock {
+    border: 1px solid #0D0D0D;
+    border-bottom: none;
+    border-right: none;
+}
+
+    .table.global-stock thead tr td {
+        background-color: #66FF99;
+        text-align: center;
+    }
+
+    .table.global-stock thead tr:first-child td:first-child {
+        background-color: #B7DEE8;
+    }
+
+    .table.global-stock thead tr:first-child td {
+        background-color: #66CCFF;
+    }
+
+    .table.global-stock tbody tr td:not(:last-child) {
+        text-align: right;
+    }
+
+.table.ict-infra {
+    /*border-bottom: 1px solid #0D0D0D;*/
+    /*margin-top:26px;*/
+}
+
+    .table.ict-infra td,
+    .table.gs-fm td {
+        vertical-align: middle;
+    }
+
+    .table.ict-infra img,
+    .table.gs-fm img {
+        height: 20px;
+        width: auto;
+    }
+
+h5 {
+    font-weight: bold;
+}
+
+.row.header h5 {
+    font-size: 14px;
+}
+
+.community {
+    height: 70px;
+}
+
+    .community img {
+        height: 29px;
+        margin-top: -3px;
+        width: auto;
+    }
+
+.market-tone {
+    float: right;
+    margin-top: 4px;
+    margin-right: 30px;
+}
+
+.fa {
+    font-size: 11px;
+}
+
+.market-tone label {
+    margin-right: 30px;
+}
+
+.co-macro-eco {
+    padding: 5px;
+    height: 189.5px;
+    /*height: 270.5px;*/
+    /*border-bottom: 1px solid #0D0D0D;*/
+}
+
+/*.table.signature {
+    border: 1px solid #000;
+    border-top: 0;
+}*/
+.table.signature thead tr td {
+    background-color: #DAEEF3;
+}
+
+.table.signature > tbody > tr > td {
+    height: 84px;
+    text-align: center;
+    margin-top: 7px;
+}
+
+.table.signature td img {
+    height: 83%;
+}
+
+.table.signature td.signature {
+    width: 25%;
+}
+
+    .table.signature td.signature img {
+        height: 30px;
+        width: auto;
+        margin-top: 7px;
+    }
+
+.table.table.signature label,
+.table.table.signature .nothing {
+    margin: 8px 0;
+    display: block;
+}
+
+.na-value {
+    background-color: #a6a6a6;
+}
+
+span.indicator .fa-circle,
+span.indicator.green fa-circle {
+    color: #5bbb75;
+}
+/*td > span > .fa-circle, td > span > .fa-times-circle, td > span > .fa-exclamation-circle {
             position: absolute;
             left: 5px;
         }*/
 
-        
-        span.indicator .fa-times-circle {
-            color: #F57D7F;
-        } 
-         span.indicator .fa-exclamation-circle {
-            color: #FDD545;
-        }
-         span.indicator.black fa-circle{
-            color: black;
-        } 
-         span.indicator.gray fa-circle{
-            color: gray;
-        } 
-         span.indicator.red fa-circle{
-            color: red;
-        } 
-         span.indicator.orange .fa-circle{
-            color: orange;
-        } 
-        .table tbody tr td {
-            position: relative;
-            background-clip: padding-box
-        }
+
+span.indicator .fa-times-circle {
+    color: #F57D7F;
+}
+
+span.indicator .fa-exclamation-circle {
+    color: #FDD545;
+}
+
+span.indicator.black fa-circle {
+    color: black;
+}
+
+span.indicator.gray fa-circle {
+    color: gray;
+}
+
+span.indicator.red fa-circle {
+    color: red;
+}
+
+span.indicator.orange .fa-circle {
+    color: orange;
+}
+
+.table tbody tr td {
+    position: relative;
+    background-clip: padding-box;
+}
+
 .table thead tr td {
-    background-clip: padding-box
+    background-clip: padding-box;
 }
-        span.indicator.left-side{
-            margin-right:10px;
-        }
-        span.indicator.right-side{
-            margin-left: 5px;
-        }
-        span.indicator.absolute{
-            position: absolute;
-            left:5px;
-        }
+
+span.indicator.left-side {
+    margin-right: 10px;
+}
+
+span.indicator.right-side {
+    margin-left: 5px;
+}
+
+span.indicator.absolute {
+    position: absolute;
+    left: 5px;
+}
+
 .daily-highlight {
-    position:relative;
+    position: relative;
 }
-        .daily-highlight .indicator.absolute{
-            left: 100px;
-            top: 5px;
-        }
-        /*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
+
+    .daily-highlight .indicator.absolute {
+        left: 100px;
+        top: 5px;
+    }
+/*.table.table.kpi-fatality > tbody > tr > td:nth-last-child(2) {
             position: relative;
         }*/
 .hhv-bar {
-    margin-bottom:5px;
+    margin-bottom: 5px;
 }
-        .psig,.hhv-bar {
+
+.psig,.hhv-bar {
                 position: relative;
             height: 19px;
             border-bottom: 1px solid #0d0d0d;
@@ -1006,11 +1074,13 @@ h6 {
             top: 5px;
             left: 9px;
         }
+
 .pie-wrapper {
-    position:relative;
+    position: relative;
 }
+
 .pie-title {
-      position: absolute;
+    position: absolute;
     bottom: 80px;
     left: 123px;
     width: 150px;
@@ -1021,158 +1091,178 @@ h6 {
 .volume {
     margin-top: 20px;
 }
+
 .tank-wrapper {
-    display:inline-block;
+    display: inline-block;
 }
-.table.tank>thead>tr>td {
-    vertical-align:middle;
+
+.table.tank > thead > tr > td {
+    vertical-align: middle;
 }
+
 .speedo-wrapper {
-    text-align:center;
-    position:relative;
+    text-align: center;
+    position: relative;
 }
-.speedo-wrapper .canvas-container {
-    display:inline-block;
-}
+
+    .speedo-wrapper .canvas-container {
+        display: inline-block;
+    }
+
     .speedo-wrapper .value {
         position: absolute;
-    bottom: -11px;
-    /* left: 45%; */
-    width: 100%;
-    left: 0;
+        bottom: -11px;
+        /* left: 45%; */
+        width: 100%;
+        left: 0;
     }
+
 .bar-percentage {
     height: 18px;
     z-index: -1;
     position: absolute;
     top: 2px;
     left: 2px;
-    width:98%;
+    width: 98%;
 }
-.bar-percentage > div {
-    background: #538DD5; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(left,#538DD5, #E3EBF7); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(right,#538DD5, #E3EBF7); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(right,#538DD5, #E3EBF7); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to right,#538DD5, #E3EBF7); /* Standard syntax */
-    /*width:100%;*/
-    height:100%;
-}
-.bar-percentage > div.mgdp {
-    background: #FFC000; /* For browsers that do not support gradients */
-    /*width:100%;*/
-    height:100%;
-}
+
+    .bar-percentage > div {
+        background: #538DD5; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(left,#538DD5, #E3EBF7); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(right,#538DD5, #E3EBF7); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(right,#538DD5, #E3EBF7); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(to right,#538DD5, #E3EBF7); /* Standard syntax */
+        /*width:100%;*/
+        height: 100%;
+    }
+
+        .bar-percentage > div.mgdp {
+            background: #FFC000; /* For browsers that do not support gradients */
+            /*width:100%;*/
+            height: 100%;
+        }
+
 td.percentage-wrapper {
-    padding:6px !important;
-    position:relative
+    padding: 6px !important;
+    position: relative;
 }
+
 .termo-label {
     position: absolute;
     font-size: 7px;
     width: 100%;
     text-align: center;
 }
+
 .brentfut-col ul {
     list-style: none;
     padding-left: 0;
     margin: 0;
 }
-.brentfut-col ul li {
-    border-bottom: 1px solid #0d0d0d;
-    padding: 5px 0;
-}
-    .brentfut-col ul li:last-child {
-        border:none;
+
+    .brentfut-col ul li {
+        border-bottom: 1px solid #0d0d0d;
+        padding: 5px 0;
     }
 
-    .table.ict-infra{
-        margin-top: 19px;
-    }
+        .brentfut-col ul li:last-child {
+            border: none;
+        }
+
+.table.ict-infra {
+    margin-top: 19px;
+}
+
 .main-table > tbody > tr > td {
-    border:1px solid #444;
+    border: 1px solid #444;
 }
 
-    .table.alert-condition tbody tr td {
-        font-size: 22px;
-    }
+.table.alert-condition tbody tr td {
+    font-size: 22px;
+}
 
-    .safty-management,
-    .commercial-operation,
-    .support
-    {
-        font-size: 14px;
-        font-weight: bold;
-    }
+.safty-management,
+.commercial-operation,
+.support {
+    font-size: 14px;
+    font-weight: bold;
+}
 
-    .daily-highlight h5,
-    .avg-stats thead tr td:first-child,
-    .feed-gas,
-    .job-pmts thead tr:first-child,
-    .mgdp thead tr:first-child,
-    .hhv thead tr:first-child {
-        font-size: 13px;
-    }
+.daily-highlight h5,
+.avg-stats thead tr td:first-child,
+.feed-gas,
+.job-pmts thead tr:first-child,
+.mgdp thead tr:first-child,
+.hhv thead tr:first-child,
+.total-commitment thead  {
+    font-size: 13px;
+}
 
-    .daily-highlight,
-    .kpi-fatality thead tr td,
-    .qhse-remark thead tr td,
-    .weekly-alarm thead,
-    .pie thead,
-    .security-remarks h5,
-    .security-incident > tbody > tr > td:first-child > ul,
-    .alert-condition thead,
-    .total-feed-gas thead,
-    .total-feed-gas tbody > tr > td:first-child,
-    .impurities > label,
-    .production thead tr td,
-    .production tbody tr > td:first-child,
-    .operation-highlight,
-    .operation-highlight h5,
-    .maintenance-highlight,
-    .maintenance-highlight h5    
-    {
-        font-size: 12px;
-    }
+.daily-highlight,
+.kpi-fatality thead tr td,
+.qhse-remark thead tr td,
+.weekly-alarm thead,
+.pie thead,
+.security-remarks h5,
+.security-incident > tbody > tr > td:first-child > ul,
+.alert-condition thead,
+.total-feed-gas thead,
+.total-feed-gas tbody > tr > td:first-child,
+.impurities > label,
+.production thead tr td,
+.production tbody tr > td:first-child,
+.operation-highlight,
+.operation-highlight h5,
+.maintenance-highlight,
+.maintenance-highlight h5 {
+    font-size: 12px;
+}
 
-    .avg-stats,
-    .dafwc,
-    .weather,
-    .tide-wave,
-    .qhse-remark tbody,
-    .weekly-alarm tbody,
-    .pie tbody,
-    .security-remarks div,
-    .job-pmts thead tr:last-child,
-    .mgdp thead tr:last-child,
-    .hhv thead tr:last-child ,
-    .psig,
-    .hhv-bar,  
-    .production tbody tr:last-child td:nth-child(1)
-    {
-        font-size: 11px;
-    }
+.avg-stats,
+.dafwc,
+.weather,
+.tide-wave,
+.qhse-remark tbody,
+.weekly-alarm tbody,
+.pie tbody,
+.security-remarks div,
+.job-pmts thead tr:last-child,
+.mgdp thead tr:last-child,
+.hhv thead tr:last-child,
+.psig,
+.hhv-bar,
+.production tbody tr:last-child td:nth-child(1),
+.total-commitment tbody {
+    font-size: 11px;
+}
 
-    .total-feed-gas tbody > tr > td:first-child,
-    .plant-availability tbody tr > td:first-child,
-    .production tbody tr > td:first-child,
-    .psig,
-    .hhv-bar,
-    .production tbody tr:last-child td:nth-child(3),
-    .production tbody tr:last-child td:nth-child(5),
-    .commodities tbody tr td:first-child
-    {
-        font-weight: bold;
-    }
+.total-feed-gas tbody > tr > td:first-child,
+.plant-availability tbody tr > td:first-child,
+.production tbody tr > td:first-child,
+.psig,
+.hhv-bar,
+.production tbody tr:last-child td:nth-child(3),
+.production tbody tr:last-child td:nth-child(5),
+.commodities tbody tr td:first-child {
+    font-weight: bold;
+}
+
+.total-commitment tbody tr td:nth-child(2) {
+    text-align: right;
+}
+
 .main-table tr td {
-    vertical-align:top;
+    vertical-align: top;
 }
+
 .main-table table table tr td {
-    padding:5px;
+    padding: 5px;
 }
+
 .proper {
     padding: 5px;
 }
+
 table.main-table {
     width: 100%;
 }
@@ -1190,50 +1280,66 @@ table.main-table {
     width: 100%;
     height: 100%;
 }
+
 table.security-incident-wrapper > tbody > tr > td {
-    padding:0;
+    padding: 0;
 }
-.security-remarks-wrapper{
-    padding:5px;
+
+.security-remarks-wrapper {
+    padding: 5px;
 }
+
 .avg-stats-value td {
-    text-decoration:underline;
+    text-decoration: underline;
 }
+
 .zero-val {
-    position:absolute;
-    left:0;
-    bottom:0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
+
 .half-val {
-    position:absolute;
-    left:41%;
-    top:0;
+    position: absolute;
+    left: 41%;
+    top: 0;
 }
+
 .full-val {
-    position:absolute;
-    right:0;
-    bottom:0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
- p {
+
+p {
     margin: 0 0 5px;
 }
 
 .highlight-style-12 {
-    font-size:12px;letter-spacing:0.5px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
 }
+
 table.flare thead tr td {
-height: 50px;
-background-color:#92cddc;
-vertical-align:middle;
-text-align:center;
+    height: 50px;
+    background-color: #92cddc;
+    vertical-align: middle;
+    text-align: center;
 }
-table.flare .left-header{
+
+table.flare .left-header {
     background-color: #dce6f1;
-    text-align:left;
+    text-align: left;
 }
+
 table.flare tbody td {
-    text-align:right;
+    text-align: right;
 }
+
 .tank-wrapper {
-    display:inline-block;
+    display: inline-block;
+}
+
+.commodities tbody > tr > td:first-child {
+    text-align: right;
 }

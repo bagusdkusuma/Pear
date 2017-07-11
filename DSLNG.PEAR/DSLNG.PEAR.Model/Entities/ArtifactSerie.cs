@@ -23,6 +23,8 @@ namespace DSLNG.PEAR.Data.Entities
         public string PreviousColor { get; set; }
         public Kpi Kpi { get; set; }
         public ValueAxis ValueAxis { get; set; }
+        public string MarkerColor { get; set; }
+        public string LineType { get; set; }
 
         public bool IsActive { get; set; }
     }

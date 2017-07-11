@@ -34,6 +34,8 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public IList<StackRequest> Stacks { get; set; }
             public string Color { get; set; }
             public string PreviousColor { get; set; }
+            public string LineType { get; set; }
+            public string MarkerColor { get; set; }
         }
 
         public class StackRequest

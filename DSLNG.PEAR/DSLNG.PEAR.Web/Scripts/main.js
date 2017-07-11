@@ -420,14 +420,6 @@ Number.prototype.format = function (n, x) {
             }
             $('#PeriodeType').change();
         });
-        //$(document).on('change', '#bar-value-axis', function (e) {
-        //    if ($('#graphic-type').val() === 'bar' && $(this).val() === 'KpiEconomic') {
-        //        $('.netback-chart-opt').show();
-        //    } else {
-        //        $('.netback-chart-opt').hide();
-        //    }
-        //});
-
 
         var initialGraphicType = $('#graphic-type');
         if (initialGraphicType.val() == 'bar') {
@@ -1014,6 +1006,7 @@ Number.prototype.format = function (n, x) {
                 Pear.Artifact.Designer._setupCallbacks.line();
                 break;
             case 'bar':
+            case 'barhorizontal':
                 var $hiddenFields = $('#hidden-fields');
                 $hiddenFields.find('.series-template:not(.original)').each(function (i, val) {
                     $this = $(val);
@@ -1223,6 +1216,7 @@ Number.prototype.format = function (n, x) {
                 data: $this.closest('form').serialize(),
                 method: 'POST',
                 success: function (data) {
+                    console.log(data.GraphicType);
                     if (callback.hasOwnProperty(data.GraphicType)) {
                         Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
@@ -1707,7 +1701,7 @@ Number.prototype.format = function (n, x) {
             },
             tooltip: {
                 formatter: function () {
-                    console.log(data);
+                    //console.log(data);
                     var tooltip = '';
                     if (data.BarChart.Periodes.length == 1) {
                         tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
@@ -1737,7 +1731,7 @@ Number.prototype.format = function (n, x) {
                             }
                             
                             if (i == this.points.length - 2) {
-                                console.log(this.points[i].series.name);
+                                //console.log(this.points[i].series.name);
                                 //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
                                 tooltip += '<strong>' + this.points[i].series.name.trim() + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
                             }
@@ -1812,6 +1806,489 @@ Number.prototype.format = function (n, x) {
     artifactDesigner._previewCallbacks.barachievement = function (data, container) {
         Pear.Artifact.Designer._previewCallbacks.bar(data, container);
     };
+    artifactDesigner._setupCallbacks.barhorizontal = function () {
+        artifactDesigner._setupCallbacks.bar();
+    }
+    artifactDesigner._previewCallbacks.barhorizontal = function (data, container) {
+        //console.log(data.BarChart.SeriesType);
+        if (data.BarChart.SeriesType == "single-stack") {
+            Pear.Artifact.Designer._displayBasicBarhorizontalChart(data, container);
+        } else if (data.BarChart.SeriesType == "multi-stack") {
+            Pear.Artifact.Designer._displayMultistacksBarhorizontalChart(data, container);
+        } else {
+            Pear.Artifact.Designer._displayMultistacksGroupedBarhorizontalChart(data, container);
+        }
+    };
+    artifactDesigner._displayBasicBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent'
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    color: '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    color: '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                labels: {
+                    style: {
+                        color: '#fff'
+                    }
+                },
+                gridLineColor: '#fff',
+                reversed: false
+            },
+            yAxis: {
+                //min: 0,
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        color: '#fff'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        color: '#fff'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
+                    var netbackValue = 0;
+                    for (var i in this.points) {
+                        if (this.points[i].series.name.trim().indexOf('invisible')) {
+                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+                        }
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (data.AsNetbackChart) {
+                            if (i == 0) {
+                                netbackValue += this.points[i].y;
+                            } else {
+                                if (this.points[i].series.name.trim().indexOf('invisible')) {
+                                    netbackValue -= this.points[i].y;
+                                }
+                            }
+
+                            if (i == this.points.length - 2) {
+                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                tooltip += '<strong>' + this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
+                            }
+                        } else {
+                            if (typeof this.points[i].series.stackKey !== 'undefined') {
+                                //total in process
+                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                                //}
+
+                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                    //totalInProcess = 0;
+                                }
+                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                    totalInProcess = 0;
+                                }
+                            }
+
+                        }
+
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
+            //tooltip: {
+            //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //        '<td style="padding:0"><b>{point.y:.1f} ' + data.BarChart.ValueAxisTitle + '</b></td></tr>',
+            //    footerFormat: '</table>',
+            //    shared: true,
+            //    useHTML: true
+            //},
+            plotOptions: {
+                bar: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
+    artifactDesigner._displayMultistacksBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent',
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                gridLineColor: '#fff',
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                reverse: false
+            },
+            yAxis: {
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            //total in process
+                            //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                            totalInProcess += this.points[i].y;
+                            //}
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                //totalInProcess = 0;
+                            }
+                            if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                totalInProcess = 0;
+                            }
+                        }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+            //    }
+            //},
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                bar: {
+                    stacking: 'normal'
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
+    artifactDesigner._displayMultistacksGroupedBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent',
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                gridLineColor: '#fff',
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                reversed:false
+            },
+            yAxis: {
+                //min: 0,
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    //console.log(data);
+                    var tooltip = '';
+                    if (data.BarChart.Periodes.length == 1) {
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    } else if (data.TimePeriodes.length) {
+                        tooltip += '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    } else {
+
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    }
+                    var totalInProcess = 0;
+                    var netbackValue = 0;
+                    for (var i in this.points) {
+                        if (this.points[i].series.name.trim().indexOf('invisible')) {
+                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+                        }
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (data.AsNetbackChart) {
+                            if (i == 0) {
+                                netbackValue += this.points[i].y;
+                            } else {
+                                if (this.points[i].series.name.trim().indexOf('invisible')) {
+                                    netbackValue -= this.points[i].y;
+                                }
+                            }
+
+                            if (i == this.points.length - 2) {
+                                //console.log(this.points[i].series.name);
+                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                tooltip += '<strong>' + this.points[i].series.name.trim() + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
+                            }
+                        } else {
+                            if (typeof this.points[i].series.stackKey !== 'undefined') {
+                                //total in process
+                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                                //}
+
+                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                    //totalInProcess = 0;
+                                }
+                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                    totalInProcess = 0;
+                                }
+                            }
+                        }
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+            //    }
+            //},
+            exporting: {
+                url: '/Chart/Export',
+                filename: 'MyChart',
+                width: 1200
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                bar: {
+                    stacking: 'normal'
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
 
     //line chart
     artifactDesigner._setupCallbacks.line = function () {
@@ -1841,7 +2318,7 @@ Number.prototype.format = function (n, x) {
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color', 'MarkerColor', 'LineType'];
                     for (var i in fields) {
                         var field = fields[i];
                         seriesTemplate.find('#LineChart_Series_0__' + field).attr('name', 'LineChart.Series[' + seriesCount + '].' + field);
@@ -2503,7 +2980,7 @@ Number.prototype.format = function (n, x) {
         var rangeControl = function () {
             $('#SpeedometerChart_RangeFilter').change(function (e) {
                 e.preventDefault();
-                var $this = $(this);
+                var $this = $(this);                
                 $('#range-holder').prop('class', $this.val().toLowerCase().trim());
             });
             var original = $('#SpeedometerChart_RangeFilter').clone(true);
@@ -3109,7 +3586,7 @@ Number.prototype.format = function (n, x) {
                 seriesTemplate.removeClass('original');
                 seriesTemplate.attr('data-series-pos', seriesCount);
                 if (seriesCount !== 0) {
-                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color'];
+                    var fields = ['Label', 'KpiId', 'ValueAxis', 'Color', 'MarkerColor', 'LineType'];
                     for (var i in fields) {
                         var field = fields[i];
                         seriesTemplate.find('[id$=LineChart_Series_0__' + field + ']').attr('name', prefix + '.Charts[' + chartPost + '].LineChart.Series[' + seriesCount + '].' + field);
@@ -3442,7 +3919,7 @@ Number.prototype.format = function (n, x) {
             tooltip: {
                 formatter: function () {
                     var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
-                    console.log(this.points);
+                    //console.log(this.points);
                     var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
@@ -3959,7 +4436,7 @@ Number.prototype.format = function (n, x) {
             $('.add-column').click(function () {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
-                //console.log($row);
+                console.log('anjing');
                 var currentCols = $row.children('.layout-column').length;
                 var newWidth = 100 / (currentCols + 1);
                 $row.children('.layout-column').each(function (i, val) {
@@ -3976,7 +4453,10 @@ Number.prototype.format = function (n, x) {
                     value: columnCount
                 }).prependTo(newColumn);
                 newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width');
+                newColumn.find('.column-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ColumnType');
                 newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
+                newColumn.find('.periode-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightPeriodeType');
+                newColumn.find('.highlight-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightTypeId');
                 $row.append(newColumn);
                 columnCount++;
             });
@@ -4007,7 +4487,10 @@ Number.prototype.format = function (n, x) {
                 }).prependTo(row.find('.layout-column'));
 
                 row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width');
+                row.find('.column-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ColumnType');
                 row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
+                row.find('.periode-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightPeriodeType');
+                row.find('.highlight-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightTypeId');
                 $('#rows-holder').append(row);
                 rowCount++;
             });
@@ -4042,6 +4525,18 @@ Number.prototype.format = function (n, x) {
                 }
             });
         });
+        $('.column-type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $parent = $this.closest('.column-properties');
+            if ($this.val() == "Artifact") {
+                $parent.find('.column-as-artifact').show();
+                $parent.find('.column-as-highlight').hide();
+            } else {
+                $parent.find('.column-as-artifact').hide();
+                $parent.find('.column-as-highlight').show();
+            }
+        });
         $('#graphic-preview').on('show.bs.modal', function () {
             $('#container').css('visibility', 'hidden');
         });
@@ -4074,6 +4569,27 @@ Number.prototype.format = function (n, x) {
                 }
             });
         });
+        $('.highlight-holder').each(function (i, val) {
+            var $holder = $(val);
+            if (wHeight > 667) {
+                $holder.css('height', height + 'px');
+            }
+            Pear.Loading.Show($(val));
+            var url = $holder.data('artifact-url');
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function (data) {
+                    var $title = $('<h4/>').html(data.Title == null || data.Title == "" ? data.Type : data.Title);
+                    var $message = $('<div />').append(data.Message);
+                    $message.addClass('dashboard-highlight-message');
+                    $title.addClass('dashboard-highlight-title');
+                    $holder.css('background', 'none');
+                    $holder.append($title);
+                    $holder.append($message);
+                }
+            });
+        });
     };
     templateEditor.EditSetup = function () {
         var addRow = function () {
@@ -4100,6 +4616,9 @@ Number.prototype.format = function (n, x) {
 
                 row.find('.column-width').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].Width').val(100);
                 row.find('.artifact-list').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ArtifactId');
+                row.find('.column-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].ColumnType');
+                row.find('.periode-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightPeriodeType');
+                row.find('.highlight-type').attr('name', 'LayoutRows[' + rowCount + '].LayoutColumns[1].HighlightTypeId');
                 $('#rows-holder').append(row);
                 rowCount++;
             });
@@ -4140,6 +4659,9 @@ Number.prototype.format = function (n, x) {
                 }).prependTo(newColumn);
                 newColumn.find('.column-width').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].Width').val(newWidth);
                 newColumn.find('.artifact-list').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ArtifactId');
+                newColumn.find('.column-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].ColumnType');
+                newColumn.find('.periode-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightPeriodeType');
+                newColumn.find('.highlight-type').attr('name', 'LayoutRows[' + $row.data('row-pos') + '].LayoutColumns[' + columnCount + '].HighlightTypeId');
                 $row.append(newColumn);
                 columnCount++;
             });
@@ -4199,7 +4721,18 @@ Number.prototype.format = function (n, x) {
             }
             $(this).parents('.layout-column').css('width', $(this).val() + '%');
         });
-
+        $('.column-type').change(function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $parent = $this.closest('.column-properties');
+            if ($this.val() == "Artifact") {
+                $parent.find('.column-as-artifact').show();
+                $parent.find('.column-as-highlight').hide();
+            } else {
+                $parent.find('.column-as-artifact').hide();
+                $parent.find('.column-as-highlight').show();
+            }
+        });
         addRow();
         addColumn();
         templateEditor._artifactSelectField($('.template-edit'));
@@ -4325,13 +4858,7 @@ Number.prototype.format = function (n, x) {
                     }
                 }
             });
-            //if ($this.val().toLowerCase() === 'alert') {
-            //    $messageHolder.html($messageHolderClone.find('.alert-condition-options').html());
-            //} else {
-            //    if (!$messageHolder.find('.message-text-area').length) {
-            //        $messageHolder.html($messageHolderClone.find('.message-text-area').html());
-            //    }
-            //}
+            
         });
         $('#TypeId').change();
     };
@@ -4851,6 +5378,230 @@ Number.prototype.format = function (n, x) {
         if ($('.operation-config-save').length) {
             Pear.OperationConfig.FormSetup();
         }
+
+        
     });
     window.Pear = Pear;
+
+    var _artifactHolder;
+    var _highchartsContainer;
+    var _latestDateTimeFormat;
+    var _configs = [];
+    var searchArtifactConfig = function (configs, artifactId) {
+        var result = { isExisted: false, config: {}, index: -1 };
+        if (configs.length > 0) {
+            for (var i = 0; i < configs.length; i++) {
+                if (configs[i].Id == artifactId) {
+                    result.isExisted = true;
+                    result.config = configs[i];
+                    result.index = i;
+                    result.dateformat = configs[i].dateformat;
+                    return result;
+                }
+            }
+        }
+
+        return result;                
+    }
+    var getDateFormat = function (periodeType) {
+        if (periodeType == undefined) return;
+        switch (periodeType.toLowerCase()) {
+            case "yearly":
+                return 'YYYY';
+            case "monthly":
+                return 'MM/YYYY';
+            case "weekly":
+                return 'MM/DD/YYYY';
+            case "daily":
+                return 'MM/DD/YYYY';
+            case "hourly":
+                return 'MM/DD/YYYY hh:00 A';
+        }
+    }
+    var getGraphicSetting = function (el) {        
+        var artifactHolder = el.closest('.artifact-holder');
+        _artifactHolder = artifactHolder;
+        _highchartsContainter = el.closest('.highcharts-container');
+
+        Pear.Loading.Show(artifactHolder);       
+        var artifactId = artifactHolder.attr('data-artifact-id');
+        var chart = artifactHolder.highcharts();
+        _highchartsContainter.hide();
+        
+        $.ajax({
+            url: '/Artifact/GraphicSetting/' + artifactId,
+            method: 'GET',
+            success: function (data) {
+                $('.graphic-setting-content').hide();
+                $('.graphic-setting-content').html(data);                
+                $('.graphic-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
+               
+
+                
+
+                $('.graphic-setting-content').show();
+                $('#graphic-setting').modal('show');
+
+                var rangeDatePicker = function () {
+                    var format = $('#datetime-attr').attr('data-datepickerformat');
+                    $('.datepicker').datetimepicker({
+                        format: format,
+                    });
+                    $('.datepicker').change(function (e) {
+                    });
+                    $('#PeriodeType').change(function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        var clearValue = $('.datepicker').each(function (i, val) {
+                            $(val).val('');
+                            if ($(val).data("DateTimePicker") !== undefined) {
+                                $(val).data("DateTimePicker").destroy();
+                            }
+                        });
+                        switch ($this.val().toLowerCase().trim()) {
+                            case 'hourly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY hh:00 A"
+                                });
+                                break;
+                            case 'daily':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY"
+                                });
+                                break;
+                            case 'weekly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY",
+                                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                                });
+                                break;
+                            case 'monthly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/YYYY"
+                                });
+                                break;
+                            case 'yearly':
+                                $('.datepicker').datetimepicker({
+                                    format: "YYYY"
+                                });
+                                break;
+                            default:
+
+                        }
+                    });
+                };
+                var rangeControl = function () {
+                    $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+                    });
+                    var original = $('#RangeFilter').clone(true);
+                    var rangeFilterSetup = function (periodeType) {
+                        var graphicType = $('#graphic-type').val();
+                        var toRemove = {};
+                        switch (graphicType) {
+                            case "tabular":
+                            case "tank":
+                            case "speedometer":
+                            case "traffic":
+                            case "pie":
+                                toRemove.hourly = ['AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                break;
+                            default:
+                                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                                break;
+                        }
+                        var originalClone = original.clone(true);
+                        originalClone.find('option').each(function (i, val) {
+                            if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                                originalClone.find(val).remove();
+                            }
+                        });
+                        $('#RangeFilter').replaceWith(originalClone);
+                    };
+
+                    rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
+                    $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        rangeFilterSetup($this.val().toLowerCase().trim());
+                        $('#range-holder').removeAttr('class');
+                    });
+
+                };
+                var specificDate = function () {
+                    $(".datepicker").on("dp.change", function (e) {
+                        if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                            $('#EndInDisplay').val($('#StartInDisplay').val());
+                        }
+                    });
+                };
+
+                rangeControl();
+                rangeDatePicker();
+                specificDate();
+
+                var search = searchArtifactConfig(_configs, artifactId);
+                if (search.isExisted == true) {
+                    console.log(search);
+                    $('.graphic-setting-content #StartInDisplay').val(search.config.StartInDisplay);
+                    $('.graphic-setting-content #EndInDisplay').val(search.config.EndInDisplay);
+                    $('.graphic-setting-content #PeriodeType').val(search.config.PeriodeType);
+                    //$('.graphic-setting-content #PeriodeType[value="' + search.config.PeriodeType + '"]').attr("selected", true);
+                    $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter);     
+                    //$('.graphic-setting-content #RangeFilter[value="' + search.config.RangeFilter + '"]').attr("selected", true);
+                    $('.datepicker').datetimepicker({
+                        format: search.dateformat,
+                    });
+                    $('#range-holder').removeClass();
+                    $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
+                }
+            }
+        });
+    }
+    
+    $('.artifact-holder').on('click', '.highcharts-subtitle', function () {           
+        getGraphicSetting($(this));
+    });
+
+    $('.artifact-holder').on('click', '.tank-subtitle', function () {
+        getGraphicSetting($(this));
+    });
+
+    $('#graphic-setting').on('submit', '#graphic-setting-form', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $('#graphic-setting-form').attr('action'),
+            data: $('#graphic-setting-form').serialize(),
+            method: 'POST',
+            success: function (data2) {
+                var callback = Pear.Artifact.Designer._previewCallbacks;
+                var result = {};                
+                $.each($('#graphic-setting-form').serializeArray(), function (key, value) {
+                    result[this.name] = this.value;
+                });
+                result['dateformat'] = getDateFormat(result["PeriodeType"]);
+                var search = searchArtifactConfig(_configs, result["Id"]);
+                (search.isExisted) ? _configs[search.index] = result : _configs.push(result);                
+                callback[data2.GraphicType](data2, _artifactHolder);
+                $('#graphic-setting').modal('hide');
+            }
+        })
+    })
+
+    $('#graphic-setting').on('hidden.bs.modal', function () {
+        _highchartsContainter.show();
+        Pear.Loading.Stop(_artifactHolder);
+    });
+
+    
 }(window, jQuery, undefined));

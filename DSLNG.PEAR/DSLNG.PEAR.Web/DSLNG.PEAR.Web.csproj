@@ -26,6 +26,8 @@
     <UpgradeBackupLocation />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -847,6 +849,7 @@
     <Compile Include="Controllers\AssumptionDataController.cs" />
     <Compile Include="Controllers\DerImageController.cs" />
     <Compile Include="Controllers\DerLoadingScheduleController.cs" />
+    <Compile Include="ViewModels\DerTransaction\ActivityViewModel.cs" />
     <Compile Include="Controllers\DerTransactionController.cs" />
     <Compile Include="Controllers\InputDataController.cs" />
     <Compile Include="Controllers\KpiTransformationController.cs" />
@@ -888,6 +891,7 @@
     <Compile Include="ViewModels\DerLayout\LayoutType\DerLayoutLineViewModel.cs" />
     <Compile Include="ViewModels\DerLayout\SaveLayoutItemViewModel.cs" />
     <Compile Include="ViewModels\DerLoadingSchedule\LoadingSchedulesViewModel.cs" />
+    <Compile Include="ViewModels\DerTransaction\CreateActivityViewModel.cs" />
     <Compile Include="ViewModels\DerTransaction\DerValuesViewModel.cs" />
     <Compile Include="ViewModels\DerTransaction\UpdateKpiViewModel.cs" />
     <Compile Include="ViewModels\Der\DerConfigViewModel.cs" />
@@ -1196,6 +1200,12 @@
     <Content Include="Views\DerTransaction\OperationSection.cshtml.orig" />
     <Content Include="Views\DerTransaction\QhsseSection2.cshtml" />
     <Content Include="Views\DerTransaction\ForcastedIndicator2.cshtml" />
+    <Content Include="Views\DerLayout\Config.V1.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_TotalCommitment.cshtml" />
+    <Content Include="Views\DerLayout\LayoutType\_TotalCommitment.Edit.cshtml" />
+    <Content Include="Views\Der\Display\_TotalCommitment.cshtml" />
+    <Content Include="Views\DerTransaction\Activity.cshtml" />
+    <Content Include="Views\Artifact\_GraphicSetting.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />
@@ -1292,6 +1302,7 @@
     <Content Include="Views\Der\Preview2.cshtml" />
     <Content Include="Views\Der\Display\_GlobalStockMarket.cshtml" />
     <Content Include="Views\Der\Preview3.cshtml" />
+    <Content Include="Views\Der\Preview3.V1.cshtml" />
     <None Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\SpeedometerChart\_Edit.cshtml" />
     <Content Include="Views\Tabular\_Create.cshtml" />
@@ -1710,6 +1721,7 @@
     <Compile Include="ViewModels\UserProfileSessionData.cs" />
     <Compile Include="ViewModels\User\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\User\CustomPrincipal.cs" />
     <Compile Include="ViewModels\User\ResetPasswordChangeModel.cs" />
     <Compile Include="ViewModels\User\ResetPasswordResponseViewModel.cs" />
     <Compile Include="ViewModels\User\ResetPasswordViewModel.cs" />

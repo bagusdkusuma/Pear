@@ -84,16 +84,17 @@
 </head>
 @helper DerDate(int addDays)
 {
-var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
-if (Request.QueryString["date"] != null)
-{
-    date = Request.QueryString["date"];
-}
-var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+    var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
+    if (Request.QueryString["date"] != null)
+    {
+        date = Request.QueryString["date"];
+    }
+    var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
     @Url.Action("Preview", "Der", new { date = d });
 }
 <body data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
     <div class="control">
+
         <div style="position:absolute;left:20px;top:20px">
             <div style="position:relative;">
                 <a class="der-yesterday" href="@DerDate(-1)">
@@ -196,7 +197,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     var row1Col0 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 0);
                                     if (row1Col0 != null)
                                     {
-                                        <div data-fraction="10" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col0.Id })" class="layout-item"></div>
+                                        <div data-fraction="10" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col0.Id })" class="layout-item row1col0"></div>
                                     }
                                 }
                             </td>
@@ -205,7 +206,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     var row1Col1 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 1);
                                     if (row1Col1 != null)
                                     {
-                                        <div data-fraction="500" data-min="0" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col1.Id })" class="layout-item"></div>
+                                        <div data-fraction="500" data-min="0" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col1.Id })" class="layout-item row1col1"></div>
                                     }
                                 }
                             </td>
@@ -214,7 +215,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     var row1Col2 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 2);
                                     if (row1Col2 != null)
                                     {
-                                        <div data-fraction="1" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col2.Id })" class="layout-item"></div>
+                                        <div data-fraction="1" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col2.Id })" class="layout-item row1col2"></div>
                                     }
                                 }
                             </td>
@@ -223,7 +224,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     var row1Col3 = Model.Items.FirstOrDefault(x => x.Row == 1 && x.Column == 3);
                                     if (row1Col3 != null)
                                     {
-                                        <div data-fraction="0.5" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col3.Id })" class="layout-item"></div>
+                                        <div data-fraction="0.5" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row1Col3.Id })" class="layout-item row1col3"></div>
                                     }
                                 }
                             </td>
@@ -474,11 +475,11 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                     <div class="text-center commercial-operation proper"><label>COMMERCIAL OPERATION & MAINTENANCE PERFORMANCE</label></div>
                 </td>
             </tr>
-            <tr>
+            @*<tr>
                 <td colspan="2">
                     &nbsp;
                 </td>
-            </tr>
+            </tr>*@
             <tr>
                 <td colspan="2">
                     <div class="text-center feed-gas proper"><label>FEED GAS TO PLANT</label></div>
@@ -489,14 +490,43 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                     <table style="width:100%">
                         <tr>
                             <td style="width:50%;padding-right:5px;">
-                                @{
-                                    var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
-                                    if (row5Col0 != null)
-                                    {
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:45%">
+                                            @{
+                                                var row5Col0 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 0);
+                                                if (row5Col0 != null)
+                                                {
 
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col0.Id })" class="layout-item"></div>
-                                    }
-                                }
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col0.Id })" class="layout-item"></div>
+                                                }
+                                            }
+                                        </td>
+                                        <td style="width:50%" rowspan="2">
+                                            @{
+                                                var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
+                                                if (row5Col2 != null)
+                                                {
+
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col2.Id })" class="layout-item row5col2"></div>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width:40%">
+                                            @{
+                                                var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
+                                                if (row5Col1 != null)
+                                                {
+                                                    <div data-url="@Url.Action("LayoutItem", "Der", new { id = row5Col1.Id })" class="layout-item row5col1"></div>
+                                                }
+                                            }
+
+                                        </td>
+                                    </tr>
+                                </table>
+
                                 <table style="width:100%">
                                     <tr>
                                         <td style="width:58.5%;padding:0">
@@ -735,7 +765,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                 if (row12Col2 != null)
                                                 {
 
-                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode "></div>
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row12Col2.Id })" class="layout-item highlight-json-plant-mode "></div>
                                                 }
                                             }
                                         </td>
@@ -774,23 +804,24 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                             <td style="width:50%;padding-left:5px;">
                                 <table style="width:100%">
                                     <tr>
-                                        <td style="width:75%;padding:0">
+                                        <td style="width:50%;padding:0;padding-bottom: 16px;">
                                             @{
-                                                var row5Col1 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 1);
-                                                if (row5Col1 != null)
+                                                var row5Col3 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 3);
+                                                if (row5Col3 != null)
                                                 {
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col1.Id })" class="layout-item"></div>
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col3.Id })" class="layout-item row5col3"></div>
                                                 }
+
                                             }
                                         </td>
-                                        <td style="width:25%;padding:0">
+                                        <td style="width:50%;padding:0">
                                             @{
-                                                var row5Col2 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 2);
-                                                if (row5Col2 != null)
+                                                var row5Col4 = Model.Items.FirstOrDefault(x => x.Row == 5 && x.Column == 4);
+                                                if (row5Col4 != null)
                                                 {
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col2.Id })" class="layout-item"></div>
+                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row5Col4.Id })" class="layout-item row5col4"></div>
                                                 }
                                             }
                                         </td>
@@ -877,7 +908,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
             </tr>
             <tr>
                 <td colspan="2">
-                    <table style="width:100%">
+                    <table style="width:100%;">
                         <tr>
                             <td style="width:50%;padding:0;border-right:1px solid #444">
                                 <table style="width:100%">
@@ -1029,63 +1060,102 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     </div>
 
                                 </div>
-                                <table class="table table-bordered signature">
-                                    <thead>
+                                <div class="chart-bottom">
+                                    <table style="width:100%">
                                         <tr>
-                                            <td style="text-align:center">Prepared By</td>
-                                            <td style="text-align:center">Reviewed By</td>
-                                            <td style="text-align:center">
+                                            <td style="width: 40%">
                                                 @{
-                                                    if (Request.QueryString["date"] != null)
+                                                    var row15col4 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 4);
+                                                    if (row15col4 != null)
                                                     {
-                                                        var id = "DER/" + DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
-                                                        <text>@id</text>
-                                                    }
-                                                    else
-                                                    {
-                                                        var id = "DER/" + DateTime.Now.ToString("dd-MMM-yyyy");
-                                                        <text>@id</text>
+
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15col4.Id })" class="layout-item row15col4" style="max-height:192px"></div>
                                                     }
                                                 }
-                                                Generated by PEAR system
+                                            </td>
+                                            <td style="width: 60%">
+                                                @{
+                                                    var row15col5 = Model.Items.FirstOrDefault(x => x.Row == 15 && x.Column == 5);
+                                                    if (row15col5 != null)
+                                                    {
+
+                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row15col5.Id })" class="layout-item row15col5" style="max-height:192px"></div>
+                                                    }
+                                                }
                                             </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="signature">
-                                                @{
-                                                    var row16Col2 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 2);
-                                                    if (row16Col2 != null)
-                                                    {
-
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col2.Id })" class="layout-item"></div>
-                                                    }
-
-                                                }
-                                            </td>
-                                            <td class="signature">
-                                                @{
-                                                    var row16Col3 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 3);
-                                                    if (row16Col3 != null)
-                                                    {
-
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col3.Id })" class="layout-item"></div>
-                                                    }
-
-                                                }
-
-                                            </td>
-                                            <td>
-
-                                                <img src="@Url.Content("~/content/images/strictly-sign.png")">
-                                                <span style="display:block">Not for custody/commercial (information purpose only)</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    </table>
+                                </div>
                             </td>
                         </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border-left: 0;border-bottom:0">
+                    <table style="width:100%">
+                        <tbody>
+                            <tr style="border-left: 0">
+                                <td style="width:50%;"></td>
+                                <td style="width:50%;border-left: 1px solid;border-bottom: 1px solid;">
+                                    <table class="table table-bordered signature">
+                                        <thead>
+                                            <tr>
+                                                <td style="text-align: center">Prepared By</td>
+                                                <td style="text-align: center">Reviewed By</td>
+                                                <td style="text-align: center">
+                                                    @{
+                                                        if (Request.QueryString["date"] != null)
+                                                        {
+                                                            var id = "DER/" + DateTime.ParseExact(Request.QueryString["date"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).ToString("dd-MMM-yyyy");
+                                                            <text>@id</text>
+                                                        }
+                                                        else
+                                                        {
+                                                            var id = "DER/" + DateTime.Now.ToString("dd-MMM-yyyy");
+                                                            <text>@id</text>
+                                                        }
+                                                    }
+                                                    Generated by PEAR system
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="signature">
+                                                    @{
+                                                        var row16Col2 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 2);
+                                                        if (row16Col2 != null)
+                                                        {
+
+                                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col2.Id })" class="layout-item"></div>
+                                                        }
+
+                                                    }
+                                                </td>
+                                                <td class="signature">
+                                                    @{
+                                                        var row16Col3 = Model.Items.FirstOrDefault(x => x.Row == 16 && x.Column == 3);
+                                                        if (row16Col3 != null)
+                                                        {
+
+                                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row16Col3.Id })" class="layout-item"></div>
+                                                        }
+
+                                                    }
+
+                                                </td>
+                                                <td>
+
+                                                    <img src="@Url.Content("~/content/images/strictly-sign.png")">
+                                                    <span style="display:block">Not for custody/commercial (information purpose only)</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </td>
             </tr>
@@ -1132,6 +1202,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
             } else {
                 $('.datepicker').val(decodeURIComponent(date));
             }
+            var currentDate = $('.datepicker').val();
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY",
                 focusOnShow: false
@@ -1139,7 +1210,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                 $(".datepicker").blur();
                 reloadView();
             });
-            var currentDate = $('.datepicker').val();
+
             currentDate = moment(currentDate, "MM/DD/YYYY");
             currentDate = currentDate.subtract(1, 'day').format("MM/DD/YYYY");
 
@@ -1260,15 +1331,21 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                     success: function (data) {
 
                         if (data.GraphicType !== undefined) {
-                            console.log(data.GraphicType);
-                            var callback = window.Der.Artifact;
-                            callback[data.GraphicType](data, that);
+                            if (data.GraphicType == 'jcc-monthly-trend') {
+                                var callback = window.Der.Artifact;
+                                callback['jccMonthlyTrend'](data, that);
+                            } else {
+                                var callback = window.Der.Artifact;
+                                callback[data.GraphicType](data, that);
+                            }
+
                         } else if (data.type == 'reviewed-by' || data.type == 'prepared-by' || data.type === "highlight" || data.type === "weather" || data.type === 'temperature' ||
                                 data.type === "alert" || data.type === "avg-ytd-key-statistic" || data.type === "flare" || data.type === "safety" ||
                             data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
                             || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
                                 data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board') {
+                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board'
+                            || data.type === 'total-commitment') {
 
                             if (data.type === "highlight" && that.hasClass('daily-highlight')) {
                                 var type = "absolute";

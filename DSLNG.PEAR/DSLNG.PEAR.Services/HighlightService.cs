@@ -61,9 +61,10 @@ namespace DSLNG.PEAR.Services
 
         public GetHighlightResponse GetHighlightByPeriode(GetHighlightRequest request)
         {
+            
             var data = DataContext.Highlights
                                   .Include(x => x.HighlightType)
-                                  .Where(x => x.PeriodeType == PeriodeType.Daily)
+                                  .Where(x => x.PeriodeType == (request.PeriodeType.HasValue? request.PeriodeType : PeriodeType.Daily))
                                   .Where(x => x.Date == request.Date)
                                   .AsQueryable();
 
@@ -90,7 +91,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
-                var todayHighlight = DataContext.Highlights.FirstOrDefault(x => x.Date == request.Date && x.HighlightType.Id == request.TypeId);
+                var todayHighlight = DataContext.Highlights.FirstOrDefault(x =>x.PeriodeType == request.PeriodeType && x.Date == request.Date && x.HighlightType.Id == request.TypeId);
                 if (todayHighlight != null && todayHighlight.Id != request.Id)
                 {
                     return new SaveHighlightResponse
@@ -147,7 +148,6 @@ namespace DSLNG.PEAR.Services
                     Message = "An error occured while trying to save highlight data, Error message = " + e.Message + " and ID = " + request.Id
                 };
             }
-
         }
         public GetReportHighlightsResponse GetReportHighlights(GetReportHighlightsRequest request)
         {

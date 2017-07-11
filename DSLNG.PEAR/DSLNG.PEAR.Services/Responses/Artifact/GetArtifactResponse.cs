@@ -55,6 +55,8 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public string Label { get; set; }
             public ValueAxis ValueAxis { get; set; }
             public IList<StackResponse> Stacks { get; set; }
+            public string MarkerColor { get; set; }
+            public string LineType { get; set; }
         }
         public class StackResponse
         {
