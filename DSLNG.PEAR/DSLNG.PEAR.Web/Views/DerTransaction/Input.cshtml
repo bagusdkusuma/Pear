@@ -138,12 +138,12 @@
 
 @helper DerDate(int addDays)
 {
-    var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
-    if (Request.QueryString["date"] != null)
-    {
-        date = Request.QueryString["date"];
-    }
-    var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
+if (Request.QueryString["date"] != null)
+{
+    date = Request.QueryString["date"];
+}
+var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
     @Url.Action("Input", "DerTransaction", new { date = d });
 }
 
@@ -170,12 +170,12 @@
                         </a>
                         <input id="currentDate" class="form-control datepicker" type="text">
                         <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
-                        
+
                         <a class="der-tomorrow" href="@DerDate(1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     </div>
-                </form>                
+                </form>
             </div>
-            
+
         </div>
         @*<hr />*@
     </div>
@@ -286,45 +286,12 @@
             </div>
         </div>
     </div>
-    @*<hr />*@
-    <div class="col-md-12" style="margin-bottom: 30px;">       
-        @*<div class="col-md-3">
-                <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
-                    <tr>
-                        <td>
-                            <label for="">Prepared By-L</label>
-                            <br />
-                            <select>
-                                <option>Select Option</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-md-3">
-                <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
-                    <tr>
-                        <td>
-                            <label for="">Reviewed By-M</label>
-                            <br />
-                            <select>
-                                <option>Select Option</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>*@
-        @*<a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
-            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>*@
+    <div class="col-md-12" style="margin-bottom: 30px;">
         <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         <a class="btn btn-master-rgw btn-primary" href="@Url.Action("Activity", "DerTransaction")">DER Input Files</a>
         <label class="labletop">Batch :</label>
         @Html.DropDownList("Batch_Id", (IEnumerable<SelectListItem>)ViewBag.KpiTransformations, new { @class = "btn btn-master-rgw btn-primary" })
-        <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>        
+        <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>
         <div id="processResult"></div>
     </div>
 </section>
@@ -462,14 +429,14 @@
                 e.preventDefault();
                 var $this = $(this);
                 var target = $this.data('target');
-                expands(target, $this);                
+                expands(target, $this);
             });
 
             $('.btn-input-slide').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 var target = $this.data('target');
-                expands(target, $this);                
+                expands(target, $this);
             });
 
             var updateCallback = function (resp, f, $obj, type) {
@@ -588,7 +555,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-kpi');
-                                    });                                    
                                 });
                             }
                             openNextTab($this, nextTabindex);
@@ -638,7 +604,7 @@
                                         var nextTab = parseInt($textarea.attr('tabindex')) + 1;
                                         if (key == 9) {
                                             var highlightTypeId = $textarea.data('highlight-type-id');
-                                            var id = $textarea.attr('data-id');                                            
+                                            var id = $textarea.attr('data-id');
                                             row.addClass('processing');
                                             var value = editor.getContent();
                                             if ((highlightTypeId == 53 || highlightTypeId == 21) && value.length > 210) {
@@ -674,7 +640,6 @@
                                                         row.addClass('succeed');
                                                     }
                                                 }, row, 'textarea-highlight');
-                                                });                                                
                                             });
                                         }
                                     });
@@ -713,7 +678,6 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 }, $this, 'select-highlight');
-                                });
                             });
                         });
                         $('.datepicker', target).datetimepicker({
@@ -749,7 +713,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-highlight');
-                                    });
                                 });
                             }
                         });
@@ -786,7 +749,6 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 }, $this, 'select-highlight');
-                                });
                             });
                         });
                         $(target).on('altChange', 'select.der-highlight-wave', function (e) {
@@ -827,7 +789,6 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 }, $this, 'select-highlight');
-                                });
                             });
                         });
                         $(target).on('altChange', 'select.der-highlight-weather', function (e) {
@@ -862,7 +823,6 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 }, $this, 'select-highlight');
-                                });
                             });
                         });
                         $(target).on('keyup', 'input.der-highlight-wave', function (e) {
@@ -899,7 +859,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-highlight');
-                                    });
                                 });
                             }
                         });
@@ -938,7 +897,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-highlight');
-                                    });
                                 });
                             }
                         });
@@ -1014,7 +972,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-highlight');
-                                    });
                                 });
                             }
                         });
