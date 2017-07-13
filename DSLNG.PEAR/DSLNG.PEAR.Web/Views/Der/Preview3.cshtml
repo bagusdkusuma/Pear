@@ -84,12 +84,12 @@
 </head>
 @helper DerDate(int addDays)
 {
-    var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
-    if (Request.QueryString["date"] != null)
-    {
-        date = Request.QueryString["date"];
-    }
-    var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
+if (Request.QueryString["date"] != null)
+{
+    date = Request.QueryString["date"];
+}
+var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
     @Url.Action("Preview", "Der", new { date = d });
 }
 <body data-date="@DateTime.Now.ToString("MM/dd/yyyy")">
@@ -108,7 +108,15 @@
         <a class="btn btn-default" href="@Url.Action("Index","DER")">Back To List</a>
 
         <form action="@Url.Action("Generate","DER")" method="post">
-            <input class="btn btn-primary generate" type="submit" value="Publish" />
+            @if (Session["DER"] != null)
+            {
+                var privilege = Session["DER"] as List<string>;
+                if (privilege.Contains("AllowPublish"))
+                {
+                    <input class="btn btn-primary generate" type="submit" value="Publish" />
+                }
+            }
+
         </form>
     </div>
     <div class="container a3-ratio preview">
@@ -476,10 +484,10 @@
                 </td>
             </tr>
             @*<tr>
-                <td colspan="2">
-                    &nbsp;
-                </td>
-            </tr>*@
+                    <td colspan="2">
+                        &nbsp;
+                    </td>
+                </tr>*@
             <tr>
                 <td colspan="2">
                     <div class="text-center feed-gas proper"><label>FEED GAS TO PLANT</label></div>
