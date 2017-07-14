@@ -1330,7 +1330,19 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'column',
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.BarChart.Title,
@@ -1464,7 +1476,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -1492,6 +1517,18 @@ Number.prototype.format = function (n, x) {
                 type: 'column',
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.BarChart.Title,
@@ -1613,7 +1650,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -1632,6 +1682,18 @@ Number.prototype.format = function (n, x) {
                 type: 'column',
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.BarChart.Title,
@@ -1779,7 +1841,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -1824,7 +1899,19 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'bar',
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.BarChart.Title,
@@ -1959,7 +2046,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -1987,6 +2087,18 @@ Number.prototype.format = function (n, x) {
                 type: 'bar',
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.BarChart.Title,
@@ -2109,7 +2221,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -2128,6 +2253,18 @@ Number.prototype.format = function (n, x) {
                 type: 'bar',
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.BarChart.Title,
@@ -2276,7 +2413,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -2339,6 +2489,18 @@ Number.prototype.format = function (n, x) {
             chart: {
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.LineChart.Title,
@@ -2402,7 +2564,24 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                                this.yAxis[0].axisTitle.attr({
+                                    "font-size": '12px'
+                                });
+
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -2573,7 +2752,19 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'area',
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.AreaChart.Title,
@@ -2701,7 +2892,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -2735,7 +2939,19 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'area',
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.AreaChart.Title,
@@ -2883,7 +3099,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -3024,7 +3253,19 @@ Number.prototype.format = function (n, x) {
                 plotBackgroundImage: null,
                 plotBorderWidth: 0,
                 plotShadow: false,
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
 
             title: {
@@ -3075,7 +3316,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -3788,7 +4042,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.MultiaxisChart.Charts[i].Measurement, //data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                         //color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
                 },
@@ -3854,7 +4109,19 @@ Number.prototype.format = function (n, x) {
             chart: {
                 zoomType: 'xy',
                 alignTicks: false,
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.MultiaxisChart.Title,
@@ -3871,7 +4138,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -4105,7 +4385,19 @@ Number.prototype.format = function (n, x) {
         container.highcharts({
             chart: {
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.ComboChart.Title,
@@ -4149,7 +4441,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -4282,7 +4587,19 @@ Number.prototype.format = function (n, x) {
                     alpha: 60,
                     beta: 0
                 },
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
                 //margin: [0, 0, 0, 0],
                 //spacingTop: 0,
                 //spacingBottom: 0,
@@ -4304,7 +4621,20 @@ Number.prototype.format = function (n, x) {
             exporting: {
                 url: '/Chart/Export',
                 filename: 'MyChart',
-                width: 1200
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
