@@ -735,6 +735,7 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var artifactResp = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
             var previewViewModel = new ArtifactPreviewViewModel();
+            previewViewModel.Id = id;
             previewViewModel.FractionScale = artifactResp.FractionScale;
             previewViewModel.MaxFractionScale = artifactResp.MaxFractionScale;
             previewViewModel.AsNetbackChart = artifactResp.AsNetbackChart;

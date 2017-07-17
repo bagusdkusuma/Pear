@@ -1345,7 +1345,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.BarChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,                
                 style: {
                     color: '#fff'
                 }
@@ -1371,7 +1372,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -1531,7 +1533,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.BarChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,
                 style: {
                     "color": '#fff'
                 }
@@ -1556,7 +1559,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -1696,7 +1700,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.BarChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,                
                 style: {
                     "color": '#fff'
                 }
@@ -1722,14 +1727,16 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
                 labels: {
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 }
             },
@@ -1914,7 +1921,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.BarChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,                
                 style: {
                     color: '#fff'
                 }
@@ -1941,14 +1949,16 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
                 labels: {
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 }
             },
@@ -2101,7 +2111,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.BarChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,
                 style: {
                     "color": '#fff'
                 }
@@ -2127,14 +2138,16 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
                 labels: {
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 }
             },
@@ -2267,7 +2280,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.BarChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,
                 style: {
                     "color": '#fff'
                 }
@@ -2294,14 +2308,16 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
                 labels: {
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 }
             },
@@ -2503,7 +2519,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.LineChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.LineChart.Title + '</a>' : data.LineChart.Title,                
                 //x: -20, //center
                 style: {
                     color: '#fff'
@@ -2767,7 +2784,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.AreaChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.AreaChart.Title + '</a>' : data.AreaChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -2796,7 +2814,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.AreaChart.ValueAxisTitle,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 labels: {
@@ -2804,7 +2823,8 @@ Number.prototype.format = function (n, x) {
                         return this.value;
                     },
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -2954,7 +2974,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.AreaChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.AreaChart.Title + '</a>' : data.AreaChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -2981,7 +3002,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.AreaChart.ValueAxisTitle,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -3269,7 +3291,8 @@ Number.prototype.format = function (n, x) {
             },
 
             title: {
-                text: data.SpeedometerChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.SpeedometerChart.Title + '</a>' : data.SpeedometerChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -3557,7 +3580,8 @@ Number.prototype.format = function (n, x) {
         var tableUniqueClass = "table-" + Math.floor((Math.random() * 100) + 1);
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
-        wrapper.append($('<h3>').html(data.Tabular.Title));
+        var title = $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.Tabular.Title + '</a>' : data.Tabular.Title;
+        wrapper.append($('<h3>').html(title));
 
         //container for scrolling table
         var tableScrollContainer = $('<div>');
@@ -3714,6 +3738,7 @@ Number.prototype.format = function (n, x) {
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
     };
     artifactDesigner._previewCallbacks.tank = function (data, container) {
+        data.Tank.ArtifactId = data.Id;
         container.tank(data.Tank, {
             height: container.height(),
             width: container.width()
@@ -4124,7 +4149,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.MultiaxisChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.MultiaxisChart.Title + '</a>' : data.MultiaxisChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -4400,7 +4426,8 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.ComboChart.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.ComboChart.Title + '</a>' : data.ComboChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -4426,7 +4453,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.ComboChart.Measurement,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -4607,7 +4635,8 @@ Number.prototype.format = function (n, x) {
                 //spacingRight: 0
             },
             title: {
-                text: data.Pie.Title,
+                useHTML: true,
+                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.Pie.Title + '</a>' : data.Pie.Title,                
                 style: {
                     color: '#fff'
                 }
@@ -4910,13 +4939,25 @@ Number.prototype.format = function (n, x) {
                 url: url,
                 method: 'GET',
                 success: function (data) {
-                    var $title = $('<h4/>').html(data.Title == null || data.Title == "" ? data.Type : data.Title);
+                    var isSuperAdmin = $('#user-profile-session-data').data('issuperadmin') == true;
+                    var editUrl = $('.highlight-holder').data('artifact-edit-url').replace('_id_', data.Id);
+                    var title = data.Title == null || data.Title == "" ? data.Type : data.Title;
+                    var clickableTitle = isSuperAdmin ? $('<a/>', { 'href': editUrl, 'text': title }) : title;
+                    var $title = $('<h4/>').html(clickableTitle);
                     var $message = $('<div />').append(data.Message);
                     $message.addClass('dashboard-highlight-message');
                     $title.addClass('dashboard-highlight-title');
                     $holder.css('background', 'none');
                     $holder.append($title);
                     $holder.append($message);
+
+                    //var $title = $('<h4/>').html(data.Title == null || data.Title == "" ? data.Type : data.Title);
+                    //var $message = $('<div />').append(data.Message);
+                    //$message.addClass('dashboard-highlight-message');
+                    //$title.addClass('dashboard-highlight-title');
+                    //$holder.css('background', 'none');
+                    //$holder.append($title);
+                    //$holder.append($message);
                 }
             });
         });

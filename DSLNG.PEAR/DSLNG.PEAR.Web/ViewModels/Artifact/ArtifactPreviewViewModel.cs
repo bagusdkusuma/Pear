@@ -8,6 +8,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
 {
     public class ArtifactPreviewViewModel
     {
+        public int Id{ get; set; }
         public string GraphicType { get; set; }
         public double? FractionScale { get; set; }
         public double? MaxFractionScale { get; set; }
