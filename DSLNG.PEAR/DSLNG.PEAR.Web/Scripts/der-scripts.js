@@ -317,15 +317,23 @@ Number.prototype.format = function (n, x) {
             if (options.legend.hasOwnProperty('enabled')) {
                 options.legend.enabled = true;
             }
+            decimal = 2;
+        }
+        else if (container.hasClass('row1col1')) {            
+            decimal = 2;
+        }
+        else if (container.hasClass('row1col2')) {
+            decimal = 2;
         }
         else if (container.hasClass('row1col3')) {
             symbol = 'triangle';
             converted = true;
+            decimal = 2;
         }
         else if (container.hasClass('row1col4')) {
             symbol = 'square';
             converted = true;
-            decimal = 1;
+            decimal = 2;
         }
         else if (container.hasClass('row1col5')) {
             fillColor = '#403152';
