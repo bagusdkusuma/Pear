@@ -397,6 +397,7 @@ Number.prototype.format = function (n, x) {
         }
         else if (container.hasClass('row15col5')) {
             options.gridLineColor = 'transparent';
+            decimal = 2;
         }
 
         var yAxes = [];
