@@ -30,7 +30,7 @@
             <td><div class="next-row">BRENT FUT&nbsp;</div></td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Deviation)"></i></span>
-                
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "USD/bbl", "N/A", true, 2)
             </td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Deviation)"></i></span>
