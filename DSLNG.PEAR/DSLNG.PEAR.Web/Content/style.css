@@ -3482,3 +3482,7 @@ tr.der-transaction-error {
 .artifact-holder .highcharts-subtitle {
     cursor: pointer;
 }
+
+.artifact-holder .highcharts-title {
+    text-align: center;
+}
