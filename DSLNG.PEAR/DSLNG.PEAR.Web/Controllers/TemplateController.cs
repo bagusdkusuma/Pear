@@ -12,9 +12,11 @@ using System;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Requests.Select;
 using System.Linq;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class TemplateController : BaseController
     {
         private readonly IArtifactService _artifactService;
@@ -33,12 +35,13 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(new { results = artifacts }, JsonRequestBehavior.AllowGet);
         }
 
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
             return View();
         }
 
-        
+        [AuthorizeUser(AccessLevel ="AllowView")]
         public ActionResult View(int id)
         { 
             var template = _templateService.GetTemplate(new GetTemplateRequest{Id = id});
@@ -46,6 +49,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
+        [AuthorizeUser(AccessLevel = "AllowCreate")]
         public ActionResult Create()
         {
             var viewModel = new TemplateViewModel();
@@ -72,6 +76,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [AuthorizeUser(AccessLevel = "AllowUpdate")]
         public ActionResult Update(int id)
         {
             var template = _templateService.GetTemplate(new GetTemplateRequest {Id = id});
@@ -108,6 +113,7 @@ namespace DSLNG.PEAR.Web.Controllers
             }
         }
 
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Preview(TemplateViewModel viewModel)
         {
             return View(viewModel);

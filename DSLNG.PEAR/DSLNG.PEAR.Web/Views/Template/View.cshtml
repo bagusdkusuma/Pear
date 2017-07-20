@@ -1,38 +1,52 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Template.TemplateViewModel
 @using DSLNG.PEAR.Web.ViewModels
-@{ UserProfileSessionData user = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"]; }
-<span id="user-profile-session-data" data-issuperadmin="@user.IsSuperAdmin.ToString().ToLowerInvariant()"></span>
+@{ 
+    //UserProfileSessionData user = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];
+
+    var allowEdit = false;
+}
+@if (Session["Artifact"] != null || Session["Tempate"] != null)
+{
+    var tempPriv = Session["Template"] as List<string>;
+    var privilege = Session["Artifact"] as List<string>;
+    if (privilege.Contains("AllowUpdate") || tempPriv.Contains("AllowUpdate"))
+    {
+        allowEdit = true;
+    }
+}
+@*<span id="user-profile-session-data" data-issuperadmin="@user.IsSuperAdmin.ToString().ToLowerInvariant()"></span>*@
+<span id="user-profile-session-data" data-issuperadmin="@allowEdit.ToString().ToLowerInvariant()"></span>
 <div class="template-view">
     <div class="row">
         <div class="col-md-12">
-             <div class="page-header">
-              <h3>@Model.Name</h3>
+            <div class="page-header">
+                <h3>@Model.Name</h3>
             </div>
         </div>
     </div>
     @foreach (var row in Model.LayoutRows)
-    { 
+    {
         <div class="row layout-row">
             @foreach (var col in row.LayoutColumns)
-            { 
+            {
                 <div class="layout-column" style="width:@col.Width%;">
-                    
-                    
+
+
                     @if (col.ColumnType == "Artifact")
                     {
                         @*if (user.IsSuperAdmin)
-                        {
-                            <a href="@Url.Action("Edit", "Artifact", new { id = col.ArtifactId })">Edit</a>
-                        }*@
+                            {
+                                <a href="@Url.Action("Edit", "Artifact", new { id = col.ArtifactId })">Edit</a>
+                            }*@
                         <div class="whitebox artifact-holder" style="height:350px;" data-artifact-url="@Url.Action("View", "Artifact", new { id = col.ArtifactId })" data-artifact-id="@col.ArtifactId">
                         </div>
                     }
                     else
                     {
                         @*if (user.IsSuperAdmin)
-                        {
-                            <a href="@Url.Action("View", "Highlight", new { id = col.HighlightTypeId })">Edit</a>
-                        }*@
+                            {
+                                <a href="@Url.Action("View", "Highlight", new { id = col.HighlightTypeId })">Edit</a>
+                            }*@
                         <div class="whitebox highlight-holder" style="height:350px;" data-artifact-edit-url="@Url.Action("Edit", "Highlight", new { id = "_id_" })" data-artifact-url="@Url.Action("View", "Highlight", new { typeId=col.HighlightTypeId, periodeType = col.HighlightPeriodeType })">
                         </div>
                     }
@@ -56,12 +70,12 @@
                     <div class="graphic-setting-content">
                         <p>Some text in the modal.</p>
                     </div>
-                    <input type="submit" class="btn btn-default" value="Save" /> 
+                    <input type="submit" class="btn btn-default" value="Save" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </form>
             </div>
             <div class="modal-footer">
-                
+
             </div>
         </div>
 

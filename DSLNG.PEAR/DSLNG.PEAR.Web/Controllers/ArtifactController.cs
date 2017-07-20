@@ -18,9 +18,11 @@ using DSLNG.PEAR.Services.Requests.Highlight;
 using System.Data.SqlClient;
 using NReco.ImageGenerator;
 using DSLNG.PEAR.Services.Responses.Artifact;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class ArtifactController : BaseController
     {
         private readonly IMeasurementService _measurementService;
@@ -39,6 +41,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _highlightService = highlightService;
         }
 
+        [AuthorizeUser(AccessLevel ="AllowView")]
         public ActionResult Index()
         {
             return View();
@@ -128,6 +131,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
+        [AuthorizeUser(AccessLevel ="AllowUpdate")]
         public ActionResult Edit(int id)
         {
             var artifact = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
@@ -731,6 +735,7 @@ namespace DSLNG.PEAR.Web.Controllers
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.AllExistingYears.ToString(), Text = "All Existing Years" });
         }
 
+        [AuthorizeUser(AccessLevel ="AllowView")]
         public ActionResult View(int id)
         {
             var artifactResp = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
