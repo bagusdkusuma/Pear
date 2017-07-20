@@ -1477,7 +1477,7 @@ Number.prototype.format = function (n, x) {
             },
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -1653,7 +1653,7 @@ Number.prototype.format = function (n, x) {
             //},
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -1847,7 +1847,7 @@ Number.prototype.format = function (n, x) {
             //},
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -2055,7 +2055,7 @@ Number.prototype.format = function (n, x) {
             },
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -2233,7 +2233,7 @@ Number.prototype.format = function (n, x) {
             //},
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -2428,7 +2428,7 @@ Number.prototype.format = function (n, x) {
             //},
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -2580,7 +2580,7 @@ Number.prototype.format = function (n, x) {
             },
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.LineChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -2911,7 +2911,7 @@ Number.prototype.format = function (n, x) {
             //},
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.AreaChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -3120,7 +3120,7 @@ Number.prototype.format = function (n, x) {
             },
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.AreaChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -3338,7 +3338,7 @@ Number.prototype.format = function (n, x) {
             },
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.SpeedometerChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -4163,7 +4163,7 @@ Number.prototype.format = function (n, x) {
             },
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.MultiaxisChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -4468,7 +4468,7 @@ Number.prototype.format = function (n, x) {
             },
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.ComboChart.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
@@ -4649,7 +4649,7 @@ Number.prototype.format = function (n, x) {
             },
             exporting: {
                 url: '/Chart/Export',
-                filename: 'MyChart',
+                filename: data.Pie.Title,
                 width: 1200,
                 chartOptions: {
                     chart: {
