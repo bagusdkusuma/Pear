@@ -632,14 +632,15 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
-        public ActionResult DerInputFileGrid(GridParams gridParams)
+        public ActionResult DerInputFileGrid(GridParams gridParams, string Date)
         {
             var derInputFiles = _derTransactionService.GetDerInputFiles(new Services.Requests.Der.GetDerInputFilesRequest
             {
                 Skip = gridParams.DisplayStart,
                 Take = gridParams.DisplayLength,
                 SortingDictionary = gridParams.SortingDictionary,
-                Search = gridParams.Search
+                Search = gridParams.Search,
+                Date = Date
             });
 
             var data = new
@@ -685,7 +686,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     CreatedBy = UserProfile().UserId
                 });
             }
-            return RedirectToAction("Activity");
+            return RedirectToAction("Index", new { date = theDate.ToString("MM/dd/yyyy") });
         }
 
         [HttpPost]
@@ -694,7 +695,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _derTransactionService.DeleteDerInputFile(id);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
-            return RedirectToAction("Activity");
+            return RedirectToAction("Index", new { date = response.Date.ToString("MM/dd/yyyy") });
         }
 
         private DerValuesViewModel GetDerValuesPerSection(string date, int[] actualKpiIds, int[] targetKpiIds, int[] highlightTypeIds)

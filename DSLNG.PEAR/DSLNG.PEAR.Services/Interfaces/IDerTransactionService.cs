@@ -13,6 +13,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetHighlightValuesResponse GetHighlightValues(GetHighlightValuesRequest request);
         BaseResponse CreateDerInputFile(CreateDerInputFileRequest request);
         GetDerInputFilesResponse GetDerInputFiles(GetDerInputFilesRequest request);
-        BaseResponse DeleteDerInputFile(int id);
+        DeleteDerInputFileResponse DeleteDerInputFile(int id);
     }
 }

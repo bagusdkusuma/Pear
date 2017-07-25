@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Requests.Der
     {
         public int Take { get; set; }
         public int Skip { get; set; }
+        public string Date { get; set; }
     }
 }

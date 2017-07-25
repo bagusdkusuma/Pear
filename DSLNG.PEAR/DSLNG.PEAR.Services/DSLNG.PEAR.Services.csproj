@@ -170,6 +170,7 @@
     <Compile Include="Requests\Wave\SaveWaveRequest.cs" />
     <Compile Include="Responses\CustomFormula\GetCustomFormulaResponse.cs" />
     <Compile Include="Responses\DerLoadingSchedule\GetDerLoadingSchedulesResponse.cs" />
+    <Compile Include="Responses\DerTransaction\DeleteDerInputFileResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetDerInputFilesResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetDerLayoutItemsResponse.cs" />
     <Compile Include="Responses\DerTransaction\GetHighlightValuesResponse.cs" />

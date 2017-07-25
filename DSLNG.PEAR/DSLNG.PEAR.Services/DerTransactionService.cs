@@ -15,6 +15,7 @@ using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Services.Requests.Der;
 using System.Data.SqlClient;
 using System.Data.Entity.Infrastructure;
+using System.Globalization;
 
 namespace DSLNG.PEAR.Services
 {
@@ -766,9 +767,12 @@ namespace DSLNG.PEAR.Services
                 derInputFile.Date = request.Date;
                 derInputFile.FileName = request.FileName;
                 derInputFile.Title = request.Title;
-                var user = new User { Id = request.CreatedBy };
-                DataContext.Users.Attach(user);
+                var user = DataContext.Users.Single(x => x.Id == request.CreatedBy);
+                //DataContext.Users.Attach(user);
                 derInputFile.CreatedBy = user;
+                derInputFile.UpdatedBy = user;
+                derInputFile.CreatedDate = DateTime.Now;
+                derInputFile.UpdatedDate = DateTime.Now;
                 DataContext.DerInputFiles.Add(derInputFile);
 
                 DataContext.SaveChanges();
@@ -787,7 +791,7 @@ namespace DSLNG.PEAR.Services
         public GetDerInputFilesResponse GetDerInputFiles(GetDerInputFilesRequest request)
         {
             int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            var data = SortData(request.Search, request.SortingDictionary, request.Date, out totalRecords);
             if (request.Take != -1)
             {
                 data = data.Skip(request.Skip).Take(request.Take);
@@ -800,11 +804,17 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public IEnumerable<DerInputFile> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        public IEnumerable<DerInputFile> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, string Date, out int TotalRecords)
         {
             var data = DataContext.DerInputFiles.AsQueryable();
             data = data.Include(x => x.CreatedBy)
                 .Include(x => x.UpdatedBy);
+
+            if (!string.IsNullOrEmpty(Date) && !string.IsNullOrWhiteSpace(Date))
+            {
+                var currentDate = DateTime.ParseExact(Date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+                data = data.Where(x => x.Date == currentDate);                
+            }
 
             foreach (var sortOrder in sortingDictionary)
             {
@@ -822,12 +832,13 @@ namespace DSLNG.PEAR.Services
             return data;
         }
 
-        public BaseResponse DeleteDerInputFile(int id)
+        public DeleteDerInputFileResponse DeleteDerInputFile(int id)
         {
-            var response = new BaseResponse();
+            var response = new DeleteDerInputFileResponse();
             try
             {
-                var derInputFile = new DerInputFile { Id = id };
+                var derInputFile = DataContext.DerInputFiles.Single(x => x.Id == id);
+                response.Date = new DateTime(derInputFile.Date.Year, derInputFile.Date.Month, derInputFile.Date.Day);
                 DataContext.DerInputFiles.Attach(derInputFile);
                 DataContext.Entry(derInputFile).State = EntityState.Deleted;
                 DataContext.SaveChanges();

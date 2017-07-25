@@ -285,6 +285,63 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                 </div>
             </div>
         </div>
+
+        <div class="row">            
+            <div class="col-md-12">
+                <a href="javascript:;" class="btn btn-trigger" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">File Attachment</h5>
+                </a>
+                <div class="add-button-wrapper pull-left col-md-12">
+                    @*@if (Session["DER"] != null)
+            {
+                var privilege = Session["DER"] as List<string>;
+                if (privilege.Contains("AllowUpload"))
+                {
+                    <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#activity-upload-modal">Upload</a>
+                }
+            }*@
+                    <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#activity-upload-modal">Upload</a>
+                </div>
+                <table id="activity-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Created By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="activity-upload-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <form name="upload-activity-form" action="@Url.Action("UploadActivity", "DerTransaction")" enctype="multipart/form-data" method="post">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upload File</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group form-list">
+                                        <label>File</label>
+                                        <input class="form-control" type="file" name="file" required>
+                                        <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-group form-list">
+                                        <label>Date</label>
+                                        <input name="date" class="form-control datepicker" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn-master-rgw btn btn-primary" value="Upload" />
+                                    <button type="button" class="btn btn-master-rgw btn-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-12" style="margin-bottom: 30px;">
         <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
@@ -980,5 +1037,69 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
             }
         });
 
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#activity-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                //"columnDefs": [
+                //    { "visible": false, "targets": 0 }
+                //],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("DerInputFileGrid", "DerTransaction", new { @Date = "_date_"})'.replace('_date_', $('#currentDate').val()),                
+                search: true,
+                //"order": [[3, "asc"]],
+                "aoColumns": [
+                    {
+                        "mDataProp": "FileName", "name": "FileName", "className": "text-align-left",
+                        "mRender": function (data, type, row) {
+                            var files = row.FileName.split(';');
+                            if (files.length) {
+                                return '<a href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">' + row.Title +'</a>'
+                            }
+                            return '';
+                        }
+                    },
+                    {
+                        "mDataProp": "CreatedBy", "name": "CreatedBy", "className": "text-align-left"
+                    },
+
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            return deleteLink;
+                        }
+                    }
+                ],
+                
+            });
+
+            $('#activity-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("DeleteActivity", "DerTransaction")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+            //$('.datepicker').datetimepicker({
+            //    format: "MM/DD/YYYY",
+            //    focusOnShow: false
+            //});
+
+
+        });
     </script>
 }
