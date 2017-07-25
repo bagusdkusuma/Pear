@@ -43,7 +43,8 @@ namespace DSLNG.PEAR.Web.Controllers
 
         [AuthorizeUser(AccessLevel ="AllowView")]
         public ActionResult View(int id)
-        { 
+        {
+            ViewData["privileges"] = HttpContext.Session["Template"];
             var template = _templateService.GetTemplate(new GetTemplateRequest{Id = id});
             var viewModel = template.MapTo<TemplateViewModel>();
             return View(viewModel);

@@ -41,6 +41,12 @@ namespace DSLNG.PEAR.Web.Attributes
                 return false;
             string privilegeLevels = string.Join(",", GetUserRights(menu.Id, controller, sessionData.RolePrivilegeName));
 
+            var userRight = httpContext.Session[controller];
+            if (userRight == null)
+            {
+                httpContext.Session[controller] = privilegeLevels;
+            }
+
             if (privilegeLevels.Contains(this.AccessLevel)) return true;
             else return false;
         }
@@ -61,7 +67,6 @@ namespace DSLNG.PEAR.Web.Attributes
             {
                 var privilege = _menuService.GetMenuPrivilege(new DSLNG.PEAR.Services.Requests.Menu.GetMenuPrivilegeRequest { Menu_Id = menu_id, RolePrivilege_Id = item.Key });
                 if (!privilege.IsSuccess) continue;
-                var test = privilege.AllowApprove.ToString();
                 if (privilege.AllowApprove)
                 {
                     if (!userRights.Contains("AllowApprove"))
