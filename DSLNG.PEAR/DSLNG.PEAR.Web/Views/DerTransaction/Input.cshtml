@@ -344,8 +344,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
         </div>
     </div>
     <div class="col-md-12" style="margin-bottom: 30px;">
-        <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
-        <a class="btn btn-master-rgw btn-primary" href="@Url.Action("Activity", "DerTransaction")">DER Input Files</a>
+        <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>        
         <label class="labletop">Batch :</label>
         @Html.DropDownList("Batch_Id", (IEnumerable<SelectListItem>)ViewBag.KpiTransformations, new { @class = "btn btn-master-rgw btn-primary" })
         <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>
