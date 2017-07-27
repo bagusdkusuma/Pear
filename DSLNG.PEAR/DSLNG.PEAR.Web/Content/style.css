@@ -3477,12 +3477,43 @@ tr.der-transaction-error {
     border: 2px solid red !important;
 }
 
-
-.artifact-holder .tank-subtitle,
-.artifact-holder .highcharts-subtitle {
-    cursor: pointer;
-}
-
 .artifact-holder .highcharts-title {
     text-align: center;
 }
+
+#der-table tbody td {
+    vertical-align: top;
+}
+
+#der-table .read-more {
+    color: red;
+    text-decoration: underline;
+}
+
+.modal-content {
+    border: 2px solid #fff;
+}
+
+.btn-primary-alt {
+    background-color: #65A9BF;
+    border-radius: 0;
+    border: none;
+    color: #fff;
+}
+
+    .btn-primary-alt:hover {
+        background-color: #00679E;
+        color: #fff;
+    }
+
+.btn-secondary-alt {
+    background-color: #DDCFC0;
+    border-radius: 0;
+    border: none;
+    color: #004071;
+}
+
+    .btn-secondary-alt:hover {
+        background-color: #ccc;
+        color: #004071;
+    }

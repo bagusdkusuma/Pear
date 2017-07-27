@@ -1234,6 +1234,20 @@ namespace DSLNG.PEAR.Services
                                 timeInformation = currentDay.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
+                        case RangeFilter.CurrentWeek:
+                            {                                
+                                var startDay = StartOfWeek();                                
+                                var endDay = startDay.AddDays(7);
+                                timeInformation = startDay.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + endDay.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                                while (startDay.Day != endDay.Day)
+                                {
+                                    periodes.Add(startDay.ToString(dailyFormat));
+                                    dateTimePeriodes.Add(startDay);
+                                    startDay = startDay.AddDays(1);
+                                }
+                               
+                                break;
+                            }
                         case RangeFilter.CurrentMonth:
                             {
                                 var currentMonth = DateTime.Now.Month;
@@ -3362,11 +3376,23 @@ namespace DSLNG.PEAR.Services
             return timeInformation;
         }
 
-        class DateTimeValue
+        private DateTime StartOfWeek()
         {
-            public DateTime? Start { get; set; }
-            public DateTime? End { get; set; }
-            public RangeFilter RangeFilter { get; set; }
+            DateTime dt = new DateTime(2017, 2, 1);
+            int diff = dt.DayOfWeek - DayOfWeek.Sunday;
+            if (diff < 0)
+            {
+                diff += 7;
+            }
+            return dt.AddDays(-1 * diff).Date;
         }
+    
+
+    class DateTimeValue
+    {
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+        public RangeFilter RangeFilter { get; set; }
     }
+}
 }

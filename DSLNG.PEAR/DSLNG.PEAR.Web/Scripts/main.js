@@ -1345,8 +1345,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,                
+                title: data.BarChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -1533,8 +1532,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,
+                text: data.BarChart.Title,
                 style: {
                     "color": '#fff'
                 }
@@ -1700,8 +1698,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,                
+                text: data.BarChart.Title,                
                 style: {
                     "color": '#fff'
                 }
@@ -1921,8 +1918,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,                
+                text: data.BarChart.Title,                
                 style: {
                     color: '#fff'
                 }
@@ -2111,8 +2107,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,
+                text: data.BarChart.Title,
                 style: {
                     "color": '#fff'
                 }
@@ -2280,8 +2275,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.BarChart.Title + '</a>' : data.BarChart.Title,
+                text: data.BarChart.Title,
                 style: {
                     "color": '#fff'
                 }
@@ -2519,8 +2513,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.LineChart.Title + '</a>' : data.LineChart.Title,                
+                text: data.LineChart.Title,                
                 //x: -20, //center
                 style: {
                     color: '#fff'
@@ -2784,8 +2777,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.AreaChart.Title + '</a>' : data.AreaChart.Title,
+                text: data.AreaChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -2974,8 +2966,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.AreaChart.Title + '</a>' : data.AreaChart.Title,
+                text: data.AreaChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -3291,8 +3282,7 @@ Number.prototype.format = function (n, x) {
             },
 
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.SpeedometerChart.Title + '</a>' : data.SpeedometerChart.Title,
+                text: data.SpeedometerChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -4130,7 +4120,7 @@ Number.prototype.format = function (n, x) {
                 series.push(data.MultiaxisChart.Charts[i].Series[j]);
             }
         }
-        container.highcharts({
+        var h = container.highcharts({
             chart: {
                 zoomType: 'xy',
                 alignTicks: false,
@@ -4149,8 +4139,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.MultiaxisChart.Title + '</a>' : data.MultiaxisChart.Title,
+                text: data.MultiaxisChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -4177,7 +4166,7 @@ Number.prototype.format = function (n, x) {
 
                         }
                     }
-                }
+                }                
             },
             credits: {
                 enabled: false
@@ -4272,7 +4261,8 @@ Number.prototype.format = function (n, x) {
                 shared: true
             },
             series: series
-        });
+        })
+        
     };
 
 
@@ -4426,8 +4416,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.ComboChart.Title + '</a>' : data.ComboChart.Title,
+                text: data.ComboChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -4635,8 +4624,7 @@ Number.prototype.format = function (n, x) {
                 //spacingRight: 0
             },
             title: {
-                useHTML: true,
-                text: $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.Pie.Title + '</a>' : data.Pie.Title,                
+                text: data.Pie.Title,                
                 style: {
                     color: '#fff'
                 }
@@ -5794,10 +5782,10 @@ Number.prototype.format = function (n, x) {
         _artifactHolder = artifactHolder;
         _highchartsContainter = el.closest('.highcharts-container');
 
-        Pear.Loading.Show(artifactHolder);       
+        //Pear.Loading.Show(artifactHolder);       
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
-        _highchartsContainter.hide();
+        //_highchartsContainter.hide();
         
         $.ajax({
             url: '/Artifact/GraphicSetting/' + artifactId,
@@ -5806,9 +5794,6 @@ Number.prototype.format = function (n, x) {
                 $('.graphic-setting-content').hide();
                 $('.graphic-setting-content').html(data);                
                 $('.graphic-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
-               
-
-                
 
                 $('.graphic-setting-content').show();
                 $('#graphic-setting').modal('show');
@@ -5940,9 +5925,9 @@ Number.prototype.format = function (n, x) {
         });
     }
     
-    $('.artifact-holder').on('click', '.highcharts-subtitle', function () {           
-        getGraphicSetting($(this));
-    });
+    //$('.artifact-holder').on('click', '.highcharts-subtitle', function () {           
+    //    getGraphicSetting($(this));
+    //});
 
     $('.artifact-holder').on('click', '.tank-subtitle', function () {
         getGraphicSetting($(this));
@@ -5969,10 +5954,49 @@ Number.prototype.format = function (n, x) {
         })
     })
 
+    $('#graphic-setting').on('click', '#backToDefault', function (e) {
+        e.preventDefault();
+        console.log(_artifactHolder);
+        $.ajax({
+            url: _artifactHolder.data('artifact-url'),
+            //data: {id : 158},
+            method: 'POST',
+            success: function (data2) {
+                var callback = Pear.Artifact.Designer._previewCallbacks;
+                //var result = {};
+                //$.each($('#graphic-setting-form').serializeArray(), function (key, value) {
+                //    result[this.name] = this.value;
+                //});
+                //result['dateformat'] = getDateFormat(result["PeriodeType"]);
+                var search = searchArtifactConfig(_configs, _artifactHolder.data('artifact-id'));
+                if (search.isExisted)
+                    _configs.splice(search.index, 1);
+                callback[data2.GraphicType](data2, _artifactHolder);
+                $('#graphic-setting').modal('hide');
+            }
+        })
+    });
     $('#graphic-setting').on('hidden.bs.modal', function () {
-        _highchartsContainter.show();
-        Pear.Loading.Stop(_artifactHolder);
+        //_highchartsContainter.show();
+        //Pear.Loading.Stop(_artifactHolder);
     });
 
-    
+    if ($('#user-profile-session-data').length > 0) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
+            text: "Change Periode",
+            onclick: function () {
+                getGraphicSetting($(this.renderTo));
+            }
+        });
+    }
+
+    if ($('#user-profile-session-data').length > 0 && $('#user-profile-session-data').data('issuperadmin') == true) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
+            text: "Edit Chart",
+            onclick: function (e) {
+                var id = $(this.renderTo).data('artifact-id');
+                window.open('/Artifact/Edit/' + id, '_blank');
+            }
+        });
+    }
 }(window, jQuery, undefined));

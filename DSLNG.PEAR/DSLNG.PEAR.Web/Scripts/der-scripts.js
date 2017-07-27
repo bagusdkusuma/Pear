@@ -317,13 +317,13 @@ Number.prototype.format = function (n, x) {
             if (options.legend.hasOwnProperty('enabled')) {
                 options.legend.enabled = true;
             }
-            decimal = 2;
+            decimal = 0;            
         }
         else if (container.hasClass('row1col1')) {            
-            decimal = 2;
+            decimal = 0;
         }
         else if (container.hasClass('row1col2')) {
-            decimal = 2;
+            decimal = 1;
         }
         else if (container.hasClass('row1col3')) {
             symbol = 'triangle';
@@ -342,56 +342,65 @@ Number.prototype.format = function (n, x) {
         }
         else if (container.hasClass('row5col2')) {
             options.gridLineColor = 'transparent';
-            decimal = 2;
+            decimal = 1;
             plotOpt['line'] = {
                 dataLabels: {
                     enabled: true,
                     format: '{y:.2f}',
                     style: {
                         fontWeight: 'normal',
-                        fontSize: '10px'
-                    }
+                        fontSize: '9px'
+                    },
+                    overflow: 'none',
+                    crop: false
                 }
             }
         }
         else if (container.hasClass('row5col3')) {
             options.gridLineColor = 'transparent';
-            decimal = 2;
+            decimal = 1;
             plotOpt['line'] = {
                 dataLabels: {
                     enabled: true,
                     format: '{y:.2f}',
                     style: {
                         fontWeight: 'normal',
-                        fontSize: '10px'
-                    }
+                        fontSize: '9px'
+                    },
+                    overflow: 'none',
+                    crop: false
                 }
             }
         }
         else if (container.hasClass('row5col4')) {
             options.gridLineColor = 'transparent';      
-            decimal = 2;
+            decimal = 1;
             plotOpt['line'] = {
                 dataLabels: {
                     enabled: true,
                     format: '{y:.2f}',
                     style: {
                         fontWeight: 'normal',
-                        fontSize: '10px'
-                    }
+                        fontSize: '9px'
+                    },
+                    overflow: 'none',
+                    crop: false
                 }
             }
         }
         else if (container.hasClass('row15col4')) {
             options.gridLineColor = 'transparent';
+            decimal = 1;
             plotOpt['line'] = {
                 dataLabels: {
                     enabled: true,
-                    format: '{y:.2f}',
+                    format: '{y:.1f}',
                     style: {
                         fontWeight: 'normal',
-                        fontSize: '10px'
-                    }
+                        fontSize: '9px'
+                    },
+                    overflow: 'none',
+                    crop: false
                 }
             }
         }
@@ -425,8 +434,8 @@ Number.prototype.format = function (n, x) {
                 marker = {
                     enabled: true,
                     radius: 3,
-                    symbol: j == 0 ? 'triangle' : 'square',
-                    fillColor: j == 0 ? '#0d0d0d' : '#fbf405'
+                    fillColor: '#fbf405',
+                    symbol: 'square'
                 };
             }
             else if (container.hasClass('row1col1')) {
@@ -434,7 +443,7 @@ Number.prototype.format = function (n, x) {
                     enabled: true,
                     radius: 3,
                     symbol: 'triangle',
-                    fillColor: '#ff0000'
+                    fillColor: '#fbf405'
                 };
             }
             else if (container.hasClass('row1col2')) {
@@ -442,14 +451,14 @@ Number.prototype.format = function (n, x) {
                     enabled: true,
                     radius: 3,
                     symbol: 'square',
-                    fillColor: '#ff0000'
+                    fillColor: '#fbf405'
                 };
             }
             else if (container.hasClass('row1col3')) {
                 marker = {
                     enabled: true,
                     radius: 3,
-                    symbol: 'circle',
+                    symbol: 'square',
                     fillColor: '#401352'
                 };
             }
@@ -601,7 +610,7 @@ Number.prototype.format = function (n, x) {
                 //    symbol: getSymbol(container, j),
                 //    fillColor: fillColor
                 //};
-                data.MultiaxisChart.Charts[i].Series[j].marker = getMarkerConfig(i);
+                data.MultiaxisChart.Charts[i].Series[j].marker = getMarkerConfig(j);
                 if (data.MultiaxisChart.Charts[i].Series[j].type != 'spline' && data.MultiaxisChart.Charts[i].SeriesType == 'single-stack') {
                     data.MultiaxisChart.Charts[i].Series[j].stack = data.MultiaxisChart.Charts[i].Series[j].name;
                 }
@@ -619,7 +628,7 @@ Number.prototype.format = function (n, x) {
                 zoomType: 'xy',
                 alignTicks: false,
                 backgroundColor: 'transparent',
-                height: 200,
+                height: container.is('.row15col4, .row15col5') ? 140 : 200,
                 spacingBottom: 5,
                 spacingTop: 5,
                 spacingLeft: 0,
@@ -670,9 +679,9 @@ Number.prototype.format = function (n, x) {
         options.legend = {
             layout: 'horizontal',
             align: 'left',
-            x: 70,
+            x: 30,
             verticalAlign: 'bottom',
-            y: -30,
+            y: -15,
             floating: true,
             enabled: true,
         };
