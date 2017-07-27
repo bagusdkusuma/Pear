@@ -68,11 +68,10 @@
             <label class="labletop">Traffic Light :</label>
             <select class="selectpicker" id="traffic-light" style="width:50%">
                 <option value=""> Select All</option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-1" value="1" @(Model.TrafficLight == "1" ? "selected" : "")></option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-2" value="2" @(Model.TrafficLight == "2" ? "selected" : "")></option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-3" value="3" @(Model.TrafficLight == "3" ? "selected" : "")></option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-4" value="4" @(Model.TrafficLight == "4" ? "selected" : "")></option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-5" value="5" @(Model.TrafficLight == "5" ? "selected" : "")></option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-1" value="1" @(Model.TrafficLight == "1" ? "selected" : "")> -- Normal Shut Down</option>                
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-3" value="3" @(Model.TrafficLight == "3" ? "selected" : "")> -- Alert</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-4" value="4" @(Model.TrafficLight == "4" ? "selected" : "")> -- Need Attention</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-5" value="5" @(Model.TrafficLight == "5" ? "selected" : "")> -- Normal Ops</option>
             </select>
 
             @*@Html.DropDownListFor(x => x.TrafficLight, Model.TrafficLights, new { @class = "form-control", id = "traffic-light" })*@
@@ -92,8 +91,8 @@
     <thead>
         <tr>
             <th style="width:70px">Publish Date</th>
-            <th>&nbsp;</th>
-            <th>Daily Highlight</th>
+            <th style="border:none;border-left:1px solid #fff;padding: 0">&nbsp;</th>
+            <th style="border-left:none">Daily Highlight</th>
             <th>Marine Cargo Delivery</th>
             <th>QHSE</th>
             <th>Security</th>
@@ -215,7 +214,7 @@
 
                     },
                     {
-                        "mDataProp": "DailyIndicator", "name": "DailyIndicator", "className": "dt-body-left", "orderable": false,
+                        "mDataProp": "DailyIndicator", "name": "DailyIndicator", "className": "dt-body-left", "orderable": false, width: 1, "padding": "0", fixed: true,
                         "mRender": function (data, type, row, pos) {
                             var str = '';
                             if (parseInt(data) < 2) {
@@ -229,7 +228,13 @@
                             } else if (parseInt(data) > 4) {
                                 str = '<span class="indicator green"><i class="fa fa-circle" style="color:green"></i></span>';
                             }
-                            return str + "<span style='padding-left: 10px;'>" + shortenText(row["OverallPerformance"], "Overall Performance", row['Date']) + "</span>";
+                            return str;// + "<span style='padding-left: 10px;'>" + shortenText(row["OverallPerformance"], "Overall Performance", row['Date']) + "</span>";
+                        }
+                    },
+                    {
+                        "mDataProp": "OverallPerformance", "name": "OverallPerformance", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "OverallPerformance", row['Date']);
                         }
                     },
                     {

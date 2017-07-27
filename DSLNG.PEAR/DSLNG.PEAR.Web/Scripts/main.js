@@ -1475,6 +1475,14 @@ Number.prototype.format = function (n, x) {
                 shared: true
             },
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
@@ -1650,6 +1658,14 @@ Number.prototype.format = function (n, x) {
             //    }
             //},
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
@@ -1843,6 +1859,14 @@ Number.prototype.format = function (n, x) {
             //    }
             //},
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
@@ -2050,6 +2074,14 @@ Number.prototype.format = function (n, x) {
                 shared: true
             },
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
@@ -2227,6 +2259,14 @@ Number.prototype.format = function (n, x) {
             //    }
             //},
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
@@ -2421,6 +2461,14 @@ Number.prototype.format = function (n, x) {
             //    }
             //},
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
@@ -2572,6 +2620,14 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.LineChart.Title,
                 width: 1200,
@@ -2902,6 +2958,14 @@ Number.prototype.format = function (n, x) {
             //    }
             //},
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.AreaChart.Title,
                 width: 1200,
@@ -3110,6 +3174,14 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.AreaChart.Title,
                 width: 1200,
@@ -3327,6 +3399,14 @@ Number.prototype.format = function (n, x) {
                 }]
             },
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.SpeedometerChart.Title,
                 width: 1200,
@@ -4151,6 +4231,14 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.MultiaxisChart.Title,
                 width: 1200,
@@ -4456,6 +4544,14 @@ Number.prototype.format = function (n, x) {
                 },
             },
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.ComboChart.Title,
                 width: 1200,
@@ -4636,6 +4732,14 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
                 url: '/Chart/Export',
                 filename: data.Pie.Title,
                 width: 1200,
@@ -5956,18 +6060,21 @@ Number.prototype.format = function (n, x) {
 
     $('#graphic-setting').on('click', '#backToDefault', function (e) {
         e.preventDefault();
-        console.log(_artifactHolder);
+        //var $form = $(this).closest('form');
+
+        //// reset errors with unobtrusive
+        //$form.trigger('reset.unobtrusiveValidation');
+
+        //// reset inputs
+        //var validator = $form.validate(); // get saved validator
+        ////validator.settings.ignore = ''; // if form hided (closed ui dialogs, etc)
+        //validator.resetForm();
         $.ajax({
             url: _artifactHolder.data('artifact-url'),
             //data: {id : 158},
             method: 'POST',
             success: function (data2) {
-                var callback = Pear.Artifact.Designer._previewCallbacks;
-                //var result = {};
-                //$.each($('#graphic-setting-form').serializeArray(), function (key, value) {
-                //    result[this.name] = this.value;
-                //});
-                //result['dateformat'] = getDateFormat(result["PeriodeType"]);
+                var callback = Pear.Artifact.Designer._previewCallbacks;                
                 var search = searchArtifactConfig(_configs, _artifactHolder.data('artifact-id'));
                 if (search.isExisted)
                     _configs.splice(search.index, 1);

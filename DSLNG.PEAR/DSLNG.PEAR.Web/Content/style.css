@@ -3483,10 +3483,16 @@ tr.der-transaction-error {
 
 #der-table tbody td {
     vertical-align: top;
+    border-bottom: 1px solid #fff;
+}
+
+#der-table tbody tr:last-child td {
+    vertical-align: top;
+    border-bottom: 0;
 }
 
 #der-table .read-more {
-    color: red;
+    color: orange;
     text-decoration: underline;
 }
 

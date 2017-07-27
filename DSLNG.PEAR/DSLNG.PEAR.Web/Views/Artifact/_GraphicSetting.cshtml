@@ -10,7 +10,8 @@
     <div class="form-inline whitebox">
         <div id="general-graphic-settings">
             <div class="form-group form-list">
-                <h4>Graphic Settings</h4>
+                <h4>Graph Settings</h4>
+                <hr/>
             </div>
             <div class="form-group form-list">
                 @Html.LabelFor(model => model.PeriodeType)
@@ -123,3 +124,24 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var headerTitle = @Html.Raw(Json.Encode(Model.HeaderTitle));
+        var mt = $('.modal-title')
+        mt.text(headerTitle);
+
+        //$('#graphSettingResetBtn').click(function () {
+        //    var $form = $(this).closest('form');
+
+        //    // reset errors with unobtrusive
+        //    $form.trigger('reset.unobtrusiveValidation');
+
+        //    // reset inputs
+        //    var validator = $form.validate(); // get saved validator
+        //    //validator.settings.ignore = ''; // if form hided (closed ui dialogs, etc)
+        //    validator.resetForm();
+        //});
+
+    });
+</script>

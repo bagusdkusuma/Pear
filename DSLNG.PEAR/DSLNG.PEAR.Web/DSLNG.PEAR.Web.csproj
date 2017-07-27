@@ -391,6 +391,7 @@
     <Content Include="Content\img\plan-bg.jpg" />
     <Content Include="Content\img\plan.png" />
     <Content Include="Content\img\pointer.png" />
+    <Content Include="Content\img\printer_3.png" />
     <Content Include="Content\img\remark_sign.png" />
     <Content Include="Content\img\report-bg.jpg" />
     <Content Include="Content\img\report.png" />
