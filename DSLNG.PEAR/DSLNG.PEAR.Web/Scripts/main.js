@@ -5053,15 +5053,23 @@ Number.prototype.format = function (n, x) {
                 method: 'GET',
                 success: function (data) {
                     var isSuperAdmin = $('#user-profile-session-data').data('issuperadmin') == true;
-                    var editUrl = $('.highlight-holder').data('artifact-edit-url').replace('_id_', data.Id);
+                    var editUrl = $('.highlight-holder').data('artifact-edit-url');
+                    if(editUrl != undefined){
+                        editUrl.replace('_id_', data.Id);
+                    }
+                    
                     var title = data.Title == null || data.Title == "" ? data.Type : data.Title;
-                    var clickableTitle = isSuperAdmin ? $('<a/>', { 'href': editUrl, 'text': title }) : title;
+                    var clickableTitle = isSuperAdmin && editUrl != undefined ? $('<a/>', { 'href': editUrl, 'text': title }) : title;
                     var $title = $('<h4/>').html(clickableTitle);
+                    var $periode = $('<div />').append(Pear.Artifact.Designer._toJavascriptDate(data.Date, data.SPeriodeType));
                     var $message = $('<div />').append(data.Message);
                     $message.addClass('dashboard-highlight-message');
                     $title.addClass('dashboard-highlight-title');
+                    $periode.addClass('dashboard-highlight-periode');
+                    $periode.attr('data-periode-type', data.SPeriodeType);
                     $holder.css('background', 'none');
                     $holder.append($title);
+                    $holder.append($periode);
                     $holder.append($message);
 
                     //var $title = $('<h4/>').html(data.Title == null || data.Title == "" ? data.Type : data.Title);
