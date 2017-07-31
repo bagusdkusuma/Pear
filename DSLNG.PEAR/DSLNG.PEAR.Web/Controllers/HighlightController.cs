@@ -518,7 +518,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 Date = date,
                 HighlightTypeId = typeId,
                 PeriodeType = periodeTypeEnum
-            });
+            }, true);
 
             var jsonResult = Json(highlight, JsonRequestBehavior.AllowGet);
             jsonResult.MaxJsonLength = int.MaxValue;
