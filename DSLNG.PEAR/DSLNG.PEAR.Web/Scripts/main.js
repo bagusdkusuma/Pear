@@ -378,10 +378,10 @@ Number.prototype.format = function (n, x) {
                         break;
                     default:
                         toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         break;
                 }
                 var originalClone = original.clone(true);
@@ -430,6 +430,7 @@ Number.prototype.format = function (n, x) {
         rangeDatePicker();
         specificDate();
     };
+
     artifactDesigner.EditSetup = function () {
         var callback = Pear.Artifact.Designer._setupCallbacks;
         var loadGraph = function (url, type) {
@@ -558,11 +559,11 @@ Number.prototype.format = function (n, x) {
                         toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth'];
                         break;
                     default:
-                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         break;
                 }
                 var originalClone = original.clone(true);
@@ -1202,6 +1203,7 @@ Number.prototype.format = function (n, x) {
         //$('#PeriodeType').change();
         $('#RangeFilter').change();
     };
+
     artifactDesigner._setupCallbacks = {};
 
     artifactDesigner.Preview = function () {
@@ -1216,7 +1218,6 @@ Number.prototype.format = function (n, x) {
                 data: $this.closest('form').serialize(),
                 method: 'POST',
                 success: function (data) {
-                    console.log(data.GraphicType);
                     if (callback.hasOwnProperty(data.GraphicType)) {
                         Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
@@ -1239,6 +1240,7 @@ Number.prototype.format = function (n, x) {
             $('#container').html('');
         });
     };
+
     artifactDesigner._previewCallbacks = {};
 
     //bar chart
@@ -1315,6 +1317,7 @@ Number.prototype.format = function (n, x) {
         addSeries();
         addStack();
     };
+
     artifactDesigner._previewCallbacks.bar = function (data, container) {
         //console.log(data.BarChart.SeriesType);
         if (data.BarChart.SeriesType == "single-stack") {
@@ -1325,6 +1328,7 @@ Number.prototype.format = function (n, x) {
             Pear.Artifact.Designer._displayMultistacksGroupedBarChart(data, container);
         }
     };
+
     artifactDesigner._displayBasicBarChart = function (data, container) {
         container.highcharts({
             chart: {
@@ -1520,6 +1524,7 @@ Number.prototype.format = function (n, x) {
             series: data.BarChart.Series
         });
     };
+
     artifactDesigner._displayMultistacksBarChart = function (data, container) {
         container.highcharts({
             chart: {
@@ -1694,6 +1699,7 @@ Number.prototype.format = function (n, x) {
             series: data.BarChart.Series
         });
     };
+
     artifactDesigner._displayMultistacksGroupedBarChart = function (data, container) {
         container.highcharts({
             chart: {
@@ -1895,23 +1901,29 @@ Number.prototype.format = function (n, x) {
             series: data.BarChart.Series
         });
     };
+
     artifactDesigner._setupCallbacks.baraccumulative = function () {
         Pear.Artifact.Designer._setupCallbacks.bar();
     };
+
     artifactDesigner._previewCallbacks.baraccumulative = function (data, container) {
         Pear.Artifact.Designer._previewCallbacks.bar(data, container);
     };
+
     artifactDesigner._setupCallbacks.barachievement = function () {
         $('#bar-value-axis').val('KpiActual');
         $('.main-value-axis').css('display', 'none');
         Pear.Artifact.Designer._setupCallbacks.bar();
     };
+
     artifactDesigner._previewCallbacks.barachievement = function (data, container) {
         Pear.Artifact.Designer._previewCallbacks.bar(data, container);
     };
+
     artifactDesigner._setupCallbacks.barhorizontal = function () {
         artifactDesigner._setupCallbacks.bar();
     }
+
     artifactDesigner._previewCallbacks.barhorizontal = function (data, container) {
         //console.log(data.BarChart.SeriesType);
         if (data.BarChart.SeriesType == "single-stack") {
@@ -1922,6 +1934,7 @@ Number.prototype.format = function (n, x) {
             Pear.Artifact.Designer._displayMultistacksGroupedBarhorizontalChart(data, container);
         }
     };
+
     artifactDesigner._displayBasicBarhorizontalChart = function (data, container) {
         container.highcharts({
             chart: {
@@ -2119,6 +2132,7 @@ Number.prototype.format = function (n, x) {
             series: data.BarChart.Series
         });
     };
+
     artifactDesigner._displayMultistacksBarhorizontalChart = function (data, container) {
         container.highcharts({
             chart: {
@@ -2295,6 +2309,7 @@ Number.prototype.format = function (n, x) {
             series: data.BarChart.Series
         });
     };
+
     artifactDesigner._displayMultistacksGroupedBarhorizontalChart = function (data, container) {
         container.highcharts({
             chart: {
@@ -3008,6 +3023,7 @@ Number.prototype.format = function (n, x) {
             series: data.AreaChart.Series
         });
     };
+
     artifactDesigner._displayMultistacksAreaChart = function (data, container) {
         data.AreaChart.Series = data.AreaChart.Series.reverse();
         //console.log(data);
@@ -3330,6 +3346,7 @@ Number.prototype.format = function (n, x) {
         //rangeControl();
         //rangeDatePicker();
     };
+
     artifactDesigner._previewCallbacks.speedometer = function (data, container) {
         container.highcharts({
             chart: {
@@ -3495,6 +3512,7 @@ Number.prototype.format = function (n, x) {
 
     //tabular
     artifactDesigner._setupCallbacks.tabularrow = {};
+
     artifactDesigner._setupCallbacks.tabularrow.rangeControl = function (context) {
         context.find('.range-filter').change(function (e) {
             e.preventDefault();
@@ -3505,13 +3523,12 @@ Number.prototype.format = function (n, x) {
         var rangeFilterSetup = function (periodeType) {
             var toRemove = {};
 
-            toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-            toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'MTD', 'CurrentMonth', 'YTD', 'DTD', 'SpecificMonth', 'SpecificYear', 'AllExistingYears', 'Interval'];
-            ;//['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificMonth', 'SpecificYear'];
-            toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificYear', 'AllExistingYears', 'Interval'];//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificYear'];
-            toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'AllExistingYears', 'Interval'];
-            ;//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth'];
+            toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            
             var originalClone = original.clone(true);
             originalClone.find('option').each(function (i, val) {
                 if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
@@ -3548,6 +3565,7 @@ Number.prototype.format = function (n, x) {
 
         });
     };
+
     artifactDesigner._setupCallbacks.tabularrow.specificDate = function (context) {
         $(".datepicker").on("dp.change", function (e) {
             if (context.find('.range-filter').val().toLowerCase().indexOf('specific') > -1) {//&& e.target.class === 'start-in-display') {
@@ -3555,6 +3573,7 @@ Number.prototype.format = function (n, x) {
             }
         });
     };
+
     artifactDesigner._setupCallbacks.tabularrow.rangeDatePicker = function (context) {
 
         context.find('.datepicker').change(function (e) {
@@ -3602,6 +3621,7 @@ Number.prototype.format = function (n, x) {
             }
         });
     };
+
     artifactDesigner._setupCallbacks.tabular = function () {
         var removeRow = function () {
             $('.row-template .remove').click(function (e) {
@@ -3646,6 +3666,7 @@ Number.prototype.format = function (n, x) {
         $('#general-graphic-settings').css('display', 'none');
         $('.form-measurement').css('display', 'none');
     };
+
     artifactDesigner._previewCallbacks.tabular = function (data, container) {
         var tableUniqueClass = "table-" + Math.floor((Math.random() * 100) + 1);
         var wrapper = $('<div>');
@@ -3792,6 +3813,7 @@ Number.prototype.format = function (n, x) {
         removePlot();
         addPlot();
     };
+
     artifactDesigner._previewCallbacks.trafficlight = function (data, container) {
         container.trafficlight(data.TrafficLightChart);
     };
@@ -4887,7 +4909,6 @@ Number.prototype.format = function (n, x) {
             $('.add-column').click(function () {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
-                console.log('anjing');
                 var currentCols = $row.children('.layout-column').length;
                 var newWidth = 100 / (currentCols + 1);
                 $row.children('.layout-column').each(function (i, val) {
@@ -5863,7 +5884,7 @@ Number.prototype.format = function (n, x) {
                 }
             }
         }
-
+        
         return result;                
     }
     var getDateFormat = function (periodeType) {
@@ -5902,7 +5923,7 @@ Number.prototype.format = function (n, x) {
                 $('.graphic-setting-content').show();
                 $('#graphic-setting').modal('show');
 
-                var rangeDatePicker = function () {
+                function rangeDatePicker() {
                     var format = $('#datetime-attr').attr('data-datepickerformat');
                     $('.datepicker').datetimepicker({
                         format: format,
@@ -5950,7 +5971,7 @@ Number.prototype.format = function (n, x) {
                         }
                     });
                 };
-                var rangeControl = function () {
+                function rangeControl () {
                     $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
                         e.preventDefault();
                         var $this = $(this);
@@ -5974,10 +5995,10 @@ Number.prototype.format = function (n, x) {
                                 break;
                             default:
                                 toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];                                
                                 break;
                         }
                         var originalClone = original.clone(true);
@@ -5998,30 +6019,27 @@ Number.prototype.format = function (n, x) {
                     });
 
                 };
-                var specificDate = function () {
+                function specificDate () {
                     $(".datepicker").on("dp.change", function (e) {
                         if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
                             $('#EndInDisplay').val($('#StartInDisplay').val());
                         }
                     });
                 };
-
                 rangeControl();
                 rangeDatePicker();
                 specificDate();
-
                 var search = searchArtifactConfig(_configs, artifactId);
-                if (search.isExisted == true) {
-                    console.log(search);
-                    $('.graphic-setting-content #StartInDisplay').val(search.config.StartInDisplay);
-                    $('.graphic-setting-content #EndInDisplay').val(search.config.EndInDisplay);
-                    $('.graphic-setting-content #PeriodeType').val(search.config.PeriodeType);
+                if (search.isExisted == true) {             
+                    $('.graphic-setting-content #PeriodeType').val(search.config.PeriodeType).change();
                     //$('.graphic-setting-content #PeriodeType[value="' + search.config.PeriodeType + '"]').attr("selected", true);
-                    $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter);     
+                    $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter).change();     
                     //$('.graphic-setting-content #RangeFilter[value="' + search.config.RangeFilter + '"]').attr("selected", true);
                     $('.datepicker').datetimepicker({
                         format: search.dateformat,
                     });
+                    $('.graphic-setting-content #StartInDisplay').val(search.config.StartInDisplay);
+                    $('.graphic-setting-content #EndInDisplay').val(search.config.EndInDisplay);
                     $('#range-holder').removeClass();
                     $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
                 }
@@ -6051,7 +6069,7 @@ Number.prototype.format = function (n, x) {
                 });
                 result['dateformat'] = getDateFormat(result["PeriodeType"]);
                 var search = searchArtifactConfig(_configs, result["Id"]);
-                (search.isExisted) ? _configs[search.index] = result : _configs.push(result);                
+                (search.isExisted) ? _configs[search.index] = result : _configs.push(result);    
                 callback[data2.GraphicType](data2, _artifactHolder);
                 $('#graphic-setting').modal('hide');
             }
