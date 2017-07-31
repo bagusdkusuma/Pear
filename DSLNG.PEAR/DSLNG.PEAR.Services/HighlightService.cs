@@ -59,14 +59,21 @@ namespace DSLNG.PEAR.Services
             }
         }
 
-        public GetHighlightResponse GetHighlightByPeriode(GetHighlightRequest request)
+        public GetHighlightResponse GetHighlightByPeriode(GetHighlightRequest request, bool latest = false)
         {
             
             var data = DataContext.Highlights
                                   .Include(x => x.HighlightType)
                                   .Where(x => x.PeriodeType == (request.PeriodeType.HasValue? request.PeriodeType : PeriodeType.Daily))
-                                  .Where(x => x.Date == request.Date)
                                   .AsQueryable();
+            if (latest)
+            {
+                data = data.OrderByDescending(x => x.Date);
+            }
+            else {
+                data = data.Where(x => x.Date == request.Date);
+            }
+            
 
             if (request.HighlightTypeId > 0)
             {

@@ -61,8 +61,12 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
                 }
             }
+            var forbidenTypes = new string[] { "Alert" };
             viewModel.HighlightTypes = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
-                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).Where(x => !x.Text.ToLower().Contains("indicator") 
+                && !forbidenTypes.Contains(x.Text) 
+                && !x.Text.ToLower().Contains("edg")
+                && !x.Text.ToLower().Contains("gtg")).ToList();
             foreach (var name in Enum.GetNames(typeof(TemplateColumnType)))
             {
                 viewModel.ColumnTypes.Add(new SelectListItem { Text = name, Value = name });
@@ -89,8 +93,12 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
                 }
             }
+            var forbidenTypes = new string[] { "Alert" };
             viewModel.HighlightTypes = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
-                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).Where(x => !x.Text.ToLower().Contains("indicator")
+                && !forbidenTypes.Contains(x.Text)
+                && !x.Text.ToLower().Contains("edg")
+                && !x.Text.ToLower().Contains("gtg")).ToList();
             foreach (var name in Enum.GetNames(typeof(TemplateColumnType)))
             {
                 viewModel.ColumnTypes.Add(new SelectListItem { Text = name, Value = name });
