@@ -254,11 +254,11 @@
             textAnchor: "middle",
         });
 
-        if (isSuperAdmin) {
-            tTitle.click(function () {
-                window.open("/artifact/edit/" + options.ArtifactId, "_blank");
-            });
-        }
+        //if (isSuperAdmin) {
+        //    tTitle.click(function () {
+        //        window.open("/artifact/edit/" + options.ArtifactId, "_blank");
+        //    });
+        //}
         
 
        
@@ -267,7 +267,7 @@
             font: "14px Open Sans, sans-serif",
             fill: "#fff",
             textAnchor: "middle",
-            class: "tank-subtitle"
+            //class: "tank-subtitle"
         });
         
         return this;

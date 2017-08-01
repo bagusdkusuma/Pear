@@ -378,7 +378,7 @@ Number.prototype.format = function (n, x) {
                         break;
                     default:
                         toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                        toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
@@ -560,7 +560,7 @@ Number.prototype.format = function (n, x) {
                         break;
                     default:
                         toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                        toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
@@ -3671,7 +3671,17 @@ Number.prototype.format = function (n, x) {
         var tableUniqueClass = "table-" + Math.floor((Math.random() * 100) + 1);
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
-        var title = $('#user-profile-session-data').data('issuperadmin') == true ? '<a href="/Artifact/Edit/' + data.Id + '" target="_blank">' + data.Tabular.Title + '</a>' : data.Tabular.Title;
+        var btn = '<div class="btn-group chart-button">' +
+            '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +        
+            '<ul class="dropdown-menu pull-right">' +            
+            '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>' +
+            '</ul>' +
+            '</div >';
+        var title = data.Tabular.Title;        
+        if ($('#user-profile-session-data').data('issuperadmin') == true) {
+            wrapper.append(btn);               
+        }
+        
         wrapper.append($('<h3>').html(title));
 
         //container for scrolling table
@@ -3831,10 +3841,24 @@ Number.prototype.format = function (n, x) {
     };
     artifactDesigner._previewCallbacks.tank = function (data, container) {
         data.Tank.ArtifactId = data.Id;
-        container.tank(data.Tank, {
-            height: container.height(),
-            width: container.width()
-        });
+        setTimeout(function () {
+            container.tank(data.Tank, {
+                height: container.height(),
+                width: container.width()
+            });
+
+            var btn = '<div class="btn-group chart-button">' +
+                '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
+                '<ul class="dropdown-menu pull-right">' +
+                '<li><a class="tank-subtitle" href="javascript:;">Change Periode</a></li>' +
+                '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>' +
+                '</ul>' +
+                '</div >';
+            container.css('position', 'relative');
+            if ($('#user-profile-session-data').data('issuperadmin') == true) {
+                container.append(btn);
+            }
+        }, 500);
     };
 
     //mutliaxis
@@ -5051,16 +5075,16 @@ Number.prototype.format = function (n, x) {
             $.ajax({
                 url: url,
                 method: 'GET',
-                success: function (data) {
+                success: function (data) {                    
                     var isSuperAdmin = $('#user-profile-session-data').data('issuperadmin') == true;
+                    $holder.attr('data-highlight-id', data.Id);
                     var editUrl = $('.highlight-holder').data('artifact-edit-url');
-                    if(editUrl != undefined){
-                        editUrl.replace('_id_', data.Id);
+                    if (editUrl != undefined) {
+                        editUrl = editUrl.replace('_id_', data.Id);
                     }
                     
-                    var title = data.Title == null || data.Title == "" ? data.Type : data.Title;
-                    var clickableTitle = isSuperAdmin && editUrl != undefined ? $('<a/>', { 'href': editUrl, 'text': title }) : title;
-                    var $title = $('<h4/>').html(clickableTitle);
+                    var title = data.Title == null || data.Title == "" ? data.Type : data.Title;                    
+                    var $title = $('<h4/>').html(title);
                     var $periode = $('<div />').append(Pear.Artifact.Designer._toJavascriptDate(data.Date, data.SPeriodeType));
                     var $message = $('<div />').append(data.Message);
                     $message.addClass('dashboard-highlight-message');
@@ -5072,13 +5096,17 @@ Number.prototype.format = function (n, x) {
                     $holder.append($periode);
                     $holder.append($message);
 
-                    //var $title = $('<h4/>').html(data.Title == null || data.Title == "" ? data.Type : data.Title);
-                    //var $message = $('<div />').append(data.Message);
-                    //$message.addClass('dashboard-highlight-message');
-                    //$title.addClass('dashboard-highlight-title');
-                    //$holder.css('background', 'none');
-                    //$holder.append($title);
-                    //$holder.append($message);
+                    var btn = '<div class="btn-group chart-button">' +
+                        '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
+                        '<ul class="dropdown-menu pull-right">' +
+                        '<li><a class="highlight-change-periode" href="javascript:;">Change Periode</a></li>' +
+                        '<li><a href="'+ editUrl +'" target="_blank">Edit Highlight</a></li>' +
+                        '</ul>' +
+                        '</div >';
+                    $holder.css('position', 'relative');
+                    if (isSuperAdmin) {
+                        $holder.append(btn);
+                    }                    
                 }
             });
         });
@@ -5182,7 +5210,6 @@ Number.prototype.format = function (n, x) {
                 data: $this.closest('form').serialize(),
                 method: 'POST',
                 success: function (data) {
-                    //console.log(data);
                     $('#container').html(data);
                     templateEditor.ViewSetup();
                     $('#graphic-preview').modal('show');
@@ -5878,7 +5905,9 @@ Number.prototype.format = function (n, x) {
     var _artifactHolder;
     var _highchartsContainer;
     var _latestDateTimeFormat;
+    var _highlightHolder;
     var _configs = [];
+    var _highlightConfigs = [];
     var searchArtifactConfig = function (configs, artifactId) {
         var result = { isExisted: false, config: {}, index: -1 };
         if (configs.length > 0) {
@@ -5894,6 +5923,22 @@ Number.prototype.format = function (n, x) {
         }
         
         return result;                
+    }
+    var searchHighlightConfig = function (configs, highlightId) {
+        var result = { isExisted: false, config: {}, index: -1 };
+        if (configs.length > 0) {
+            for (var i = 0; i < configs.length; i++) {
+                if (configs[i].Id == highlightId) {
+                    result.isExisted = true;
+                    result.config = configs[i];
+                    result.index = i;
+                    result.dateformat = configs[i].dateformat;
+                    return result;
+                }
+            }
+        }
+
+        return result;
     }
     var getDateFormat = function (periodeType) {
         if (periodeType == undefined) return;
@@ -5918,10 +5963,11 @@ Number.prototype.format = function (n, x) {
         //Pear.Loading.Show(artifactHolder);       
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
+        var url = '/Artifact/GraphicSetting/' + artifactId;
         //_highchartsContainter.hide();
         
         $.ajax({
-            url: '/Artifact/GraphicSetting/' + artifactId,
+            url: url, 
             method: 'GET',
             success: function (data) {
                 $('.graphic-setting-content').hide();
@@ -6003,7 +6049,7 @@ Number.prototype.format = function (n, x) {
                                 break;
                             default:
                                 toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];                                
@@ -6022,7 +6068,9 @@ Number.prototype.format = function (n, x) {
                     $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
                         e.preventDefault();
                         var $this = $(this);
+                        
                         rangeFilterSetup($this.val().toLowerCase().trim());
+                        $('.graphic-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
                         $('#range-holder').removeAttr('class');
                     });
 
@@ -6040,9 +6088,7 @@ Number.prototype.format = function (n, x) {
                 var search = searchArtifactConfig(_configs, artifactId);
                 if (search.isExisted == true) {             
                     $('.graphic-setting-content #PeriodeType').val(search.config.PeriodeType).change();
-                    //$('.graphic-setting-content #PeriodeType[value="' + search.config.PeriodeType + '"]').attr("selected", true);
                     $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter).change();     
-                    //$('.graphic-setting-content #RangeFilter[value="' + search.config.RangeFilter + '"]').attr("selected", true);
                     $('.datepicker').datetimepicker({
                         format: search.dateformat,
                     });
@@ -6054,13 +6100,170 @@ Number.prototype.format = function (n, x) {
             }
         });
     }
-    
-    //$('.artifact-holder').on('click', '.highcharts-subtitle', function () {           
-    //    getGraphicSetting($(this));
-    //});
+    var getHighlightSetting = function (el) {
+        var highlightHolder = el.closest('.highlight-holder');
+        _highlightHolder = highlightHolder;
+        _highchartsContainter = el.closest('.highcharts-container');
+ 
+        var highlightId = highlightHolder.attr('data-highlight-id');
+        //var chart = artifactHolder.highcharts();
+        var url = '/Artifact/HighlightSetting/' + highlightId;
+        //_highchartsContainter.hide();
 
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function (data) {
+                $('.highlight-setting-content').hide();
+                $('.highlight-setting-content').html(data);
+                $('.highlight-setting-content').append('<input type="hidden" value="' + highlightId + '" name="Id" />');
+
+                $('.highlight-setting-content').show();
+                $('#highlight-setting').modal('show');
+
+                function rangeDatePicker() {
+                    var format = $('#datetime-attr').attr('data-datepickerformat');
+                    $('.datepicker').datetimepicker({
+                        format: format,
+                    });
+                    $('.datepicker').change(function (e) {
+                    });
+                    $('#PeriodeType').change(function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        var clearValue = $('.datepicker').each(function (i, val) {
+                            $(val).val('');
+                            if ($(val).data("DateTimePicker") !== undefined) {
+                                $(val).data("DateTimePicker").destroy();
+                            }
+                        });
+                        switch ($this.val().toLowerCase().trim()) {
+                            case 'hourly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY hh:00 A"
+                                });
+                                break;
+                            case 'daily':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY"
+                                });
+                                break;
+                            case 'weekly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY",
+                                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                                });
+                                break;
+                            case 'monthly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/YYYY"
+                                });
+                                break;
+                            case 'yearly':
+                                $('.datepicker').datetimepicker({
+                                    format: "YYYY"
+                                });
+                                break;
+                            default:
+
+                        }
+                    });
+                };
+                function rangeControl() {
+                    $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {                        
+                        e.preventDefault();
+                        var $this = $(this);
+                        $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+                    });
+                    var original = $('#RangeFilter').clone(true);
+                    var rangeFilterSetup = function (periodeType) {
+                        var graphicType = $('#graphic-type').val();                        
+                        var toRemove = {};
+                        switch (graphicType) {
+                            case "tabular":
+                            case "tank":
+                            case "speedometer":
+                            case "traffic":
+                            case "pie":
+                                toRemove.hourly = ['AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                break;
+                            case "highlight":
+                                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                break;
+                            default:
+                                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                break;
+                        }
+                        var originalClone = original.clone(true);
+                        originalClone.find('option').each(function (i, val) {
+                            if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                                originalClone.find(val).remove();
+                            }
+                        });
+                        $('#RangeFilter').replaceWith(originalClone);
+                    };
+
+                    rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
+                    $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+
+                        rangeFilterSetup($this.val().toLowerCase().trim());
+                        $('.graphic-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
+                        $('.graphic-setting-content #RangeFilter').trigger('change');
+                        //$('#range-holder').removeAttr('class');
+                    });
+
+                };
+                function specificDate() {
+                    $(".datepicker").on("dp.change", function (e) {
+                        if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                            $('#EndInDisplay').val($('#StartInDisplay').val());
+                        }
+                    });
+                };
+                rangeControl();
+                rangeDatePicker();
+                specificDate();
+
+                var search = searchHighlightConfig(_highlightConfigs, highlightId);
+                if (search.isExisted == true) {
+                    $('.highlight-setting-content #PeriodeType').val(search.config.PeriodeType).change();
+                    $('.highlight-setting-content #RangeFilter').val(search.config.RangeFilter).change();
+                    $('.datepicker').datetimepicker({
+                        format: search.dateformat,
+                    });
+                    $('.highlight-setting-content #StartInDisplay').val(search.config.StartInDisplay);
+                    $('.highlight-setting-content #EndInDisplay').val(search.config.EndInDisplay);
+                    $('#range-holder').removeClass();
+                    $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
+                } else {
+                    var currentPeriodeType = $('#general-graphic-settings #PeriodeType').val();
+                    var currentRangeFilter = $('#general-graphic-settings #RangeFilter').val().toLowerCase().trim();
+                    $('#general-graphic-settings #range-holder').prop('class', currentRangeFilter);  
+                }                            
+            }
+        });
+    }
+   
     $('.artifact-holder').on('click', '.tank-subtitle', function () {
         getGraphicSetting($(this));
+    });
+
+    $('.highlight-holder').on('click', '.highlight-change-periode', function () {
+        getHighlightSetting($(this));
     });
 
     $('#graphic-setting').on('submit', '#graphic-setting-form', function (e) {
@@ -6084,20 +6287,31 @@ Number.prototype.format = function (n, x) {
         })
     })
 
-    $('#graphic-setting').on('click', '#backToDefault', function (e) {
+    $('#highlight-setting').on('submit', '#highlight-setting-form', function (e) {
         e.preventDefault();
-        //var $form = $(this).closest('form');
+        $.ajax({
+            url: $('#highlight-setting-form').attr('action'),
+            data: $('#highlight-setting-form').serialize(),
+            method: 'POST',
+            success: function (data2) {          
+                var result = {};
+                result['dateformat'] = getDateFormat(result["PeriodeType"]);
+                $.each($('#highlight-setting-form').serializeArray(), function (key, value) {
+                    result[this.name] = this.value;
+                });
+                var search = searchHighlightConfig(_highlightConfigs, result["Id"]);
+                (search.isExisted) ? _highlightConfigs[search.index] = result : _highlightConfigs.push(result);
+                _highlightHolder.find('.dashboard-highlight-periode:first').html(Pear.Artifact.Designer._toJavascriptDate(data2.Date, data2.SPeriodeType));
+                _highlightHolder.find('.dashboard-highlight-message:first').html(data2.Message);
+                $('#highlight-setting').modal('hide');
+            }
+        })
+    })
 
-        //// reset errors with unobtrusive
-        //$form.trigger('reset.unobtrusiveValidation');
-
-        //// reset inputs
-        //var validator = $form.validate(); // get saved validator
-        ////validator.settings.ignore = ''; // if form hided (closed ui dialogs, etc)
-        //validator.resetForm();
+    $('#graphic-setting').on('click', '#backToDefault', function (e) {
+        e.preventDefault();        
         $.ajax({
             url: _artifactHolder.data('artifact-url'),
-            //data: {id : 158},
             method: 'POST',
             success: function (data2) {
                 var callback = Pear.Artifact.Designer._previewCallbacks;                
@@ -6109,6 +6323,24 @@ Number.prototype.format = function (n, x) {
             }
         })
     });
+
+    $('#highlight-setting').on('click', '#backToDefault', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: _highlightHolder.data('artifact-url'),
+            method: 'POST',
+            success: function (data2) {
+                var search = searchHighlightConfig(_highlightConfigs, _highlightHolder.data('highlight-id'));
+                if (search.isExisted)
+                    _highlightConfigs.splice(search.index, 1);
+
+                _highlightHolder.find('.dashboard-highlight-periode:first').html(Pear.Artifact.Designer._toJavascriptDate(data2.Date, data2.SPeriodeType));
+                _highlightHolder.find('.dashboard-highlight-message:first').html(data2.Message);
+                $('#highlight-setting').modal('hide');
+            }
+        })
+    });
+
     $('#graphic-setting').on('hidden.bs.modal', function () {
         //_highchartsContainter.show();
         //Pear.Loading.Stop(_artifactHolder);

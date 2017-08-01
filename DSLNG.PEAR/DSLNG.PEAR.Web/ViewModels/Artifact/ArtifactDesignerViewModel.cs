@@ -107,6 +107,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
 
         public double? FractionScale { get; set; }
         public double? MaxFractionScale { get; set; }
+        public int HighlightTypeId { get; set; }
         //chart
         public BarChartViewModel BarChart { get; set; }
         public AreaChartViewModel AreaChart { get; set; }   

@@ -1276,6 +1276,20 @@ namespace DSLNG.PEAR.Services
                                 timeInformation += " - " + startDay.AddDays(-1).ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             }
                             break;
+                        case RangeFilter.YTD:
+                            {
+                                var startDay = new DateTime(DateTime.Now.Year, 1, 1);
+                                var endDay = new DateTime(DateTime.Now.Year, 12, 31);
+                                timeInformation = startDay.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                                while (startDay <= endDay)
+                                {
+                                    periodes.Add(startDay.ToString(dailyFormat));
+                                    dateTimePeriodes.Add(startDay);
+                                    startDay = startDay.AddDays(1);
+                                }
+                                timeInformation += " - " + startDay.AddDays(-1).ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                            }
+                            break;
                         default:
                             timeInformation = Start.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + End.Value.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                             while (Start.Value <= End.Value)

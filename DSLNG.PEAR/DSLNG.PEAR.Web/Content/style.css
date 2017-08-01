@@ -3531,3 +3531,13 @@ tr.der-transaction-error {
         background-color: #ccc;
         color: #004071;
     }
+
+.chart-button {
+    position: absolute;
+    right: 0;
+    top: -12px;
+}
+
+.tabular-wrapper {
+    position: relative;
+}

@@ -1172,6 +1172,22 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView("_GraphicSetting", viewModel);
         }
 
+        public ActionResult HighlightSetting(int id)
+        {
+            var highlight = _highlightService.GetHighlight(new GetHighlightRequest { Id = id });
+            var viewModel = new ArtifactDesignerViewModel();
+            SetPeriodeTypes(viewModel.PeriodeTypes);
+            SetRangeFilters(viewModel.RangeFilters);
+            SetValueAxes(viewModel.ValueAxes);
+            highlight.MapPropertiesToInstance<ArtifactDesignerViewModel>(viewModel);
+            viewModel.GraphicType = "highlight";
+            viewModel.StartInDisplay = ParseDateToString(highlight.PeriodeType, highlight.Date);
+            viewModel.EndInDisplay = ParseDateToString(highlight.PeriodeType, highlight.Date);
+            viewModel.HighlightTypeId = highlight.TypeId;
+            viewModel.HeaderTitle = highlight.Title;
+            return PartialView("_GraphicSetting", viewModel);
+        }
+
         [HttpPost]
         public ActionResult GraphicSetting(ArtifactDesignerViewModel viewModel)
         {
@@ -1187,6 +1203,21 @@ namespace DSLNG.PEAR.Web.Controllers
             artifactResp.End = viewModel.EndAfterParsed;
 
             return GetView(previewViewModel, artifactResp);
+        }
+
+        [HttpPost]
+        public ActionResult HighlightSetting(ArtifactDesignerViewModel viewModel)
+        {
+            var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest {
+                Id = 0,
+                PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType),
+                Date = viewModel.StartAfterParsed,
+                HighlightTypeId = viewModel.HighlightTypeId
+            });
+
+            highlight.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType);
+            highlight.Date = viewModel.StartAfterParsed.Value;
+            return Json(highlight, JsonRequestBehavior.AllowGet);
         }
 
         private string ParseDateToString(PeriodeType periodeType, DateTime? date)

@@ -5,12 +5,27 @@
         width: 120px;
     }
 </style>
+@{ 
+    var id = "graphic-type";
+}
+
 <div class="form-inline whitebox">
-    @Html.HiddenFor(model => model.GraphicType, new { @class = "form-control", id="graphic-type" })
+    @Html.HiddenFor(model => model.GraphicType, new { @class = "form-control", id = "graphic-type" })
+    @Html.HiddenFor(model => model.HighlightTypeId, new { @class = "form-control" })
     <div class="form-inline whitebox">
         <div id="general-graphic-settings">
             <div class="form-group form-list">
-                <h4>Graph Settings</h4>
+                @{
+                    if (Model.HighlightTypeId > 0)
+                    {
+                        <h4>Highlight Settings</h4>
+                    }
+                    else
+                    {
+                        <h4>Graph Settings</h4>
+                    }
+                }
+                
                 <hr/>
             </div>
             <div class="form-group form-list">
