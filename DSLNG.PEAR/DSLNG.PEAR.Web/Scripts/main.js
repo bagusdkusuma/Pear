@@ -1436,7 +1436,7 @@ Number.prototype.format = function (n, x) {
                                     netbackValue -= this.points[i].y;
                                 }
                             }
-                            
+
                             if (i == this.points.length - 2) {
                                 //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
                                 tooltip += '<strong>' + this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
@@ -1459,7 +1459,7 @@ Number.prototype.format = function (n, x) {
                             }
 
                         }
-                        
+
 
                         //if (typeof this.points[i].total !== 'undefined') {
                         //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
@@ -1625,7 +1625,7 @@ Number.prototype.format = function (n, x) {
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //total in process
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -1720,7 +1720,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.BarChart.Title,                
+                text: data.BarChart.Title,
                 style: {
                     "color": '#fff'
                 }
@@ -1793,10 +1793,10 @@ Number.prototype.format = function (n, x) {
                     var tooltip = '';
                     if (data.BarChart.Periodes.length == 1) {
                         tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
-                    }else if (data.TimePeriodes.length) {
+                    } else if (data.TimePeriodes.length) {
                         tooltip += '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
                     } else {
-                        
+
                         tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
                     }
                     var totalInProcess = 0;
@@ -1817,7 +1817,7 @@ Number.prototype.format = function (n, x) {
                                     netbackValue -= this.points[i].y;
                                 }
                             }
-                            
+
                             if (i == this.points.length - 2) {
                                 //console.log(this.points[i].series.name);
                                 //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
@@ -1955,7 +1955,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.BarChart.Title,                
+                text: data.BarChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -2350,7 +2350,7 @@ Number.prototype.format = function (n, x) {
                         "color": '#fff'
                     }
                 },
-                reversed:false
+                reversed: false
             },
             yAxis: {
                 //min: 0,
@@ -2576,7 +2576,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                text: data.LineChart.Title,                
+                text: data.LineChart.Title,
                 //x: -20, //center
                 style: {
                     color: '#fff'
@@ -2710,7 +2710,7 @@ Number.prototype.format = function (n, x) {
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -2936,7 +2936,7 @@ Number.prototype.format = function (n, x) {
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -3139,7 +3139,7 @@ Number.prototype.format = function (n, x) {
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -3310,7 +3310,7 @@ Number.prototype.format = function (n, x) {
         var rangeControl = function () {
             $('#SpeedometerChart_RangeFilter').change(function (e) {
                 e.preventDefault();
-                var $this = $(this);                
+                var $this = $(this);
                 $('#range-holder').prop('class', $this.val().toLowerCase().trim());
             });
             var original = $('#SpeedometerChart_RangeFilter').clone(true);
@@ -3528,7 +3528,7 @@ Number.prototype.format = function (n, x) {
             toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
             toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
             toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-            
+
             var originalClone = original.clone(true);
             originalClone.find('option').each(function (i, val) {
                 if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
@@ -3672,16 +3672,16 @@ Number.prototype.format = function (n, x) {
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
         var btn = '<div class="btn-group chart-button">' +
-            '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +        
-            '<ul class="dropdown-menu pull-right">' +            
+            '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
+            '<ul class="dropdown-menu pull-right">' +
             '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>' +
             '</ul>' +
             '</div >';
-        var title = data.Tabular.Title;        
+        var title = data.Tabular.Title;
         if ($('#user-profile-session-data').data('issuperadmin') == true) {
-            wrapper.append(btn);               
+            wrapper.append(btn);
         }
-        
+
         wrapper.append($('<h3>').html(title));
 
         //container for scrolling table
@@ -4300,7 +4300,7 @@ Number.prototype.format = function (n, x) {
 
                         }
                     }
-                }                
+                }
             },
             credits: {
                 enabled: false
@@ -4352,7 +4352,7 @@ Number.prototype.format = function (n, x) {
                     var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
-                      
+
                         var prev = (parseInt(i) - 1);
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
@@ -4362,7 +4362,7 @@ Number.prototype.format = function (n, x) {
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //console.log(
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //    console.log(totalInProcess);
                             //}
 
@@ -4376,7 +4376,7 @@ Number.prototype.format = function (n, x) {
                                 totalInProcess = 0;
                             }
                         }
-                       
+
                         //if (typeof this.points[i].total !== 'undefined') {
                         //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
                         //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
@@ -4396,7 +4396,7 @@ Number.prototype.format = function (n, x) {
             },
             series: series
         })
-        
+
     };
 
 
@@ -4661,7 +4661,7 @@ Number.prototype.format = function (n, x) {
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -4766,7 +4766,7 @@ Number.prototype.format = function (n, x) {
                 //spacingRight: 0
             },
             title: {
-                text: data.Pie.Title,                
+                text: data.Pie.Title,
                 style: {
                     color: '#fff'
                 }
@@ -5075,15 +5075,15 @@ Number.prototype.format = function (n, x) {
             $.ajax({
                 url: url,
                 method: 'GET',
-                success: function (data) {                    
+                success: function (data) {
                     var isSuperAdmin = $('#user-profile-session-data').data('issuperadmin') == true;
                     $holder.attr('data-highlight-id', data.Id);
                     var editUrl = $('.highlight-holder').data('artifact-edit-url');
                     if (editUrl != undefined) {
                         editUrl = editUrl.replace('_id_', data.Id);
                     }
-                    
-                    var title = data.Title == null || data.Title == "" ? data.Type : data.Title;                    
+
+                    var title = data.Title == null || data.Title == "" ? data.Type : data.Title;
                     var $title = $('<h4/>').html(title);
                     var $periode = $('<div />').append(Pear.Artifact.Designer._toJavascriptDate(data.Date, data.SPeriodeType));
                     var $message = $('<div />').append(data.Message);
@@ -5100,13 +5100,13 @@ Number.prototype.format = function (n, x) {
                         '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
                         '<ul class="dropdown-menu pull-right">' +
                         '<li><a class="highlight-change-periode" href="javascript:;">Change Periode</a></li>' +
-                        '<li><a href="'+ editUrl +'" target="_blank">Edit Highlight</a></li>' +
+                        '<li><a href="' + editUrl + '" target="_blank">Edit Highlight</a></li>' +
                         '</ul>' +
                         '</div >';
                     $holder.css('position', 'relative');
                     if (isSuperAdmin) {
                         $holder.append(btn);
-                    }                    
+                    }
                 }
             });
         });
@@ -5344,8 +5344,8 @@ Number.prototype.format = function (n, x) {
                     $.each(data, function (key, opt) {
                         select
                             .append($("<option></option>")
-                            .attr("value", opt.Value.trim())
-                            .text(opt.Text.trim()));
+                                .attr("value", opt.Value.trim())
+                                .text(opt.Text.trim()));
                     });
 
                     $messageHolder.html($messageHolderClone.find('.alert-condition-options').html());
@@ -5365,19 +5365,19 @@ Number.prototype.format = function (n, x) {
                                 "searchreplace visualblocks code fullscreen",
                                 "insertdatetime media table contextmenu paste"
                             ],
-                            style_formats : [
-                                    {title : 'Line height 20px', selector : 'p,div,h1,h2,h3,h4,h5,h6', styles: {lineHeight: '20px'}},
-                                    {title : 'Line height 30px', selector : 'p,div,h1,h2,h3,h4,h5,h6', styles: {lineHeight: '30px'}}
+                            style_formats: [
+                                { title: 'Line height 20px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '20px' } },
+                                { title: 'Line height 30px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '30px' } }
                             ],
-                            force_br_newlines : true,
-                            force_p_newlines : false,
+                            force_br_newlines: true,
+                            force_p_newlines: false,
                             //forced_root_block : '',
                             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                         });
                     }
                 }
             });
-            
+
         });
         $('#TypeId').change();
     };
@@ -5838,16 +5838,16 @@ Number.prototype.format = function (n, x) {
                 $('.parent-options').hide();
             } else {
                 $('#ParentOptionId')
-                         .find('option')
-                         .remove()
-                         .end();
+                    .find('option')
+                    .remove()
+                    .end();
                 $.get(url, 'id=' + val, function (data) {
                     $.each(data, function (key, opt) {
 
                         $('#ParentOptionId')
                             .append($("<option></option>")
-                            .attr("value", opt.Id)
-                            .text(opt.Text));
+                                .attr("value", opt.Id)
+                                .text(opt.Text));
                     });
                     $('.parent-options').show();
                 });
@@ -5898,7 +5898,7 @@ Number.prototype.format = function (n, x) {
             Pear.OperationConfig.FormSetup();
         }
 
-        
+
     });
     window.Pear = Pear;
 
@@ -5921,8 +5921,8 @@ Number.prototype.format = function (n, x) {
                 }
             }
         }
-        
-        return result;                
+
+        return result;
     }
     var searchHighlightConfig = function (configs, highlightId) {
         var result = { isExisted: false, config: {}, index: -1 };
@@ -5955,23 +5955,35 @@ Number.prototype.format = function (n, x) {
                 return 'MM/DD/YYYY hh:00 A';
         }
     }
-    var getGraphicSetting = function (el) {        
+    var getGraphicSetting = function (el) {
         var artifactHolder = el.closest('.artifact-holder');
         _artifactHolder = artifactHolder;
         _highchartsContainter = el.closest('.highcharts-container');
 
-        //Pear.Loading.Show(artifactHolder);       
+
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
         var url = '/Artifact/GraphicSetting/' + artifactId;
-        //_highchartsContainter.hide();
-        
+
+        $('body').append($('<div/>').addClass('modal-loader').css({
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: 'rgba(0,0,0,.5)',
+            backgroundImage: 'url("/Content/img/ajax-loader2.gif")',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 1000,
+        }));
+
         $.ajax({
-            url: url, 
+            url: url,
             method: 'GET',
             success: function (data) {
                 $('.graphic-setting-content').hide();
-                $('.graphic-setting-content').html(data);                
+                $('.graphic-setting-content').html(data);
                 $('.graphic-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
 
                 $('.graphic-setting-content').show();
@@ -6025,7 +6037,7 @@ Number.prototype.format = function (n, x) {
                         }
                     });
                 };
-                function rangeControl () {
+                function rangeControl() {
                     $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
                         e.preventDefault();
                         var $this = $(this);
@@ -6052,7 +6064,7 @@ Number.prototype.format = function (n, x) {
                                 toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];                                
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 break;
                         }
                         var originalClone = original.clone(true);
@@ -6068,14 +6080,14 @@ Number.prototype.format = function (n, x) {
                     $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
                         e.preventDefault();
                         var $this = $(this);
-                        
+
                         rangeFilterSetup($this.val().toLowerCase().trim());
                         $('.graphic-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
                         $('#range-holder').removeAttr('class');
                     });
 
                 };
-                function specificDate () {
+                function specificDate() {
                     $(".datepicker").on("dp.change", function (e) {
                         if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
                             $('#EndInDisplay').val($('#StartInDisplay').val());
@@ -6086,9 +6098,9 @@ Number.prototype.format = function (n, x) {
                 rangeDatePicker();
                 specificDate();
                 var search = searchArtifactConfig(_configs, artifactId);
-                if (search.isExisted == true) {             
+                if (search.isExisted == true) {
                     $('.graphic-setting-content #PeriodeType').val(search.config.PeriodeType).change();
-                    $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter).change();     
+                    $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter).change();
                     $('.datepicker').datetimepicker({
                         format: search.dateformat,
                     });
@@ -6099,16 +6111,30 @@ Number.prototype.format = function (n, x) {
                 }
             }
         });
+
     }
     var getHighlightSetting = function (el) {
         var highlightHolder = el.closest('.highlight-holder');
         _highlightHolder = highlightHolder;
         _highchartsContainter = el.closest('.highcharts-container');
- 
+
         var highlightId = highlightHolder.attr('data-highlight-id');
         //var chart = artifactHolder.highcharts();
         var url = '/Artifact/HighlightSetting/' + highlightId;
         //_highchartsContainter.hide();
+
+        $('body').append($('<div/>').addClass('modal-loader').css({
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: 'rgba(0,0,0,.5)',
+            backgroundImage: 'url("/Content/img/ajax-loader2.gif")',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 1000,
+        }));
 
         $.ajax({
             url: url,
@@ -6170,14 +6196,14 @@ Number.prototype.format = function (n, x) {
                     });
                 };
                 function rangeControl() {
-                    $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {                        
+                    $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
                         e.preventDefault();
                         var $this = $(this);
                         $('#range-holder').prop('class', $this.val().toLowerCase().trim());
                     });
                     var original = $('#RangeFilter').clone(true);
                     var rangeFilterSetup = function (periodeType) {
-                        var graphicType = $('#graphic-type').val();                        
+                        var graphicType = $('#graphic-type').val();
                         var toRemove = {};
                         switch (graphicType) {
                             case "tabular":
@@ -6252,18 +6278,26 @@ Number.prototype.format = function (n, x) {
                 } else {
                     var currentPeriodeType = $('#general-graphic-settings #PeriodeType').val();
                     var currentRangeFilter = $('#general-graphic-settings #RangeFilter').val().toLowerCase().trim();
-                    $('#general-graphic-settings #range-holder').prop('class', currentRangeFilter);  
-                }                            
+                    $('#general-graphic-settings #range-holder').prop('class', currentRangeFilter);
+                }
             }
         });
     }
-   
+
     $('.artifact-holder').on('click', '.tank-subtitle', function () {
         getGraphicSetting($(this));
     });
 
     $('.highlight-holder').on('click', '.highlight-change-periode', function () {
         getHighlightSetting($(this));
+    });
+
+    $('#graphic-setting').on('show.bs.modal', function () {
+        $('body').children('.modal-loader').remove();
+    });
+
+    $('#highlight-setting').on('show.bs.modal', function () {
+        $('body').children('.modal-loader').remove();
     });
 
     $('#graphic-setting').on('submit', '#graphic-setting-form', function (e) {
@@ -6274,13 +6308,13 @@ Number.prototype.format = function (n, x) {
             method: 'POST',
             success: function (data2) {
                 var callback = Pear.Artifact.Designer._previewCallbacks;
-                var result = {};                
+                var result = {};
                 $.each($('#graphic-setting-form').serializeArray(), function (key, value) {
                     result[this.name] = this.value;
                 });
                 result['dateformat'] = getDateFormat(result["PeriodeType"]);
                 var search = searchArtifactConfig(_configs, result["Id"]);
-                (search.isExisted) ? _configs[search.index] = result : _configs.push(result);    
+                (search.isExisted) ? _configs[search.index] = result : _configs.push(result);
                 callback[data2.GraphicType](data2, _artifactHolder);
                 $('#graphic-setting').modal('hide');
             }
@@ -6293,7 +6327,7 @@ Number.prototype.format = function (n, x) {
             url: $('#highlight-setting-form').attr('action'),
             data: $('#highlight-setting-form').serialize(),
             method: 'POST',
-            success: function (data2) {          
+            success: function (data2) {
                 var result = {};
                 result['dateformat'] = getDateFormat(result["PeriodeType"]);
                 $.each($('#highlight-setting-form').serializeArray(), function (key, value) {
@@ -6309,12 +6343,12 @@ Number.prototype.format = function (n, x) {
     })
 
     $('#graphic-setting').on('click', '#backToDefault', function (e) {
-        e.preventDefault();        
+        e.preventDefault();
         $.ajax({
             url: _artifactHolder.data('artifact-url'),
             method: 'POST',
             success: function (data2) {
-                var callback = Pear.Artifact.Designer._previewCallbacks;                
+                var callback = Pear.Artifact.Designer._previewCallbacks;
                 var search = searchArtifactConfig(_configs, _artifactHolder.data('artifact-id'));
                 if (search.isExisted)
                     _configs.splice(search.index, 1);
