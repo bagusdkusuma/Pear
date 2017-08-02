@@ -106,7 +106,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">min HHV MGDP (btu/scf)</label></td>
+                <td><label class="control-label">min HHV PEP (btu/scf)</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 174, 45, "btu/scf", "1050", "yearly-target")
@@ -211,7 +211,7 @@
         @*@{
                 var mgdpLayout = Model.DerLayoutItems.First(x => x.Row == 5 && x.Column == 1);
             }*@
-        <label class="control-label subtitle">MGDP-Donggi CPP :</label>
+        <label class="control-label subtitle">PEP-Donggi CPP :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">24H (MMscfd)</label></td> *@
@@ -249,7 +249,7 @@
         </table>
     </div>
     <div class="col-md-2">
-        <label class="control-label subtitle">MGDP-Matindok CPP :</label>
+        <label class="control-label subtitle">PEP-Matindok CPP :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">24H (MMscfd)</label></td> *@
@@ -317,7 +317,7 @@
         </table>
     </div>
     <div class="col-md-2">
-        <label class="control-label subtitle">Commitments MGDP :</label>
+        <label class="control-label subtitle">Commitments PEP :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 @* <td><label class="control-label">DCQ (MMbtu)</label></td> *@
