@@ -1487,7 +1487,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -1671,7 +1671,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -1873,7 +1873,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -2095,7 +2095,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -2281,7 +2281,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -2484,7 +2484,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.BarChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -2643,7 +2643,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.LineChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -2981,7 +2981,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.AreaChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -3198,7 +3198,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.AreaChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -3424,7 +3424,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.SpeedometerChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -4285,7 +4285,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.MultiaxisChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -4598,7 +4598,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.ComboChart.Title,
                 width: 1200,
                 chartOptions: {
@@ -4786,7 +4786,7 @@ Number.prototype.format = function (n, x) {
                         symbolStroke: '#330033'
                     }
                 },
-                url: '/Chart/Export',
+                //url: '/Chart/Export',
                 filename: data.Pie.Title,
                 width: 1200,
                 chartOptions: {
