@@ -1,10 +1,33 @@
 ﻿@using DSLNG.PEAR.Data.Enums
 @model DSLNG.PEAR.Web.ViewModels.Artifact.ArtifactDesignerViewModel
-<div class="form-inline whitebox">    
-    @Html.HiddenFor(model => model.GraphicType, new { @class = "form-control", id="graphic-type" })
+<style>
+    label {
+        width: 120px;
+    }
+</style>
+@{ 
+    var id = "graphic-type";
+}
+
+<div class="form-inline whitebox">
+    @Html.HiddenFor(model => model.GraphicType, new { @class = "form-control", id = "graphic-type" })
+    @Html.HiddenFor(model => model.HighlightTypeId, new { @class = "form-control" })
     <div class="form-inline whitebox">
-        <h2>Graphic Settings</h2>
         <div id="general-graphic-settings">
+            <div class="form-group form-list">
+                @{
+                    if (Model.HighlightTypeId > 0)
+                    {
+                        <h4>Highlight Settings</h4>
+                    }
+                    else
+                    {
+                        <h4>Graph Settings</h4>
+                    }
+                }
+                
+                <hr/>
+            </div>
             <div class="form-group form-list">
                 @Html.LabelFor(model => model.PeriodeType)
                 @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
@@ -33,64 +56,64 @@
                 </div>
             </div>
             @*<div class="scale">
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.FractionScale)
-                    @Html.TextBoxFor(model => model.FractionScale, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.FractionScale)
-                </div>
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.FractionScale)
+                        @Html.TextBoxFor(model => model.FractionScale, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FractionScale)
+                    </div>
 
-                <div class="form-group form-list">
-                    @Html.LabelFor(model => model.MaxFractionScale)
-                    @Html.TextBoxFor(model => model.MaxFractionScale, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.MaxFractionScale)
+                    <div class="form-group form-list">
+                        @Html.LabelFor(model => model.MaxFractionScale)
+                        @Html.TextBoxFor(model => model.MaxFractionScale, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaxFractionScale)
+                    </div>
                 </div>
-            </div>
-            <div class="form-group form-list main-value-axis">
-                @Html.LabelFor(model => model.ValueAxis)
-                @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ValueAxis)
-            </div>
-            <div class="form-group form-list netback-chart-opt">
-                @Html.LabelFor(model => model.AsNetbackChart)
-                @Html.CheckBoxFor(model => model.AsNetbackChart, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AsNetbackChart)
-            </div>*@
+                <div class="form-group form-list main-value-axis">
+                    @Html.LabelFor(model => model.ValueAxis)
+                    @Html.DropDownListFor(model => model.ValueAxis, Model.ValueAxes, new { id = "bar-value-axis", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ValueAxis)
+                </div>
+                <div class="form-group form-list netback-chart-opt">
+                    @Html.LabelFor(model => model.AsNetbackChart)
+                    @Html.CheckBoxFor(model => model.AsNetbackChart, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AsNetbackChart)
+                </div>*@
         </div>
         @*<div id="graphic-settings">
-            @switch (Model.GraphicType)
-            {
-                case "speedometer":
-                    Html.RenderPartial("~/Views/SpeedometerChart/_Edit.cshtml", Model);
-                    break;
-                case "trafficlight":
-                    Html.RenderPartial("~/Views/TrafficLightChart/_Edit.cshtml", Model);
-                    break;
-                case "line":
-                    Html.RenderPartial("~/Views/LineChart/_Edit.cshtml", Model);
-                    break;
-                case "area":
-                    Html.RenderPartial("~/Views/AreaChart/_Edit.cshtml", Model);
-                    break;
-                case "multiaxis":
-                    Html.RenderPartial("~/Views/MultiaxisChart/_Edit.cshtml", Model);
-                    break;
-                case "combo":
-                    Html.RenderPartial("~/Views/ComboChart/_Edit.cshtml", Model);
-                    break;
-                case "tank":
-                    Html.RenderPartial("~/Views/Tank/_Edit.cshtml", Model);
-                    break;
-                case "tabular":
-                    Html.RenderPartial("~/Views/Tabular/_Edit.cshtml", Model);
-                    break;
-                case "pie":
-                    Html.RenderPartial("~/Views/Pie/_Edit.cshtml", Model);
-                    break;
-                default:
-                    Html.RenderPartial("~/Views/BarChart/_Edit.cshtml", Model);
-                    break;
-            }
-        </div>*@
+                @switch (Model.GraphicType)
+                {
+                    case "speedometer":
+                        Html.RenderPartial("~/Views/SpeedometerChart/_Edit.cshtml", Model);
+                        break;
+                    case "trafficlight":
+                        Html.RenderPartial("~/Views/TrafficLightChart/_Edit.cshtml", Model);
+                        break;
+                    case "line":
+                        Html.RenderPartial("~/Views/LineChart/_Edit.cshtml", Model);
+                        break;
+                    case "area":
+                        Html.RenderPartial("~/Views/AreaChart/_Edit.cshtml", Model);
+                        break;
+                    case "multiaxis":
+                        Html.RenderPartial("~/Views/MultiaxisChart/_Edit.cshtml", Model);
+                        break;
+                    case "combo":
+                        Html.RenderPartial("~/Views/ComboChart/_Edit.cshtml", Model);
+                        break;
+                    case "tank":
+                        Html.RenderPartial("~/Views/Tank/_Edit.cshtml", Model);
+                        break;
+                    case "tabular":
+                        Html.RenderPartial("~/Views/Tabular/_Edit.cshtml", Model);
+                        break;
+                    case "pie":
+                        Html.RenderPartial("~/Views/Pie/_Edit.cshtml", Model);
+                        break;
+                    default:
+                        Html.RenderPartial("~/Views/BarChart/_Edit.cshtml", Model);
+                        break;
+                }
+            </div>*@
         @{
             if (Model.PeriodeType == PeriodeType.Yearly.ToString())
             {
@@ -116,3 +139,24 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var headerTitle = @Html.Raw(Json.Encode(Model.HeaderTitle));
+        var mt = $('.modal-title')
+        mt.text(headerTitle);
+
+        //$('#graphSettingResetBtn').click(function () {
+        //    var $form = $(this).closest('form');
+
+        //    // reset errors with unobtrusive
+        //    $form.trigger('reset.unobtrusiveValidation');
+
+        //    // reset inputs
+        //    var validator = $form.validate(); // get saved validator
+        //    //validator.settings.ignore = ''; // if form hided (closed ui dialogs, etc)
+        //    validator.resetForm();
+        //});
+
+    });
+</script>

@@ -74,7 +74,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                                         var relatedKpiActual = kpiAchievementService.GetKpiAchievement(relatedKpiId, date, kpiTransformationSchedule.PeriodeType);
                                         if (relatedKpiActual.IsSuccess && relatedKpiActual.Value.HasValue)
                                         {
-                                            kpiTransformed = Regex.Replace(kpiTransformed, "k" + g.Value, relatedKpiActual.Value.ToString(), RegexOptions.IgnoreCase);
+                                            kpiTransformed = Regex.Replace(kpiTransformed, "k" + g.Value, (relatedKpiActual.Value % 1) == 0 ? relatedKpiActual.Value.ToString()+".00" : relatedKpiActual.Value.ToString(), RegexOptions.IgnoreCase);
                                             if (kpi.YtdFormula == YtdFormula.Custom)
                                             {
                                                 if ((relatedKpiActual.Mtd.HasValue && relatedKpiActual.Ytd.HasValue && relatedKpiActual.Itd.HasValue && kpiTransformationSchedule.PeriodeType == PeriodeType.Daily)

@@ -9,6 +9,6 @@ namespace DSLNG.PEAR.Data.Enums
         Weekly,
         Monthly,
         Yearly,
-        Itd
+        //Itd
     }
 }

@@ -138,12 +138,12 @@
 
 @helper DerDate(int addDays)
 {
-    var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
-    if (Request.QueryString["date"] != null)
-    {
-        date = Request.QueryString["date"];
-    }
-    var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
+var date = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
+if (Request.QueryString["date"] != null)
+{
+    date = Request.QueryString["date"];
+}
+var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture).AddDays(addDays).ToString("MM/dd/yyyy");
     @Url.Action("Input", "DerTransaction", new { date = d });
 }
 
@@ -170,12 +170,12 @@
                         </a>
                         <input id="currentDate" class="form-control datepicker" type="text">
                         <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
-                        
+
                         <a class="der-tomorrow" href="@DerDate(1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     </div>
-                </form>                
+                </form>
             </div>
-            
+
         </div>
         @*<hr />*@
     </div>
@@ -285,46 +285,66 @@
                 </div>
             </div>
         </div>
-    </div>
-    @*<hr />*@
-    <div class="col-md-12" style="margin-bottom: 30px;">       
-        @*<div class="col-md-3">
-                <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
-                    <tr>
-                        <td>
-                            <label for="">Prepared By-L</label>
-                            <br />
-                            <select>
-                                <option>Select Option</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                            </select>
-                        </td>
-                    </tr>
+
+        <div class="row">            
+            
+            <div class="col-md-12">
+                <a href="javascript:;" class="btn btn-trigger" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 style="margin-left: -16px;" class="text-title-section">File Attachment</h5>
+                </a>
+                <div class="add-button-wrapper pull-left col-md-12">
+                    <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#activity-upload-modal">Upload</a>
+                </div>
+                @if (TempData["IsSuccess"] != null && bool.Parse(TempData["IsSuccess"].ToString()) == false)
+                {
+                    <p style="color:red">@TempData["Message"]</p>
+                }
+                <table id="activity-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Created By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
                 </table>
+                <div id="activity-upload-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <form name="upload-activity-form" action="@Url.Action("UploadActivity", "DerTransaction")" enctype="multipart/form-data" method="post">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Upload File</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group form-list">
+                                        <label>File</label>
+                                        <input class="form-control" type="file" name="file" required>
+                                        <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-group form-list">
+                                        <label>Date</label>
+                                        <input name="date" class="form-control datepicker" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <input type="submit" class="btn-master-rgw btn btn-primary" value="Upload" />
+                                    <button type="button" class="btn btn-master-rgw btn-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-3">
-                <table width="900" border="0" cellpadding="2" cellspacing="2" hidden="hidden">
-                    <tr>
-                        <td>
-                            <label for="">Reviewed By-M</label>
-                            <br />
-                            <select>
-                                <option>Select Option</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-            </div>*@
-        @*<a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-check-circle"></i> Save</a>
-            <a href="#" class="btn btn-master-rgw btn-primary"><i class="fa fa-search"></i> Check</a>*@
-        <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
-        <a class="btn btn-master-rgw btn-primary" href="@Url.Action("Activity", "DerTransaction")">DER Input Files</a>
+        </div>
+    </div>
+    <div class="col-md-12" style="margin-bottom: 30px;">
+        <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>        
         <label class="labletop">Batch :</label>
         @Html.DropDownList("Batch_Id", (IEnumerable<SelectListItem>)ViewBag.KpiTransformations, new { @class = "btn btn-master-rgw btn-primary" })
-        <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>        
+        <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>
         <div id="processResult"></div>
     </div>
 </section>
@@ -462,14 +482,14 @@
                 e.preventDefault();
                 var $this = $(this);
                 var target = $this.data('target');
-                expands(target, $this);                
+                expands(target, $this);
             });
 
             $('.btn-input-slide').click(function (e) {
                 e.preventDefault();
                 var $this = $(this);
                 var target = $this.data('target');
-                expands(target, $this);                
+                expands(target, $this);
             });
 
             var updateCallback = function (resp, f, $obj, type) {
@@ -588,7 +608,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-kpi');
-                                    });                                    
                                 });
                             }
                             openNextTab($this, nextTabindex);
@@ -638,7 +657,7 @@
                                         var nextTab = parseInt($textarea.attr('tabindex')) + 1;
                                         if (key == 9) {
                                             var highlightTypeId = $textarea.data('highlight-type-id');
-                                            var id = $textarea.attr('data-id');                                            
+                                            var id = $textarea.attr('data-id');
                                             row.addClass('processing');
                                             var value = editor.getContent();
                                             if ((highlightTypeId == 53 || highlightTypeId == 21) && value.length > 210) {
@@ -674,7 +693,6 @@
                                                         row.addClass('succeed');
                                                     }
                                                 }, row, 'textarea-highlight');
-                                                });                                                
                                             });
                                         }
                                     });
@@ -713,7 +731,6 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 }, $this, 'select-highlight');
-                                });
                             });
                         });
                         $('.datepicker', target).datetimepicker({
@@ -749,7 +766,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-highlight');
-                                    });
                                 });
                             }
                         });
@@ -786,7 +802,6 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 }, $this, 'select-highlight');
-                                });
                             });
                         });
                         $(target).on('altChange', 'select.der-highlight-wave', function (e) {
@@ -827,7 +842,6 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 }, $this, 'select-highlight');
-                                });
                             });
                         });
                         $(target).on('altChange', 'select.der-highlight-weather', function (e) {
@@ -862,7 +876,6 @@
                                         $this.attr('data-id', resp.Id);
                                     }
                                 }, $this, 'select-highlight');
-                                });
                             });
                         });
                         $(target).on('keyup', 'input.der-highlight-wave', function (e) {
@@ -899,7 +912,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-highlight');
-                                    });
                                 });
                             }
                         });
@@ -938,7 +950,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-highlight');
-                                    });
                                 });
                             }
                         });
@@ -1014,7 +1025,6 @@
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-highlight');
-                                    });
                                 });
                             }
                         });
@@ -1023,5 +1033,69 @@
             }
         });
 
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#activity-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                //"columnDefs": [
+                //    { "visible": false, "targets": 0 }
+                //],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("DerInputFileGrid", "DerTransaction", new { @Date = "_date_"})'.replace('_date_', $('#currentDate').val()),                
+                search: true,
+                //"order": [[3, "asc"]],
+                "aoColumns": [
+                    {
+                        "mDataProp": "FileName", "name": "FileName", "className": "text-align-left",
+                        "mRender": function (data, type, row) {
+                            var files = row.FileName.split(';');
+                            if (files.length) {
+                                return '<a href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">' + row.Title +'</a>'
+                            }
+                            return '';
+                        }
+                    },
+                    {
+                        "mDataProp": "CreatedBy", "name": "CreatedBy", "className": "text-align-left"
+                    },
+
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row) {
+                            var deleteLink = '<a class="delete" data-id="_id_" href="javascript:;">Delete</a>'.replace('_id_', data.Id);
+                            return deleteLink;
+                        }
+                    }
+                ],
+                
+            });
+
+            $('#activity-table').on('click', '.delete', function () {
+                var id = $(this).attr('data-id');
+                if (confirm('Are you sure want to delete this item?')) {
+                    var url = '@Url.Action("DeleteActivity", "DerTransaction")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="id" value="' + id + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+            //$('.datepicker').datetimepicker({
+            //    format: "MM/DD/YYYY",
+            //    focusOnShow: false
+            //});
+
+
+        });
     </script>
 }

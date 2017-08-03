@@ -13,6 +13,7 @@ namespace DSLNG.PEAR.Web.ViewModels.InputData
             GroupInputDatas = new List<GroupInputData>();
         }
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public string PeriodeType { get; set; }
         public DateTime Date { get; set; }

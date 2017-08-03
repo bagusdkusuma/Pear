@@ -10,6 +10,7 @@ using DSLNG.PEAR.Services.Requests.KpiTarget;
 using DSLNG.PEAR.Services.Requests.Select;
 using DSLNG.PEAR.Services.Requests.Wave;
 using DSLNG.PEAR.Services.Requests.Weather;
+using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Web.Attributes;
 using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.DerTransaction;
@@ -632,14 +633,15 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
-        public ActionResult DerInputFileGrid(GridParams gridParams)
+        public ActionResult DerInputFileGrid(GridParams gridParams, string Date)
         {
             var derInputFiles = _derTransactionService.GetDerInputFiles(new Services.Requests.Der.GetDerInputFilesRequest
             {
                 Skip = gridParams.DisplayStart,
                 Take = gridParams.DisplayLength,
                 SortingDictionary = gridParams.SortingDictionary,
-                Search = gridParams.Search
+                Search = gridParams.Search,
+                Date = Date
             });
 
             var data = new
@@ -663,7 +665,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult UploadActivity(HttpPostedFileBase file, string date)
         {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-            var ext = file.FileName.Split('.');
+            var response = new BaseResponse();
             var title = Path.GetFileNameWithoutExtension(file.FileName) + "_" + theDate.ToString("dd-MMM-yyyy") + "_" + new Random().Next(1, 100) + Path.GetExtension(file.FileName);
             string filename = title.Replace('/', '-');
 
@@ -677,7 +679,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 var path = Path.Combine(Server.MapPath(PathConstant.DerInputFile), filename);
                 file.SaveAs(path);
 
-                var response = _derTransactionService.CreateDerInputFile(new CreateDerInputFileRequest
+                response = _derTransactionService.CreateDerInputFile(new CreateDerInputFileRequest
                 {
                     FileName = PathConstant.DerInputFile + "/" + filename,                    
                     Date = theDate,
@@ -685,7 +687,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     CreatedBy = UserProfile().UserId
                 });
             }
-            return RedirectToAction("Activity");
+
+            TempData["Message"] = response.Message;
+            TempData["IsSuccess"] = response.IsSuccess;
+
+            return RedirectToAction("Index", new { date = theDate.ToString("MM/dd/yyyy") });
         }
 
         [HttpPost]
@@ -694,7 +700,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var response = _derTransactionService.DeleteDerInputFile(id);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
-            return RedirectToAction("Activity");
+            return RedirectToAction("Index", new { date = response.Date.ToString("MM/dd/yyyy") });
         }
 
         private DerValuesViewModel GetDerValuesPerSection(string date, int[] actualKpiIds, int[] targetKpiIds, int[] highlightTypeIds)

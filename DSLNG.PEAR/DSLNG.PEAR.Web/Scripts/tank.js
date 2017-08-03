@@ -11,7 +11,8 @@
         });;
 
         // variable Donggi
-        var title = options.Title;
+        var isSuperAdmin = $('#user-profile-session-data').data('issuperadmin') == true;
+        var title = options.Title;        
         var subtitle = options.Subtitle;
         var minCapacity = options.MinCapacity;
         var maxCapacity = options.MaxCapacity;
@@ -253,11 +254,20 @@
             textAnchor: "middle",
         });
 
+        //if (isSuperAdmin) {
+        //    tTitle.click(function () {
+        //        window.open("/artifact/edit/" + options.ArtifactId, "_blank");
+        //    });
+        //}
+        
+
+       
+
         var tSubtitle = s.text(svgWidth / 2, 44, subtitle).attr({
             font: "14px Open Sans, sans-serif",
             fill: "#fff",
             textAnchor: "middle",
-            class: "tank-subtitle"
+            //class: "tank-subtitle"
         });
         
         return this;

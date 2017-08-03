@@ -67,23 +67,22 @@
         <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
             <label class="labletop">Traffic Light :</label>
             <select class="selectpicker" id="traffic-light" style="width:50%">
-                <option value=""> Select Traffic Light</option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-1" value="1" @(Model.TrafficLight == "1" ? "selected" : "")></option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-2" value="2" @(Model.TrafficLight == "2" ? "selected" : "")></option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-3" value="3" @(Model.TrafficLight == "3" ? "selected" : "")></option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-4" value="4" @(Model.TrafficLight == "4" ? "selected" : "")></option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-5" value="5" @(Model.TrafficLight == "5" ? "selected" : "")></option>
+                <option value=""> Select All</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-1" value="1" @(Model.TrafficLight == "1" ? "selected" : "")> -- Normal Shut Down</option>                
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-3" value="3" @(Model.TrafficLight == "3" ? "selected" : "")> -- Alert</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-4" value="4" @(Model.TrafficLight == "4" ? "selected" : "")> -- Need Attention</option>
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-5" value="5" @(Model.TrafficLight == "5" ? "selected" : "")> -- Normal Ops</option>
             </select>
 
             @*@Html.DropDownListFor(x => x.TrafficLight, Model.TrafficLights, new { @class = "form-control", id = "traffic-light" })*@
         </div>
         <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
             <label class="labletop">Year :</label>
-            @Html.DropDownListFor(x => x.Year, Model.YearList, new { @class = "form-control", id = "year" })
+            @Html.DropDownListFor(x => x.Year, Model.YearList, new { @class = "selectpicker", id = "year" })
         </div>
         <div class="form-group" style="margin-top: 5px;">
             <label class="labletop">Month :</label>
-            @Html.DropDownListFor(x => x.Month, Model.MonthList, new { @class = "form-control", id = "month" })
+            @Html.DropDownListFor(x => x.Month, Model.MonthList, new { @class = "selectpicker", id = "month" })
 
         </div>
     </form>
@@ -92,8 +91,9 @@
     <thead>
         <tr>
             <th style="width:70px">Publish Date</th>
-            <th>Daily Highlight</th>
-            <th>Marin Cargo Delivery</th>
+            <th style="border:none;border-left:1px solid #fff;padding: 0">&nbsp;</th>
+            <th style="border-left:none">Daily Highlight</th>
+            <th>Marine Cargo Delivery</th>
             <th>QHSE</th>
             <th>Security</th>
             <th>File Attachment</th>
@@ -157,14 +157,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Details</h4>
+                <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
             <div class="modal-body" style="color:#fff">
 
             </div>
-            <div class="modal-footer">
+            @*<div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
@@ -181,15 +181,16 @@
                 }
             }
             $('#derModal').on('show.bs.modal', function (e) {
+                $('#derModal h4').text($(e.relatedTarget).data('title') + ' - ' + $(e.relatedTarget).data('date'))
                 $('#derModal .modal-body').html($(e.relatedTarget).data('text'));
             })
             AllowDelete = '@{ @AllowDelete}';
-            function shortenText(data) {
+            function shortenText(data, title, date) {
                 var textDisplay = data.replace('<p>', '').replace('</p>', '');
                 var length = 150;
                 if (data.length > length) {
                     textDisplay = data.substring(0, length).replace(/<\/?[^>]+(>|$)/g, "");
-                    textDisplay += ' | <a href="#" data-toggle="modal" data-target="#derModal" data-text="' + data + '">Read More</button>';
+                    textDisplay += ' | <a class="read-more" href="#" data-toggle="modal" data-target="#derModal" data-text="' + data + '" data-title="' + title + '" data-date="' + moment(new Date(date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') +'">Read More</button>';
                 }
                 return textDisplay;
             }
@@ -208,12 +209,12 @@
                     {
                         "mDataProp": "Date", "name": "Date", "className": "dt-body-left",
                         "mRender": function (data, type, row, pos) {
-                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + " version " + row["Revision"] + '</a>';
+                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + '</a>';
                         }
 
                     },
                     {
-                        "mDataProp": "DailyIndicator", "name": "DailyIndicator", "className": "dt-body-left",
+                        "mDataProp": "DailyIndicator", "name": "DailyIndicator", "className": "dt-body-left", "orderable": false, width: 1, "padding": "0", fixed: true,
                         "mRender": function (data, type, row, pos) {
                             var str = '';
                             if (parseInt(data) < 2) {
@@ -227,25 +228,31 @@
                             } else if (parseInt(data) > 4) {
                                 str = '<span class="indicator green"><i class="fa fa-circle" style="color:green"></i></span>';
                             }
-                            return str + "<span style='padding-left: 10px;'>" + shortenText(row["OverallPerformance"]) + "</span>";
+                            return str;// + "<span style='padding-left: 10px;'>" + shortenText(row["OverallPerformance"], "Overall Performance", row['Date']) + "</span>";
+                        }
+                    },
+                    {
+                        "mDataProp": "OverallPerformance", "name": "OverallPerformance", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "OverallPerformance", row['Date']);
                         }
                     },
                     {
                         "mDataProp": "MarineCargoDelivery", "name": "MarineCargoDelivery", "className": "dt-body-left", "orderable": false,
                         "mRender": function (data, type, row, pos) {
-                            return shortenText(data);
+                            return shortenText(data, "Marine Cargo Delivery", row['Date']);
                         }
                     },
                     {
                         "mDataProp": "Qhse", "name": "Qhse", "className": "dt-body-left", "orderable": false,
                         "mRender": function (data, type, row, pos) {
-                            return shortenText(data);
+                            return shortenText(data, "QHSE", row['Date']);
                         }
                     },
                     {
                         "mDataProp": "Security", "name": "Security", "className": "dt-body-left", "orderable": false,
                         "mRender": function (data, type, row, pos) {
-                            return shortenText(data);
+                            return shortenText(data, "Security", row['Date']);
                         }
                     },
 
@@ -383,5 +390,7 @@
             content: "\25cb";
             font-size: 3em;
         }
+
+        
     </style>
 }

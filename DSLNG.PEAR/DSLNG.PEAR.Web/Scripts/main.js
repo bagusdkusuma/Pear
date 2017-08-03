@@ -378,10 +378,10 @@ Number.prototype.format = function (n, x) {
                         break;
                     default:
                         toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         break;
                 }
                 var originalClone = original.clone(true);
@@ -430,6 +430,7 @@ Number.prototype.format = function (n, x) {
         rangeDatePicker();
         specificDate();
     };
+
     artifactDesigner.EditSetup = function () {
         var callback = Pear.Artifact.Designer._setupCallbacks;
         var loadGraph = function (url, type) {
@@ -558,11 +559,11 @@ Number.prototype.format = function (n, x) {
                         toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth'];
                         break;
                     default:
-                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
-                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                        toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                        toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                         break;
                 }
                 var originalClone = original.clone(true);
@@ -1202,6 +1203,7 @@ Number.prototype.format = function (n, x) {
         //$('#PeriodeType').change();
         $('#RangeFilter').change();
     };
+
     artifactDesigner._setupCallbacks = {};
 
     artifactDesigner.Preview = function () {
@@ -1216,7 +1218,6 @@ Number.prototype.format = function (n, x) {
                 data: $this.closest('form').serialize(),
                 method: 'POST',
                 success: function (data) {
-                    console.log(data.GraphicType);
                     if (callback.hasOwnProperty(data.GraphicType)) {
                         Pear.Loading.Stop($('#container'));
                         callback[data.GraphicType](data, $('#container'));
@@ -1239,6 +1240,7 @@ Number.prototype.format = function (n, x) {
             $('#container').html('');
         });
     };
+
     artifactDesigner._previewCallbacks = {};
 
     //bar chart
@@ -1315,6 +1317,7 @@ Number.prototype.format = function (n, x) {
         addSeries();
         addStack();
     };
+
     artifactDesigner._previewCallbacks.bar = function (data, container) {
         //console.log(data.BarChart.SeriesType);
         if (data.BarChart.SeriesType == "single-stack") {
@@ -1325,15 +1328,28 @@ Number.prototype.format = function (n, x) {
             Pear.Artifact.Designer._displayMultistacksGroupedBarChart(data, container);
         }
     };
+
     artifactDesigner._displayBasicBarChart = function (data, container) {
         container.highcharts({
             chart: {
                 type: 'column',
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
-                text: data.BarChart.Title,
+                title: data.BarChart.Title,
                 style: {
                     color: '#fff'
                 }
@@ -1359,7 +1375,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -1419,7 +1436,7 @@ Number.prototype.format = function (n, x) {
                                     netbackValue -= this.points[i].y;
                                 }
                             }
-                            
+
                             if (i == this.points.length - 2) {
                                 //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
                                 tooltip += '<strong>' + this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
@@ -1442,7 +1459,7 @@ Number.prototype.format = function (n, x) {
                             }
 
                         }
-                        
+
 
                         //if (typeof this.points[i].total !== 'undefined') {
                         //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
@@ -1462,9 +1479,30 @@ Number.prototype.format = function (n, x) {
                 shared: true
             },
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.BarChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -1486,12 +1524,25 @@ Number.prototype.format = function (n, x) {
             series: data.BarChart.Series
         });
     };
+
     artifactDesigner._displayMultistacksBarChart = function (data, container) {
         container.highcharts({
             chart: {
                 type: 'column',
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.BarChart.Title,
@@ -1519,503 +1570,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        "color": '#fff'
-                    }
-                },
-                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
-                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
-                labels: {
-                    style: {
-                        "color": '#fff'
-                    }
-                }
-            },
-            legend: {
-                itemStyle: {
-                    "color": '#fff'
-                },
-                itemHoverStyle: {
-                    color: '#FF0000'
-                }
-            },
-            navigation: {
-                buttonOptions: {
-                    symbolStroke: '#fff',
-                    symbolFill: '#fff',
-                    theme: {
-                        'stroke-width': 0,
-                        stroke: 'silver',
-                        fill: 'transparent',
-                        r: 0,
-                        states: {
-                            hover: {
-                                fill: 'transparent'
-                            },
-                            select: {
-                                fill: 'transparent'
-                            }
-                        }
-                    }
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
-                    var totalInProcess = 0;
-                    for (var i in this.points) {
-                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
-
-                        var prev = (parseInt(i) - 1);
-                        var next = (parseInt(i) + 1);
-                        var nextExist = typeof this.points[next] !== 'undefined';
-                        var prevExist = typeof this.points[prev] !== 'undefined';
-
-                        if (typeof this.points[i].series.stackKey !== 'undefined') {
-                            //total in process
-                            //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
-                            //}
-
-                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
-                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
-                                //totalInProcess = 0;
-                            }
-                            if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
-                                totalInProcess = 0;
-                            }
-                        }
-
-                        //if (typeof this.points[i].total !== 'undefined') {
-                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
-                        //    }
-                        //}
-                        if (data.Highlights != null && data.Highlights != undefined) {
-                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
-                            }
-                        }
-                    }
-                    return tooltip;
-                },
-                shared: true
-            },
-            //tooltip: {
-            //    formatter: function () {
-            //        return '<b>' + this.x + '</b><br/>' +
-            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
-            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
-            //    }
-            //},
-            exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
-            },
-            credits: {
-                enabled: false
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal'
-                }
-            },
-            series: data.BarChart.Series
-        });
-    };
-    artifactDesigner._displayMultistacksGroupedBarChart = function (data, container) {
-        container.highcharts({
-            chart: {
-                type: 'column',
-                zoomType: 'xy',
-                backgroundColor: 'transparent',
-            },
-            title: {
-                text: data.BarChart.Title,
-                style: {
-                    "color": '#fff'
-                }
-            },
-            subtitle: {
-                text: data.BarChart.Subtitle,
-                style: {
-                    "color": '#fff'
-                }
-            },
-            xAxis: {
-                categories: data.BarChart.Periodes,
-                crosshair: true,
-                gridLineColor: '#fff',
-                labels: {
-                    style: {
-                        "color": '#fff'
-                    }
-                }
-            },
-            yAxis: {
-                //min: 0,
-                title: {
-                    text: data.BarChart.ValueAxisTitle,
-                    style: {
-                        "color": '#fff'
-                    }
-                },
-                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
-                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
-                labels: {
-                    style: {
-                        "color": '#fff'
-                    }
-                }
-            },
-            legend: {
-                itemStyle: {
-                    "color": '#fff'
-                },
-                itemHoverStyle: {
-                    color: '#FF0000'
-                }
-            },
-            navigation: {
-                buttonOptions: {
-                    symbolStroke: '#fff',
-                    symbolFill: '#fff',
-                    theme: {
-                        'stroke-width': 0,
-                        stroke: 'silver',
-                        fill: 'transparent',
-                        r: 0,
-                        states: {
-                            hover: {
-                                fill: 'transparent'
-                            },
-                            select: {
-                                fill: 'transparent'
-                            }
-                        }
-                    }
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    //console.log(data);
-                    var tooltip = '';
-                    if (data.BarChart.Periodes.length == 1) {
-                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
-                    }else if (data.TimePeriodes.length) {
-                        tooltip += '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
-                    } else {
-                        
-                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
-                    }
-                    var totalInProcess = 0;
-                    var netbackValue = 0;
-                    for (var i in this.points) {
-                        if (this.points[i].series.name.trim().indexOf('invisible')) {
-                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
-                        }
-                        var prev = (parseInt(i) - 1);
-                        var next = (parseInt(i) + 1);
-                        var nextExist = typeof this.points[next] !== 'undefined';
-                        var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (data.AsNetbackChart) {
-                            if (i == 0) {
-                                netbackValue += this.points[i].y;
-                            } else {
-                                if (this.points[i].series.name.trim().indexOf('invisible')) {
-                                    netbackValue -= this.points[i].y;
-                                }
-                            }
-                            
-                            if (i == this.points.length - 2) {
-                                //console.log(this.points[i].series.name);
-                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
-                                tooltip += '<strong>' + this.points[i].series.name.trim() + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
-                            }
-                        } else {
-                            if (typeof this.points[i].series.stackKey !== 'undefined') {
-                                //total in process
-                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
-                                //}
-
-                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
-                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
-                                    //totalInProcess = 0;
-                                }
-                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
-                                    totalInProcess = 0;
-                                }
-                            }
-                        }
-                        //if (typeof this.points[i].total !== 'undefined') {
-                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
-                        //    }
-                        //}
-                        if (data.Highlights != null && data.Highlights != undefined) {
-                            if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
-                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
-                            }
-                        }
-                    }
-                    return tooltip;
-                },
-                shared: true
-            },
-            //tooltip: {
-            //    formatter: function () {
-            //        return '<b>' + this.x + '</b><br/>' +
-            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
-            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
-            //    }
-            //},
-            exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
-            },
-            credits: {
-                enabled: false
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal'
-                }
-            },
-            series: data.BarChart.Series
-        });
-    };
-    artifactDesigner._setupCallbacks.baraccumulative = function () {
-        Pear.Artifact.Designer._setupCallbacks.bar();
-    };
-    artifactDesigner._previewCallbacks.baraccumulative = function (data, container) {
-        Pear.Artifact.Designer._previewCallbacks.bar(data, container);
-    };
-    artifactDesigner._setupCallbacks.barachievement = function () {
-        $('#bar-value-axis').val('KpiActual');
-        $('.main-value-axis').css('display', 'none');
-        Pear.Artifact.Designer._setupCallbacks.bar();
-    };
-    artifactDesigner._previewCallbacks.barachievement = function (data, container) {
-        Pear.Artifact.Designer._previewCallbacks.bar(data, container);
-    };
-    artifactDesigner._setupCallbacks.barhorizontal = function () {
-        artifactDesigner._setupCallbacks.bar();
-    }
-    artifactDesigner._previewCallbacks.barhorizontal = function (data, container) {
-        //console.log(data.BarChart.SeriesType);
-        if (data.BarChart.SeriesType == "single-stack") {
-            Pear.Artifact.Designer._displayBasicBarhorizontalChart(data, container);
-        } else if (data.BarChart.SeriesType == "multi-stack") {
-            Pear.Artifact.Designer._displayMultistacksBarhorizontalChart(data, container);
-        } else {
-            Pear.Artifact.Designer._displayMultistacksGroupedBarhorizontalChart(data, container);
-        }
-    };
-    artifactDesigner._displayBasicBarhorizontalChart = function (data, container) {
-        container.highcharts({
-            chart: {
-                type: 'bar',
-                zoomType: 'xy',
-                backgroundColor: 'transparent'
-            },
-            title: {
-                text: data.BarChart.Title,
-                style: {
-                    color: '#fff'
-                }
-            },
-            subtitle: {
-                text: data.BarChart.Subtitle,
-                style: {
-                    color: '#fff'
-                }
-            },
-            xAxis: {
-                categories: data.BarChart.Periodes,
-                crosshair: true,
-                labels: {
-                    style: {
-                        color: '#fff'
-                    }
-                },
-                gridLineColor: '#fff',
-                reversed: false
-            },
-            yAxis: {
-                //min: 0,
-                title: {
-                    text: data.BarChart.ValueAxisTitle,
-                    style: {
-                        color: '#fff'
-                    }
-                },
-                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
-                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
-                labels: {
-                    style: {
-                        color: '#fff'
-                    }
-                }
-            },
-            legend: {
-                itemStyle: {
-                    "color": '#fff'
-                },
-                itemHoverStyle: {
-                    color: '#FF0000'
-                }
-            },
-            navigation: {
-                buttonOptions: {
-                    symbolStroke: '#fff',
-                    symbolFill: '#fff',
-                    theme: {
-                        'stroke-width': 0,
-                        stroke: 'silver',
-                        fill: 'transparent',
-                        r: 0,
-                        states: {
-                            hover: {
-                                fill: 'transparent'
-                            },
-                            select: {
-                                fill: 'transparent'
-                            }
-                        }
-                    }
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
-                    var totalInProcess = 0;
-                    var netbackValue = 0;
-                    for (var i in this.points) {
-                        if (this.points[i].series.name.trim().indexOf('invisible')) {
-                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
-                        }
-                        var prev = (parseInt(i) - 1);
-                        var next = (parseInt(i) + 1);
-                        var nextExist = typeof this.points[next] !== 'undefined';
-                        var prevExist = typeof this.points[prev] !== 'undefined';
-                        if (data.AsNetbackChart) {
-                            if (i == 0) {
-                                netbackValue += this.points[i].y;
-                            } else {
-                                if (this.points[i].series.name.trim().indexOf('invisible')) {
-                                    netbackValue -= this.points[i].y;
-                                }
-                            }
-
-                            if (i == this.points.length - 2) {
-                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
-                                tooltip += '<strong>' + this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
-                            }
-                        } else {
-                            if (typeof this.points[i].series.stackKey !== 'undefined') {
-                                //total in process
-                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
-                                //}
-
-                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
-                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
-                                    //totalInProcess = 0;
-                                }
-                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
-                                    totalInProcess = 0;
-                                }
-                            }
-
-                        }
-
-
-                        //if (typeof this.points[i].total !== 'undefined') {
-                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
-                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
-                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
-                        //    }
-                        //}
-                        if (data.Highlights != null && data.Highlights != undefined) {
-                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
-                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
-                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
-                            }
-                        }
-                    }
-                    return tooltip;
-                },
-                shared: true
-            },
-            exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
-            },
-            credits: {
-                enabled: false
-            },
-            //tooltip: {
-            //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            //        '<td style="padding:0"><b>{point.y:.1f} ' + data.BarChart.ValueAxisTitle + '</b></td></tr>',
-            //    footerFormat: '</table>',
-            //    shared: true,
-            //    useHTML: true
-            //},
-            plotOptions: {
-                bar: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            series: data.BarChart.Series
-        });
-    };
-    artifactDesigner._displayMultistacksBarhorizontalChart = function (data, container) {
-        container.highcharts({
-            chart: {
-                type: 'bar',
-                zoomType: 'xy',
-                backgroundColor: 'transparent',
-            },
-            title: {
-                text: data.BarChart.Title,
-                style: {
-                    "color": '#fff'
-                }
-            },
-            subtitle: {
-                text: data.BarChart.Subtitle,
-                style: {
-                    "color": '#fff'
-                }
-            },
-            xAxis: {
-                categories: data.BarChart.Periodes,
-                crosshair: true,
-                gridLineColor: '#fff',
-                labels: {
-                    style: {
-                        "color": '#fff'
-                    }
-                },
-                reverse: false
-            },
-            yAxis: {
-                title: {
-                    text: data.BarChart.ValueAxisTitle,
-                    style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -2107,27 +1663,61 @@ Number.prototype.format = function (n, x) {
             //    }
             //},
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.BarChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
             },
             plotOptions: {
-                bar: {
+                column: {
                     stacking: 'normal'
                 }
             },
             series: data.BarChart.Series
         });
     };
-    artifactDesigner._displayMultistacksGroupedBarhorizontalChart = function (data, container) {
+
+    artifactDesigner._displayMultistacksGroupedBarChart = function (data, container) {
         container.highcharts({
             chart: {
-                type: 'bar',
+                type: 'column',
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.BarChart.Title,
@@ -2149,22 +1739,23 @@ Number.prototype.format = function (n, x) {
                     style: {
                         "color": '#fff'
                     }
-                },
-                reversed:false
+                }
             },
             yAxis: {
                 //min: 0,
                 title: {
                     text: data.BarChart.ValueAxisTitle,
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
                 max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
                 labels: {
                     style: {
-                        "color": '#fff'
+                        "color": '#fff',
+                        fontSize: '12px'
                     }
                 }
             },
@@ -2274,9 +1865,641 @@ Number.prototype.format = function (n, x) {
             //    }
             //},
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.BarChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
+
+    artifactDesigner._setupCallbacks.baraccumulative = function () {
+        Pear.Artifact.Designer._setupCallbacks.bar();
+    };
+
+    artifactDesigner._previewCallbacks.baraccumulative = function (data, container) {
+        Pear.Artifact.Designer._previewCallbacks.bar(data, container);
+    };
+
+    artifactDesigner._setupCallbacks.barachievement = function () {
+        $('#bar-value-axis').val('KpiActual');
+        $('.main-value-axis').css('display', 'none');
+        Pear.Artifact.Designer._setupCallbacks.bar();
+    };
+
+    artifactDesigner._previewCallbacks.barachievement = function (data, container) {
+        Pear.Artifact.Designer._previewCallbacks.bar(data, container);
+    };
+
+    artifactDesigner._setupCallbacks.barhorizontal = function () {
+        artifactDesigner._setupCallbacks.bar();
+    }
+
+    artifactDesigner._previewCallbacks.barhorizontal = function (data, container) {
+        //console.log(data.BarChart.SeriesType);
+        if (data.BarChart.SeriesType == "single-stack") {
+            Pear.Artifact.Designer._displayBasicBarhorizontalChart(data, container);
+        } else if (data.BarChart.SeriesType == "multi-stack") {
+            Pear.Artifact.Designer._displayMultistacksBarhorizontalChart(data, container);
+        } else {
+            Pear.Artifact.Designer._displayMultistacksGroupedBarhorizontalChart(data, container);
+        }
+    };
+
+    artifactDesigner._displayBasicBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    color: '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    color: '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                labels: {
+                    style: {
+                        color: '#fff'
+                    }
+                },
+                gridLineColor: '#fff',
+                reversed: false
+            },
+            yAxis: {
+                //min: 0,
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        color: '#fff',
+                        fontSize: '12px'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        color: '#fff',
+                        fontSize: '12px'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
+                    var netbackValue = 0;
+                    for (var i in this.points) {
+                        if (this.points[i].series.name.trim().indexOf('invisible')) {
+                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+                        }
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (data.AsNetbackChart) {
+                            if (i == 0) {
+                                netbackValue += this.points[i].y;
+                            } else {
+                                if (this.points[i].series.name.trim().indexOf('invisible')) {
+                                    netbackValue -= this.points[i].y;
+                                }
+                            }
+
+                            if (i == this.points.length - 2) {
+                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                tooltip += '<strong>' + this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
+                            }
+                        } else {
+                            if (typeof this.points[i].series.stackKey !== 'undefined') {
+                                //total in process
+                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                                //}
+
+                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                    //totalInProcess = 0;
+                                }
+                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                    totalInProcess = 0;
+                                }
+                            }
+
+                        }
+
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.BarChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            //tooltip: {
+            //    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            //    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            //        '<td style="padding:0"><b>{point.y:.1f} ' + data.BarChart.ValueAxisTitle + '</b></td></tr>',
+            //    footerFormat: '</table>',
+            //    shared: true,
+            //    useHTML: true
+            //},
+            plotOptions: {
+                bar: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
+
+    artifactDesigner._displayMultistacksBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                gridLineColor: '#fff',
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                reverse: false
+            },
+            yAxis: {
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        "color": '#fff',
+                        fontSize: '12px'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        "color": '#fff',
+                        fontSize: '12px'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var tooltip = '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    var totalInProcess = 0;
+                    for (var i in this.points) {
+                        tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+
+                        if (typeof this.points[i].series.stackKey !== 'undefined') {
+                            //total in process
+                            //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                            totalInProcess += this.points[i].y;
+                            //}
+
+                            if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                //totalInProcess = 0;
+                            }
+                            if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                totalInProcess = 0;
+                            }
+                        }
+
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+            //    }
+            //},
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.BarChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                bar: {
+                    stacking: 'normal'
+                }
+            },
+            series: data.BarChart.Series
+        });
+    };
+
+    artifactDesigner._displayMultistacksGroupedBarhorizontalChart = function (data, container) {
+        container.highcharts({
+            chart: {
+                type: 'bar',
+                zoomType: 'xy',
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
+            },
+            title: {
+                text: data.BarChart.Title,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            subtitle: {
+                text: data.BarChart.Subtitle,
+                style: {
+                    "color": '#fff'
+                }
+            },
+            xAxis: {
+                categories: data.BarChart.Periodes,
+                crosshair: true,
+                gridLineColor: '#fff',
+                labels: {
+                    style: {
+                        "color": '#fff'
+                    }
+                },
+                reversed: false
+            },
+            yAxis: {
+                //min: 0,
+                title: {
+                    text: data.BarChart.ValueAxisTitle,
+                    style: {
+                        "color": '#fff',
+                        fontSize: '12px'
+                    }
+                },
+                tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
+                max: data.MaxFractionScale == 0 ? null : data.MaxFractionScale,
+                labels: {
+                    style: {
+                        "color": '#fff',
+                        fontSize: '12px'
+                    }
+                }
+            },
+            legend: {
+                itemStyle: {
+                    "color": '#fff'
+                },
+                itemHoverStyle: {
+                    color: '#FF0000'
+                }
+            },
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#fff',
+                    symbolFill: '#fff',
+                    theme: {
+                        'stroke-width': 0,
+                        stroke: 'silver',
+                        fill: 'transparent',
+                        r: 0,
+                        states: {
+                            hover: {
+                                fill: 'transparent'
+                            },
+                            select: {
+                                fill: 'transparent'
+                            }
+                        }
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    //console.log(data);
+                    var tooltip = '';
+                    if (data.BarChart.Periodes.length == 1) {
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    } else if (data.TimePeriodes.length) {
+                        tooltip += '<b>' + artifactDesigner._toJavascriptDate(data.TimePeriodes[this.points[0].point.index], data.PeriodeType) + '</b><br/>';
+                    } else {
+
+                        tooltip += '<b>' + data.BarChart.Subtitle + '</b><br/>';
+                    }
+                    var totalInProcess = 0;
+                    var netbackValue = 0;
+                    for (var i in this.points) {
+                        if (this.points[i].series.name.trim().indexOf('invisible')) {
+                            tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>';
+                        }
+                        var prev = (parseInt(i) - 1);
+                        var next = (parseInt(i) + 1);
+                        var nextExist = typeof this.points[next] !== 'undefined';
+                        var prevExist = typeof this.points[prev] !== 'undefined';
+                        if (data.AsNetbackChart) {
+                            if (i == 0) {
+                                netbackValue += this.points[i].y;
+                            } else {
+                                if (this.points[i].series.name.trim().indexOf('invisible')) {
+                                    netbackValue -= this.points[i].y;
+                                }
+                            }
+
+                            if (i == this.points.length - 2) {
+                                //console.log(this.points[i].series.name);
+                                //tooltip += '<strong>Net back value : ' + netbackValue.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                tooltip += '<strong>' + this.points[i].series.name.trim() + ': ' + this.points[i].y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<strong><br/>';
+                            }
+                        } else {
+                            if (typeof this.points[i].series.stackKey !== 'undefined') {
+                                //total in process
+                                //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                totalInProcess += this.points[i].y;
+                                //}
+
+                                if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
+                                    (!nextExist && prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
+                                    tooltip += '<strong>Total: ' + totalInProcess.format(2) + ' ' + data.BarChart.ValueAxisTitle + '</strong><br>';
+                                    //totalInProcess = 0;
+                                }
+                                if (nextExist && this.points[next].series.stackKey != this.points[i].series.stackKey) {
+                                    totalInProcess = 0;
+                                }
+                            }
+                        }
+                        //if (typeof this.points[i].total !== 'undefined') {
+                        //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
+                        //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
+                        //        tooltip += 'Total: ' + this.points[i].total.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br>';
+                        //    }
+                        //}
+                        if (data.Highlights != null && data.Highlights != undefined) {
+                            if (!nextExist && data.Highlights !== null && data.Highlights[this.points[i].point.index] != null) {
+                                tooltip += '<b>Highlight : ' + data.Highlights[this.points[i].point.index].Title + '</b><br>';
+                                tooltip += '<p>' + data.Highlights[this.points[i].point.index].Message + '</p>';
+                            }
+                        }
+                    }
+                    return tooltip;
+                },
+                shared: true
+            },
+            //tooltip: {
+            //    formatter: function () {
+            //        return '<b>' + this.x + '</b><br/>' +
+            //            this.series.name + ': ' + this.y.format(2) + ' ' + data.BarChart.ValueAxisTitle + '<br/>' +
+            //            'Total: ' + this.point.stackTotal.format(2) + ' ' + data.BarChart.ValueAxisTitle;
+            //    }
+            //},
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.BarChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -2339,6 +2562,18 @@ Number.prototype.format = function (n, x) {
             chart: {
                 zoomType: 'xy',
                 backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.LineChart.Title,
@@ -2400,9 +2635,34 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.LineChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                                this.yAxis[0].axisTitle.attr({
+                                    "font-size": '12px'
+                                });
+
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -2450,7 +2710,7 @@ Number.prototype.format = function (n, x) {
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -2573,7 +2833,19 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'area',
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.AreaChart.Title,
@@ -2605,7 +2877,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.AreaChart.ValueAxisTitle,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 labels: {
@@ -2613,7 +2886,8 @@ Number.prototype.format = function (n, x) {
                         return this.value;
                     },
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -2662,7 +2936,7 @@ Number.prototype.format = function (n, x) {
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -2699,9 +2973,30 @@ Number.prototype.format = function (n, x) {
             //    }
             //},
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.AreaChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -2728,6 +3023,7 @@ Number.prototype.format = function (n, x) {
             series: data.AreaChart.Series
         });
     };
+
     artifactDesigner._displayMultistacksAreaChart = function (data, container) {
         data.AreaChart.Series = data.AreaChart.Series.reverse();
         //console.log(data);
@@ -2735,7 +3031,19 @@ Number.prototype.format = function (n, x) {
             chart: {
                 type: 'area',
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.AreaChart.Title,
@@ -2765,7 +3073,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.AreaChart.ValueAxisTitle,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -2830,7 +3139,7 @@ Number.prototype.format = function (n, x) {
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -2881,9 +3190,30 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.AreaChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -2980,7 +3310,7 @@ Number.prototype.format = function (n, x) {
         var rangeControl = function () {
             $('#SpeedometerChart_RangeFilter').change(function (e) {
                 e.preventDefault();
-                var $this = $(this);                
+                var $this = $(this);
                 $('#range-holder').prop('class', $this.val().toLowerCase().trim());
             });
             var original = $('#SpeedometerChart_RangeFilter').clone(true);
@@ -3016,6 +3346,7 @@ Number.prototype.format = function (n, x) {
         //rangeControl();
         //rangeDatePicker();
     };
+
     artifactDesigner._previewCallbacks.speedometer = function (data, container) {
         container.highcharts({
             chart: {
@@ -3024,7 +3355,19 @@ Number.prototype.format = function (n, x) {
                 plotBackgroundImage: null,
                 plotBorderWidth: 0,
                 plotShadow: false,
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
 
             title: {
@@ -3073,9 +3416,30 @@ Number.prototype.format = function (n, x) {
                 }]
             },
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.SpeedometerChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -3148,6 +3512,7 @@ Number.prototype.format = function (n, x) {
 
     //tabular
     artifactDesigner._setupCallbacks.tabularrow = {};
+
     artifactDesigner._setupCallbacks.tabularrow.rangeControl = function (context) {
         context.find('.range-filter').change(function (e) {
             e.preventDefault();
@@ -3158,13 +3523,12 @@ Number.prototype.format = function (n, x) {
         var rangeFilterSetup = function (periodeType) {
             var toRemove = {};
 
-            toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD'];
-            toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'MTD', 'CurrentMonth', 'YTD', 'DTD', 'SpecificMonth', 'SpecificYear', 'AllExistingYears', 'Interval'];
-            ;//['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificMonth', 'SpecificYear'];
-            toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD'];
-            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificYear', 'AllExistingYears', 'Interval'];//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificYear'];
-            toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'AllExistingYears', 'Interval'];
-            ;//['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth'];
+            toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+
             var originalClone = original.clone(true);
             originalClone.find('option').each(function (i, val) {
                 if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
@@ -3201,6 +3565,7 @@ Number.prototype.format = function (n, x) {
 
         });
     };
+
     artifactDesigner._setupCallbacks.tabularrow.specificDate = function (context) {
         $(".datepicker").on("dp.change", function (e) {
             if (context.find('.range-filter').val().toLowerCase().indexOf('specific') > -1) {//&& e.target.class === 'start-in-display') {
@@ -3208,6 +3573,7 @@ Number.prototype.format = function (n, x) {
             }
         });
     };
+
     artifactDesigner._setupCallbacks.tabularrow.rangeDatePicker = function (context) {
 
         context.find('.datepicker').change(function (e) {
@@ -3255,6 +3621,7 @@ Number.prototype.format = function (n, x) {
             }
         });
     };
+
     artifactDesigner._setupCallbacks.tabular = function () {
         var removeRow = function () {
             $('.row-template .remove').click(function (e) {
@@ -3299,11 +3666,23 @@ Number.prototype.format = function (n, x) {
         $('#general-graphic-settings').css('display', 'none');
         $('.form-measurement').css('display', 'none');
     };
+
     artifactDesigner._previewCallbacks.tabular = function (data, container) {
         var tableUniqueClass = "table-" + Math.floor((Math.random() * 100) + 1);
         var wrapper = $('<div>');
         wrapper.addClass('tabular-wrapper');
-        wrapper.append($('<h3>').html(data.Tabular.Title));
+        var btn = '<div class="btn-group chart-button">' +
+            '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
+            '<ul class="dropdown-menu pull-right">' +
+            '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>' +
+            '</ul>' +
+            '</div >';
+        var title = data.Tabular.Title;
+        if ($('#user-profile-session-data').data('issuperadmin') == true) {
+            wrapper.append(btn);
+        }
+
+        wrapper.append($('<h3>').html(title));
 
         //container for scrolling table
         var tableScrollContainer = $('<div>');
@@ -3444,6 +3823,7 @@ Number.prototype.format = function (n, x) {
         removePlot();
         addPlot();
     };
+
     artifactDesigner._previewCallbacks.trafficlight = function (data, container) {
         container.trafficlight(data.TrafficLightChart);
     };
@@ -3460,10 +3840,25 @@ Number.prototype.format = function (n, x) {
         Pear.Artifact.Designer._kpiAutoComplete($('#graphic-settings'), false);
     };
     artifactDesigner._previewCallbacks.tank = function (data, container) {
-        container.tank(data.Tank, {
-            height: container.height(),
-            width: container.width()
-        });
+        data.Tank.ArtifactId = data.Id;
+        setTimeout(function () {
+            container.tank(data.Tank, {
+                height: container.height(),
+                width: container.width()
+            });
+
+            var btn = '<div class="btn-group chart-button">' +
+                '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
+                '<ul class="dropdown-menu pull-right">' +
+                '<li><a class="tank-subtitle" href="javascript:;">Change Periode</a></li>' +
+                '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>' +
+                '</ul>' +
+                '</div >';
+            container.css('position', 'relative');
+            if ($('#user-profile-session-data').data('issuperadmin') == true) {
+                container.append(btn);
+            }
+        }, 500);
     };
 
     //mutliaxis
@@ -3788,7 +4183,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.MultiaxisChart.Charts[i].Measurement, //data.MultiaxisChart.Charts[i].ValueAxisTitle + ' (' + data.MultiaxisChart.Charts[i].Measurement + ')',
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                         //color: data.MultiaxisChart.Charts[i].ValueAxisColor
                     }
                 },
@@ -3850,11 +4246,23 @@ Number.prototype.format = function (n, x) {
                 series.push(data.MultiaxisChart.Charts[i].Series[j]);
             }
         }
-        container.highcharts({
+        var h = container.highcharts({
             chart: {
                 zoomType: 'xy',
                 alignTicks: false,
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.MultiaxisChart.Title,
@@ -3869,9 +4277,30 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.MultiaxisChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -3923,7 +4352,7 @@ Number.prototype.format = function (n, x) {
                     var totalInProcess = 0;
                     for (var i in this.points) {
                         tooltip += this.points[i].series.name + ': ' + this.points[i].y.format(2) + ' ' + this.points[i].series.options.tooltip.valueSuffix + '<br/>';
-                      
+
                         var prev = (parseInt(i) - 1);
                         var next = (parseInt(i) + 1);
                         var nextExist = typeof this.points[next] !== 'undefined';
@@ -3933,7 +4362,7 @@ Number.prototype.format = function (n, x) {
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //console.log(
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //    console.log(totalInProcess);
                             //}
 
@@ -3947,7 +4376,7 @@ Number.prototype.format = function (n, x) {
                                 totalInProcess = 0;
                             }
                         }
-                       
+
                         //if (typeof this.points[i].total !== 'undefined') {
                         //    if ((!nextExist && prevExist && this.points[prev].total == this.points[i].total) ||
                         //        (nextExist && prevExist && this.points[next].total != this.points[i].total && this.points[prev].total == this.points[i].total)) {
@@ -3966,7 +4395,8 @@ Number.prototype.format = function (n, x) {
                 shared: true
             },
             series: series
-        });
+        })
+
     };
 
 
@@ -4105,7 +4535,19 @@ Number.prototype.format = function (n, x) {
         container.highcharts({
             chart: {
                 zoomType: 'xy',
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
             },
             title: {
                 text: data.ComboChart.Title,
@@ -4134,7 +4576,8 @@ Number.prototype.format = function (n, x) {
                 title: {
                     text: data.ComboChart.Measurement,
                     style: {
-                        color: '#fff'
+                        color: '#fff',
+                        fontSize: '12px'
                     }
                 },
                 tickInterval: data.FractionScale == 0 ? null : data.FractionScale,
@@ -4147,9 +4590,30 @@ Number.prototype.format = function (n, x) {
                 },
             },
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.ComboChart.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -4197,7 +4661,7 @@ Number.prototype.format = function (n, x) {
                         //total in process
                         if (typeof this.points[i].series.stackKey !== 'undefined') {
                             //if ((!prevExist && nextExist && this.points[next].series.stackKey == this.points[i].series.stackKey) || (prevExist && this.points[prev].series.stackKey == this.points[i].series.stackKey)) {
-                                totalInProcess += this.points[i].y;
+                            totalInProcess += this.points[i].y;
                             //}
 
                             if ((nextExist && prevExist && this.points[next].series.stackKey != this.points[i].series.stackKey && this.points[prev].series.stackKey == this.points[i].series.stackKey) ||
@@ -4282,7 +4746,19 @@ Number.prototype.format = function (n, x) {
                     alpha: 60,
                     beta: 0
                 },
-                backgroundColor: 'transparent'
+                backgroundColor: 'transparent',
+                events: {
+                    beforePrint: function () {
+                        this.chartBackground.attr({
+                            fill: '#006ba1'
+                        });
+                    },
+                    afterPrint: function () {
+                        this.chartBackground.attr({
+                            fill: 'transparent'
+                        });
+                    }
+                }
                 //margin: [0, 0, 0, 0],
                 //spacingTop: 0,
                 //spacingBottom: 0,
@@ -4302,9 +4778,30 @@ Number.prototype.format = function (n, x) {
                 }
             },
             exporting: {
-                url: '/Chart/Export',
-                filename: 'MyChart',
-                width: 1200
+                buttons: {
+                    contextButton: {
+                        symbol: 'url(/Content/img/printer_3.png)',
+                        symbolStrokeWidth: 1,
+                        symbolFill: '#a4edba',
+                        symbolStroke: '#330033'
+                    }
+                },
+                //url: '/Chart/Export',
+                filename: data.Pie.Title,
+                width: 1200,
+                chartOptions: {
+                    chart: {
+                        events: {
+                            load: function () {
+                                this.setTitle(null, { style: { fontSize: '12px' } });
+                                this.chartBackground.attr({
+                                    fill: '#006ba1'
+                                });
+                            }
+
+                        }
+                    }
+                }
             },
             credits: {
                 enabled: false
@@ -4436,7 +4933,6 @@ Number.prototype.format = function (n, x) {
             $('.add-column').click(function () {
                 var $this = $(this);
                 var $row = $(this).parent().find('.layout-row');
-                console.log('anjing');
                 var currentCols = $row.children('.layout-column').length;
                 var newWidth = 100 / (currentCols + 1);
                 $row.children('.layout-column').each(function (i, val) {
@@ -4580,13 +5076,37 @@ Number.prototype.format = function (n, x) {
                 url: url,
                 method: 'GET',
                 success: function (data) {
-                    var $title = $('<h4/>').html(data.Title == null || data.Title == "" ? data.Type : data.Title);
+                    var isSuperAdmin = $('#user-profile-session-data').data('issuperadmin') == true;
+                    $holder.attr('data-highlight-id', data.Id);
+                    var editUrl = $('.highlight-holder').data('artifact-edit-url');
+                    if (editUrl != undefined) {
+                        editUrl = editUrl.replace('_id_', data.Id);
+                    }
+
+                    var title = data.Title == null || data.Title == "" ? data.Type : data.Title;
+                    var $title = $('<h4/>').html(title);
+                    var $periode = $('<div />').append(Pear.Artifact.Designer._toJavascriptDate(data.Date, data.SPeriodeType));
                     var $message = $('<div />').append(data.Message);
                     $message.addClass('dashboard-highlight-message');
                     $title.addClass('dashboard-highlight-title');
+                    $periode.addClass('dashboard-highlight-periode');
+                    $periode.attr('data-periode-type', data.SPeriodeType);
                     $holder.css('background', 'none');
                     $holder.append($title);
+                    $holder.append($periode);
                     $holder.append($message);
+
+                    var btn = '<div class="btn-group chart-button">' +
+                        '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
+                        '<ul class="dropdown-menu pull-right">' +
+                        '<li><a class="highlight-change-periode" href="javascript:;">Change Periode</a></li>' +
+                        '<li><a href="' + editUrl + '" target="_blank">Edit Highlight</a></li>' +
+                        '</ul>' +
+                        '</div >';
+                    $holder.css('position', 'relative');
+                    if (isSuperAdmin) {
+                        $holder.append(btn);
+                    }
                 }
             });
         });
@@ -4690,7 +5210,6 @@ Number.prototype.format = function (n, x) {
                 data: $this.closest('form').serialize(),
                 method: 'POST',
                 success: function (data) {
-                    //console.log(data);
                     $('#container').html(data);
                     templateEditor.ViewSetup();
                     $('#graphic-preview').modal('show');
@@ -4825,8 +5344,8 @@ Number.prototype.format = function (n, x) {
                     $.each(data, function (key, opt) {
                         select
                             .append($("<option></option>")
-                            .attr("value", opt.Value.trim())
-                            .text(opt.Text.trim()));
+                                .attr("value", opt.Value.trim())
+                                .text(opt.Text.trim()));
                     });
 
                     $messageHolder.html($messageHolderClone.find('.alert-condition-options').html());
@@ -4846,19 +5365,19 @@ Number.prototype.format = function (n, x) {
                                 "searchreplace visualblocks code fullscreen",
                                 "insertdatetime media table contextmenu paste"
                             ],
-                            style_formats : [
-                                    {title : 'Line height 20px', selector : 'p,div,h1,h2,h3,h4,h5,h6', styles: {lineHeight: '20px'}},
-                                    {title : 'Line height 30px', selector : 'p,div,h1,h2,h3,h4,h5,h6', styles: {lineHeight: '30px'}}
+                            style_formats: [
+                                { title: 'Line height 20px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '20px' } },
+                                { title: 'Line height 30px', selector: 'p,div,h1,h2,h3,h4,h5,h6', styles: { lineHeight: '30px' } }
                             ],
-                            force_br_newlines : true,
-                            force_p_newlines : false,
+                            force_br_newlines: true,
+                            force_p_newlines: false,
                             //forced_root_block : '',
                             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                         });
                     }
                 }
             });
-            
+
         });
         $('#TypeId').change();
     };
@@ -5319,16 +5838,16 @@ Number.prototype.format = function (n, x) {
                 $('.parent-options').hide();
             } else {
                 $('#ParentOptionId')
-                         .find('option')
-                         .remove()
-                         .end();
+                    .find('option')
+                    .remove()
+                    .end();
                 $.get(url, 'id=' + val, function (data) {
                     $.each(data, function (key, opt) {
 
                         $('#ParentOptionId')
                             .append($("<option></option>")
-                            .attr("value", opt.Id)
-                            .text(opt.Text));
+                                .attr("value", opt.Id)
+                                .text(opt.Text));
                     });
                     $('.parent-options').show();
                 });
@@ -5379,14 +5898,16 @@ Number.prototype.format = function (n, x) {
             Pear.OperationConfig.FormSetup();
         }
 
-        
+
     });
     window.Pear = Pear;
 
     var _artifactHolder;
     var _highchartsContainer;
     var _latestDateTimeFormat;
+    var _highlightHolder;
     var _configs = [];
+    var _highlightConfigs = [];
     var searchArtifactConfig = function (configs, artifactId) {
         var result = { isExisted: false, config: {}, index: -1 };
         if (configs.length > 0) {
@@ -5401,7 +5922,23 @@ Number.prototype.format = function (n, x) {
             }
         }
 
-        return result;                
+        return result;
+    }
+    var searchHighlightConfig = function (configs, highlightId) {
+        var result = { isExisted: false, config: {}, index: -1 };
+        if (configs.length > 0) {
+            for (var i = 0; i < configs.length; i++) {
+                if (configs[i].Id == highlightId) {
+                    result.isExisted = true;
+                    result.config = configs[i];
+                    result.index = i;
+                    result.dateformat = configs[i].dateformat;
+                    return result;
+                }
+            }
+        }
+
+        return result;
     }
     var getDateFormat = function (periodeType) {
         if (periodeType == undefined) return;
@@ -5418,31 +5955,41 @@ Number.prototype.format = function (n, x) {
                 return 'MM/DD/YYYY hh:00 A';
         }
     }
-    var getGraphicSetting = function (el) {        
+    var getGraphicSetting = function (el) {
         var artifactHolder = el.closest('.artifact-holder');
         _artifactHolder = artifactHolder;
         _highchartsContainter = el.closest('.highcharts-container');
 
-        Pear.Loading.Show(artifactHolder);       
+
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
-        _highchartsContainter.hide();
-        
+        var url = '/Artifact/GraphicSetting/' + artifactId;
+
+        $('body').append($('<div/>').addClass('modal-loader').css({
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: 'rgba(0,0,0,.5)',
+            backgroundImage: 'url("/Content/img/ajax-loader2.gif")',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 1000,
+        }));
+
         $.ajax({
-            url: '/Artifact/GraphicSetting/' + artifactId,
+            url: url,
             method: 'GET',
             success: function (data) {
                 $('.graphic-setting-content').hide();
-                $('.graphic-setting-content').html(data);                
+                $('.graphic-setting-content').html(data);
                 $('.graphic-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
-               
-
-                
 
                 $('.graphic-setting-content').show();
                 $('#graphic-setting').modal('show');
 
-                var rangeDatePicker = function () {
+                function rangeDatePicker() {
                     var format = $('#datetime-attr').attr('data-datepickerformat');
                     $('.datepicker').datetimepicker({
                         format: format,
@@ -5490,7 +6037,7 @@ Number.prototype.format = function (n, x) {
                         }
                     });
                 };
-                var rangeControl = function () {
+                function rangeControl() {
                     $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
                         e.preventDefault();
                         var $this = $(this);
@@ -5514,10 +6061,10 @@ Number.prototype.format = function (n, x) {
                                 break;
                             default:
                                 toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.daily = ['CurrentHour', 'CurrentYear', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 break;
                         }
                         var originalClone = original.clone(true);
@@ -5533,48 +6080,224 @@ Number.prototype.format = function (n, x) {
                     $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
                         e.preventDefault();
                         var $this = $(this);
+
                         rangeFilterSetup($this.val().toLowerCase().trim());
+                        $('.graphic-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
                         $('#range-holder').removeAttr('class');
                     });
 
                 };
-                var specificDate = function () {
+                function specificDate() {
                     $(".datepicker").on("dp.change", function (e) {
                         if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
                             $('#EndInDisplay').val($('#StartInDisplay').val());
                         }
                     });
                 };
-
                 rangeControl();
                 rangeDatePicker();
                 specificDate();
-
                 var search = searchArtifactConfig(_configs, artifactId);
                 if (search.isExisted == true) {
-                    console.log(search);
-                    $('.graphic-setting-content #StartInDisplay').val(search.config.StartInDisplay);
-                    $('.graphic-setting-content #EndInDisplay').val(search.config.EndInDisplay);
-                    $('.graphic-setting-content #PeriodeType').val(search.config.PeriodeType);
-                    //$('.graphic-setting-content #PeriodeType[value="' + search.config.PeriodeType + '"]').attr("selected", true);
-                    $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter);     
-                    //$('.graphic-setting-content #RangeFilter[value="' + search.config.RangeFilter + '"]').attr("selected", true);
+                    $('.graphic-setting-content #PeriodeType').val(search.config.PeriodeType).change();
+                    $('.graphic-setting-content #RangeFilter').val(search.config.RangeFilter).change();
                     $('.datepicker').datetimepicker({
                         format: search.dateformat,
                     });
+                    $('.graphic-setting-content #StartInDisplay').val(search.config.StartInDisplay);
+                    $('.graphic-setting-content #EndInDisplay').val(search.config.EndInDisplay);
                     $('#range-holder').removeClass();
                     $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
                 }
             }
         });
+
     }
-    
-    $('.artifact-holder').on('click', '.highcharts-subtitle', function () {           
-        getGraphicSetting($(this));
-    });
+    var getHighlightSetting = function (el) {
+        var highlightHolder = el.closest('.highlight-holder');
+        _highlightHolder = highlightHolder;
+        _highchartsContainter = el.closest('.highcharts-container');
+
+        var highlightId = highlightHolder.attr('data-highlight-id');
+        //var chart = artifactHolder.highcharts();
+        var url = '/Artifact/HighlightSetting/' + highlightId;
+        //_highchartsContainter.hide();
+
+        $('body').append($('<div/>').addClass('modal-loader').css({
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: 'rgba(0,0,0,.5)',
+            backgroundImage: 'url("/Content/img/ajax-loader2.gif")',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 1000,
+        }));
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function (data) {
+                $('.highlight-setting-content').hide();
+                $('.highlight-setting-content').html(data);
+                $('.highlight-setting-content').append('<input type="hidden" value="' + highlightId + '" name="Id" />');
+
+                $('.highlight-setting-content').show();
+                $('#highlight-setting').modal('show');
+
+                function rangeDatePicker() {
+                    var format = $('#datetime-attr').attr('data-datepickerformat');
+                    $('.datepicker').datetimepicker({
+                        format: format,
+                    });
+                    $('.datepicker').change(function (e) {
+                    });
+                    $('#PeriodeType').change(function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        var clearValue = $('.datepicker').each(function (i, val) {
+                            $(val).val('');
+                            if ($(val).data("DateTimePicker") !== undefined) {
+                                $(val).data("DateTimePicker").destroy();
+                            }
+                        });
+                        switch ($this.val().toLowerCase().trim()) {
+                            case 'hourly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY hh:00 A"
+                                });
+                                break;
+                            case 'daily':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY"
+                                });
+                                break;
+                            case 'weekly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY",
+                                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                                });
+                                break;
+                            case 'monthly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/YYYY"
+                                });
+                                break;
+                            case 'yearly':
+                                $('.datepicker').datetimepicker({
+                                    format: "YYYY"
+                                });
+                                break;
+                            default:
+
+                        }
+                    });
+                };
+                function rangeControl() {
+                    $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+                    });
+                    var original = $('#RangeFilter').clone(true);
+                    var rangeFilterSetup = function (periodeType) {
+                        var graphicType = $('#graphic-type').val();
+                        var toRemove = {};
+                        switch (graphicType) {
+                            case "tabular":
+                            case "tank":
+                            case "speedometer":
+                            case "traffic":
+                            case "pie":
+                                toRemove.hourly = ['AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                break;
+                            case "highlight":
+                                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                break;
+                            default:
+                                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                break;
+                        }
+                        var originalClone = original.clone(true);
+                        originalClone.find('option').each(function (i, val) {
+                            if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                                originalClone.find(val).remove();
+                            }
+                        });
+                        $('#RangeFilter').replaceWith(originalClone);
+                    };
+
+                    rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
+                    $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+
+                        rangeFilterSetup($this.val().toLowerCase().trim());
+                        $('.graphic-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
+                        $('.graphic-setting-content #RangeFilter').trigger('change');
+                        //$('#range-holder').removeAttr('class');
+                    });
+
+                };
+                function specificDate() {
+                    $(".datepicker").on("dp.change", function (e) {
+                        if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                            $('#EndInDisplay').val($('#StartInDisplay').val());
+                        }
+                    });
+                };
+                rangeControl();
+                rangeDatePicker();
+                specificDate();
+
+                var search = searchHighlightConfig(_highlightConfigs, highlightId);
+                if (search.isExisted == true) {
+                    $('.highlight-setting-content #PeriodeType').val(search.config.PeriodeType).change();
+                    $('.highlight-setting-content #RangeFilter').val(search.config.RangeFilter).change();
+                    $('.datepicker').datetimepicker({
+                        format: search.dateformat,
+                    });
+                    $('.highlight-setting-content #StartInDisplay').val(search.config.StartInDisplay);
+                    $('.highlight-setting-content #EndInDisplay').val(search.config.EndInDisplay);
+                    $('#range-holder').removeClass();
+                    $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
+                } else {
+                    var currentPeriodeType = $('#general-graphic-settings #PeriodeType').val();
+                    var currentRangeFilter = $('#general-graphic-settings #RangeFilter').val().toLowerCase().trim();
+                    $('#general-graphic-settings #range-holder').prop('class', currentRangeFilter);
+                }
+            }
+        });
+    }
 
     $('.artifact-holder').on('click', '.tank-subtitle', function () {
         getGraphicSetting($(this));
+    });
+
+    $('.highlight-holder').on('click', '.highlight-change-periode', function () {
+        getHighlightSetting($(this));
+    });
+
+    $('#graphic-setting').on('show.bs.modal', function () {
+        $('body').children('.modal-loader').remove();
+    });
+
+    $('#highlight-setting').on('show.bs.modal', function () {
+        $('body').children('.modal-loader').remove();
     });
 
     $('#graphic-setting').on('submit', '#graphic-setting-form', function (e) {
@@ -5585,23 +6308,94 @@ Number.prototype.format = function (n, x) {
             method: 'POST',
             success: function (data2) {
                 var callback = Pear.Artifact.Designer._previewCallbacks;
-                var result = {};                
+                var result = {};
                 $.each($('#graphic-setting-form').serializeArray(), function (key, value) {
                     result[this.name] = this.value;
                 });
                 result['dateformat'] = getDateFormat(result["PeriodeType"]);
                 var search = searchArtifactConfig(_configs, result["Id"]);
-                (search.isExisted) ? _configs[search.index] = result : _configs.push(result);                
+                (search.isExisted) ? _configs[search.index] = result : _configs.push(result);
                 callback[data2.GraphicType](data2, _artifactHolder);
                 $('#graphic-setting').modal('hide');
             }
         })
     })
 
-    $('#graphic-setting').on('hidden.bs.modal', function () {
-        _highchartsContainter.show();
-        Pear.Loading.Stop(_artifactHolder);
+    $('#highlight-setting').on('submit', '#highlight-setting-form', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $('#highlight-setting-form').attr('action'),
+            data: $('#highlight-setting-form').serialize(),
+            method: 'POST',
+            success: function (data2) {
+                var result = {};
+                result['dateformat'] = getDateFormat(result["PeriodeType"]);
+                $.each($('#highlight-setting-form').serializeArray(), function (key, value) {
+                    result[this.name] = this.value;
+                });
+                var search = searchHighlightConfig(_highlightConfigs, result["Id"]);
+                (search.isExisted) ? _highlightConfigs[search.index] = result : _highlightConfigs.push(result);
+                _highlightHolder.find('.dashboard-highlight-periode:first').html(Pear.Artifact.Designer._toJavascriptDate(data2.Date, data2.SPeriodeType));
+                _highlightHolder.find('.dashboard-highlight-message:first').html(data2.Message);
+                $('#highlight-setting').modal('hide');
+            }
+        })
+    })
+
+    $('#graphic-setting').on('click', '#backToDefault', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: _artifactHolder.data('artifact-url'),
+            method: 'POST',
+            success: function (data2) {
+                var callback = Pear.Artifact.Designer._previewCallbacks;
+                var search = searchArtifactConfig(_configs, _artifactHolder.data('artifact-id'));
+                if (search.isExisted)
+                    _configs.splice(search.index, 1);
+                callback[data2.GraphicType](data2, _artifactHolder);
+                $('#graphic-setting').modal('hide');
+            }
+        })
     });
 
-    
+    $('#highlight-setting').on('click', '#backToDefault', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: _highlightHolder.data('artifact-url'),
+            method: 'POST',
+            success: function (data2) {
+                var search = searchHighlightConfig(_highlightConfigs, _highlightHolder.data('highlight-id'));
+                if (search.isExisted)
+                    _highlightConfigs.splice(search.index, 1);
+
+                _highlightHolder.find('.dashboard-highlight-periode:first').html(Pear.Artifact.Designer._toJavascriptDate(data2.Date, data2.SPeriodeType));
+                _highlightHolder.find('.dashboard-highlight-message:first').html(data2.Message);
+                $('#highlight-setting').modal('hide');
+            }
+        })
+    });
+
+    $('#graphic-setting').on('hidden.bs.modal', function () {
+        //_highchartsContainter.show();
+        //Pear.Loading.Stop(_artifactHolder);
+    });
+
+    if ($('#user-profile-session-data').length > 0) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
+            text: "Change Periode",
+            onclick: function () {
+                getGraphicSetting($(this.renderTo));
+            }
+        });
+    }
+
+    if ($('#user-profile-session-data').length > 0 && $('#user-profile-session-data').data('issuperadmin') == true) {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
+            text: "Edit Chart",
+            onclick: function (e) {
+                var id = $(this.renderTo).data('artifact-id');
+                window.open('/Artifact/Edit/' + id, '_blank');
+            }
+        });
+    }
 }(window, jQuery, undefined));

@@ -797,6 +797,10 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<DSLNG.PEAR.Services.Responses.Kpi.GetKpisResponse.Kpi, CreateInputDataViewModel.Kpi>()
                 .ForMember(x => x.Measurement, o => o.MapFrom(s => s.Measurement.Name));
+
+            Mapper.CreateMap<GetHighlightResponse, ArtifactDesignerViewModel>()
+                .ForMember(x => x.Start, y => y.MapFrom(z => z.Date))
+                .ForMember(x => x.End, y => y.MapFrom(z => z.Date));
             base.Configure();
         }
 

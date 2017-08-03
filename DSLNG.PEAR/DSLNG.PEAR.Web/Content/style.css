@@ -808,10 +808,18 @@ h2 {
     color:#fff;
 }
 .template-view .dashboard-highlight-title {
-    margin-bottom:38px;
+    margin-bottom:10px;
+    margin-top:10px;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
 }
+.template-view .dashboard-highlight-periode {
+    margin-bottom:10px;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+    font-size:12px;
+} 
 .template-view .dashboard-highlight-message {
     text-align:justify;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
 }
 .column-properties {
     width: 225px;
@@ -3477,8 +3485,59 @@ tr.der-transaction-error {
     border: 2px solid red !important;
 }
 
+.artifact-holder .highcharts-title {
+    text-align: center;
+}
 
-.artifact-holder .tank-subtitle,
-.artifact-holder .highcharts-subtitle {
-    cursor: pointer;
+#der-table tbody td {
+    vertical-align: top;
+    border-bottom: 1px solid #fff;
+}
+
+#der-table tbody tr:last-child td {
+    vertical-align: top;
+    border-bottom: 0;
+}
+
+#der-table .read-more {
+    color: orange;
+    text-decoration: underline;
+}
+
+.modal-content {
+    border: 2px solid #fff;
+}
+
+.btn-primary-alt {
+    background-color: #65A9BF;
+    border-radius: 0;
+    border: none;
+    color: #fff;
+}
+
+    .btn-primary-alt:hover {
+        background-color: #00679E;
+        color: #fff;
+    }
+
+.btn-secondary-alt {
+    background-color: #DDCFC0;
+    border-radius: 0;
+    border: none;
+    color: #004071;
+}
+
+    .btn-secondary-alt:hover {
+        background-color: #ccc;
+        color: #004071;
+    }
+
+.chart-button {
+    position: absolute;
+    right: 0;
+    top: -12px;
+}
+
+.tabular-wrapper {
+    position: relative;
 }

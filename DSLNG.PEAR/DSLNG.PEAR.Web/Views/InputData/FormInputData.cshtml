@@ -1,9 +1,30 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.InputData.FormInputDataViewModel
 @using DSLNG.PEAR.Web.ViewModels.DerTransaction;
-@*@{
-    ViewBag.Title = "FormInputData";
-}*@
-
+@helper InputDataDate(int addedTime)
+{
+string date = string.Empty;
+string format = string.Empty;
+string d = string.Empty;
+switch (Model.PeriodeType.ToString())
+{
+    case "Yearly":
+        format = "yyyy";
+        date = Request.QueryString["date"] != null ? Request.QueryString["date"] : DateTime.Now.ToString(format);
+        d = DateTime.ParseExact(date, format, System.Globalization.CultureInfo.InvariantCulture).AddYears(addedTime).ToString(format);
+        break;
+    case "Monthly":
+        format = "MM/yyyy";
+        date = Request.QueryString["date"] != null ? Request.QueryString["date"] : DateTime.Now.ToString(format);
+        d = DateTime.ParseExact(date, format, System.Globalization.CultureInfo.InvariantCulture).AddMonths(addedTime).ToString(format);
+        break;
+    default:
+        format = "MM/dd/yyyy";
+        date = Request.QueryString["date"] != null ? Request.QueryString["date"] : DateTime.Now.ToString(format); 
+        d = DateTime.ParseExact(date, format, System.Globalization.CultureInfo.InvariantCulture).AddDays(addedTime).ToString(format);
+        break;
+}
+    @Url.Action("FormInputData", "inputdata", new { date = d, id = Model.Id });
+}
 <h3>@ViewBag.Title</h3>
 &nbsp;
 <div class="row">
@@ -11,8 +32,12 @@
         <form class="form-inline">
             <div class="form-group form-list">
                 <font color="#FFFFFF">Date : </font>
+                <a class="der-yesterday" href="@InputDataDate(-1)">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                </a>
                 <input id="currentDate" class="form-control datepicker" type="text">
                 <span class="field-validation-valid" data-valmsg-for="StartInDisplay" data-valmsg-replace="true"></span>
+                <a class="der-tomorrow" href="@InputDataDate(1)"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
             </div>
         </form>
     </div>
@@ -39,7 +64,7 @@
         </tr>
     </thead>
     <tbody>
-        @{ 
+        @{
             var tabIndex = 0;
         }
         @foreach (var item in Model.GroupInputDatas.OrderBy(x => x.Order))
@@ -50,7 +75,7 @@
             </tr>
 
             foreach (var kpi in item.InputDataKpiAndOrders.OrderBy(x => x.Order))
-                {
+            {
                 tabIndex++;
                 <tr>
                     <td></td>
@@ -62,7 +87,7 @@
                 </tr>
             }
 
-            }
+        }
     </tbody>
 </table>
 

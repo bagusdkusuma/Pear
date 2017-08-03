@@ -12,9 +12,11 @@ using System;
 using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Requests.Select;
 using System.Linq;
+using DSLNG.PEAR.Web.Attributes;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class TemplateController : BaseController
     {
         private readonly IArtifactService _artifactService;
@@ -33,19 +35,22 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(new { results = artifacts }, JsonRequestBehavior.AllowGet);
         }
 
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
             return View();
         }
 
-        
+        [AuthorizeUser(AccessLevel ="AllowView")]
         public ActionResult View(int id)
-        { 
+        {
+            ViewData["privileges"] = HttpContext.Session["Template"];
             var template = _templateService.GetTemplate(new GetTemplateRequest{Id = id});
             var viewModel = template.MapTo<TemplateViewModel>();
             return View(viewModel);
         }
 
+        [AuthorizeUser(AccessLevel = "AllowCreate")]
         public ActionResult Create()
         {
             var viewModel = new TemplateViewModel();
@@ -56,8 +61,12 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
                 }
             }
+            var forbidenTypes = new string[] { "Alert" };
             viewModel.HighlightTypes = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
-                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).Where(x => !x.Text.ToLower().Contains("indicator") 
+                && !forbidenTypes.Contains(x.Text) 
+                && !x.Text.ToLower().Contains("edg")
+                && !x.Text.ToLower().Contains("gtg")).ToList();
             foreach (var name in Enum.GetNames(typeof(TemplateColumnType)))
             {
                 viewModel.ColumnTypes.Add(new SelectListItem { Text = name, Value = name });
@@ -72,6 +81,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [AuthorizeUser(AccessLevel = "AllowUpdate")]
         public ActionResult Update(int id)
         {
             var template = _templateService.GetTemplate(new GetTemplateRequest {Id = id});
@@ -83,8 +93,12 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.PeriodeTypes.Add(new SelectListItem { Text = name, Value = name });
                 }
             }
+            var forbidenTypes = new string[] { "Alert" };
             viewModel.HighlightTypes = _selectService.GetSelect(new GetSelectRequest { Name = "highlight-types" }).Options
-                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).ToList();
+                .Select(x => new SelectListItem { Text = x.Text, Value = x.Id.ToString() }).Where(x => !x.Text.ToLower().Contains("indicator")
+                && !forbidenTypes.Contains(x.Text)
+                && !x.Text.ToLower().Contains("edg")
+                && !x.Text.ToLower().Contains("gtg")).ToList();
             foreach (var name in Enum.GetNames(typeof(TemplateColumnType)))
             {
                 viewModel.ColumnTypes.Add(new SelectListItem { Text = name, Value = name });
@@ -108,6 +122,7 @@ namespace DSLNG.PEAR.Web.Controllers
             }
         }
 
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Preview(TemplateViewModel viewModel)
         {
             return View(viewModel);
