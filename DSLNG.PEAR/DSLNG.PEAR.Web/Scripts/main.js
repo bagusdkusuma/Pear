@@ -134,7 +134,25 @@ String.prototype.endsWith = function (str) {
 String.prototype.isNullOrEmpty = function () {
     return this == false || this === '';
 };
+function round(value, exp,x) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (exp > 0 ? '\\.' : '$') + ')';
+    if (typeof exp === 'undefined' || +exp === 0)
+        return Math.round(value);
 
+    value = +value;
+    exp = +exp;
+
+    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0))
+        return NaN;
+
+    // Shift
+    value = value.toString().split('e');
+    value = Math.round(+(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp)));
+
+    // Shift back
+    value = value.toString().split('e');
+    return (+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp))).toString().replace(new RegExp(re, 'g'), '$&,');
+}
 /**
  * Number.prototype.format(n, x)
  * 
@@ -142,9 +160,11 @@ String.prototype.isNullOrEmpty = function () {
  * @param integer x: length of sections
  */
 Number.prototype.format = function (n, x) {
-    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-    return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+    return round(this,n,x);
+    //var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    //return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 };
+
 
 (function (window, $, undefined) {
     var Pear = {};
@@ -4171,10 +4191,18 @@ Number.prototype.format = function (n, x) {
         };
         var series = [];
         for (var i in data.MultiaxisChart.Charts) {
+         
             //console.log(data.MultiaxisChart.Charts[i].SeriesType);
             yAxes.push({
                 labels: {
-                    //format: '{value} ' + data.MultiaxisChart.Charts[i].Measurement,
+                    //  format: '{value} ' + data.MultiaxisChart.Charts[i].Measurement,
+                    formatter: function () {
+                        if (this.value < 1000 && this.value % 1 != 0) {
+                            return this.value.format(2);
+                        } else {
+                            return this.axis.defaultLabelFormatter.call(this)
+                        }
+                    },
                     style: {
                         color: '#fff',
                         //color: data.MultiaxisChart.Charts[i].ValueAxisColor

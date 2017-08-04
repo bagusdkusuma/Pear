@@ -997,6 +997,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpGet]
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Preview()
         {
             var activeDer = _derService.GetActiveDer();
