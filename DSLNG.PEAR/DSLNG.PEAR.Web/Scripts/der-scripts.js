@@ -515,7 +515,7 @@ Number.prototype.format = function (n, x) {
                 visble:false,
                 title: {
                     enabled: container.is('.row15col4') ? false : true,       
-                    text: null,//data.MultiaxisChart.Charts[i].Measurement,
+                    text: container.is('.row1col1, .row1col2, .row1col3, .row1col0') ? data.MultiaxisChart.Charts[i].Measurement : null,
                     align: 'high',
                     rotation: 0,
                     y: -10,
