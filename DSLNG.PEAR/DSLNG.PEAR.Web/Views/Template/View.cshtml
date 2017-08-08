@@ -3,6 +3,8 @@
 @{
     //UserProfileSessionData user = (UserProfileSessionData)HttpContext.Current.Session["LoginUser"];
 
+    ViewBag.Title = Model.Name;
+
     var allowEdit = false;
     var priv = ViewData["privileges"] as List<string>;
     if (priv.Contains("AllowUpdate"))
