@@ -47,7 +47,7 @@ namespace DSLNG.PEAR.Web.ViewModels.DerTransaction
         {
             public int Id { get; set; }
             public DateTime Date { get; set; }
-            public double Value { get; set; }
+            public double? Value { get; set; }
             public string Remark { get; set; }
             public string Type { get; set; }
         }
