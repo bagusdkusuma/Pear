@@ -1279,7 +1279,7 @@ namespace DSLNG.PEAR.Services
                         case RangeFilter.YTD:
                             {
                                 var startDay = new DateTime(DateTime.Now.Year, 1, 1);
-                                var endDay = new DateTime(DateTime.Now.Year, 12, 31);
+                                var endDay = DateTime.Now;
                                 timeInformation = startDay.ToString("dd MMM yy", CultureInfo.InvariantCulture);
                                 while (startDay <= endDay)
                                 {
