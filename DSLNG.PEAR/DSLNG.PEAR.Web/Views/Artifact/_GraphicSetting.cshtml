@@ -7,6 +7,14 @@
 </style>
 @{ 
     var id = "graphic-type";
+    var title = Model.HeaderTitle;
+    if(Model.HighlightTypeId > 0)
+    {
+        if (string.IsNullOrEmpty(Model.HeaderTitle))
+        {
+            title = "Highlight";
+        }
+    }
 }
 
 <div class="form-inline whitebox">
@@ -141,8 +149,8 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        var headerTitle = @Html.Raw(Json.Encode(Model.HeaderTitle));
+    $(document).ready(function () {        
+        var headerTitle = @Html.Raw(Json.Encode(title));
         var mt = $('.modal-title')
         mt.text(headerTitle);
 

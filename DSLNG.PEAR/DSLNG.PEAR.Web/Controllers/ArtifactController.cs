@@ -1184,7 +1184,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.StartInDisplay = ParseDateToString(highlight.PeriodeType, highlight.Date);
             viewModel.EndInDisplay = ParseDateToString(highlight.PeriodeType, highlight.Date);
             viewModel.HighlightTypeId = highlight.TypeId;
-            viewModel.HeaderTitle = highlight.Title;
+            viewModel.HeaderTitle = highlight.Type;
             return PartialView("_GraphicSetting", viewModel);
         }
 

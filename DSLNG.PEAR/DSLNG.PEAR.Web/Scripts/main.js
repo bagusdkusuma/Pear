@@ -134,7 +134,7 @@ String.prototype.endsWith = function (str) {
 String.prototype.isNullOrEmpty = function () {
     return this == false || this === '';
 };
-function round(value, exp,x) {
+function round(value, exp, x) {
     var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (exp > 0 ? '\\.' : '$') + ')';
     if (typeof exp === 'undefined' || +exp === 0)
         return Math.round(value);
@@ -164,7 +164,7 @@ Number.prototype.format = function (n, x) {
         var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
         return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
     }
-    return round(this,n,x);
+    return round(this, n, x);
 };
 
 
@@ -3872,14 +3872,14 @@ Number.prototype.format = function (n, x) {
             var btn = '<div class="btn-group chart-button">' +
                 '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
                 '<ul class="dropdown-menu pull-right">' +
-                '<li><a class="tank-subtitle" href="javascript:;">Change Periode</a></li>' +
-                '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>' +
-                '</ul>' +
+                '<li><a class="tank-subtitle" href="javascript:;">Change Periode</a></li>';
+            if ($('#user-profile-session-data').data('issuperadmin') == true) {
+                btn += '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>';
+            }
+            btn += '</ul>' +
                 '</div >';
             container.css('position', 'relative');
-            if ($('#user-profile-session-data').data('issuperadmin') == true) {
-                container.append(btn);
-            }
+            container.append(btn);
         }, 500);
     };
 
@@ -4193,7 +4193,7 @@ Number.prototype.format = function (n, x) {
         };
         var series = [];
         for (var i in data.MultiaxisChart.Charts) {
-         
+
             //console.log(data.MultiaxisChart.Charts[i].SeriesType);
             yAxes.push({
                 labels: {
@@ -5129,14 +5129,16 @@ Number.prototype.format = function (n, x) {
                     var btn = '<div class="btn-group chart-button">' +
                         '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
                         '<ul class="dropdown-menu pull-right">' +
-                        '<li><a class="highlight-change-periode" href="javascript:;">Change Periode</a></li>' +
-                        '<li><a href="' + editUrl + '" target="_blank">Edit Highlight</a></li>' +
-                        '</ul>' +
+                        '<li><a class="highlight-change-periode" href="javascript:;">Change Periode</a></li>';
+                    if (isSuperAdmin) {
+                        btn +=
+                            '<li><a href="' + editUrl + '" target="_blank">Edit Highlight</a></li>';
+                    }
+                    btn += '</ul>' +
                         '</div >';
                     $holder.css('position', 'relative');
-                    if (isSuperAdmin) {
-                        $holder.append(btn);
-                    }
+                    $holder.append(btn);
+
                 }
             });
         });
@@ -5749,12 +5751,12 @@ Number.prototype.format = function (n, x) {
         var assumptionParam = $('.assumption-param');
         var excludeValue = $('.exclude-value');
         var paramsHolder = $('.params-holder');
-
+    
         paramsHolder.find('.kpi-options, .key-assumption-options').each(function(i, val) {
             var select = $(val);
             Pear.OperationConfig._autocomplete(select);
         });
-
+    
         $('.output-formula').change(function(e) {
             var $this = $(this);
             var val = $this.val();
@@ -6252,7 +6254,7 @@ Number.prototype.format = function (n, x) {
                                 toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
                                 toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
-                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'CurrentYear', 'AllExistingYears'];
                                 break;
                             default:
                                 toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
@@ -6277,8 +6279,8 @@ Number.prototype.format = function (n, x) {
                         var $this = $(this);
 
                         rangeFilterSetup($this.val().toLowerCase().trim());
-                        $('.graphic-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
-                        $('.graphic-setting-content #RangeFilter').trigger('change');
+                        $('.highlight-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
+                        $('.highlight-setting-content #RangeFilter').trigger('change');
                         //$('#range-holder').removeAttr('class');
                     });
 
@@ -6310,6 +6312,7 @@ Number.prototype.format = function (n, x) {
                     var currentRangeFilter = $('#general-graphic-settings #RangeFilter').val().toLowerCase().trim();
                     $('#general-graphic-settings #range-holder').prop('class', currentRangeFilter);
                 }
+                $('#general-graphic-settings #range-filter-holder').hide();
             }
         });
     }
@@ -6374,40 +6377,28 @@ Number.prototype.format = function (n, x) {
 
     $('#graphic-setting').on('click', '#backToDefault', function (e) {
         e.preventDefault();
-        $.ajax({
-            url: _artifactHolder.data('artifact-url'),
-            method: 'POST',
-            success: function (data2) {
-                var callback = Pear.Artifact.Designer._previewCallbacks;
-                var search = searchArtifactConfig(_configs, _artifactHolder.data('artifact-id'));
-                if (search.isExisted)
-                    _configs.splice(search.index, 1);
-                callback[data2.GraphicType](data2, _artifactHolder);
-                $('#graphic-setting').modal('hide');
-            }
-        })
+        getGraphicSetting(_artifactHolder, false);
+        var search = searchArtifactConfig(_configs, _artifactHolder.data('artifact-id'));
+        if (search.isExisted) {
+            _configs.splice(search.index, 1);
+        }
     });
 
     $('#highlight-setting').on('click', '#backToDefault', function (e) {
         e.preventDefault();
-        $.ajax({
-            url: _highlightHolder.data('artifact-url'),
-            method: 'POST',
-            success: function (data2) {
-                var search = searchHighlightConfig(_highlightConfigs, _highlightHolder.data('highlight-id'));
-                if (search.isExisted)
-                    _highlightConfigs.splice(search.index, 1);
-
-                _highlightHolder.find('.dashboard-highlight-periode:first').html(Pear.Artifact.Designer._toJavascriptDate(data2.Date, data2.SPeriodeType));
-                _highlightHolder.find('.dashboard-highlight-message:first').html(data2.Message);
-                $('#highlight-setting').modal('hide');
-            }
-        })
+        getHighlightSetting(_highlightHolder, false);
+        var search = searchHighlightConfig(_highlightConfigs, _highlightHolder.data('highlight-id'));
+        if (search.isExisted) {
+            _highlightConfigs.splice(search.index, 1);
+        }
     });
 
     $('#graphic-setting').on('hidden.bs.modal', function () {
-        //_highchartsContainter.show();
-        //Pear.Loading.Stop(_artifactHolder);
+        $('.graphic-setting-content').html('');
+    });
+
+    $('#highlight-setting').on('hidden.bs.modal', function () {
+        $('.highlight-setting-content').html('');
     });
 
     if ($('#user-profile-session-data').length > 0) {
