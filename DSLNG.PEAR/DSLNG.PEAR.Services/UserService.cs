@@ -175,7 +175,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 //var user = DataContext.Users.Where(x => x.Username == request.Username).Include(x => x.Role).First();
-                var user = DataContext.Users.Where(x => x.Email == request.Email).Include(x => x.Role).Include(y => y.RolePrivileges).First();
+                var user = DataContext.Users.Where(x => x.Email == request.Email || x.Username == request.Email).Include(x => x.Role).Include(y => y.RolePrivileges).First();
                 if (user != null && user.Password == crypto.Compute(request.Password, user.PasswordSalt))
                 {
                     //Add For Update Password
