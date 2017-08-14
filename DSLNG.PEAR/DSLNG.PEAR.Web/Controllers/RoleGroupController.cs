@@ -104,6 +104,9 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create(CreateRoleGroupViewModel viewModel)
         {
             var request = viewModel.MapTo<CreateRoleGroupRequest>();
+            request.ControllerName = "RoleGroup";
+            request.ActionName = "Create";
+            request.UserId = this.UserProfile().UserId;
             var response = _roleGroupService.Create(request);
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;

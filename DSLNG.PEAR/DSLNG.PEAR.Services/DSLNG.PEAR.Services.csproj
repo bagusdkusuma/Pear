@@ -81,6 +81,7 @@
     <Compile Include="AssumptionCategoryService.cs" />
     <Compile Include="AssumptionConfigService.cs" />
     <Compile Include="AssumptionDataService.cs" />
+    <Compile Include="AuditTrailService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="BusinessPostureIdentificationService.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="HighlightService.cs" />
     <Compile Include="InputDataService.cs" />
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
+    <Compile Include="Interfaces\IAuditTrailService.cs" />
     <Compile Include="Interfaces\ICustomFormulaService.cs" />
     <Compile Include="Interfaces\IDerLoadingScheduleService.cs" />
     <Compile Include="Interfaces\IDerTransactionService.cs" />
@@ -123,6 +125,9 @@
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditTrailRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditTrailsRequest.cs" />
+    <Compile Include="Requests\BaseRequest.cs" />
     <Compile Include="Requests\CustomFormula\GetCustomFormulaRequest.cs" />
     <Compile Include="Requests\DerLoadingSchedule\GetDerLoadingSchedulesRequest.cs" />
     <Compile Include="Requests\DerTransaction\CreateDerInputFileRequest.cs" />
@@ -168,6 +173,8 @@
     <Compile Include="Requests\Wave\GetWaveRequest.cs" />
     <Compile Include="Requests\Wave\GetWavesRequest.cs" />
     <Compile Include="Requests\Wave\SaveWaveRequest.cs" />
+    <Compile Include="Responses\AuditTrail\AuditTrailResponse.cs" />
+    <Compile Include="Responses\AuditTrail\AuditTrailsResponse.cs" />
     <Compile Include="Responses\CustomFormula\GetCustomFormulaResponse.cs" />
     <Compile Include="Responses\DerLoadingSchedule\GetDerLoadingSchedulesResponse.cs" />
     <Compile Include="Responses\DerTransaction\DeleteDerInputFileResponse.cs" />

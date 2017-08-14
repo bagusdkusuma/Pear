@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.RoleGroup
 {
-    public class CreateRoleGroupRequest
+    public class CreateRoleGroupRequest : BaseRequest
     {
         public string Name { get; set; }
         public string Icon { get; set; }

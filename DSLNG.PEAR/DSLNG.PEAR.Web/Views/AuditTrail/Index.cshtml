@@ -1,0 +1,312 @@
+﻿@model  DSLNG.PEAR.Web.ViewModels.AuditTrail.GetAuditTrailViewModel
+@{
+    ViewBag.Title = "Audit Trails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dataTables_filter {
+        display: none;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-1:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: #808080;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-2:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: #F0F0F0;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-3:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: #FF0000;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-4:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: orange;
+    }
+
+    .glyphicon.glyphicon-one-fine-dot-5:before {
+        content: "\25cf";
+        font-size: 1.5em;
+        color: green;
+    }
+
+    .bootstrap-select > .dropdown-toggle {
+        width: 161px !important;
+    }
+
+    .dd-glyphicon {
+        vertical-align: top;
+        top: -4px;
+        left: 0px;
+    }
+</style>
+<h2>Audit Trail</h2>
+@Html.Partial("_MessageResponse")
+<div class="pull-right">
+    <form class="form-inline">
+        <div class="form-group" style="margin-top: 5px; margin-left: 25px; padding-right: 30px; border-right: solid 1px #3f454f;">
+            <label class="labletop">Year :</label>
+            @Html.DropDownListFor(x => x.Year, Model.YearList, new { @class = "selectpicker", id = "year" })
+        </div>
+        <div class="form-group" style="margin-top: 5px;">
+            <label class="labletop">Month :</label>
+            @Html.DropDownListFor(x => x.Month, Model.MonthList, new { @class = "selectpicker", id = "month" })
+
+        </div>
+    </form>
+</div>
+<table id="der-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Change Date</th>
+            <th>User Name</th>
+            <th>Operation</th>
+            <th>Record Id</th>
+            <th>Table Name</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+<div class="modal fade" id="auditDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body" style="color:#fff">
+
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#auditDetailModal').on('show.bs.modal', function (e) {
+                $('#auditDetailModal h4').text($(e.relatedTarget).data('title') + ' - ' + $(e.relatedTarget).data('date'))
+                $('#derModal .modal-body').html($(e.relatedTarget).data('text'));
+            })
+            AllowDelete = '@{ @AllowDelete}';
+            function shortenText(data, title, date) {
+                var textDisplay = data.replace('<p>', '').replace('</p>', '');
+                var length = 150;
+                if (data.length > length) {
+                    textDisplay = data.substring(0, length).replace(/<\/?[^>]+(>|$)/g, "");
+                    textDisplay += ' | <a class="read-more" href="#" data-toggle="modal" data-target="#derModal" data-text="' + data + '" data-title="' + title + '" data-date="' + moment(new Date(date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') +'">Read More</button>';
+                }
+                return textDisplay;
+            }
+            var table = $('#der-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "AuditTrail")',
+                "order": [[0, "desc"]],
+                "oSearch": {
+                    "sSearch": $('#month').val() + '-' + $('#year').val()
+                },
+                "aoColumns": [
+                    {
+                        "mDataProp": "Date", "name": "Date", "className": "dt-body-left",
+                        "mRender": function (data, type, row, pos) {
+                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + '</a>';
+                        }
+
+                    },
+                    {
+                        "mDataProp": "DailyIndicator", "name": "DailyIndicator", "className": "dt-body-left", "orderable": false, width: 1, "padding": "0", fixed: true,
+                        "mRender": function (data, type, row, pos) {
+                            var str = '';
+                            if (parseInt(data) < 2) {
+                                str = '<span class="indicator"><i class="fa fa-circle"  style="color:#808080" ></i></span>';
+                            } else if (parseInt(data) == 2) {
+                                str = '<span class="indicator"><i class="fa fa-circle" style="color:#F0F0F0"></i></span>';
+                            } else if (parseInt(data) == 3) {
+                                str = '<span class="indicator"><i class="fa fa-circle" style="color:#FF0000"></i></span>';
+                            } else if (parseInt(data) == 4) {
+                                str = '<span class="indicator orange"><i class="fa fa-circle" style="color:orange"></i></span>';
+                            } else if (parseInt(data) > 4) {
+                                str = '<span class="indicator green"><i class="fa fa-circle" style="color:green"></i></span>';
+                            }
+                            return str;// + "<span style='padding-left: 10px;'>" + shortenText(row["OverallPerformance"], "Overall Performance", row['Date']) + "</span>";
+                        }
+                    },
+                    {
+                        "mDataProp": "OverallPerformance", "name": "OverallPerformance", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "OverallPerformance", row['Date']);
+                        }
+                    },
+                    {
+                        "mDataProp": "MarineCargoDelivery", "name": "MarineCargoDelivery", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "Marine Cargo Delivery", row['Date']);
+                        }
+                    },
+                    {
+                        "mDataProp": "Qhse", "name": "Qhse", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "QHSE", row['Date']);
+                        }
+                    },
+                    {
+                        "mDataProp": "Security", "name": "Security", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return shortenText(data, "Security", row['Date']);
+                        }
+                    },
+
+                      {
+                          "orderable": false,
+                          "data": null,
+                          "defaultContent": '',
+                          "mRender": function (data, type, row) {
+                              var files = row.Filename.split(';');
+                              if (files.length) {
+                                  return '<a href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View</a> | ' +
+                                      '<a download href="' + files[files.length - 1].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">Download</a>';
+                              }
+                              return '';
+
+                          }
+                      }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            $(document).on('click', '.delete', function () {
+                var filename = $(this).attr('data-filename');
+                if (confirm('Are you sure want to delete this item?' + filename)) {
+                    var url = '@Url.Action("Delete", "Der")';
+                    var form = $('<form />');
+                    form.attr('action', url);
+                    form.attr('method', 'POST');
+                    form.html('<input type="hidden" name="filename" value="' + filename + '" />');
+                    $('body').append(form);
+                    form.submit();
+                }
+            });
+
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false
+            });
+
+            $('.year-filter').datetimepicker({
+                format: "MM",
+                focusOnShow: false
+            });
+
+
+            //$('#upload-der').click(function () {
+            //    alert('asasas');
+            //});
+            $(document).on('click', '#der-versions', function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                var row = $this.data('pos');
+                var rows = table.rows().data();
+                var rowData = rows[row];
+                var $table = $('<table />');
+                $table.addClass('table table-bordered der-versions-table');
+                $table.attr('style', 'color:#fff !important');
+                $table.append('<thead><tr><th>Version</th><th>File Attachment</th><th>Action</th></th></thead>');
+                $table.append('<tbody></tbody>');
+                var files = rowData.Filename.split(';');
+                var $tableBody = $table.find('tbody');
+                for (var i in files) {
+                    var version = parseInt(files[i].split('_')[1].replace('.pdf', ''));
+                    var $tr = $('<tr />');
+                    $tr.append('<td>' + version + '</td>');
+                    var view = '<a href="' + files[i].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">View File Attachment</a> |' +
+                                    '<a download href="' + files[i].replace('~/', window.location.protocol + "//" + window.location.host + "/") + '">Download</a>';
+                    $tr.append('<td>' + view + '</td>');
+                    var arrFilenames = files[i].split('/');
+                    var filename = arrFilenames[arrFilenames.length - 1];
+                    if (AllowDelete == 'True' || AllowDelete == 'true' || AllowDelete == true) {
+                        $tr.append('<td><a href="#" class="delete" data-filename="' + filename + '">Delete</a></td>');
+                    }
+                    $tableBody.append($tr);
+                }
+                $('#der-versions-modal .modal-body').html($table);
+                $('#der-versions-modal .modal-title').html("DER " + moment(new Date(rowData.Date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + " Versions");
+            });
+
+            function getQueryVariable(variable) {
+                var query = window.location.search.substring(1);
+                var vars = query.split('&');
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split('=');
+                    if (decodeURIComponent(pair[0]) == variable) {
+                        return decodeURIComponent(pair[1]);
+                    }
+                }
+                return null;
+            }
+            function updateQueryStringParameter(uri, key, value) {
+                var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+                if (uri.match(re)) {
+                    return uri.replace(re, '$1' + key + "=" + value + '$2');
+                }
+                else {
+                    return uri + separator + key + "=" + value;
+                }
+            }
+
+            var reloadView = function () {
+                var location1 = updateQueryStringParameter(window.location.href, "year", encodeURIComponent($('#year').val()));
+                var location2 = updateQueryStringParameter(location1, "month", encodeURIComponent($('#month').val()));
+                window.document.location = updateQueryStringParameter(location2, "traffic-light", encodeURIComponent($('#traffic-light').val()));
+            };
+
+            $('#month,#year').change(function (e) {
+                e.preventDefault();
+                reloadView();
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap-select.min.css")">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="@Url.Content("~/Scripts/bootstrap-select.min.js")"></script>
+    <style>
+        .glyphicon-one-fine-red-dot:before {
+            content: "\25cf";
+            font-size: 10px;
+            color: red;
+        }
+
+        .glyphicon-one-fine-full-dot:before {
+            content: "\25cf";
+            font-size: 3em;
+        }
+
+        .glyphicon-one-fine-empty-dot:before {
+            content: "\25cb";
+            font-size: 3em;
+        }
+    </style>
+
+
+
+}

@@ -46,6 +46,10 @@
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SimpleCrypto, Version=26.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
       <Private>True</Private>
@@ -73,6 +77,8 @@
     <Compile Include="Entities\ArtifactSerie.cs" />
     <Compile Include="Entities\ArtifactStack.cs" />
     <Compile Include="Entities\ArtifactTank.cs" />
+    <Compile Include="Entities\AuditTrail.cs" />
+    <Compile Include="Entities\BaseAction.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Blueprint\BusinessPostureIdentification.cs" />
     <Compile Include="Entities\Blueprint\DesiredState.cs" />

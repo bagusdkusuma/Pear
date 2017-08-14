@@ -134,6 +134,7 @@ using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
 using DSLNG.PEAR.Services.Responses.KpiTransformationSchedule;
 using DSLNG.PEAR.Services.Responses.KpiTransformationLog;
 using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
+using DSLNG.PEAR.Services.Responses.AuditTrail;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -154,7 +155,15 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureFileRepository();
             ConfigureInputData();
             ConfigureMixed();
+            ConfigureAudit();
             base.Configure();
+        }
+
+        private void ConfigureAudit()
+        {
+            Mapper.CreateMap<Data.Entities.AuditTrail, AuditTrailResponse>();
+            Mapper.CreateMap<Data.Entities.AuditTrail, AuditTrailsResponse.AuditTrail>()
+                .ForMember(k => k.UserName, o => o.MapFrom(z => z.User.Username));
         }
 
         private void ConfigureMixed()
@@ -266,6 +275,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             //Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupResponse>();
             Mapper.CreateMap<CreateRoleGroupRequest, Data.Entities.RoleGroup>();
+            Mapper.CreateMap<CreateRoleGroupRequest, Data.Entities.BaseAction>();
             Mapper.CreateMap<UpdateRoleGroupRequest, Data.Entities.RoleGroup>();
             Mapper.CreateMap<Data.Entities.RoleGroup, UpdateRoleGroupResponse>();
 
@@ -803,8 +813,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.VesselMeasuremant, o => o.MapFrom(s => s.Vessel.Measurement.Name))
                 .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
                 .ForMember(x => x.BuyerName, o => o.MapFrom(s => s.Buyer.Name))
-                .ForMember(x => x.ETA, o => o.MapFrom(s => s.ETA.HasValue? s.ETA.Value.ToString("dd-MM-yyyy") : "TBD"))
-                .ForMember(x => x.ETD, o => o.MapFrom(s => s.ETD.HasValue? s.ETD.Value.ToString("dd-MM-yyyy") : "TBD"));
+                .ForMember(x => x.ETA, o => o.MapFrom(s => s.ETA.HasValue ? s.ETA.Value.ToString("dd-MM-yyyy") : "TBD"))
+                .ForMember(x => x.ETD, o => o.MapFrom(s => s.ETD.HasValue ? s.ETD.Value.ToString("dd-MM-yyyy") : "TBD"));
             base.Configure();
         }
 
@@ -825,7 +835,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<FileManagerRolePrivilege, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege>()
                 .ForMember(x => x.FileId, y => y.MapFrom(z => z.ProcessBlueprint.Id))
                 .ForMember(x => x.RoleGroupId, y => y.MapFrom(z => z.RoleGroup.Id))
-                .ForMember(x=>x.RoleGroupName,y=>y.MapFrom(z=>z.RoleGroup.Name));
+                .ForMember(x => x.RoleGroupName, y => y.MapFrom(z => z.RoleGroup.Name));
             Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile>();
             Mapper.CreateMap<UpdateFilePrivilegeRequest, FileManagerRolePrivilege>();
             Mapper.CreateMap<FilePrivilegeRequest, FileManagerRolePrivilege>();
@@ -940,7 +950,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTarget, GetKpiTargetItemResponse>();
             Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.KpiResponse>();
             Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>()
-                .ForMember(x => x.Value , y => y.MapFrom(z => z.RealValue));
+                .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
         }
 
         private void ConfigurePmsConfig()
@@ -1076,7 +1086,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KpiLabel, y => y.MapFrom(z => z.KpiLabel))
                 .ForMember(x => x.Position, y => y.MapFrom(z => z.Position))
                 .ForMember(x => x.Kpi, y => y.Ignore());
-                
+
 
 
             //DER Original Data
@@ -1119,7 +1129,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInputData, GroupInputData>();
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.InputDataKpiAndOrder, InputDataKpiAndOrder>();
-            
+
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInput, GroupInputData>();
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.Kpi, Kpi>()
             //    .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))

@@ -15,6 +15,7 @@ namespace DSLNG.PEAR.Data.Persistence
 {
     public interface IDataContext
     {
+        IDbSet<AuditTrail> AuditTrails { get; set; }
         IDbSet<Activity> Activities { get; set; }
         IDbSet<Artifact> Artifacts { get; set; }
         IDbSet<ArtifactSerie> ArtifactSeries { get; set; }
@@ -129,6 +130,8 @@ namespace DSLNG.PEAR.Data.Persistence
 
         Database Database { get; }
         int SaveChanges();
+        int SaveChanges(int userId);
+        int SaveChanges(BaseAction activity);
         DbEntityEntry Entry(object entity);
     }
 }

@@ -10,6 +10,12 @@ using DSLNG.PEAR.Data.Entities.Mir;
 using DSLNG.PEAR.Data.Entities.Files;
 using DSLNG.PEAR.Data.Entities.InputOriginalData;
 using DSLNG.PEAR.Data.Entities.KpiTransformationEngine;
+using System.Linq;
+using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace DSLNG.PEAR.Data.Persistence
 {
@@ -21,7 +27,7 @@ namespace DSLNG.PEAR.Data.Persistence
             //Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
-
+        public IDbSet<AuditTrail> AuditTrails { get; set; }
         public IDbSet<Activity> Activities { get; set; }
         public IDbSet<Artifact> Artifacts { get; set; }
         public IDbSet<ArtifactSerie> ArtifactSeries { get; set; }
@@ -131,7 +137,7 @@ namespace DSLNG.PEAR.Data.Persistence
         public IDbSet<KpiTransformationSchedule> KpiTransformationSchedules { get; set; }
         public IDbSet<KpiTransformationLog> KpiTransformationLogs { get; set; }
         public IDbSet<DerLoadingSchedule> DerLoadingSchedules { get; set; }
-        public IDbSet<DerArtifactPlot> DerArtifactPlots { get;set; }
+        public IDbSet<DerArtifactPlot> DerArtifactPlots { get; set; }
         public IDbSet<DerInputFile> DerInputFiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -354,6 +360,170 @@ namespace DSLNG.PEAR.Data.Persistence
             //    .HasRequired<RoleGroup>(s => s.RoleGroup)
             //    .WithMany(s => s.FileManagerRolePrivileges);
             base.OnModelCreating(modelBuilder);
+        }
+        ///// <summary>
+        ///// Without AuditTrails
+        ///// </summary>
+        ///// <returns></returns>
+        //public override int SaveChanges()
+        //{
+        //    return base.SaveChanges();
+        //}
+        public int SaveChanges(int UserId)
+        {
+            foreach (var ent in this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted))
+            {
+                var audits = GetAuditRecordsForChange(ent, UserId);
+                foreach (AuditTrail audit in audits)
+                {
+                    this.AuditTrails.Add(audit);
+                }
+                //base.SaveChanges();
+            }
+            return base.SaveChanges();
+        }
+
+        private List<AuditTrail> GetAuditRecordsForChange(DbEntityEntry dbEntry, int userId)
+        {
+            List<AuditTrail> results = new List<AuditTrail>();
+            DateTime changeTime = DateTime.UtcNow;
+            TableAttribute tableAttr = dbEntry.Entity.GetType().GetCustomAttributes(typeof(TableAttribute), false).SingleOrDefault() as TableAttribute;
+            string tableName = tableAttr != null ? tableAttr.Name : dbEntry.Entity.GetType().Name;
+            string keyName = dbEntry.Entity.GetType().GetProperties().Single(p => p.GetCustomAttributes(typeof(KeyAttribute), false).Count() > 0).Name;
+
+            if (dbEntry.State == EntityState.Added)
+            {
+                var newObject = JsonConvert.SerializeObject(dbEntry.CurrentValues.ToObject());
+                var nextId = dbEntry.CurrentValues.GetValue<object>(keyName);
+                results.Add(new AuditTrail
+                {
+                    User = Users.Find(userId),
+                    UpdateDate = changeTime,
+                    Action = "Add", //Added
+                    RecordId = dbEntry.CurrentValues.GetValue<int>(keyName),
+                    TableName = tableName,
+                    NewValue = newObject
+                });
+            }
+            else if (dbEntry.State == EntityState.Deleted)
+            {
+                var oldObject = JsonConvert.SerializeObject(dbEntry.OriginalValues.ToObject());
+                results.Add(new AuditTrail
+                {
+                    User = Users.Find(userId),
+                    UpdateDate = changeTime,
+                    Action = "Deleted", //Deleted
+                    RecordId = dbEntry.OriginalValues.GetValue<int>(keyName),
+                    TableName = tableName,
+                    NewValue = oldObject
+                });
+            }
+            else if (dbEntry.State == EntityState.Modified)
+            {
+                var newObject = JsonConvert.SerializeObject(dbEntry.CurrentValues.ToObject());
+                var oldObject = JsonConvert.SerializeObject(dbEntry.OriginalValues.ToObject());
+                results.Add(new AuditTrail
+                {
+                    User = Users.Find(userId),
+                    UpdateDate = changeTime,
+                    Action = "Edit", //Modified
+                    RecordId = dbEntry.OriginalValues.GetValue<int>(keyName),
+                    TableName = tableName,
+                    OldValue = oldObject,
+                    NewValue = newObject
+                });
+
+                //foreach (string propertyName in dbEntry.OriginalValues.PropertyNames)
+                //{
+                //    if(!object.Equals(dbEntry.OriginalValues.GetValue<object>(propertyName), dbEntry.CurrentValues.GetValue<object>(propertyName)))
+                //    {
+                //        results.Add(new AuditTrail
+                //        {
+                //            User = Users.Find(userId),
+                //            UpdateDate = changeTime,
+                //            Action = "Edit", //Modified
+                //            RecordId = dbEntry.OriginalValues.GetValue<int>(keyName),
+                //            TableName = tableName,
+                //            OldValue = dbEntry.OriginalValues.ToObject().ToString(),
+                //            NewValue = dbEntry.CurrentValues.ToObject().ToString()
+                //        });
+                //    }
+                //}
+
+            }
+            return results;
+        }
+
+        public int SaveChanges(BaseAction activity)
+        {
+            foreach (var dbEntry in this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted))
+            {
+                var audits = GetAuditRecordsForLog(dbEntry, activity);
+                foreach (AuditTrail audit in audits)
+                {
+                    this.AuditTrails.Add(audit);
+                }
+            }
+            return base.SaveChanges();
+        }
+
+        private List<AuditTrail> GetAuditRecordsForLog(DbEntityEntry dbEntry, BaseAction activity)
+        {
+            List<AuditTrail> results = new List<AuditTrail>();
+            DateTime changeTime = DateTime.UtcNow;
+            TableAttribute tableAttr = dbEntry.Entity.GetType().GetCustomAttributes(typeof(TableAttribute), false).SingleOrDefault() as TableAttribute;
+            string tableName = tableAttr != null ? tableAttr.Name : dbEntry.Entity.GetType().Name;
+            string keyName = dbEntry.Entity.GetType().GetProperties().Single(p => p.GetCustomAttributes(typeof(KeyAttribute), false).Count() > 0).Name;
+
+            if (dbEntry.State == EntityState.Added)
+            {
+                var newObject = JsonConvert.SerializeObject(dbEntry.CurrentValues.ToObject());
+                SaveChanges();
+                results.Add(new AuditTrail
+                {
+                    User = Users.Find(activity.UserId),
+                    UpdateDate = changeTime,
+                    Action = "Add", //Added
+                    ControllerName = activity.ControllerName,
+                    ActionName = activity.ActionName,
+                    RecordId = dbEntry.CurrentValues.GetValue<int>(keyName),
+                    TableName = tableName,
+                    NewValue = newObject
+                });
+            }
+            else if (dbEntry.State == EntityState.Deleted)
+            {
+                var oldObject = JsonConvert.SerializeObject(dbEntry.OriginalValues.ToObject());
+                results.Add(new AuditTrail
+                {
+                    User = Users.Find(activity.UserId),
+                    UpdateDate = changeTime,
+                    Action = "Deleted", //Deleted
+                    ControllerName = activity.ControllerName,
+                    ActionName = activity.ActionName,
+                    RecordId = dbEntry.OriginalValues.GetValue<int>(keyName),
+                    TableName = tableName,
+                    NewValue = oldObject
+                });
+            }
+            else if (dbEntry.State == EntityState.Modified)
+            {
+                var newObject = JsonConvert.SerializeObject(dbEntry.CurrentValues.ToObject());
+                var oldObject = JsonConvert.SerializeObject(dbEntry.OriginalValues.ToObject());
+                results.Add(new AuditTrail
+                {
+                    User = Users.Find(activity.UserId),
+                    UpdateDate = changeTime,
+                    Action = "Edit", //Modified
+                    ControllerName = activity.ControllerName,
+                    ActionName = activity.ActionName,
+                    RecordId = dbEntry.OriginalValues.GetValue<int>(keyName),
+                    TableName = tableName,
+                    OldValue = oldObject,
+                    NewValue = newObject
+                });
+            }
+            return results;
         }
         //public DbEntries 
 

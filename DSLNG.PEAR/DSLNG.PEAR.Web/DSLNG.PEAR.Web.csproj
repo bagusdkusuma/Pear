@@ -850,8 +850,10 @@
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="Controllers\ArtifactCloneController.cs" />
     <Compile Include="Controllers\AssumptionDataController.cs" />
+    <Compile Include="Controllers\AuditTrailController.cs" />
     <Compile Include="Controllers\DerImageController.cs" />
     <Compile Include="Controllers\DerLoadingScheduleController.cs" />
+    <Compile Include="ViewModels\AuditTrail\GetAuditTrailViewModel.cs" />
     <Compile Include="ViewModels\DerTransaction\ActivityViewModel.cs" />
     <Compile Include="Controllers\DerTransactionController.cs" />
     <Compile Include="Controllers\InputDataController.cs" />
@@ -1209,6 +1211,7 @@
     <Content Include="Views\Der\Display\_TotalCommitment.cshtml" />
     <Content Include="Views\DerTransaction\Activity.cshtml" />
     <Content Include="Views\Artifact\_GraphicSetting.cshtml" />
+    <Content Include="Views\AuditTrail\Index.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

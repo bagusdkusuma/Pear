@@ -191,6 +191,8 @@ using DSLNG.PEAR.Services.Responses.KpiInformation;
 using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
 using DSLNG.PEAR.Web.ViewModels.DerLoadingSchedule;
 using DSLNG.PEAR.Services.Responses.DerLoadingSchedule;
+using DSLNG.PEAR.Web.ViewModels.AuditTrail;
+using DSLNG.PEAR.Services.Responses.AuditTrail;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -211,7 +213,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureFileRepository();
             ConfigureInputDataViewModel();
             ConfigureMixed();
+            ConfigureAuditTrail();
             base.Configure();
+        }
+
+        private void ConfigureAuditTrail()
+        {
+            Mapper.CreateMap<AuditTrailsResponse, GetAuditTrailViewModel>();
+            Mapper.CreateMap<AuditTrailsResponse.AuditTrail, GetAuditTrailViewModel.AuditTrail>();
         }
 
         private void ConfigureMixed()
@@ -374,7 +383,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<LineChartViewModel, GetCartesianChartDataRequest>();
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>()
-                .ForMember(x => x.marker, y => y.MapFrom(z => new LineChartDataViewModel.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor}))                
+                .ForMember(x => x.marker, y => y.MapFrom(z => new LineChartDataViewModel.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor }))
                 .ForMember(x => x.dashStyle, y => y.MapFrom(z => z.LineType));
             Mapper.CreateMap<LineChartViewModel, CreateArtifactRequest>()
                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
