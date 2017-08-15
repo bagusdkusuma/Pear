@@ -233,11 +233,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 {                    
                     AuditTrailsResponse.AuditTrail val = (AuditTrailsResponse.AuditTrail)z.Value;
                     var list = new List<AuditDelta>();
-                    var items = JsonConvert.DeserializeObject<Dictionary<string, object>>(val.OldValue);
-                    foreach (var item in items)
+                    if(val.OldValue != null)
                     {
-                        list.Add(new AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
-                    }
+                        var items = JsonConvert.DeserializeObject<Dictionary<string, object>>(val.OldValue);
+                        foreach (var item in items)
+                        {
+                            list.Add(new AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
+                        }
+                    }                    
 
                     return list;
                 }))
@@ -245,11 +248,14 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 {
                     AuditTrailsResponse.AuditTrail val = (AuditTrailsResponse.AuditTrail)z.Value;
                     var list = new List<AuditDelta>();
-                    var items = JsonConvert.DeserializeObject<Dictionary<string, object>>(val.NewValue);
-                    foreach (var item in items)
+                    if(val.NewValue != null)
                     {
-                        list.Add(new AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
-                    }
+                        var items = JsonConvert.DeserializeObject<Dictionary<string, object>>(val.NewValue);
+                        foreach (var item in items)
+                        {
+                            list.Add(new AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
+                        }
+                    }                    
 
                     return list;
                 }));

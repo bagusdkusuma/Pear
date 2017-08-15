@@ -14,14 +14,22 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var old in item.OldValue)
+            @foreach (var newValue in item.NewValue)
             {
-                if (old.Value != item.NewValue.FirstOrDefault(x => x.FieldName == old.FieldName).Value)
+                if (item.Action.ToLowerInvariant().Equals("edit") && newValue.Value != item.OldValue.FirstOrDefault(x => x.FieldName == newValue.FieldName).Value)
                 {
                     <tr>
-                        <td>@old.FieldName</td>
-                        <td>@old.Value</td>
-                        <td>@item.NewValue.FirstOrDefault(x => x.FieldName == old.FieldName).Value</td>
+                        <td>@newValue.FieldName</td>
+                        <td>@item.OldValue.FirstOrDefault(x => x.FieldName == newValue.FieldName).Value</td>
+                        <td>@item.NewValue.FirstOrDefault(x => x.FieldName == newValue.FieldName).Value</td>
+                    </tr>
+                }
+                else if (item.Action.ToLowerInvariant().Equals("add"))
+                {
+                    <tr>
+                        <td>@newValue.FieldName</td>
+                        <td></td>
+                        <td>@newValue.Value</td>
                     </tr>
                 }
             }
