@@ -1,14 +1,15 @@
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Script.Serialization;
 
-namespace DSLNG.PEAR.Services.Responses.AuditTrail
+namespace DSLNG.PEAR.Web.ViewModels.AuditTrail
 {
-    public class AuditTrailsResponse : BaseResponse
+    public class AuditTrailsDetailsViewModel
     {
         public IList<AuditTrail> AuditTrails { get; set; }
-        public int TotalRecords { get; set; }
-        public int Count { get; set; }
 
         public class AuditTrail
         {
@@ -21,10 +22,14 @@ namespace DSLNG.PEAR.Services.Responses.AuditTrail
             public string Action { get; set; }
             public int RecordId { get; set; }
             public string TableName { get; set; }
-            public string OldValue { get; set; }
-            public string NewValue { get; set; }            
-        }
+            public IList<AuditDelta> OldValue { get; set; }
+            public IList<AuditDelta> NewValue { get; set; }
 
-        
+            public class AuditDelta
+            {
+                public string FieldName { get; set; }
+                public string Value { get; set; }
+            }
+        }
     }
 }

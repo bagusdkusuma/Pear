@@ -9,5 +9,7 @@ namespace DSLNG.PEAR.Services.Requests.AuditTrail
         public int Take { get; set; }
         public int Skip { get; set; }
         public bool OnlyCount { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }
