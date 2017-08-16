@@ -28,10 +28,27 @@ namespace DSLNG.PEAR.Services
             };
         }
 
+        public AuditTrailsResponse GetAuditTrailDetails(int recordId)
+        {
+            var response = new AuditTrailsResponse();
+            try
+            {
+                var auditDetails = DataContext.AuditTrails.Where(x => x.RecordId == recordId).ToList();
+                response.AuditTrails = auditDetails.MapTo<AuditTrailsResponse.AuditTrail>();
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+            return response;
+        }
+
         public AuditTrailsResponse GetAuditTrails(GetAuditTrailsRequest request)
         {
             int totalRecords;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecords);
+            var data = SortData(request, request.SortingDictionary, out totalRecords);
             if(request.Take != -1)
             {
                 data = data.Skip(request.Skip).Take(request.Take);
@@ -44,14 +61,26 @@ namespace DSLNG.PEAR.Services
             };
         }
 
-        private IEnumerable<AuditTrail> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        private IEnumerable<AuditTrail> SortData(GetAuditTrailsRequest request, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
             var data = DataContext.AuditTrails.Include(x => x.User).AsQueryable();
-            if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
+            if (!string.IsNullOrEmpty(request.Search) && !string.IsNullOrWhiteSpace(request.Search))
             {
-                data = data.Where(x => x.TableName.Contains(search) || x.Action.Contains(search) || x.ActionName.Contains(search) 
-                || x.ControllerName.Contains(search) || x.NewValue.Contains(search) || x.OldValue.Contains(search));
+                data = data.Where(x => x.TableName.Contains(request.Search) || x.Action.Contains(request.Search) || x.ActionName.Contains(request.Search) 
+                || x.ControllerName.Contains(request.Search) || x.NewValue.Contains(request.Search) || x.OldValue.Contains(request.Search));
             }
+
+            if(request.StartDate != null)
+            {
+                data = data.Where(x => x.UpdateDate >= request.StartDate);
+            }
+
+            if (request.EndDate != null)
+            {
+                data = data.Where(x => x.UpdateDate <= request.EndDate);
+            }
+
+            data = data.GroupBy(x => x.RecordId).Select(y => y.FirstOrDefault()).OrderBy(x => x.UpdateDate);
 
             foreach (var sortOrder in sortingDictionary)
             {
@@ -59,18 +88,18 @@ namespace DSLNG.PEAR.Services
                 {
                     case "User":
                         data = sortOrder.Value == SortOrder.Ascending 
-                            ? data.OrderBy(x => x.User.Username) 
-                            : data.OrderByDescending(x => x.User.Username);
+                            ? data.OrderByDescending(x => x.UpdateDate).ThenBy(x => x.User.Username) 
+                            : data.OrderByDescending(x => x.UpdateDate).ThenByDescending(x => x.User.Username);
                         break;
                     case "TableName":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.TableName)
-                            : data.OrderByDescending(x => x.TableName);
+                            ? data.OrderByDescending(x => x.UpdateDate).ThenBy(x => x.TableName)
+                            : data.OrderByDescending(x => x.UpdateDate).ThenByDescending(x => x.TableName);
                         break;
                     case "Controller":
                         data = sortOrder.Value == SortOrder.Ascending
-                            ? data.OrderBy(x => x.ControllerName)
-                            : data.OrderByDescending(x => x.ControllerName);
+                            ? data.OrderByDescending(x => x.UpdateDate).ThenBy(x => x.User.Username)
+                            : data.OrderByDescending(x => x.UpdateDate).ThenByDescending(x => x.ControllerName);
                         break;
                     default:
                         data = data.OrderByDescending(x => x.UpdateDate);

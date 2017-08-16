@@ -160,13 +160,25 @@ function round(value, exp, x) {
  * @param integer x: length of sections
  */
 Number.prototype.format = function (n, x) {
-    if (this % 1 == 0) {
-        var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+    if (parseFloat(this % 1) == parseFloat(0) ) {       
         return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
     }
-    return round(this, n, x);
+    var y = round(this, n, x);    
+    if (parseFloat(y % 1) == parseFloat(0)) {
+        return parseFloat(y).toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+    }
+    return y;
 };
 
+var a = 397053424;
+var b = 397053424.9;
+var c = 397053424.99;
+var d = 397053424.999;
+console.log(a.format(2));
+console.log(b.format(2));
+console.log(c.format(2));
+console.log(d.format(2));
 
 (function (window, $, undefined) {
     var Pear = {};

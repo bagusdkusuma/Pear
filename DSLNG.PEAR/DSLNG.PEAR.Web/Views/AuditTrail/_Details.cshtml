@@ -1,0 +1,39 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.AuditTrail.AuditTrailsDetailsViewModel
+<h3>Audit History</h3>
+@foreach (var item in Model.AuditTrails)
+{
+    <span style="float: left;margin-bottom: 19px;">Event Date : @item.UpdateDate</span>
+    <span style="float: right;">Action Type : @item.Action</span>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Field Name</th>
+                <th>Before Change</th>
+                <th>After Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var newValue in item.NewValue)
+            {
+                if (item.Action.ToLowerInvariant().Equals("edit") && newValue.Value != item.OldValue.FirstOrDefault(x => x.FieldName == newValue.FieldName).Value)
+                {
+                    <tr>
+                        <td>@newValue.FieldName</td>
+                        <td>@item.OldValue.FirstOrDefault(x => x.FieldName == newValue.FieldName).Value</td>
+                        <td>@item.NewValue.FirstOrDefault(x => x.FieldName == newValue.FieldName).Value</td>
+                    </tr>
+                }
+                else if (item.Action.ToLowerInvariant().Equals("add"))
+                {
+                    <tr>
+                        <td>@newValue.FieldName</td>
+                        <td></td>
+                        <td>@newValue.Value</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    
+}

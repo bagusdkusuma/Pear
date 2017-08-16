@@ -1,13 +1,17 @@
-﻿using DSLNG.PEAR.Services.Interfaces;
+﻿using DSLNG.PEAR.Common.Extensions;
+using DSLNG.PEAR.Services.Interfaces;
 using DSLNG.PEAR.Services.Requests.AuditTrail;
 using DSLNG.PEAR.Services.Responses.AuditTrail;
 using DSLNG.PEAR.Web.Grid;
 using DSLNG.PEAR.Web.ViewModels.AuditTrail;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -53,7 +57,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 Skip = gridParams.DisplayStart,
                 Take = gridParams.DisplayLength,
                 Search = gridParams.Search,
-                SortingDictionary = gridParams.SortingDictionary
+                SortingDictionary = gridParams.SortingDictionary,
+                StartDate = string.IsNullOrEmpty(Request["StartDate"]) ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0) : DateTime.ParseExact(Request["StartDate"], "MM/dd/yyyy", CultureInfo.InvariantCulture),
+                EndDate = string.IsNullOrEmpty(Request["EndDate"]) ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59) : DateTime.ParseExact(Request["EndDate"], "MM/dd/yyyy", CultureInfo.InvariantCulture)
             });
             IList<AuditTrailsResponse.AuditTrail> datas = audit.AuditTrails;
             var data = new
@@ -66,10 +72,14 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Details()
+        public ActionResult Details(int id)
         {
-            var data = "";
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var response = _auditService.GetAuditTrailDetails(id);
+            //var items = new JavaScriptSerializer().DeserializeObject(response.AuditTrails[0].OldValue);
+            //var items = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(response.AuditTrails[0].OldValue);
+
+            var viewModel = response.MapTo<AuditTrailsDetailsViewModel>();
+            return PartialView("_Details", viewModel);
         }
     }
 }
