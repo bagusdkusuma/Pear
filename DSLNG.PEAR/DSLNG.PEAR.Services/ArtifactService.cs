@@ -2832,7 +2832,7 @@ namespace DSLNG.PEAR.Services
             var measurement = new Measurement { Id = request.MeasurementId };
             DataContext.Measurements.Attach(measurement);
             artifact.Measurement = measurement;
-
+            var action = request.MapTo<BaseAction>();
             foreach (var seriesReq in request.Series)
             {
                 var series = seriesReq.MapTo<ArtifactSerie>();
@@ -2977,12 +2977,14 @@ namespace DSLNG.PEAR.Services
                 artifact.Tank = tank;
             }
             DataContext.Artifacts.Add(artifact);
-            DataContext.SaveChanges();
+            //DataContext.SaveChanges();
+            DataContext.SaveChanges(action);
             return new CreateArtifactResponse();
         }
 
         public UpdateArtifactResponse Update(UpdateArtifactRequest request)
         {
+            var action = request.MapTo<BaseAction>();
             var artifact = DataContext.Artifacts.Include(x => x.Measurement)
                 .Include(x => x.Series)
                 .Include(x => x.Series.Select(y => y.Kpi))
@@ -3201,7 +3203,7 @@ namespace DSLNG.PEAR.Services
 
             artifact.FractionScale = request.FractionScale;
 
-            DataContext.SaveChanges();
+            DataContext.SaveChanges(action);
             return new UpdateArtifactResponse();
         }
 
@@ -3309,6 +3311,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var action = request.MapTo<BaseAction>();
                 var artifact = DataContext.Artifacts.Include(x => x.Series).Include(x => x.Plots).Include(x => x.LayoutColumns).FirstOrDefault(x => x.Id == request.Id);
                 if (artifact.LayoutColumns.Count > 0)
                 {
@@ -3327,7 +3330,7 @@ namespace DSLNG.PEAR.Services
                     DataContext.ArtifactPlots.Remove(plot);
                 }
                 DataContext.Artifacts.Remove(artifact);
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 return new DeleteArtifactResponse
                 {
                     IsSuccess = true,
