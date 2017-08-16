@@ -33,7 +33,7 @@ namespace DSLNG.PEAR.Services
             var response = new AuditTrailsResponse();
             try
             {
-                var auditDetails = DataContext.AuditTrails.Where(x => x.RecordId == recordId).ToList();
+                var auditDetails = DataContext.AuditTrails.Where(x => x.RecordId == recordId).OrderByDescending(x => x.UpdateDate).ToList();
                 response.AuditTrails = auditDetails.MapTo<AuditTrailsResponse.AuditTrail>();
                 response.IsSuccess = true;
             }
@@ -80,7 +80,8 @@ namespace DSLNG.PEAR.Services
                 data = data.Where(x => x.UpdateDate <= request.EndDate);
             }
 
-            data = data.GroupBy(x => x.RecordId).SelectMany(y => y).OrderBy(x => x.UpdateDate).Include(x => x.User);
+            data = data.GroupBy(x => x.RecordId).Select(y => y.OrderByDescending(x => x.UpdateDate).FirstOrDefault())
+                .OrderByDescending(x => x.UpdateDate).Include(x => x.User);
 
             foreach (var sortOrder in sortingDictionary)
             {
