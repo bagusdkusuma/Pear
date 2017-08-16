@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Services.Requests.Artifact
 {
-    public class UpdateArtifactRequest
+    public class UpdateArtifactRequest : BaseRequest
     {
         public UpdateArtifactRequest()
         {

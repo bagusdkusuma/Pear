@@ -114,6 +114,7 @@ namespace DSLNG.PEAR.Services
         public SaveRolePrivilegeResponse SaveRolePrivilege(SaveRolePrivilegeRequest request)
         {
             var response = new SaveRolePrivilegeResponse();
+            var baseRequest = request.MapTo<BaseAction>();
             try
             {
                 var privilege = request.MapTo<RolePrivilege>();
@@ -133,7 +134,7 @@ namespace DSLNG.PEAR.Services
                     DataContext.RolePrivileges.Add(privilege);
                 }
                 //DataContext.SaveChanges();
-                DataContext.SaveChanges(user.Id);
+                DataContext.SaveChanges(baseRequest);
                 //try to batch update
                 if (request.MenuRolePrivileges.Count > 0)
                 {
@@ -161,7 +162,7 @@ namespace DSLNG.PEAR.Services
                             DataContext.MenuRolePrivileges.Add(menuPrivilege);
                         }
                     }
-                    DataContext.SaveChanges(user.Id);
+                    DataContext.SaveChanges(baseRequest);
                 }
                 response.IsSuccess = true;
                 response.Id = privilege.Id;

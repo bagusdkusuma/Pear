@@ -142,6 +142,8 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var request = model.MapTo<SaveRolePrivilegeRequest>();
                 request.UserId = this.UserProfile().UserId;
+                request.ControllerName = "Privilege";
+                request.ActionName = "Create";
                 if (_roleService.SaveRolePrivilege(request).IsSuccess)
                 {
                     return RedirectToAction("Index", new { roleId = request.RoleGroup_Id });
@@ -169,6 +171,8 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 var request = model.MapTo<SaveRolePrivilegeRequest>();
                 request.UserId = this.UserProfile().UserId;
+                request.ControllerName = "Privilege";
+                request.ActionName = "Edit";
                 var response = _roleService.SaveRolePrivilege(request);
                 
                 if (response.IsSuccess)
