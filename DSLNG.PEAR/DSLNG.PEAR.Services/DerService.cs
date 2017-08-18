@@ -63,11 +63,14 @@ namespace DSLNG.PEAR.Services
                 var month = int.Parse(dates[0].Trim());
                 if (month == 0)
                 {
-                    data = data.Where(x => x.Date.Year == year);
+                    var lastDay = new DateTime(year, 1, 1);
+                    data = data.Where(x => x.Date.Year == year && x.Date != lastDay);
                 }
                 else
                 {
-                    data = data.Where(x => x.Date.Year == year && x.Date.Month == month);
+                    var earlyNextMonth = new DateTime(year, month + 1, 1);
+                    var earlyThisMonth = new DateTime(year, month, 1);
+                    data = data.Where(x => ((x.Date.Year == year && x.Date.Month == month) && x.Date != earlyThisMonth) || x.Date == earlyNextMonth);
                 }
             }
 
@@ -2049,16 +2052,14 @@ namespace DSLNG.PEAR.Services
                 trafficLight = srch.Length > 2 ? srch[2].Trim() : string.Empty;
                 if (month == 0)
                 {
-                    var lastDay = new DateTime(year - 1, 12, 31);
+                    var lastDay = new DateTime(year, 1, 1);
                     highlights = highlights.Where(x => x.Date.Year == year || x.Date == lastDay);
                 }
                 else
                 {
-                    var prevMonth = month > 1 ? month - 1 : 12;
-                    var prevYear = month > 1 ? year : year - 1;
-                    var lastDay = new DateTime(prevYear,
-                                   prevMonth, DateTime.DaysInMonth(prevYear, prevMonth));
-                    highlights = highlights.Where(x => x.Date.Year == year && x.Date.Month == month || x.Date == lastDay);
+                    var earlyNextMonth = new DateTime(year, month + 1, 1);
+                    var earlyThisMonth = new DateTime(year, month, 1);
+                    highlights = highlights.Where(x => (x.Date.Year == year && x.Date.Month == month));
                 }
             }
             int overallPerformanceId = 8;
@@ -2069,15 +2070,17 @@ namespace DSLNG.PEAR.Services
             var listHighlight = highlights.Where(x => x.HighlightType.Id == overallPerformanceId || x.HighlightType.Id == marineCargoDeliveryId
             || x.HighlightType.Id == qhseRemarkId || x.HighlightType.Id == securityRemarkId || x.HighlightType.Id == dailyIndicatorId).ToList();
             var der = new GetDersResponse.Der();
+            var activityDate = new DateTime();
             foreach (var item in data)
             {
                 der = item.MapTo<GetDersResponse.Der>();
-                var highlightDate = der.Date.AddDays(-1);
-                der.OverallPerformance = listHighlight.Where(x => x.Date == highlightDate && x.HighlightType != null && x.HighlightType.Id == overallPerformanceId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
-                der.MarineCargoDelivery = listHighlight.Where(x => x.Date == highlightDate && x.HighlightType != null && x.HighlightType.Id == marineCargoDeliveryId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
-                der.Qhse = listHighlight.Where(x => x.Date == highlightDate && x.HighlightType != null && x.HighlightType.Id == qhseRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
-                der.Security = listHighlight.Where(x => x.Date == highlightDate && x.HighlightType != null && x.HighlightType.Id == securityRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
-                der.DailyIndicator = listHighlight.Where(x => x.Date == highlightDate && x.HighlightType != null && x.HighlightType.Id == dailyIndicatorId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                activityDate = der.Date.AddDays(-1);
+                der.OverallPerformance = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == overallPerformanceId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.MarineCargoDelivery = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == marineCargoDeliveryId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.Qhse = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == qhseRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.Security = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == securityRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.DailyIndicator = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == dailyIndicatorId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.Date = activityDate;
                 response.Ders.Add(der);
             }
 
