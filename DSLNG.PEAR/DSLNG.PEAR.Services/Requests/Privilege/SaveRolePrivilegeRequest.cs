@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.Privilege
 {
-    public class SaveRolePrivilegeRequest
+    public class SaveRolePrivilegeRequest : BaseRequest
     {
         public SaveRolePrivilegeRequest()
         {
@@ -16,7 +16,7 @@ namespace DSLNG.PEAR.Services.Requests.Privilege
         public int RoleGroup_Id { get; set; }
         public string Name { get; set; }
         public string Descriptions { get; set; }
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
         public List<MenuRolePrivilege> MenuRolePrivileges { get; set; }
         public class MenuRolePrivilege
         {

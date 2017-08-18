@@ -132,6 +132,7 @@
     <Compile Include="Requests\CustomFormula\GetCustomFormulaRequest.cs" />
     <Compile Include="Requests\DerLoadingSchedule\GetDerLoadingSchedulesRequest.cs" />
     <Compile Include="Requests\DerTransaction\CreateDerInputFileRequest.cs" />
+    <Compile Include="Requests\DerTransaction\DerDeleteRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetDerLayoutItemsRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetDerInputFilesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetHighlightValuesRequest.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Requests\Files\GetFileRequest.cs" />
     <Compile Include="Requests\Files\GetFilesRequest.cs" />
     <Compile Include="Requests\Files\SaveFileRepositoryRequest.cs" />
+    <Compile Include="Requests\InputData\DeleteInputDataRequest.cs" />
     <Compile Include="Requests\InputData\GetInputDatasRequest.cs" />
     <Compile Include="Requests\InputData\SaveOrUpdateInputDataRequest.cs" />
     <Compile Include="Requests\KpiTransformationLog\GetKpiTransformationLogsRequest.cs" />
@@ -159,6 +161,7 @@
     <Compile Include="Requests\Der\GetKpiValueRequest.cs" />
     <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
     <Compile Include="Requests\Der\SaveOriginalDataRequest.cs" />
+    <Compile Include="Requests\Privilege\DeleteRolePrivilegeRequest.cs" />
     <Compile Include="Requests\Privilege\GetPrivilegeByRoleRequest.cs" />
     <Compile Include="Requests\Privilege\GetPrivilegeRequest.cs" />
     <Compile Include="Requests\Privilege\GetPrivilegesRequest.cs" />

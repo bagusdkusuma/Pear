@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.KpiAchievement
 {
-    public class UpdateKpiAchievementItemRequest
+    public class DeleteKpiAchievementRequest : BaseRequest
+    {
+        public int kpiId { get; set; }
+        public DateTime periode { get; set; }
+        public PeriodeType periodeType { get; set; }
+    }
+    public class UpdateKpiAchievementItemRequest : BaseRequest
     {
         public int Id { get; set; }
         public int KpiId { get; set; }
@@ -27,12 +33,12 @@ namespace DSLNG.PEAR.Services.Requests.KpiAchievement
         }
         public string Remark { get; set; }
         public PeriodeType PeriodeType { get; set; }
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
         public bool UpdateDeviation { get; set; }
         public string UpdateFrom { get; set; }
     }
 
-    public class BatchUpdateKpiAchievementRequest
+    public class BatchUpdateKpiAchievementRequest : BaseRequest
     {
         public BatchUpdateKpiAchievementRequest()
         {

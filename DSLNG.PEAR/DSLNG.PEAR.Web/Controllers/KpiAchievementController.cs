@@ -327,7 +327,15 @@ namespace DSLNG.PEAR.Web.Controllers
                                                     oldKpiAchievement.ExceptionType ==
                                                     typeof(InvalidOperationException))
                                                 {
-                                                    var delete = _kpiAchievementService.DeleteKpiAchievement(kpiId, periodData, pType);
+                                                    //var delete = _kpiAchievementService.DeleteKpiAchievement(kpiId, periodData, pType);
+                                                    var delete = _kpiAchievementService.DeleteKpiAchievement(new DeleteKpiAchievementRequest {
+                                                        kpiId = kpiId,
+                                                        periode = periodData,
+                                                        periodeType = pType,
+                                                        ControllerName = "KPI Achievement",
+                                                        ActionName = "Read Excel File",
+                                                        UserId = UserProfile().UserId
+                                                    });
                                                     fixedError = delete.IsSuccess;
                                                 }
 

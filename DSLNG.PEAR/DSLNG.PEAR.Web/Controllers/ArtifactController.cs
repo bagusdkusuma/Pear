@@ -966,6 +966,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "line":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         viewModel.LineChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
@@ -974,6 +977,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "area":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         viewModel.AreaChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
@@ -981,6 +987,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "multiaxis":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         viewModel.MultiaxisChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
@@ -988,6 +997,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "combo":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         viewModel.ComboChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
@@ -995,6 +1007,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "speedometer":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         viewModel.SpeedometerChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
@@ -1003,6 +1018,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "trafficlight":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         viewModel.TrafficLightChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
@@ -1010,6 +1028,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "tabular":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         viewModel.Tabular.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
@@ -1024,6 +1045,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "pie":
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         request.Series = viewModel.Pie.Series.MapTo<CreateArtifactRequest.SeriesRequest>();
                         _artifactServie.Create(request);
                     }
@@ -1031,6 +1055,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 default:
                     {
                         var request = viewModel.MapTo<CreateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Create";
                         viewModel.BarChart.MapPropertiesToInstance<CreateArtifactRequest>(request);
                         _artifactServie.Create(request);
                     }
@@ -1047,6 +1074,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "line":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.LineChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1055,6 +1085,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "area":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.AreaChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1062,6 +1095,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "multiaxis":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.MultiaxisChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1069,6 +1105,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "combo":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.ComboChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1076,6 +1115,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "speedometer":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.SpeedometerChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1083,6 +1125,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "trafficlight":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.TrafficLightChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1090,6 +1135,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "tank":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.Tank.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         request.Id = viewModel.Id;
                         _artifactServie.Update(request);
@@ -1098,6 +1146,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "tabular":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.Tabular.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1105,6 +1156,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "pie":
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.Pie.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1112,6 +1166,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 default:
                     {
                         var request = viewModel.MapTo<UpdateArtifactRequest>();
+                        request.UserId = this.UserProfile().UserId;
+                        request.ControllerName = "Artifact";
+                        request.ActionName = "Edit";
                         viewModel.BarChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
@@ -1142,7 +1199,12 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         public ActionResult Delete(int id) {
-            var resp = _artifactServie.Delete(new DeleteArtifactRequest { Id = id });
+            var request = new DeleteArtifactRequest();
+            request.Id = id;
+            request.UserId = this.UserProfile().UserId;
+            request.ControllerName = "Artifact";
+            request.ActionName = "Delete";
+            var resp = _artifactServie.Delete(request);
             TempData["IsSuccess"] = resp.IsSuccess;
             TempData["Message"] = resp.Message;
             return RedirectToAction("Index");

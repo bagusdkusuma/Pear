@@ -136,6 +136,7 @@ using DSLNG.PEAR.Services.Responses.KpiTransformationSchedule;
 using DSLNG.PEAR.Services.Responses.KpiTransformationLog;
 using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
 using DSLNG.PEAR.Services.Responses.AuditTrail;
+using DSLNG.PEAR.Services.Requests.DerTransaction;
 #endregion
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -166,6 +167,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.AuditTrail, AuditTrailResponse>();
             Mapper.CreateMap<Data.Entities.AuditTrail, AuditTrailsResponse.AuditTrail>()
                 .ForMember(k => k.UserName, o => o.MapFrom(z => z.User.Username));
+            Mapper.CreateMap<DerDeleteRequest, BaseAction>();
+            Mapper.CreateMap<CreateDerInputFileRequest, BaseAction>();
+            Mapper.CreateMap<DeleteKpiAchievementRequest, BaseAction>();
+            Mapper.CreateMap<DeleteRolePrivilegeRequest, BaseAction>();
+            Mapper.CreateMap<SaveRolePrivilegeRequest, BaseAction>();
+            Mapper.CreateMap<DeleteKpiRequest, BaseAction>();
+            Mapper.CreateMap<CreateKpiResponse, BaseAction>();
+            Mapper.CreateMap<UpdateKpiRequest, BaseAction>();
+            Mapper.CreateMap<SaveOrUpdateInputDataRequest, BaseAction>();
+            Mapper.CreateMap<DeleteInputDataRequest, BaseAction>();
         }
 
         private void ConfigureMixed()
@@ -292,6 +303,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(k => k.Type, o => o.MapFrom(k => k.PeriodeType.ToString()));
             Mapper.CreateMap<UpdateKpiAchievementItemRequest, KpiAchievement>()
                 .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
+            Mapper.CreateMap<UpdateKpiAchievementItemRequest, BaseAction>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse.Pillar>();
@@ -328,7 +340,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateArtifactRequest.RowRequest, ArtifactRow>();
             Mapper.CreateMap<CreateArtifactRequest.ChartRequest, ArtifactChart>()
                 .ForMember(x => x.Series, o => o.Ignore());
-
+            Mapper.CreateMap<CreateArtifactRequest, BaseAction>();
             Mapper.CreateMap<UpdateArtifactRequest, Artifact>()
                .ForMember(x => x.Series, o => o.Ignore())
                .ForMember(x => x.Plots, o => o.Ignore())
@@ -341,6 +353,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<UpdateArtifactRequest.RowRequest, ArtifactRow>();
             Mapper.CreateMap<UpdateArtifactRequest.ChartRequest, ArtifactChart>()
                 .ForMember(x => x.Series, o => o.Ignore());
+            Mapper.CreateMap<UpdateArtifactRequest, BaseAction>();
 
             Mapper.CreateMap<Artifact, GetArtifactsResponse.Artifact>()
                 .ForMember(x => x.Used, o => o.MapFrom(x => x.LayoutColumns.Count > 0));
@@ -479,6 +492,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
+            Mapper.CreateMap<SaveWeatherRequest, BaseAction>();
             Mapper.CreateMap<Weather, GetWeatherResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
@@ -771,6 +785,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Wave, GetWavesResponse.WaveResponse>()
                 .ForMember(x => x.Value, y => y.MapFrom(z => z.Value.Text));
             Mapper.CreateMap<SaveWaveRequest, Wave>();
+            Mapper.CreateMap<SaveWaveRequest, BaseAction>();
 
 
             Mapper.CreateMap<MirConfiguration, GetsMirConfigurationsResponse.MirConfiguration>();
@@ -953,6 +968,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.KpiResponse>();
             Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>()
                 .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
+            Mapper.CreateMap<SaveKpiTargetRequest, BaseAction>();
         }
 
         private void ConfigurePmsConfig()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.KpiTarget
 {
-    public class SaveKpiTargetRequest
+    public class SaveKpiTargetRequest : BaseRequest
     {
         public int Id { get; set; }
         public int KpiId { get; set; }
@@ -23,6 +23,6 @@ namespace DSLNG.PEAR.Services.Requests.KpiTarget
         }
         public string Remark { get; set; }
         public Data.Enums.PeriodeType PeriodeType { get; set; }
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
     }
 }

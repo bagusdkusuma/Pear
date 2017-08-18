@@ -18,6 +18,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         CreateKpiResponse Create(CreateKpiRequest request);
         UpdateKpiResponse Update(UpdateKpiRequest request);
         DeleteKpiResponse Delete(int id);
+        DeleteKpiResponse Delete(DeleteKpiRequest request);
 
         bool IsValidKpi(GetKpiByRole request);
         IList<Kpi> DownloadKpis();

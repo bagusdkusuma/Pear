@@ -33,7 +33,7 @@ namespace DSLNG.PEAR.Services
             var response = new AuditTrailsResponse();
             try
             {
-                var auditDetails = DataContext.AuditTrails.Where(x => x.RecordId == recordId).ToList();
+                var auditDetails = DataContext.AuditTrails.Where(x => x.RecordId == recordId).OrderByDescending(x => x.UpdateDate).ToList();
                 response.AuditTrails = auditDetails.MapTo<AuditTrailsResponse.AuditTrail>();
                 response.IsSuccess = true;
             }
@@ -63,7 +63,7 @@ namespace DSLNG.PEAR.Services
 
         private IEnumerable<AuditTrail> SortData(GetAuditTrailsRequest request, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var data = DataContext.AuditTrails.Include(x => x.User).AsQueryable();
+            var data = DataContext.AuditTrails.AsQueryable();
             if (!string.IsNullOrEmpty(request.Search) && !string.IsNullOrWhiteSpace(request.Search))
             {
                 data = data.Where(x => x.TableName.Contains(request.Search) || x.Action.Contains(request.Search) || x.ActionName.Contains(request.Search) 
@@ -80,7 +80,8 @@ namespace DSLNG.PEAR.Services
                 data = data.Where(x => x.UpdateDate <= request.EndDate);
             }
 
-            data = data.GroupBy(x => x.RecordId).Select(y => y.FirstOrDefault()).OrderBy(x => x.UpdateDate);
+            data = data.GroupBy(x => x.RecordId).Select(y => y.OrderByDescending(x => x.UpdateDate).FirstOrDefault())
+                .OrderByDescending(x => x.UpdateDate).Include(x => x.User);
 
             foreach (var sortOrder in sortingDictionary)
             {

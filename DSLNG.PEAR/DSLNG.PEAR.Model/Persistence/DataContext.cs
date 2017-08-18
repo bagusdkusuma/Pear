@@ -371,14 +371,19 @@ namespace DSLNG.PEAR.Data.Persistence
         //}
         public int SaveChanges(int UserId)
         {
-            foreach (var ent in this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted))
+            foreach (var ent in this.ChangeTracker.Entries().Where(p => p.State != EntityState.Detached).ToList())
             {
                 var audits = GetAuditRecordsForChange(ent, UserId);
-                foreach (AuditTrail audit in audits)
+                if(audits!=null && audits.Count() > 0)
                 {
-                    this.AuditTrails.Add(audit);
+                    foreach (AuditTrail audit in audits)
+                    {
+                        this.AuditTrails.Add(audit);
+                    }
+                    this.SaveChanges();
                 }
-                //base.SaveChanges();
+                
+                //this.SaveChanges();
             }
             return base.SaveChanges();
         }
@@ -394,7 +399,7 @@ namespace DSLNG.PEAR.Data.Persistence
             if (dbEntry.State == EntityState.Added)
             {
                 var newObject = JsonConvert.SerializeObject(dbEntry.CurrentValues.ToObject());
-                var nextId = dbEntry.CurrentValues.GetValue<object>(keyName);
+                this.SaveChanges();
                 results.Add(new AuditTrail
                 {
                     User = Users.Find(userId),
@@ -456,14 +461,23 @@ namespace DSLNG.PEAR.Data.Persistence
 
         public int SaveChanges(BaseAction activity)
         {
-            foreach (var dbEntry in this.ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted))
+            foreach (var change in ChangeTracker.Entries().Where(p=>p.State != EntityState.Detached).ToList())
             {
-                var audits = GetAuditRecordsForLog(dbEntry, activity);
+                var audits = GetAuditRecordsForLog(change, activity);
                 foreach (AuditTrail audit in audits)
                 {
                     this.AuditTrails.Add(audit);
                 }
             }
+
+            //foreach (var dbEntry in this.ChangeTracker.Entries().Where(p => ( p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted) && p.State != EntityState.Detached))
+            //{
+            //    var audits = GetAuditRecordsForLog(dbEntry, activity);
+            //    foreach (AuditTrail audit in audits)
+            //    {
+            //        this.AuditTrails.Add(audit);
+            //    }
+            //}
             return base.SaveChanges();
         }
 
@@ -503,7 +517,7 @@ namespace DSLNG.PEAR.Data.Persistence
                     ActionName = activity.ActionName,
                     RecordId = dbEntry.OriginalValues.GetValue<int>(keyName),
                     TableName = tableName,
-                    NewValue = oldObject
+                    OldValue = oldObject
                 });
             }
             else if (dbEntry.State == EntityState.Modified)

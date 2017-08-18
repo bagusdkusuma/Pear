@@ -77,6 +77,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var weather = request.MapTo<Weather>();
+                var action = request.MapTo<BaseAction>();
                 if (request.Id != 0)
                 {
                     weather = DataContext.Weathers.First(x => x.Id == request.Id);
@@ -93,7 +94,7 @@ namespace DSLNG.PEAR.Services
                     weather.Value = value;
                     DataContext.Weathers.Add(weather);
                 }
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 return new SaveWeatherResponse
                 {
                     IsSuccess = true,

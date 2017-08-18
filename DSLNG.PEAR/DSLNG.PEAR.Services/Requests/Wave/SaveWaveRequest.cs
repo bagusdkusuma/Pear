@@ -7,7 +7,7 @@ using DSLNG.PEAR.Services.Requests.Periode;
 
 namespace DSLNG.PEAR.Services.Requests.Wave
 {
-    public class SaveWaveRequest
+    public class SaveWaveRequest : BaseRequest
     {
         public int Id { get; set; }
         public PeriodeType PeriodeType { get; set; }
