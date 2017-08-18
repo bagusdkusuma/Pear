@@ -299,5 +299,26 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
+        public BaseResponse DeleteRolePrivilege(DeleteRolePrivilegeRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var action = request.MapTo<BaseAction>();
+                var privilege = new RolePrivilege { Id = request.Id };
+                DataContext.RolePrivileges.Attach(privilege);
+                DataContext.Entry(privilege).State = EntityState.Deleted;
+                DataContext.SaveChanges(action);
+                response.IsSuccess = true;
+                response.Message = "Role Privilege Deleted Successfully";
+            }
+            catch (DbUpdateException upd)
+            {
+                response.IsSuccess = false;
+                response.Message = upd.Message;
+            }
+            return response;
+        }
     }
 }

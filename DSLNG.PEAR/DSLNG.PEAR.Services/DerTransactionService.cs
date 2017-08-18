@@ -763,6 +763,7 @@ namespace DSLNG.PEAR.Services
             var response = new BaseResponse();
             try
             {
+                var action = request.MapTo<BaseAction>();
                 var derInputFile = new DerInputFile();
                 derInputFile.Date = request.Date;
                 derInputFile.FileName = request.FileName;
@@ -775,7 +776,7 @@ namespace DSLNG.PEAR.Services
                 derInputFile.UpdatedDate = DateTime.Now;
                 DataContext.DerInputFiles.Add(derInputFile);
 
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 response.IsSuccess = true;
                 response.Message = "Der Input File has been added successfully";
             }
@@ -832,16 +833,17 @@ namespace DSLNG.PEAR.Services
             return data;
         }
 
-        public DeleteDerInputFileResponse DeleteDerInputFile(int id)
+        public DeleteDerInputFileResponse DeleteDerInputFile(DerDeleteRequest req)
         {
             var response = new DeleteDerInputFileResponse();
             try
             {
-                var derInputFile = DataContext.DerInputFiles.Single(x => x.Id == id);
+                var action = req.MapTo<BaseAction>();
+                var derInputFile = DataContext.DerInputFiles.Single(x => x.Id == req.Id);
                 response.Date = new DateTime(derInputFile.Date.Year, derInputFile.Date.Month, derInputFile.Date.Day);
                 DataContext.DerInputFiles.Attach(derInputFile);
                 DataContext.Entry(derInputFile).State = EntityState.Deleted;
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 response.IsSuccess = true;
                 response.Message = "DER input file attachment has been deleted successfully";
             }

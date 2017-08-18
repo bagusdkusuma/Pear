@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.InputData
 {
-    public class SaveOrUpdateInputDataRequest
+    public class SaveOrUpdateInputDataRequest : BaseRequest
     {
         public SaveOrUpdateInputDataRequest()
         {
@@ -17,7 +17,7 @@ namespace DSLNG.PEAR.Services.Requests.InputData
         public string Name { get; set; }
         public string PeriodeType { get; set; }
         public int UpdatedById { get; set; }
-        
+
         public int AccountabilityId { get; set; }
         public int Order { get; set; }
         public IList<GroupInputData> GroupInputDatas { get; set; }

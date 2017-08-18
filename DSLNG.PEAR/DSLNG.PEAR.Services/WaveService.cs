@@ -61,6 +61,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var action = request.MapTo<BaseAction>();
                 var wave = request.MapTo<Wave>();
                 if (request.Id != 0)
                 {
@@ -93,7 +94,7 @@ namespace DSLNG.PEAR.Services
                     }
                     DataContext.Waves.Add(wave);
                 }
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 return new SaveWaveResponse
                 {
                     IsSuccess = true,

@@ -98,6 +98,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var action = request.MapTo<BaseAction>();
                 var todayHighlight = DataContext.Highlights.FirstOrDefault(x =>x.PeriodeType == request.PeriodeType && x.Date == request.Date && x.HighlightType.Id == request.TypeId);
                 if (todayHighlight != null && todayHighlight.Id != request.Id)
                 {
@@ -131,7 +132,7 @@ namespace DSLNG.PEAR.Services
                         highlight.HighlightType = highlightType;
                     }
                 }
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 return new SaveHighlightResponse
                 {
                     IsSuccess = true,

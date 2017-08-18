@@ -302,7 +302,12 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var response = _kpiService.Delete(id);
+            var response = _kpiService.Delete(new DeleteKpiRequest {
+                Id = id,
+                ControllerName ="KPI Configuration",
+                ActionName ="Delete",
+                UserId = this.UserProfile().UserId
+            });
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");

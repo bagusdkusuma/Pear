@@ -16,5 +16,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveOrUpdateInputDataResponse SaveOrUpdateInputData(SaveOrUpdateInputDataRequest request);
         GetInputDatasResponse GetInputDatas();
         BaseResponse Delete(int id);
+        BaseResponse Delete(DeleteInputDataRequest request);
     }
 }

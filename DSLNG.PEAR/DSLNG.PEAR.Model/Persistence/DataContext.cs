@@ -517,7 +517,7 @@ namespace DSLNG.PEAR.Data.Persistence
                     ActionName = activity.ActionName,
                     RecordId = dbEntry.OriginalValues.GetValue<int>(keyName),
                     TableName = tableName,
-                    NewValue = oldObject
+                    OldValue = oldObject
                 });
             }
             else if (dbEntry.State == EntityState.Modified)

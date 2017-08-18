@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using DSLNG.PEAR.Common.Extensions;
 using System.Data.SqlClient;
+using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -194,6 +195,21 @@ namespace DSLNG.PEAR.Web.Controllers
                             }).ToList();
 
             return View(model);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var response = new BaseResponse();
+            response = _roleService.DeleteRolePrivilege(new DeleteRolePrivilegeRequest
+            {
+                Id = id,
+                UserId = this.UserProfile().UserId,
+                ControllerName = "Role Privilege",
+                ActionName = "Delete"
+            });
+            TempData["IsSuccess"] = response.IsSuccess;
+            TempData["Message"] = response.Message;
+            return RedirectToAction("Index");
         }
     }
 }
