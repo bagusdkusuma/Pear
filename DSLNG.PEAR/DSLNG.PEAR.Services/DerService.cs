@@ -97,6 +97,7 @@ namespace DSLNG.PEAR.Services
             var response = new CreateOrUpdateResponse();
             try
             {
+                var action = request.MapTo<BaseAction>();
                 var existingDer = DataContext.Ders.FirstOrDefault(s => s.Title == request.Title);
                 var user = new User { Id = request.RevisionBy };
                 DataContext.Users.Attach(user);
@@ -122,7 +123,7 @@ namespace DSLNG.PEAR.Services
                     DataContext.Ders.Add(der);
                 }
 
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 response.IsSuccess = true;
                 response.Message = "DER has been added successfully";
             }
@@ -186,6 +187,7 @@ namespace DSLNG.PEAR.Services
             var response = new CreateOrUpdateDerLayoutResponse();
             try
             {
+                var action = request.MapTo<BaseAction>();
                 if (request.Id > 0)
                 {
                     var derLayout = DataContext.DerLayouts.Single(x => x.Id == request.Id);
@@ -199,7 +201,7 @@ namespace DSLNG.PEAR.Services
                     DataContext.DerLayouts.Add(new DerLayout() { IsActive = request.IsActive, Title = request.Title, IsDeleted = false });
                 }
 
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 response.IsSuccess = true;
                 response.Message = "DER Layout has been Saved successfully";
             }
@@ -2096,6 +2098,173 @@ namespace DSLNG.PEAR.Services
                             : response.Ders.OrderByDescending(x => x.DailyIndicator).ToList();
                         break;
                 }
+            }
+
+            return response;
+        }
+
+        public BaseResponse DeleteLayout(DeleteDerlayoutRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var action = request.MapTo<BaseAction>();
+                var derLayout = DataContext.DerLayouts
+                .Include(x => x.Items)
+                .Single(x => x.Id == request.Id);
+                derLayout.IsDeleted = true;
+                DataContext.Entry(derLayout).State = EntityState.Modified;
+                DataContext.SaveChanges(action);
+                response.IsSuccess = true;
+            }
+            catch (Exception exception)
+            {
+                response.IsSuccess = false;
+                response.Message = exception.Message;
+            }
+            
+            return response;
+        }
+
+        public DeleteDerLayoutItemResponse DeleteLayoutItem(DeleteDerLayoutItemRequest request)
+        {
+            var response = new DeleteDerLayoutItemResponse();
+            var action = request.MapTo<BaseAction>();
+            switch (request.Type.ToLowerInvariant())
+            {
+                case "highlight":
+                    {
+                        try
+                        {
+                            action.ActionName = string.Format("{0}-{1}", action.ActionName, request.Type.ToLowerInvariant());
+                            var derLayoutItem = DataContext.DerLayoutItems
+                                .Include(x => x.Highlight)
+                                .Include(x => x.Highlight.SelectOption)
+                                .Include(x => x.DerLayout)
+                                .Single(x => x.Id == request.Id);
+                            response.DerLayoutId = derLayoutItem.DerLayout.Id;
+                            DataContext.DerHighlights.Remove(derLayoutItem.Highlight);
+                            DataContext.DerLayoutItems.Remove(derLayoutItem);
+                            DataContext.SaveChanges(action);
+                            response.IsSuccess = true;
+                        }
+                        catch (Exception exception)
+                        {
+                            response.Message = exception.Message;
+                        }
+                        break;
+                    }
+                case "safety":
+                case "security":
+                case "job-pmts":
+                case "avg-ytd-key-statistic":
+                case "temperature":
+                case "lng-and-cds":
+                case "total-feed-gas":
+                case "table-tank":
+                case "mgdp":
+                case "hhv":
+                case "lng-and-cds-production":
+                case "weekly-maintenance":
+                case "critical-pm":
+                case "procurement":
+                case "indicative-commercial-price":
+                case "plant-availability":
+                case "economic-indicator":
+                case "loading-duration":
+                case "key-equipment-status":
+                    {
+                        try
+                        {
+                            action.ActionName = string.Format("{0}-{1}", action.ActionName, request.Type.ToLowerInvariant());
+                            var derLayoutItem = DataContext.DerLayoutItems
+                                .Include(x => x.KpiInformations)
+                                .Include(x => x.DerLayout)
+                                .Single(x => x.Id == request.Id);
+                            //var kpiInformations = new DerKpiInformation();
+                            foreach (var item in derLayoutItem.KpiInformations.ToList())
+                            {
+                                var kpiInformation = DataContext.DerKpiInformations.Single(x => x.Id == item.Id);
+                                DataContext.DerKpiInformations.Remove(kpiInformation);
+                            }
+                            response.DerLayoutId = derLayoutItem.DerLayout.Id;
+                            DataContext.DerLayoutItems.Remove(derLayoutItem);
+                            DataContext.SaveChanges(action);
+                            response.IsSuccess = true;
+                        }
+                        catch (Exception exception)
+                        {
+                            response.Message = exception.Message;
+                        }
+                        break;
+                    }
+                case "multiaxis":
+                    {
+                        try
+                        {
+                            action.ActionName = string.Format("{0}-{1}", action.ActionName, request.Type.ToLowerInvariant());
+                            var derLayoutItem = DataContext.DerLayoutItems
+                                .Include(x => x.Artifact)
+                                .Include(x => x.DerLayout)
+                                .Include(x => x.Artifact.Charts)
+                                .Include(x => x.Artifact.CustomSerie)
+                                .Single(x => x.Id == request.Id);
+                            //var kpiInformations = new DerKpiInformation();
+                            //foreach (var item in derLayoutItem.KpiInformations.ToList())
+                            //{
+                            //    var kpiInformation = DataContext.DerKpiInformations.Single(x => x.Id == item.Id);
+                            //    DataContext.DerKpiInformations.Remove(kpiInformation);
+                            //}
+                            response.DerLayoutId = derLayoutItem.DerLayout.Id;
+                            DataContext.DerLayoutItems.Remove(derLayoutItem);
+                            DataContext.SaveChanges(action);
+                            response.IsSuccess = true;
+                        }
+                        catch (Exception exception)
+                        {
+                            response.Message = exception.Message;
+                        }
+                        break;
+                    }
+            }
+
+            return response;
+        }
+
+        public BaseResponse DeleteFilename(DeleteFilenameRequest request)
+        {
+            var response = new CreateOrUpdateResponse();
+            try
+            {
+                var action = request.MapTo<BaseAction>();
+                var existingDer = DataContext.Ders.FirstOrDefault(s => s.Date == request.date);
+                var filenames = existingDer.Filename.Split(';').ToList();
+                var fileToRemove = filenames.FirstOrDefault(x => x.Contains(request.filename));
+                filenames.Remove(fileToRemove);
+                if (filenames.Count == 0)
+                {
+                    DataContext.Ders.Remove(existingDer);
+                    DataContext.SaveChanges(action);
+                    response.IsSuccess = true;
+                    response.Message = "File Attachment has been Deleted successfully";
+                    return response;
+                }
+                var lastFile = filenames.Last();
+                var regex = new Regex(@"_(\d+)\.pdf");
+                Match match = regex.Match(lastFile);
+                Regex versionRegex = new Regex(@"\d+");
+                Match versionMatch = versionRegex.Match(match.Value);
+                existingDer.Revision = int.Parse(versionMatch.Value);
+                existingDer.Filename = string.Join(";", filenames);
+
+                DataContext.SaveChanges(action);
+                response.IsSuccess = true;
+                response.Message = "File Attachment has been Deleted successfully";
+            }
+            catch (Exception exception)
+            {
+                response.IsSuccess = false;
+                response.Message = exception.Message;
             }
 
             return response;

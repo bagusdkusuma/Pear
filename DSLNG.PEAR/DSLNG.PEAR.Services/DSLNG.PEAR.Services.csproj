@@ -137,6 +137,9 @@
     <Compile Include="Requests\DerTransaction\GetDerInputFilesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetHighlightValuesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetKpiInformationValuesRequest.cs" />
+    <Compile Include="Requests\Der\DeleteDerLayoutItemRequest.cs" />
+    <Compile Include="Requests\Der\DeleteDerlayoutRequest.cs" />
+    <Compile Include="Requests\Der\DeleteFilenameRequest.cs" />
     <Compile Include="Requests\Der\GetDersRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\FilePrivilegeRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\UpdateFilePrivilegeRequest.cs" />
