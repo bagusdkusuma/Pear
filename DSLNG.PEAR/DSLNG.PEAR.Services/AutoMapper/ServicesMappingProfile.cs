@@ -1,5 +1,4 @@
-﻿#region namespace
-using System;
+﻿using System;
 using AutoMapper;
 using DSLNG.PEAR.Data.Entities;
 using DSLNG.PEAR.Data.Entities.Der;
@@ -137,7 +136,6 @@ using DSLNG.PEAR.Services.Responses.KpiTransformationLog;
 using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
 using DSLNG.PEAR.Services.Responses.AuditTrail;
 using DSLNG.PEAR.Services.Requests.DerTransaction;
-#endregion
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {

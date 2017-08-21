@@ -1,5 +1,4 @@
-﻿#region namespace
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using AutoMapper;
 using DSLNG.PEAR.Services.Common.PmsSummary;
@@ -197,7 +196,6 @@ using DSLNG.PEAR.Services.Responses.AuditTrail;
 using static DSLNG.PEAR.Web.ViewModels.AuditTrail.AuditTrailsDetailsViewModel.AuditTrail;
 using Newtonsoft.Json;
 using static DSLNG.PEAR.Web.ViewModels.AuditTrail.AuditTrailsDetailsViewModel;
-#endregion
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
