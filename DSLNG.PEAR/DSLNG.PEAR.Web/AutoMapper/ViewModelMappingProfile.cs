@@ -193,9 +193,7 @@ using DSLNG.PEAR.Web.ViewModels.DerLoadingSchedule;
 using DSLNG.PEAR.Services.Responses.DerLoadingSchedule;
 using DSLNG.PEAR.Web.ViewModels.AuditTrail;
 using DSLNG.PEAR.Services.Responses.AuditTrail;
-using static DSLNG.PEAR.Web.ViewModels.AuditTrail.AuditTrailsDetailsViewModel.AuditTrail;
 using Newtonsoft.Json;
-using static DSLNG.PEAR.Web.ViewModels.AuditTrail.AuditTrailsDetailsViewModel;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -230,13 +228,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.OldValue, y => y.ResolveUsing(z =>
                 {                    
                     AuditTrailsResponse.AuditTrail val = (AuditTrailsResponse.AuditTrail)z.Value;
-                    var list = new List<AuditDelta>();
+                    var list = new List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>();
                     if(val.OldValue != null)
                     {
                         var items = JsonConvert.DeserializeObject<Dictionary<string, object>>(val.OldValue);
                         foreach (var item in items)
                         {
-                            list.Add(new AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
+                            list.Add(new AuditTrailsDetailsViewModel.AuditTrail.AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
                         }
                     }                    
 
@@ -245,13 +243,13 @@ namespace DSLNG.PEAR.Web.AutoMapper
                 .ForMember(x => x.NewValue, y => y.ResolveUsing(z =>
                 {
                     AuditTrailsResponse.AuditTrail val = (AuditTrailsResponse.AuditTrail)z.Value;
-                    var list = new List<AuditDelta>();
+                    var list = new List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>();
                     if(val.NewValue != null)
                     {
                         var items = JsonConvert.DeserializeObject<Dictionary<string, object>>(val.NewValue);
                         foreach (var item in items)
                         {
-                            list.Add(new AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
+                            list.Add(new AuditTrailsDetailsViewModel.AuditTrail.AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
                         }
                     }                    
 
@@ -1361,15 +1359,15 @@ namespace DSLNG.PEAR.Web.AutoMapper
         TDestMember Resolve(TSource source, TDestination destination, TDestMember destMember, ResolutionContext context);
     }
 
-    public class AuditTrailJsonResolver : IValueResolver<string, List<AuditDelta>, IList<AuditDelta>>
+    public class AuditTrailJsonResolver : IValueResolver<string, List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>, IList<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>>
     {
-        public IList<AuditDelta> Resolve(string source, List<AuditDelta> destination, IList<AuditDelta> destMember, ResolutionContext context)
+        public IList<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta> Resolve(string source, List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta> destination, IList<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta> destMember, ResolutionContext context)
         {
-            var list = new List<AuditDelta>();
+            var list = new List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>();
             var items = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(source);
             foreach (var item in items)
             {
-                list.Add(new AuditDelta { FieldName = item.Key, Value = item.Value });
+                list.Add(new AuditTrailsDetailsViewModel.AuditTrail.AuditDelta { FieldName = item.Key, Value = item.Value });
             }
 
             return list;
