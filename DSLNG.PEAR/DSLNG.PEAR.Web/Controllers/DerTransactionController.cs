@@ -700,41 +700,43 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult UploadActivity(IEnumerable<HttpPostedFileBase> files, string date)
         {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-            foreach(var x in Request.Files)
+            if(files.Count() > 0)
             {
-                var y = x;
-            }
-            foreach (var file in files)
-            {                
-                var response = new BaseResponse();
-                var title = Path.GetFileNameWithoutExtension(file.FileName) + "_" + theDate.ToString("dd-MMM-yyyy") + "_" + new Random().Next(1, 100) + Path.GetExtension(file.FileName);
-                string filename = title.Replace('/', '-');
-
-                if (!Directory.Exists(Server.MapPath(PathConstant.DerInputFile)))
+                foreach (var file in files)
                 {
-                    Directory.CreateDirectory(Server.MapPath(PathConstant.DerInputFile));
-                }
+                    var response = new BaseResponse();
+                    var cleanName = string.Join("_", file.FileName.Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries)).TrimEnd('.').Replace('&', '-');
+                    var title = Path.GetFileNameWithoutExtension(cleanName) + "_" + theDate.ToString("dd-MMM-yyyy") + "_" + new Random().Next(1, 100) + Path.GetExtension(cleanName);
+                    
+                    string filename = title.Replace('/', '-');
 
-                if (file.ContentLength > 0)
-                {
-                    var path = Path.Combine(Server.MapPath(PathConstant.DerInputFile), filename);
-                    file.SaveAs(path);
-
-                    response = _derTransactionService.CreateDerInputFile(new CreateDerInputFileRequest
+                    if (!Directory.Exists(Server.MapPath(PathConstant.DerInputFile)))
                     {
-                        FileName = PathConstant.DerInputFile + "/" + filename,
-                        Date = theDate,
-                        Title = file.FileName,
-                        CreatedBy = UserProfile().UserId,
-                        UserId = UserProfile().UserId,
-                        ControllerName = "DER Input form",
-                        ActionName = "Upload DER files reference"
-                    });
-                }
+                        Directory.CreateDirectory(Server.MapPath(PathConstant.DerInputFile));
+                    }
 
-                TempData["Message"] = response.Message;
-                TempData["IsSuccess"] = response.IsSuccess;
+                    if (file.ContentLength > 0)
+                    {
+                        var path = Path.Combine(Server.MapPath(PathConstant.DerInputFile), filename);
+                        file.SaveAs(path);
+
+                        response = _derTransactionService.CreateDerInputFile(new CreateDerInputFileRequest
+                        {
+                            FileName = PathConstant.DerInputFile + "/" + filename,
+                            Date = theDate,
+                            Title = file.FileName,
+                            CreatedBy = UserProfile().UserId,
+                            UserId = UserProfile().UserId,
+                            ControllerName = "DER Input form",
+                            ActionName = "Upload DER files reference"
+                        });
+                    }
+
+                    TempData["Message"] = response.Message;
+                    TempData["IsSuccess"] = response.IsSuccess;
+                }
             }
+            
             
 
             return RedirectToAction("Index", new { date = theDate.ToString("MM/dd/yyyy") });
