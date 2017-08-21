@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.Der
 {
-    public class CreateOrUpdateDerRequest
+    public class CreateOrUpdateDerRequest : BaseRequest
     {
         public int Id { get; set; }
         public string Title { get; set; }
