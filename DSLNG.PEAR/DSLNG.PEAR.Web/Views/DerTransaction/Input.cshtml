@@ -1097,15 +1097,11 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                 }
             });
 
-            $('.btn-input-slide-local').click(function () {
-                alert('as');
-            })
-
-            //$('.datepicker').datetimepicker({
-            //    format: "MM/DD/YYYY",
-            //    focusOnShow: false
-            //});
-
+            @if (TempData["ExpandedFileAttachment"] != null && TempData["ExpandedFileAttachment"].ToString().ToLowerInvariant() == "true")
+            {
+                @:$('#collapseAttachment').collapse('show');
+            }
+            
 
         });
     </script>

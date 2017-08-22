@@ -736,9 +736,9 @@ namespace DSLNG.PEAR.Web.Controllers
                     TempData["IsSuccess"] = response.IsSuccess;
                 }
             }
-            
-            
 
+
+            TempData["ExpandedFileAttachment"] = true;
             return RedirectToAction("Index", new { date = theDate.ToString("MM/dd/yyyy") });
         }
 
@@ -753,6 +753,7 @@ namespace DSLNG.PEAR.Web.Controllers
             });
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
+            TempData["ExpandedFileAttachment"] = true;
             return RedirectToAction("Index", new { date = response.Date.ToString("MM/dd/yyyy") });
         }
 
