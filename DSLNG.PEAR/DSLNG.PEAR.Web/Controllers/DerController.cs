@@ -1164,6 +1164,8 @@ namespace DSLNG.PEAR.Web.Controllers
             //var response = _derService.DeleteFilename(filename, date);
             var response = _derService.DeleteFilename(new DeleteFilenameRequest
             {
+                filename = filename,
+                date = date,
                 UserId = UserProfile().UserId,
                 ControllerName = "DER",
                 ActionName = "Delete"
