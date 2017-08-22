@@ -391,7 +391,7 @@ namespace DSLNG.PEAR.Data.Persistence
         private List<AuditTrail> GetAuditRecordsForChange(DbEntityEntry dbEntry, int userId)
         {
             List<AuditTrail> results = new List<AuditTrail>();
-            DateTime changeTime = DateTime.UtcNow;
+            DateTime changeTime = DateTime.Now;
             TableAttribute tableAttr = dbEntry.Entity.GetType().GetCustomAttributes(typeof(TableAttribute), false).SingleOrDefault() as TableAttribute;
             string tableName = tableAttr != null ? tableAttr.Name : dbEntry.Entity.GetType().Name;
             string keyName = dbEntry.Entity.GetType().GetProperties().Single(p => p.GetCustomAttributes(typeof(KeyAttribute), false).Count() > 0).Name;
@@ -484,7 +484,7 @@ namespace DSLNG.PEAR.Data.Persistence
         private List<AuditTrail> GetAuditRecordsForLog(DbEntityEntry dbEntry, BaseAction activity)
         {
             List<AuditTrail> results = new List<AuditTrail>();
-            DateTime changeTime = DateTime.UtcNow;
+            DateTime changeTime = DateTime.Now;
             TableAttribute tableAttr = dbEntry.Entity.GetType().GetCustomAttributes(typeof(TableAttribute), false).SingleOrDefault() as TableAttribute;
             string tableName = tableAttr != null ? tableAttr.Name : dbEntry.Entity.GetType().Name;
             string keyName = dbEntry.Entity.GetType().GetProperties().Single(p => p.GetCustomAttributes(typeof(KeyAttribute), false).Count() > 0).Name;
