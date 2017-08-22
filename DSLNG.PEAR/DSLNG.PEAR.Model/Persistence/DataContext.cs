@@ -371,6 +371,11 @@ namespace DSLNG.PEAR.Data.Persistence
         //}
         public int SaveChanges(int UserId)
         {
+            //by pass for accommodate null params when UserId parameter not inserted yet (old param are not using this params)
+            if (UserId == default(int))
+            {
+                return this.SaveChanges();
+            }
             foreach (var ent in this.ChangeTracker.Entries().Where(p => p.State != EntityState.Detached).ToList())
             {
                 var audits = GetAuditRecordsForChange(ent, UserId);
@@ -461,6 +466,11 @@ namespace DSLNG.PEAR.Data.Persistence
 
         public int SaveChanges(BaseAction activity)
         {
+            if (activity.UserId == null)
+            {
+                return this.SaveChanges();
+            }
+
             foreach (var change in ChangeTracker.Entries().Where(p=>p.State != EntityState.Detached).ToList())
             {
                 var audits = GetAuditRecordsForLog(change, activity);

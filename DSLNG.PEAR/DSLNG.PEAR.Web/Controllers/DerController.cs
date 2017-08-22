@@ -1091,7 +1091,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 Filename = PathConstant.DerPath + "/" + pdfName,
                 Title = title,
                 Date = theDate,
-                RevisionBy = UserProfile().UserId
+                RevisionBy = UserProfile().UserId,
+                UserId = UserProfile().UserId,
+                ControllerName = "DER",
+                ActionName = "Generate"
             });
             if (response.IsSuccess)
             {
@@ -1139,7 +1142,10 @@ namespace DSLNG.PEAR.Web.Controllers
                     Filename = PathConstant.DerPath + "/" + string.Format("{0}_{1}.pdf", filename, revision),
                     Title = title,
                     Date = theDate,
-                    RevisionBy = UserProfile().UserId
+                    RevisionBy = UserProfile().UserId,
+                    UserId = UserProfile().UserId,
+                    ControllerName = "DER",
+                    ActionName = "Generate"
                 });
             }
             return RedirectToAction("Index");
@@ -1155,7 +1161,13 @@ namespace DSLNG.PEAR.Web.Controllers
             Regex rgx = new Regex(pattern);
             dateString = rgx.Replace(dateString, "");
             var date = DateTime.ParseExact(dateString, "dd-MMM-yyyy", CultureInfo.InvariantCulture);
-            var response = _derService.DeleteFilename(filename, date);
+            //var response = _derService.DeleteFilename(filename, date);
+            var response = _derService.DeleteFilename(new DeleteFilenameRequest
+            {
+                UserId = UserProfile().UserId,
+                ControllerName = "DER",
+                ActionName = "Delete"
+            });
             TempData["IsSuccess"] = response.IsSuccess;
             TempData["Message"] = response.Message;
             return RedirectToAction("Index");
