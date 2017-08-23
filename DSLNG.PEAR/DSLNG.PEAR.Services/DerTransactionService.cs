@@ -826,6 +826,11 @@ namespace DSLNG.PEAR.Services
                             ? data.OrderBy(x => x.Date)
                             : data.OrderByDescending(x => x.Date);
                         break;
+                    case "FileName":
+                        data = sortOrder.Value == SortOrder.Ascending
+                            ? data.OrderBy(x => x.FileName)
+                            : data.OrderByDescending(x => x.FileName);
+                        break;
                 }
             }
             
