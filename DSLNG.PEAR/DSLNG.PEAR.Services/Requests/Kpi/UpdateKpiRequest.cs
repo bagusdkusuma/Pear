@@ -7,7 +7,7 @@ using DSLNG.PEAR.Services.Responses.Kpi;
 
 namespace DSLNG.PEAR.Services.Requests.Kpi
 {
-    public class UpdateKpiRequest
+    public class UpdateKpiRequest : BaseRequest
     {
         public int Id { get; set; }
         public string Code { get; set; }
@@ -32,5 +32,10 @@ namespace DSLNG.PEAR.Services.Requests.Kpi
 
         public bool IsActive { get; set; }
         public ICollection<KpiRelationModel> RelationModels { get; set; }
+    }
+
+    public class DeleteKpiRequest : BaseRequest
+    {
+        public int Id { get; set; }
     }
 }

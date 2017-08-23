@@ -165,6 +165,7 @@ namespace DSLNG.PEAR.Services
             var response = new CreateKpiResponse();
             try
             {
+                var action = request.MapTo<BaseAction>();
                 var kpi = request.MapTo<Kpi>();
                 if (request.PillarId.HasValue)
                 {
@@ -204,7 +205,7 @@ namespace DSLNG.PEAR.Services
                 }
 
                 DataContext.Kpis.Add(kpi);
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 response.IsSuccess = true;
                 response.Message = "KPI item has been added successfully";
             }
@@ -221,6 +222,7 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateKpiResponse();
             try
             {
+                var action = request.MapTo<BaseAction>();
                 var updateKpi = request.MapTo<Kpi>();
                 if (request.PillarId.HasValue)
                 {
@@ -319,7 +321,7 @@ namespace DSLNG.PEAR.Services
                     existedkpi.RelationModels = relation;
                 }
 
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 response.IsSuccess = true;
                 response.Message = "KPI item has been updated successfully";
             }
@@ -440,6 +442,27 @@ namespace DSLNG.PEAR.Services
                 .Include(x => x.RoleGroup)
                 .ToList();
             return data;
+        }
+
+        public DeleteKpiResponse Delete(DeleteKpiRequest request)
+        {
+            var response = new DeleteKpiResponse();
+            try
+            {
+                var action = request.MapTo<BaseAction>();
+                var kpi = new Kpi { Id = request.Id };
+                DataContext.Kpis.Attach(kpi);
+                DataContext.Entry(kpi).State = EntityState.Deleted;
+                DataContext.SaveChanges(action);
+                response.IsSuccess = true;
+                response.Message = "KPI item has been deleted successfully";
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                response.Message = dbUpdateException.Message;
+            }
+
+            return response;
         }
     }
 }

@@ -103,6 +103,7 @@ namespace DSLNG.PEAR.Web.DependencyResolution {
             For<ICustomFormulaService>().Use<CustomFormulaService>();
             For<HelpController>().Use(ctx => new HelpController());
             For<ICustomPrincipal>().Use<CustomPrincipal>();
+            For<IAuditTrailService>().Use<AuditTrailService>();
         }
 
         #endregion

@@ -191,6 +191,9 @@ using DSLNG.PEAR.Services.Responses.KpiInformation;
 using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
 using DSLNG.PEAR.Web.ViewModels.DerLoadingSchedule;
 using DSLNG.PEAR.Services.Responses.DerLoadingSchedule;
+using DSLNG.PEAR.Web.ViewModels.AuditTrail;
+using DSLNG.PEAR.Services.Responses.AuditTrail;
+using Newtonsoft.Json;
 
 namespace DSLNG.PEAR.Web.AutoMapper
 {
@@ -211,7 +214,48 @@ namespace DSLNG.PEAR.Web.AutoMapper
             ConfigureFileRepository();
             ConfigureInputDataViewModel();
             ConfigureMixed();
+            ConfigureAuditTrail();
             base.Configure();
+        }
+
+        private void ConfigureAuditTrail()
+        {
+            Mapper.CreateMap<AuditTrailsResponse, GetAuditTrailViewModel>();
+            Mapper.CreateMap<AuditTrailsResponse.AuditTrail, GetAuditTrailViewModel.AuditTrail>();
+            Mapper.CreateMap<AuditTrailResponse, AuditTrailsDetailsViewModel>();
+            Mapper.CreateMap<AuditTrailsResponse, AuditTrailsDetailsViewModel>();
+            Mapper.CreateMap<AuditTrailsResponse.AuditTrail, AuditTrailsDetailsViewModel.AuditTrail>()
+                .ForMember(x => x.OldValue, y => y.ResolveUsing(z =>
+                {                    
+                    AuditTrailsResponse.AuditTrail val = (AuditTrailsResponse.AuditTrail)z.Value;
+                    var list = new List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>();
+                    if(val.OldValue != null)
+                    {
+                        var items = JsonConvert.DeserializeObject<Dictionary<string, object>>(val.OldValue);
+                        foreach (var item in items)
+                        {
+                            list.Add(new AuditTrailsDetailsViewModel.AuditTrail.AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
+                        }
+                    }                    
+
+                    return list;
+                }))
+                .ForMember(x => x.NewValue, y => y.ResolveUsing(z =>
+                {
+                    AuditTrailsResponse.AuditTrail val = (AuditTrailsResponse.AuditTrail)z.Value;
+                    var list = new List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>();
+                    if(val.NewValue != null)
+                    {
+                        var items = JsonConvert.DeserializeObject<Dictionary<string, object>>(val.NewValue);
+                        foreach (var item in items)
+                        {
+                            list.Add(new AuditTrailsDetailsViewModel.AuditTrail.AuditDelta { FieldName = item.Key, Value = item.Value != null ? item.Value.ToString() : string.Empty });
+                        }
+                    }                    
+
+                    return list;
+                }));
+
         }
 
         private void ConfigureMixed()
@@ -374,7 +418,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<LineChartViewModel, GetCartesianChartDataRequest>();
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetCartesianChartDataRequest.SeriesRequest>();
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, LineChartDataViewModel.SeriesViewModel>()
-                .ForMember(x => x.marker, y => y.MapFrom(z => new LineChartDataViewModel.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor}))                
+                .ForMember(x => x.marker, y => y.MapFrom(z => new LineChartDataViewModel.SeriesViewModel.MarkerViewModel { fillColor = z.MarkerColor, lineColor = z.MarkerColor }))
                 .ForMember(x => x.dashStyle, y => y.MapFrom(z => z.LineType));
             Mapper.CreateMap<LineChartViewModel, CreateArtifactRequest>()
                .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
@@ -1224,6 +1268,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             }
         }
     }
+
     public class MultiaxisSeriesCreateResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, IList<CreateArtifactRequest.SeriesRequest>>
     {
         protected override IList<CreateArtifactRequest.SeriesRequest> ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
@@ -1240,7 +1285,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
             }
         }
     }
-
 
     public class MultiaxisSeriesUpdateResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, IList<UpdateArtifactRequest.SeriesRequest>>
     {
@@ -1293,7 +1337,6 @@ namespace DSLNG.PEAR.Web.AutoMapper
         }
     }
 
-
     public class ComboSeriesUpdateResolver : ValueResolver<ComboChartViewModel.ChartViewModel, IList<UpdateArtifactRequest.SeriesRequest>>
     {
         protected override IList<UpdateArtifactRequest.SeriesRequest> ResolveCore(ComboChartViewModel.ChartViewModel source)
@@ -1308,6 +1351,26 @@ namespace DSLNG.PEAR.Web.AutoMapper
                     return source.BarChart.Series.MapTo<UpdateArtifactRequest.SeriesRequest>();
 
             }
+        }
+    }
+
+    public interface IValueResolver<in TSource, in TDestination, TDestMember>
+    {
+        TDestMember Resolve(TSource source, TDestination destination, TDestMember destMember, ResolutionContext context);
+    }
+
+    public class AuditTrailJsonResolver : IValueResolver<string, List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>, IList<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>>
+    {
+        public IList<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta> Resolve(string source, List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta> destination, IList<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta> destMember, ResolutionContext context)
+        {
+            var list = new List<AuditTrailsDetailsViewModel.AuditTrail.AuditDelta>();
+            var items = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(source);
+            foreach (var item in items)
+            {
+                list.Add(new AuditTrailsDetailsViewModel.AuditTrail.AuditDelta { FieldName = item.Key, Value = item.Value });
+            }
+
+            return list;
         }
     }
 }

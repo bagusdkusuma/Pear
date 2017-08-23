@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.DerTransaction
 {
-    public class CreateDerInputFileRequest
+    public class CreateDerInputFileRequest : BaseRequest
     {
         public DateTime Date { get; set; }
         public string FileName { get; set; }

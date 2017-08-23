@@ -72,12 +72,13 @@ namespace DSLNG.PEAR.Services
         public CreateRoleGroupResponse Create(CreateRoleGroupRequest request)
         {
             var response = new CreateRoleGroupResponse();
+            var action = request.MapTo<BaseAction>();
             try
             {
                 var roleGroup = request.MapTo<RoleGroup>();
                 roleGroup.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
                 DataContext.RoleGroups.Add(roleGroup);
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 response.IsSuccess = true;
                 response.Message = "RoleGroup type item has been added successfully";
             }

@@ -270,7 +270,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
             </div>
         </div>
 
-        <div class="row others">
+        <div class="row others" style="margin-bottom: 20px;">
             <div class="col-md-12">
                 <a class="btn btn-trigger" role="button" data-toggle="collapse" data-content-url="@Url.Action("EnablerSection",new { date="__date__" })" data-target="#collapseOthers" aria-expanded="false" aria-controls="collapseExample">
                     <h5 style="margin-left: -16px;" class="text-title-section">Enabler</h5>
@@ -286,62 +286,68 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
             </div>
         </div>
 
-        <div class="row">            
-            
+        <div class="row" style="margin-bottom: 20px;">
             <div class="col-md-12">
-                <a href="javascript:;" class="btn btn-trigger" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+                <a href="javascript:;" class="btn btn-trigger" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample" data-target="#collapseAttachment">
                     <h5 style="margin-left: -16px;" class="text-title-section">File Attachment</h5>
                 </a>
-                <div class="add-button-wrapper pull-left col-md-12">
-                    <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#activity-upload-modal">Upload</a>
-                </div>
-                @if (TempData["IsSuccess"] != null && bool.Parse(TempData["IsSuccess"].ToString()) == false)
-                {
-                    <p style="color:red">@TempData["Message"]</p>
-                }
-                <table id="activity-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th>File Name</th>
-                            <th>Created By</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div id="activity-upload-modal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <form name="upload-activity-form" action="@Url.Action("UploadActivity", "DerTransaction")" enctype="multipart/form-data" method="post">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Upload File</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group form-list">
-                                        <label>File</label>
-                                        <input class="form-control" type="file" name="file" required>
-                                        <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                <span class="pull-right" style="border: 1px solid white; border-radius: 5px;">
+                    <a class="btn  btn-input-slide" role="button" data-toggle="collapse" data-target="#collapseAttachment" href="#collapseAttachment" aria-expanded="false" aria-controls="collapseExample">
+                        +
+                    </a>
+                </span>
+                <div class="collapse" id="collapseAttachment" style="margin-top: 15px; margin-bottom: 15px;">
+                    <div class="add-button-wrapper pull-left col-md-12">
+                        <a class="btn-master-rgw btn btn-primary" id="upload-der" data-toggle="modal" data-target="#activity-upload-modal">Upload</a>
+                    </div>
+                    @if (TempData["IsSuccess"] != null && bool.Parse(TempData["IsSuccess"].ToString()) == false)
+                    {
+                        <p style="color:red">@TempData["Message"]</p>
+                    }
+                    <table id="activity-table" class="table-transparent table table-bordered table-responsive" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Created By</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div id="activity-upload-modal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <form name="upload-activity-form" action="@Url.Action("UploadActivity", "DerTransaction")" enctype="multipart/form-data" method="post">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Upload File</h4>
                                     </div>
-                                    <div class="form-group form-list">
-                                        <label>Date</label>
-                                        <input name="date" class="form-control datepicker" />
+                                    <div class="modal-body">
+                                        <div class="form-group form-list">
+                                            <label>File</label>
+                                            <input class="form-control" type="file" id="files" name="files" required multiple>
+                                            <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                                        </div>
+                                        <div class="form-group form-list">
+                                            <label>Date</label>
+                                            <input name="date" class="form-control datepicker" />
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="modal-footer">
-                                    <input type="submit" class="btn-master-rgw btn btn-primary" value="Upload" />
-                                    <button type="button" class="btn btn-master-rgw btn-primary" data-dismiss="modal">Close</button>
+                                    <div class="modal-footer">
+                                        <input type="submit" class="btn-master-rgw btn btn-primary" value="Upload" />
+                                        <button type="button" class="btn btn-master-rgw btn-primary" data-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-12" style="margin-bottom: 30px;">
-        <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>        
+        <a tabindex="278" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         <label class="labletop">Batch :</label>
         @Html.DropDownList("Batch_Id", (IEnumerable<SelectListItem>)ViewBag.KpiTransformations, new { @class = "btn btn-master-rgw btn-primary" })
         <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>
@@ -1046,8 +1052,9 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
-                "sAjaxSource": '@Url.Action("DerInputFileGrid", "DerTransaction", new { @Date = "_date_"})'.replace('_date_', $('#currentDate').val()),                
-                search: true,
+                "sAjaxSource": '@Url.Action("DerInputFileGrid", "DerTransaction", new { @Date = "_date_"})'.replace('_date_', $('#currentDate').val()),
+                search: true,
+
                 //"order": [[3, "asc"]],
                 "aoColumns": [
                     {
@@ -1074,7 +1081,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                         }
                     }
                 ],
-                
+
             });
 
             $('#activity-table').on('click', '.delete', function () {
@@ -1090,11 +1097,11 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                 }
             });
 
-            //$('.datepicker').datetimepicker({
-            //    format: "MM/DD/YYYY",
-            //    focusOnShow: false
-            //});
-
+            @if (TempData["ExpandedFileAttachment"] != null && TempData["ExpandedFileAttachment"].ToString().ToLowerInvariant() == "true")
+            {
+                @:$('#collapseAttachment').collapse('show');
+            }
+            
 
         });
     </script>

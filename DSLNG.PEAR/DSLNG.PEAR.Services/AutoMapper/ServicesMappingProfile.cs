@@ -134,6 +134,8 @@ using DSLNG.PEAR.Services.Requests.KpiTransformationSchedule;
 using DSLNG.PEAR.Services.Responses.KpiTransformationSchedule;
 using DSLNG.PEAR.Services.Responses.KpiTransformationLog;
 using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
+using DSLNG.PEAR.Services.Responses.AuditTrail;
+using DSLNG.PEAR.Services.Requests.DerTransaction;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -154,7 +156,32 @@ namespace DSLNG.PEAR.Services.AutoMapper
             ConfigureFileRepository();
             ConfigureInputData();
             ConfigureMixed();
+            ConfigureAudit();
             base.Configure();
+        }
+
+        private void ConfigureAudit()
+        {
+            Mapper.CreateMap<Data.Entities.AuditTrail, AuditTrailResponse>();
+            Mapper.CreateMap<Data.Entities.AuditTrail, AuditTrailsResponse.AuditTrail>()
+                .ForMember(k => k.UserName, o => o.MapFrom(z => z.User.Username));
+            Mapper.CreateMap<DerDeleteRequest, BaseAction>();
+            Mapper.CreateMap<CreateDerInputFileRequest, BaseAction>();
+            Mapper.CreateMap<DeleteKpiAchievementRequest, BaseAction>();
+            Mapper.CreateMap<DeleteRolePrivilegeRequest, BaseAction>();
+            Mapper.CreateMap<SaveRolePrivilegeRequest, BaseAction>();
+            Mapper.CreateMap<DeleteKpiRequest, BaseAction>();
+            Mapper.CreateMap<CreateKpiResponse, BaseAction>();
+            Mapper.CreateMap<UpdateKpiRequest, BaseAction>();
+            Mapper.CreateMap<SaveOrUpdateInputDataRequest, BaseAction>();
+            Mapper.CreateMap<DeleteInputDataRequest, BaseAction>();
+
+            // DER Services
+            Mapper.CreateMap<CreateOrUpdateDerLayoutRequest, BaseAction>();
+            Mapper.CreateMap<DeleteDerlayoutRequest, BaseAction>();
+            Mapper.CreateMap<DeleteDerLayoutItemRequest, BaseAction>();
+            Mapper.CreateMap<DeleteFilenameRequest, BaseAction>();
+            Mapper.CreateMap<CreateOrUpdateDerRequest, BaseAction>();
         }
 
         private void ConfigureMixed()
@@ -266,6 +293,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             //Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupsResponse>();
             Mapper.CreateMap<Data.Entities.RoleGroup, GetRoleGroupResponse>();
             Mapper.CreateMap<CreateRoleGroupRequest, Data.Entities.RoleGroup>();
+            Mapper.CreateMap<CreateRoleGroupRequest, Data.Entities.BaseAction>();
             Mapper.CreateMap<UpdateRoleGroupRequest, Data.Entities.RoleGroup>();
             Mapper.CreateMap<Data.Entities.RoleGroup, UpdateRoleGroupResponse>();
 
@@ -280,6 +308,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(k => k.Type, o => o.MapFrom(k => k.PeriodeType.ToString()));
             Mapper.CreateMap<UpdateKpiAchievementItemRequest, KpiAchievement>()
                 .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
+            Mapper.CreateMap<UpdateKpiAchievementItemRequest, BaseAction>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarResponse>();
             Mapper.CreateMap<Data.Entities.Pillar, GetPillarsResponse.Pillar>();
@@ -316,7 +345,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<CreateArtifactRequest.RowRequest, ArtifactRow>();
             Mapper.CreateMap<CreateArtifactRequest.ChartRequest, ArtifactChart>()
                 .ForMember(x => x.Series, o => o.Ignore());
-
+            Mapper.CreateMap<CreateArtifactRequest, BaseAction>();
             Mapper.CreateMap<UpdateArtifactRequest, Artifact>()
                .ForMember(x => x.Series, o => o.Ignore())
                .ForMember(x => x.Plots, o => o.Ignore())
@@ -329,6 +358,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<UpdateArtifactRequest.RowRequest, ArtifactRow>();
             Mapper.CreateMap<UpdateArtifactRequest.ChartRequest, ArtifactChart>()
                 .ForMember(x => x.Series, o => o.Ignore());
+            Mapper.CreateMap<UpdateArtifactRequest, BaseAction>();
 
             Mapper.CreateMap<Artifact, GetArtifactsResponse.Artifact>()
                 .ForMember(x => x.Used, o => o.MapFrom(x => x.LayoutColumns.Count > 0));
@@ -467,6 +497,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Weather, GetWeathersResponse.WeatherResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Text));
             Mapper.CreateMap<SaveWeatherRequest, Weather>();
+            Mapper.CreateMap<SaveWeatherRequest, BaseAction>();
             Mapper.CreateMap<Weather, GetWeatherResponse>()
                 .ForMember(x => x.Value, o => o.MapFrom(s => s.Value.Value))
                 .ForMember(x => x.Text, o => o.MapFrom(s => s.Value.Text));
@@ -759,6 +790,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Wave, GetWavesResponse.WaveResponse>()
                 .ForMember(x => x.Value, y => y.MapFrom(z => z.Value.Text));
             Mapper.CreateMap<SaveWaveRequest, Wave>();
+            Mapper.CreateMap<SaveWaveRequest, BaseAction>();
 
 
             Mapper.CreateMap<MirConfiguration, GetsMirConfigurationsResponse.MirConfiguration>();
@@ -803,8 +835,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.VesselMeasuremant, o => o.MapFrom(s => s.Vessel.Measurement.Name))
                 .ForMember(x => x.BuyerId, o => o.MapFrom(s => s.Buyer.Id))
                 .ForMember(x => x.BuyerName, o => o.MapFrom(s => s.Buyer.Name))
-                .ForMember(x => x.ETA, o => o.MapFrom(s => s.ETA.HasValue? s.ETA.Value.ToString("dd-MM-yyyy") : "TBD"))
-                .ForMember(x => x.ETD, o => o.MapFrom(s => s.ETD.HasValue? s.ETD.Value.ToString("dd-MM-yyyy") : "TBD"));
+                .ForMember(x => x.ETA, o => o.MapFrom(s => s.ETA.HasValue ? s.ETA.Value.ToString("dd-MM-yyyy") : "TBD"))
+                .ForMember(x => x.ETD, o => o.MapFrom(s => s.ETD.HasValue ? s.ETD.Value.ToString("dd-MM-yyyy") : "TBD"));
             base.Configure();
         }
 
@@ -825,7 +857,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<FileManagerRolePrivilege, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege>()
                 .ForMember(x => x.FileId, y => y.MapFrom(z => z.ProcessBlueprint.Id))
                 .ForMember(x => x.RoleGroupId, y => y.MapFrom(z => z.RoleGroup.Id))
-                .ForMember(x=>x.RoleGroupName,y=>y.MapFrom(z=>z.RoleGroup.Name));
+                .ForMember(x => x.RoleGroupName, y => y.MapFrom(z => z.RoleGroup.Name));
             Mapper.CreateMap<ProcessBlueprint, GetProcessBlueprintPrivilegesResponse.FileManagerRolePrivilege.BlueprintFile>();
             Mapper.CreateMap<UpdateFilePrivilegeRequest, FileManagerRolePrivilege>();
             Mapper.CreateMap<FilePrivilegeRequest, FileManagerRolePrivilege>();
@@ -940,7 +972,8 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTarget, GetKpiTargetItemResponse>();
             Mapper.CreateMap<Kpi, GetKpiTargetItemResponse.KpiResponse>();
             Mapper.CreateMap<SaveKpiTargetRequest, KpiTarget>()
-                .ForMember(x => x.Value , y => y.MapFrom(z => z.RealValue));
+                .ForMember(x => x.Value, y => y.MapFrom(z => z.RealValue));
+            Mapper.CreateMap<SaveKpiTargetRequest, BaseAction>();
         }
 
         private void ConfigurePmsConfig()
@@ -1076,7 +1109,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
                 .ForMember(x => x.KpiLabel, y => y.MapFrom(z => z.KpiLabel))
                 .ForMember(x => x.Position, y => y.MapFrom(z => z.Position))
                 .ForMember(x => x.Kpi, y => y.Ignore());
-                
+
 
 
             //DER Original Data
@@ -1119,7 +1152,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInputData, GroupInputData>();
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.InputDataKpiAndOrder, InputDataKpiAndOrder>();
-            
+
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.GroupInput, GroupInputData>();
             //Mapper.CreateMap<SaveOrUpdateInputDataRequest.Kpi, Kpi>()
             //    .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))

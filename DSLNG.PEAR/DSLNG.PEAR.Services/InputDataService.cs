@@ -24,6 +24,46 @@ namespace DSLNG.PEAR.Services
         {
         }
 
+        public BaseResponse Delete(DeleteInputDataRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var action = request.MapTo<Data.Entities.BaseAction>();
+                var input = DataContext.InputData
+                    .Include(x => x.GroupInputDatas)
+                    .Include(x => x.GroupInputDatas.Select(y => y.InputDataKpiAndOrders))
+                    .First(x => x.Id == request.Id);
+                if (input.GroupInputDatas.Count > 0)
+                {
+                    foreach (var item in input.GroupInputDatas.ToList())
+                    {
+                        if (item.InputDataKpiAndOrders.Count > 0)
+                        {
+                            foreach (var kpi in item.InputDataKpiAndOrders.ToList())
+                            {
+                                DataContext.InputDataKpiAndOrder.Remove(kpi);
+                            }
+                            DataContext.SaveChanges(action);
+                        }
+                        DataContext.GroupInputData.Remove(item);
+                        DataContext.SaveChanges(action);
+                    }
+                }
+                //DataContext.InputData.Attach(input);
+                DataContext.InputData.Remove(input);
+                DataContext.SaveChanges(action);
+                response.IsSuccess = true;
+                response.Message = string.Format("Input Data item {0} deleted Successfully!", input.Name);
+            }
+            catch (DbUpdateException e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
+            }
+            return response;
+        }
+
         public BaseResponse Delete(int id)
         {
             var response = new BaseResponse();
@@ -131,6 +171,7 @@ namespace DSLNG.PEAR.Services
             var response = new SaveOrUpdateInputDataResponse();
             try
             {
+                var action = request.MapTo<Data.Entities.BaseAction>();
                 if (request.Id > 0)
                 {
                     var inputData = DataContext.InputData
@@ -169,7 +210,7 @@ namespace DSLNG.PEAR.Services
 
                     inputData.GroupInputDatas = groupInputDatas;
                     DataContext.Entry(inputData).State = EntityState.Modified;
-                    DataContext.SaveChanges();
+                    DataContext.SaveChanges(action);
 
                     response.IsSuccess = true;
                 }
@@ -197,7 +238,7 @@ namespace DSLNG.PEAR.Services
 
                     inputData.GroupInputDatas = groupInputDatas;
                     DataContext.InputData.Add(inputData);
-                    DataContext.SaveChanges();
+                    DataContext.SaveChanges(action);
                     response.IsSuccess = true;
                 }
             }

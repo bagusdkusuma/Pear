@@ -1,0 +1,176 @@
+﻿@model  DSLNG.PEAR.Web.ViewModels.AuditTrail.GetAuditTrailViewModel
+@{
+    ViewBag.Title = "Audit Trails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Audit Trail</h2>
+@Html.Partial("_MessageResponse")
+<div class="pull-right" style="margin-bottom: 20px">
+    <form class="form-inline" style="position:relative">        
+        <div class="form-group" style="margin-top: 5px;">
+            <label class="labletop">Start Date :</label>
+            <input type="text" name="startDate" id="startDate" class="datepicker"/>
+        </div>
+        <div class="form-group" style="margin-top: 5px;">
+            <label class="labletop">End Date :</label>
+            <input type="text" name="startDate" id="startDate" class="datepicker"/>
+        </div>
+        <div class="form-group" style="margin-top: 5px;">
+            <input type="button" id="filter-button" value="Go" />
+        </div>
+    </form>
+</div>
+<table id="audit-trail-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Updated Date</th>
+            <th>Time</th>
+            <th>User</th>            
+            <th>Table Name</th>
+            <th>Record Id</th>
+            <th>Operation</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+</table>
+<div class="modal fade" id="audit-trail-detail-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="myModalLabel">Audit History</h3>
+            </div>
+            <div class="modal-body audit-trail-detail-modal-content" style="color:#fff">
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#audit-trail-detail-modal').on('show.bs.modal', function (e) {
+                $('#auditDetailModal h4').text($(e.relatedTarget).data('title') + ' - ' + $(e.relatedTarget).data('date'))
+                $('#derModal .modal-body').html($(e.relatedTarget).data('text'));
+            })
+            var table = $('#audit-trail-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": -1,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("Grid", "AuditTrail")',
+                "fnServerParams": function (aoData) {
+                    aoData.push({ name: "startDate", value: $('#startDate').val() });
+                    aoData.push({ name: "endDate", value: $('#endDate').val() });
+                },
+                "order": [[0, "desc"]],
+                "oSearch": {
+                    //"sSearch": $('#month').val() + '-' + $('#year').val()
+                },
+                "aoColumns": [
+                    {
+                        "mDataProp": "UpdateDate", "name": "UpdateDate", "className": "dt-body-left",
+                        "mRender": function (data, type, row, pos) {
+                            return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY');
+                        }
+
+                    },
+                    {
+                        "mDataProp": "UpdateDate", "name": "UpdateDate", "className": "dt-body-left",
+                        "mRender": function (data, type, row, pos) {
+                            return moment(new Date(data.match(/\d+/)[0] * 1)).format('h:mm:ss');
+                        }
+
+                    },
+                    {
+                        "mDataProp": "UserName", "name": "UserName", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "mDataProp": "TableName", "name": "TableName", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "mDataProp": "RecordId", "name": "RecordId", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "mDataProp": "Action", "name": "Action", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                        "mRender": function (data, type, row, pos) {
+                            return '<a href="#" id="audit-trail-detail" data-url="/AuditTrail/Details/' + row['RecordId'] +'" data-toggle="modal" data-target="#audit-trail-detail-modal">View</a>';
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            
+
+            $('.datepicker').datetimepicker({
+                format: "MM/DD/YYYY",
+                focusOnShow: false,
+                defaultDate: "@DateTime.Now.ToString("MM/dd/yy")",
+            });
+
+            function filterGrid() {
+                table.draw();
+            }
+
+            $('#filter-button').click(function (event) {
+                event.preventDefault();
+                filterGrid();
+            });            
+
+            //$('#audit-trail-detail-modal').on('show.bs.modal', function (e) {
+            //    var $this = $(this);
+            //    console.log($this.data('url'));
+            //    console.log($this.attr('data-url'))
+            //    console.log(e);
+            //    $.ajax({
+            //        url: $this.data('url'),
+            //        method: 'GET',
+            //        success: function (data) {
+            //            $('.audit-trail-detail-modal-content').html('as');
+            //            //$('#audit-trail-detail-modal').modal('show');
+            //        }
+            //    });
+            //});
+
+            $('#audit-trail-detail-modal').on('show.bs.modal', function (e) {
+                var $this = $(this);
+                $.ajax({
+                    url: $(e.relatedTarget).data('url'),
+                    method: 'GET',
+                    success: function (data) {
+                        $('.audit-trail-detail-modal-content').html(data);
+                        //$('#audit-trail-detail-modal').modal('show');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap-select.min.css")">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="@Url.Content("~/Scripts/bootstrap-select.min.js")"></script>
+}

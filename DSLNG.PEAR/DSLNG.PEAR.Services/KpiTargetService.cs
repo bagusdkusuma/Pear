@@ -939,6 +939,7 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateKpiTargetItemResponse();
             try
             {
+                var action = request.MapTo<BaseAction>();
                 var kpiTarget = request.MapTo<KpiTarget>();
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
                 if (request.Id != 0)
@@ -1009,7 +1010,7 @@ namespace DSLNG.PEAR.Services
                     }
                     */
                 }
-                DataContext.SaveChanges();
+                DataContext.SaveChanges(action);
                 response.Id = kpiTarget.Id;
                 response.IsSuccess = true;
                 response.Message = "KPI Target item has been updated successfully";

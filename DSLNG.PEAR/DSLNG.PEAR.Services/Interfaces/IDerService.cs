@@ -25,10 +25,13 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetOriginalDataResponse GetOriginalData(int layoutId, DateTime date);
         SaveOriginalDataResponse SaveOriginalData(SaveOriginalDataRequest request);
         GetDafwcDataResponse GetDafwcData(int id, DateTime date);
-        DeleteDerLayoutItemResponse DeleteLayoutItem(int id, string type );
+        DeleteDerLayoutItemResponse DeleteLayoutItem(int id, string type);
+        DeleteDerLayoutItemResponse DeleteLayoutItem(DeleteDerLayoutItemRequest request);
         BaseResponse DeleteLayout(int id);
+        BaseResponse DeleteLayout(DeleteDerlayoutRequest request);
         GetKpiValueResponse GetKpiValue(GetKpiValueRequest request);
         BaseResponse DeleteFilename(string filename, DateTime date);
+        BaseResponse DeleteFilename(DeleteFilenameRequest request);
         bool IsDerExisted(DateTime date, out int revision);
     }
 

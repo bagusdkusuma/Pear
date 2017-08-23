@@ -751,13 +751,13 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 //var valtoString = string.Empty;
                 //if (kpiValue != null) {valtoString= kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,#.#########"); }
-                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,0.#########")) : (kpiValue.Type == "now" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,0.#########")) : value));
+                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty)) : (kpiValue.Type == "now" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty) ) : value));
                 existValue = kpiValue == null ? existValue : kpiValue.Type;
             }
             else
             {
                 value = kpiValue == null ? value : (defaultValueDefined == "prev" ? kpiValue.Remark : (kpiValue.Type == "now" ? kpiValue.Remark : value));
-                existValue = kpiValue == null ? existValue : kpiValue.Type;
+                existValue = kpiValue == null ? existValue : (string.IsNullOrEmpty(kpiValue.Remark) ? existValue : kpiValue.Type);
             }
             return new ValueObject { Value = value, ExistValue = existValue, Id = kpiValue == null ? 0 : kpiValue.Id };
         }

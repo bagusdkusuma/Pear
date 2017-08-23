@@ -78,6 +78,9 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Create(CreateInputDataViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveOrUpdateInputDataRequest>();
+            request.ControllerName = "Input Data";
+            request.ActionName = "Create";
+            request.UserId = this.UserProfile().UserId;
             request.UpdatedById = UserProfile().UserId;            
             var response = _inputDataService.SaveOrUpdateInputData(request);
             return RedirectToAction("Index");
@@ -86,7 +89,12 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-             var response = _inputDataService.Delete(id);
+             var response = _inputDataService.Delete(new DeleteInputDataRequest {
+                 Id = id,
+                 ControllerName = "Input Data",
+                 ActionName = "Delete",
+                 UserId = this.UserProfile().UserId
+             });
             @TempData["IsSuccess"] = response.IsSuccess;
             @TempData["Message"] = response.Message;
             return Redirect("Index");
@@ -111,6 +119,9 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = viewModel.MapTo<SaveOrUpdateInputDataRequest>();
             request.UpdatedById = UserProfile().UserId;
+            request.ControllerName = "Input Data";
+            request.ActionName = "Update";
+            request.UserId = UserProfile().UserId;
             var response = _inputDataService.SaveOrUpdateInputData(request);
             return RedirectToAction("Index");
         }

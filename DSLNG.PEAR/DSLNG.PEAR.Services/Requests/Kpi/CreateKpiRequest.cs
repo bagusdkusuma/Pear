@@ -7,7 +7,7 @@ using DSLNG.PEAR.Services.Responses.Kpi;
 
 namespace DSLNG.PEAR.Services.Requests.Kpi
 {
-    public class CreateKpiRequest
+    public class CreateKpiRequest : BaseRequest
     {
         public string Code { get; set; }
         public string Name { get; set; }

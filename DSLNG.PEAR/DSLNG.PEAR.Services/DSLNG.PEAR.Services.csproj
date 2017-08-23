@@ -69,6 +69,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -81,6 +82,7 @@
     <Compile Include="AssumptionCategoryService.cs" />
     <Compile Include="AssumptionConfigService.cs" />
     <Compile Include="AssumptionDataService.cs" />
+    <Compile Include="AuditTrailService.cs" />
     <Compile Include="AutoMapper\ServicesMappingProfile.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="BusinessPostureIdentificationService.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="HighlightService.cs" />
     <Compile Include="InputDataService.cs" />
     <Compile Include="Interfaces\GetDerLayoutResponse.cs" />
+    <Compile Include="Interfaces\IAuditTrailService.cs" />
     <Compile Include="Interfaces\ICustomFormulaService.cs" />
     <Compile Include="Interfaces\IDerLoadingScheduleService.cs" />
     <Compile Include="Interfaces\IDerTransactionService.cs" />
@@ -123,19 +126,27 @@
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditTrailRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditTrailsRequest.cs" />
+    <Compile Include="Requests\BaseRequest.cs" />
     <Compile Include="Requests\CustomFormula\GetCustomFormulaRequest.cs" />
     <Compile Include="Requests\DerLoadingSchedule\GetDerLoadingSchedulesRequest.cs" />
     <Compile Include="Requests\DerTransaction\CreateDerInputFileRequest.cs" />
+    <Compile Include="Requests\DerTransaction\DerDeleteRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetDerLayoutItemsRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetDerInputFilesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetHighlightValuesRequest.cs" />
     <Compile Include="Requests\DerTransaction\GetKpiInformationValuesRequest.cs" />
+    <Compile Include="Requests\Der\DeleteDerLayoutItemRequest.cs" />
+    <Compile Include="Requests\Der\DeleteDerlayoutRequest.cs" />
+    <Compile Include="Requests\Der\DeleteFilenameRequest.cs" />
     <Compile Include="Requests\Der\GetDersRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\FilePrivilegeRequest.cs" />
     <Compile Include="Requests\FileManagerRolePrivilege\UpdateFilePrivilegeRequest.cs" />
     <Compile Include="Requests\Files\GetFileRequest.cs" />
     <Compile Include="Requests\Files\GetFilesRequest.cs" />
     <Compile Include="Requests\Files\SaveFileRepositoryRequest.cs" />
+    <Compile Include="Requests\InputData\DeleteInputDataRequest.cs" />
     <Compile Include="Requests\InputData\GetInputDatasRequest.cs" />
     <Compile Include="Requests\InputData\SaveOrUpdateInputDataRequest.cs" />
     <Compile Include="Requests\KpiTransformationLog\GetKpiTransformationLogsRequest.cs" />
@@ -153,6 +164,7 @@
     <Compile Include="Requests\Der\GetKpiValueRequest.cs" />
     <Compile Include="Requests\Der\SaveLayoutItemRequest.cs" />
     <Compile Include="Requests\Der\SaveOriginalDataRequest.cs" />
+    <Compile Include="Requests\Privilege\DeleteRolePrivilegeRequest.cs" />
     <Compile Include="Requests\Privilege\GetPrivilegeByRoleRequest.cs" />
     <Compile Include="Requests\Privilege\GetPrivilegeRequest.cs" />
     <Compile Include="Requests\Privilege\GetPrivilegesRequest.cs" />
@@ -168,6 +180,8 @@
     <Compile Include="Requests\Wave\GetWaveRequest.cs" />
     <Compile Include="Requests\Wave\GetWavesRequest.cs" />
     <Compile Include="Requests\Wave\SaveWaveRequest.cs" />
+    <Compile Include="Responses\AuditTrail\AuditTrailResponse.cs" />
+    <Compile Include="Responses\AuditTrail\AuditTrailsResponse.cs" />
     <Compile Include="Responses\CustomFormula\GetCustomFormulaResponse.cs" />
     <Compile Include="Responses\DerLoadingSchedule\GetDerLoadingSchedulesResponse.cs" />
     <Compile Include="Responses\DerTransaction\DeleteDerInputFileResponse.cs" />
