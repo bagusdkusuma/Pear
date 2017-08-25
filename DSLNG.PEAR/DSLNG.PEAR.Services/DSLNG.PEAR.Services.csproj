@@ -126,8 +126,13 @@
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\AuditTrail\CreateAuditUserRequest.cs" />
     <Compile Include="Requests\AuditTrail\GetAuditTrailRequest.cs" />
     <Compile Include="Requests\AuditTrail\GetAuditTrailsRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditUserLoginRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditUserLoginsRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditUserRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditUsersRequest.cs" />
     <Compile Include="Requests\BaseRequest.cs" />
     <Compile Include="Requests\CustomFormula\GetCustomFormulaRequest.cs" />
     <Compile Include="Requests\DerLoadingSchedule\GetDerLoadingSchedulesRequest.cs" />

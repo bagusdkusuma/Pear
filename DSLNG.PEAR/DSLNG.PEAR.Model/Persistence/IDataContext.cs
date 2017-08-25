@@ -16,6 +16,8 @@ namespace DSLNG.PEAR.Data.Persistence
     public interface IDataContext
     {
         IDbSet<AuditTrail> AuditTrails { get; set; }
+        IDbSet<UserLogin> UserLogins { get; set; }
+        IDbSet<AuditUser> AuditUsers { get; set; }
         IDbSet<Activity> Activities { get; set; }
         IDbSet<Artifact> Artifacts { get; set; }
         IDbSet<ArtifactSerie> ArtifactSeries { get; set; }

@@ -136,6 +136,7 @@ using DSLNG.PEAR.Services.Responses.KpiTransformationLog;
 using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
 using DSLNG.PEAR.Services.Responses.AuditTrail;
 using DSLNG.PEAR.Services.Requests.DerTransaction;
+using DSLNG.PEAR.Services.Requests.AuditTrail;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -182,6 +183,16 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DeleteDerLayoutItemRequest, BaseAction>();
             Mapper.CreateMap<DeleteFilenameRequest, BaseAction>();
             Mapper.CreateMap<CreateOrUpdateDerRequest, BaseAction>();
+
+            Mapper.CreateMap<UserLogin, LoginUserResponse.Login>();
+            Mapper.CreateMap<UserLogin, AuditUserLoginResponse>();
+            Mapper.CreateMap<AuditUser, AuditUserLoginResponse.AuditUser>();
+            Mapper.CreateMap<User, AuditUserLoginResponse.User>();
+
+            Mapper.CreateMap<UserLogin, AuditUserLoginsResponse.UserLogin>();
+            Mapper.CreateMap<AuditUser, AuditUserLoginsResponse.UserLogin.AuditUser>();
+            Mapper.CreateMap<CreateAuditUserRequest, AuditUser>();
+            
         }
 
         private void ConfigureMixed()
