@@ -188,6 +188,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<UserLogin, AuditUserLoginResponse>();
             Mapper.CreateMap<AuditUser, AuditUserLoginResponse.AuditUser>();
             Mapper.CreateMap<User, AuditUserLoginResponse.User>();
+            Mapper.CreateMap<AuditUserLoginResponse.User, User>();
 
             Mapper.CreateMap<UserLogin, AuditUserLoginsResponse.UserLogin>();
             Mapper.CreateMap<AuditUser, AuditUserLoginsResponse.UserLogin.AuditUser>();

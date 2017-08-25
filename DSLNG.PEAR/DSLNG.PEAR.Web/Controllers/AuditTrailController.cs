@@ -109,9 +109,11 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult LoginDetails(int loginId)
+        public ActionResult LoginDetails(int Id)
         {
-            return View();
+            var data = _auditService.GetUserLogin(new GetAuditUserLoginRequest { Id = Id });
+            var viewModel = data.MapTo<GetAuditUserLoginViewModel>();
+            return PartialView("_LoginDetails",viewModel);
         }
     }
 }

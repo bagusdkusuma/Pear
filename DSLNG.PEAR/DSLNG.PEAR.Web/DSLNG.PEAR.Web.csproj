@@ -1215,6 +1215,7 @@
     <Content Include="Views\AuditTrail\Index.cshtml" />
     <Content Include="Views\AuditTrail\_Details.cshtml" />
     <Content Include="Views\AuditTrail\LoginIndex.cshtml" />
+    <Content Include="Views\AuditTrail\_LoginDetails.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

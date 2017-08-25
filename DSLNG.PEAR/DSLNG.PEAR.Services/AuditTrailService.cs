@@ -120,6 +120,7 @@ namespace DSLNG.PEAR.Services
             {
                 var data = DataContext.UserLogins.Include(x => x.User).Include(x => x.AuditUsers).FirstOrDefault(x => x.Id == request.Id);
                 response = data.MapTo<AuditUserLoginResponse>();
+                response.UserLoggedIn = data.User.MapTo<AuditUserLoginResponse.User>();
                 response.IsSuccess = true;
             }
             catch (Exception ex)

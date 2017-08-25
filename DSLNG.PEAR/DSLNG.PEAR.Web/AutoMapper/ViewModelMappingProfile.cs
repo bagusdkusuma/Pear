@@ -221,8 +221,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
         private void ConfigureAuditTrail()
         {
             Mapper.CreateMap<AuditUserLoginsResponse, GetUserLoginViewModel>();
+            Mapper.CreateMap<AuditUserLoginsResponse.UserLogin, GetUserLoginViewModel.UserLogin>();
             Mapper.CreateMap<AuditUserLoginResponse, GetAuditUserLoginViewModel>();
+            Mapper.CreateMap<AuditUserLoginResponse.AuditUser, GetAuditUserLoginViewModel.AuditUser>();
+            Mapper.CreateMap<AuditUserLoginResponse.User, GetAuditUserLoginViewModel.User>();
             Mapper.CreateMap<AuditUserResponse, GetAuditUserViewModel>();
+            Mapper.CreateMap<AuditUserResponse.UserLogin, GetAuditUserViewModel.UserLogin>();
             Mapper.CreateMap<AuditUsersResponse, GetAuditUsersViewModel>();
             Mapper.CreateMap<AuditUsersResponse.AuditUser, GetAuditUsersViewModel.AuditUser>();
 
