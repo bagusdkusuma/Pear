@@ -175,7 +175,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<UpdateKpiRequest, BaseAction>();
             Mapper.CreateMap<SaveOrUpdateInputDataRequest, BaseAction>();
             Mapper.CreateMap<DeleteInputDataRequest, BaseAction>();
-
+            Mapper.CreateMap<SaveHighlightRequest, BaseAction>();
             // DER Services
             Mapper.CreateMap<CreateOrUpdateDerLayoutRequest, BaseAction>();
             Mapper.CreateMap<DeleteDerlayoutRequest, BaseAction>();

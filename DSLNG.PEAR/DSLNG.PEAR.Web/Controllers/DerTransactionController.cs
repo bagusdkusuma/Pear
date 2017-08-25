@@ -645,6 +645,9 @@ namespace DSLNG.PEAR.Web.Controllers
             if (weather.Id == 0)
             {
                 var request = viewModel.MapTo<SaveWeatherRequest>();
+                request.UserId = UserProfile().UserId;
+                request.ControllerName = "Der Input Form";
+                request.ActionName = "Input Weather";
                 var resp = _weatherService.SaveWeather(request);
                 return Json(resp);
             }
