@@ -15,13 +15,24 @@ namespace DSLNG.PEAR.Common.Helpers
             {
                 return "Unkown IP Address";
             }
-            IPAddress myIP = IPAddress.Parse(clientIP);
-            IPHostEntry GetIPHost = Dns.GetHostEntry(myIP);
-            if (GetIPHost != null)
+            try
             {
-                List<string> compName = GetIPHost.HostName.ToString().Split('.').ToList();
-                return compName.First();
+                IPAddress myIP = IPAddress.Parse(clientIP);
+                IPHostEntry GetIPHost = Dns.GetHostEntry(myIP);
+                if (GetIPHost != null)
+                {
+                    List<string> compName = GetIPHost.HostName.ToString().Split('.').ToList();
+                    return compName.First();
+                }
             }
+            catch (Exception e)
+            {
+
+                return e.Message;
+            }
+            
+            
+            
             return "You Are Acessing this Application from outside network";
         }
     }

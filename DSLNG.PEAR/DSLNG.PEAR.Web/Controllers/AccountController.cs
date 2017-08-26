@@ -69,8 +69,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
         private bool IsValid(string email, string password)
         {
-            var hostname = DomainHelper.GetComputerName(Request.UserHostAddress);
-            var user = _userService.Login(new LoginUserRequest { Email = email, Password = password, IpAddress= Request.UserHostAddress, Browser = Request.UserAgent, HostName=hostname });
+            var hostname = string.Empty;
+            if (Request.ServerVariables["REMOTE_ADDR"] != null)
+            {
+              hostname = DomainHelper.GetComputerName(Request.ServerVariables["REMOTE_ADDR"]);
+            }
+            var user = _userService.Login(new LoginUserRequest { Email = email, Password = password, IpAddress = Request.UserHostAddress, Browser = Request.UserAgent, HostName = hostname });
             if (user != null && user.IsSuccess)
             {
                 /* Try Get Current User Role
@@ -101,7 +105,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     IsSuperAdmin = user.IsSuperAdmin,
                     LoginId = user.UserLogin.Id
                 };
-                
+
                 string userData = serializer.Serialize(serializedModel);
                 //FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
                 //    version: 1,
