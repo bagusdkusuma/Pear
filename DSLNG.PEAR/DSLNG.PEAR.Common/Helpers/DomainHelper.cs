@@ -11,6 +11,10 @@ namespace DSLNG.PEAR.Common.Helpers
     {
         public static string GetComputerName(string clientIP)
         {
+            if(clientIP == null)
+            {
+                return "Unkown IP Address";
+            }
             IPAddress myIP = IPAddress.Parse(clientIP);
             IPHostEntry GetIPHost = Dns.GetHostEntry(myIP);
             if (GetIPHost != null)
