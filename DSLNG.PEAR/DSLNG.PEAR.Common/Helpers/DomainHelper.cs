@@ -13,8 +13,12 @@ namespace DSLNG.PEAR.Common.Helpers
         {
             IPAddress myIP = IPAddress.Parse(clientIP);
             IPHostEntry GetIPHost = Dns.GetHostEntry(myIP);
-            List<string> compName = GetIPHost.HostName.ToString().Split('.').ToList();
-            return compName.First();
+            if (GetIPHost != null)
+            {
+                List<string> compName = GetIPHost.HostName.ToString().Split('.').ToList();
+                return compName.First();
+            }
+            return "You Are Acessing this Application from outside network";
         }
     }
 }

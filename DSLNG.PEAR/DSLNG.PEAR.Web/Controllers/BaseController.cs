@@ -189,7 +189,7 @@ namespace DSLNG.PEAR.Web.Controllers
             }
 
             if (Session["LoginUser"] != null && !filterContext.RequestContext.RouteData.Values["Action"].ToString().Equals("SiteMap")
-                && !filterContext.RequestContext.RouteData.Values["Action"].ToString().Contains("Grid"))
+                && !filterContext.RequestContext.RouteData.Values["Action"].ToString().Contains("Grid") && !filterContext.RequestContext.RouteData.Values["Controller"].ToString().Contains("Audit") && !filterContext.RequestContext.RouteData.Values["Controller"].ToString().Contains("Home"))
             {
                 var request = new Services.Requests.AuditTrail.CreateAuditUserRequest();
                 request.UserId = this.UserProfile().UserId;
