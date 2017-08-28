@@ -27,13 +27,13 @@ namespace DSLNG.PEAR.Common.Helpers
             }
             catch (Exception e)
             {
-
-                return e.Message;
+                if (e.Message.Length > 50) return "Unkown hostname";
+                else return e.Message;
             }
             
             
             
-            return "You Are Acessing this Application from outside network";
+            return "You Are Acessing from outside local network";
         }
     }
 }
