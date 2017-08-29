@@ -91,7 +91,12 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Delete(int id)
         {
             var response = new BaseResponse();
-            response = _kpiTransformationService.Delete(id);
+            response = _kpiTransformationService.Delete(new DeleteTransformationRequest {
+                Id = id,
+                UserId = this.UserProfile().UserId,
+                ControllerName = "KPI Transformation",
+                ActionName = "Delete"
+            });
             @TempData["IsSuccess"] = response.IsSuccess;
             @TempData["Message"] = response.Message;
             return RedirectToAction("Index");
@@ -128,6 +133,8 @@ namespace DSLNG.PEAR.Web.Controllers
         {
             var request = viewModel.MapTo<SaveKpiTransformationScheduleRequest>();
             request.UserId = UserProfile().UserId;
+            request.ControllerName = "KPI Transformation Scheduler";
+            request.ActionName = "Process KPI Transformation Scheduler";
             var response = _kpiTransformationScheduleService.Save(request);
             _kpiTransformationJob.Process(response);
             return RedirectToAction("Index");
@@ -152,6 +159,9 @@ namespace DSLNG.PEAR.Web.Controllers
         private ActionResult Save(KpiTransformationViewModel viewModel)
         {
             var req = viewModel.MapTo<SaveKpiTransformationRequest>();
+            req.UserId = this.UserProfile().UserId;
+            req.ControllerName = "KPI Transformation";
+            req.ActionName = "Save";
             var resp = _kpiTransformationService.Save(req);
             TempData["IsSuccess"] = resp.IsSuccess;
             TempData["Message"] = resp.Message;
@@ -170,7 +180,12 @@ namespace DSLNG.PEAR.Web.Controllers
             var log = _kpiTransformationScheduleService.Get(id);
             logId = log.KpiTransformation_Id;
 
-            var result = _kpiTransformationScheduleService.Delete(id);
+            var result = _kpiTransformationScheduleService.Delete(new DeleteKPITransformationScheduleRequest {
+                Id = id,
+                UserId = this.UserProfile().UserId,
+                ControllerName = "KPI Transformation Schedule",
+                ActionName = "Delete Transformation Schedule"
+            });
 
             @TempData["IsSuccess"] = result.IsSuccess;
             @TempData["Message"] = result.Message;

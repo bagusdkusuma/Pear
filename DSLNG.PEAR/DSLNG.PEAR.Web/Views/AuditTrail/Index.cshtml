@@ -25,7 +25,9 @@
         <tr>
             <th>Updated Date</th>
             <th>Time</th>
-            <th>User</th>            
+            <th>User</th>
+            <th>Module</th>
+            <th>Action</th>
             <th>Table Name</th>
             <th>Record Id</th>
             <th>Operation</th>
@@ -86,6 +88,18 @@
                     },
                     {
                         "mDataProp": "UserName", "name": "UserName", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "mDataProp": "ControllerName", "name": "ControllerName", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "mDataProp": "ActionName", "name": "ActionName", "className": "dt-body-left", "orderable": false,
                         "mRender": function (data, type, row, pos) {
                             return data;
                         }

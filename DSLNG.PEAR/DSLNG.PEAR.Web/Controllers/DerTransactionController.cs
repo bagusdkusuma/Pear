@@ -382,7 +382,39 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (viewModel.Type)
             {
                 case "daily-actual":
+                    {
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
+                            ControllerName = "Der Input Form",
+                            ActionName = string.Format("UpdateKPI daily-actual KPI:{0}", viewModel.KpiId)
+                        };
+                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
                 case "monthly-actual":
+                    {
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
+                            ControllerName = "Der Input Form",
+                            ActionName = string.Format("UpdateKPI monthly-actual KPI:{0}", viewModel.KpiId)
+                        };
+                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
                 case "yearly-actual":
                     {
                         var request = new UpdateKpiAchievementItemRequest
@@ -395,7 +427,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI yearly-actual"
+                            ActionName = string.Format("UpdateKPI yearly-actual KPI:{0}",viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
                         return Json(resp);
@@ -413,7 +445,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI monthly-actual-prev"
+                            ActionName = string.Format("UpdateKPI monthly-actual-prev KPI:{0}",viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
                         return Json(resp);
@@ -430,7 +462,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI monthly-actual-jcc"
+                            ActionName = string.Format("UpdateKPI monthly-actual-jcc KPI:{0}", viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateCustomJccFormula(request);
                         return Json(resp);
@@ -447,7 +479,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI monthly-actual-bunker"
+                            ActionName = string.Format("UpdateKPI monthly-actual-bunker KPI:{0}", viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateCustomBunkerPriceFormula(request);
                         return Json(resp);
@@ -476,7 +508,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = value,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI monthly-actual-dafwc"
+                            ActionName = string.Format("UpdateKPI monthly-actual-dafwc KPI:{0}", viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
                         return Json(resp);
@@ -493,7 +525,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI Save KPI Target Request"
+                            ActionName = string.Format("UpdateKPI Save KPI Target Request KPI:{0}", viewModel.KpiId)
                         };
                         var resp = _kpiTargetService.UpdateOriginalData(request);
                         return Json(resp);
@@ -507,7 +539,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var req = viewModel.MapTo<SaveHighlightRequest>();
             req.UserId = UserProfile().UserId;
             req.ControllerName = "Der Input Form";
-            req.ActionName = "Update Highlight";
+            req.ActionName = string.Format("Update Highlight HighlightType:{0}", viewModel.TypeId);
 
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
@@ -526,7 +558,7 @@ namespace DSLNG.PEAR.Web.Controllers
             req.TypeId = viewModel.TypeId;
             req.UserId = UserProfile().UserId;
             req.ControllerName = "Der Input Form";
-            req.ActionName = "Update Infra GSM";
+            req.ActionName = string.Format("Update Infra GSM HighlightType:{0}",viewModel.TypeId);
 
             if (existingHighlight.Id == 0)
             {
@@ -557,7 +589,7 @@ namespace DSLNG.PEAR.Web.Controllers
             req.TypeId = viewModel.TypeId;
             req.UserId = UserProfile().UserId;
             req.ControllerName = "Der Input Form";
-            req.ActionName = "Update Brenfutt";
+            req.ActionName = string.Format("Update Brenfutt HighlightType:{0}",viewModel.TypeId);
             if (existingHighlight.Id == 0)
             {
                 req.Message = "{\"a\" : { \"label\" : \"\", \"value\" : \"\" },\"b\" : { \"label\" : \"\", \"value\" : \"\" },\"c\" : { \"label\" : \"\", \"value\" : \"\" },\"d\" : { \"label\" : \"\", \"value\" : \"\" } }";

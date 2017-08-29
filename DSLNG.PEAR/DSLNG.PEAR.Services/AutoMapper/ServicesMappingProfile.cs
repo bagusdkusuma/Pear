@@ -193,6 +193,11 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<UserLogin, AuditUserLoginsResponse.UserLogin>();
             Mapper.CreateMap<AuditUser, AuditUserLoginsResponse.UserLogin.AuditUser>();
             Mapper.CreateMap<CreateAuditUserRequest, AuditUser>();
+            Mapper.CreateMap<DeleteTransformationRequest, BaseAction>();
+            Mapper.CreateMap<SaveKpiTransformationRequest, BaseAction>();
+            Mapper.CreateMap<DeleteKPITransformationScheduleRequest, BaseAction>();
+            Mapper.CreateMap<SaveKpiTransformationScheduleRequest, BaseAction>();
+            Mapper.CreateMap<SaveKpiTransformationScheduleResponse, BaseAction>();
             
         }
 

@@ -158,6 +158,7 @@
     <Compile Include="Requests\KpiTransformationLog\SaveKpiTransformationLogRequest.cs" />
     <Compile Include="Requests\KpiTransformationSchedule\GetKpiTransformationSchedulesRequest.cs" />
     <Compile Include="Requests\KpiTransformationSchedule\SaveKpiTransformationScheduleRequest.cs" />
+    <Compile Include="Requests\KpiTransformation\DeleteTransformationRequest.cs" />
     <Compile Include="Requests\KpiTransformation\GetKpiTransformationsRequest.cs" />
     <Compile Include="Requests\KpiTransformation\SaveKpiTransformationRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />

@@ -3,7 +3,7 @@ using DSLNG.PEAR.Data.Enums;
 
 namespace DSLNG.PEAR.Services.Requests.KpiTransformation
 {
-    public class SaveKpiTransformationRequest
+    public class SaveKpiTransformationRequest : BaseRequest
     {
         public int Id { get; set; }
         public string Name { get; set; }

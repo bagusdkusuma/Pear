@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DSLNG.PEAR.Services.Requests.KpiTransformationSchedule
 {
-    public class SaveKpiTransformationScheduleRequest
+    public class SaveKpiTransformationScheduleRequest : BaseRequest
     {
         public int KpiTransformationId { get; set; }
         public PeriodeType PeriodeType { get; set; }
@@ -17,5 +17,10 @@ namespace DSLNG.PEAR.Services.Requests.KpiTransformationSchedule
        public int UserId { get; set; }
         public IList<int> KpiIds { get; set; }
         
+    }
+
+    public class DeleteKPITransformationScheduleRequest : BaseRequest
+    {
+        public int Id { get; set; }
     }
 }

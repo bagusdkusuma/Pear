@@ -155,11 +155,11 @@ namespace DSLNG.PEAR.Services
             }
             if (request.StartDate != null)
             {
-                data = data.Where(x => x.LastLogin >= request.StartDate);
+                data = data.Where(x => DbFunctions.TruncateTime(x.LastLogin) >= request.StartDate.Date);
             }
             if (request.EndDate != null)
             {
-                data = data.Where(x => x.LastLogin <= request.EndDate);
+                data = data.Where(x => DbFunctions.TruncateTime(x.LastLogin) <= request.EndDate.Date);
             }
 
             foreach (var sortOrder in sortingDictionary)
@@ -254,12 +254,12 @@ namespace DSLNG.PEAR.Services
 
             if (request.StartDate != null)
             {
-                data = data.Where(x => x.UpdateDate >= request.StartDate);
+                data = data.Where(x => DbFunctions.TruncateTime(x.UpdateDate) >= request.StartDate.Date);
             }
 
             if (request.EndDate != null)
             {
-                data = data.Where(x => x.UpdateDate <= request.EndDate);
+                data = data.Where(x => DbFunctions.TruncateTime(x.UpdateDate) <= request.EndDate.Date);
             }
 
             data = data.GroupBy(x => x.RecordId).Select(y => y.OrderByDescending(x => x.UpdateDate).FirstOrDefault())
