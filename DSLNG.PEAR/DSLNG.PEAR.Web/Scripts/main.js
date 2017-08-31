@@ -3558,9 +3558,9 @@ console.log(d.format(2));
             var toRemove = {};
 
             toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-            toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.daily = ['CurrentHour', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
             toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
             toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
 
             var originalClone = original.clone(true);
