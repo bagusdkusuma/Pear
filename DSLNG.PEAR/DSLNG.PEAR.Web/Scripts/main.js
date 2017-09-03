@@ -171,14 +171,14 @@ Number.prototype.format = function (n, x) {
     return y;
 };
 
-var a = 397053424;
-var b = 397053424.9;
-var c = 397053424.99;
-var d = 397053424.999;
-console.log(a.format(2));
-console.log(b.format(2));
-console.log(c.format(2));
-console.log(d.format(2));
+//var a = 397053424;
+//var b = 397053424.9;
+//var c = 397053424.99;
+//var d = 397053424.999;
+//console.log(a.format(2));
+//console.log(b.format(2));
+//console.log(c.format(2));
+//console.log(d.format(2));
 
 (function (window, $, undefined) {
     var Pear = {};

@@ -1098,7 +1098,7 @@ namespace DSLNG.PEAR.Web.Controllers
             });
             if (response.IsSuccess)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { year = theDate.Year, month = theDate.Month});
             }
 
             return base.ErrorPage(response.Message);
