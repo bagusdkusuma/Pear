@@ -252,8 +252,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
-                        }
-                    case "indicative-commercial-price":
+                        }                   
                     case "total-feed-gas":
                     case "weekly-maintenance":
                     case "critical-pm":
@@ -262,6 +261,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
                             break;
                         }
+                    case "indicative-commercial-price":
                     case "avg-ytd-key-statistic":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 5);
@@ -746,7 +746,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "indicative-commercial-price":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(4);
+                        viewModel.KpiInformations = GetKpiInformations(5);
                         return PartialView("LayoutType/_IndicativeCommercialPrice", viewModel);
                     }
                 case "plant-availability":
