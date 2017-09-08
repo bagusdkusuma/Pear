@@ -82,7 +82,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return PartialView("_Details", viewModel);
         }
 
-        public ActionResult LoginIndex()
+        public ActionResult UserLogin()
         {
             return View();
         }
@@ -114,6 +114,36 @@ namespace DSLNG.PEAR.Web.Controllers
             var data = _auditService.GetUserLogin(new GetAuditUserLoginRequest { Id = Id });
             var viewModel = data.MapTo<GetAuditUserLoginViewModel>();
             return PartialView("_LoginDetails",viewModel);
+        }
+
+        public ActionResult AuditUserGrid(GridParams gridParams, int loginId)
+        {
+            var audit = _auditService.GetAuditUsers(new GetAuditUsersRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                Search = gridParams.Search,
+                SortingDictionary = gridParams.SortingDictionary,
+                LoginId = loginId
+            });
+
+            IList<AuditUsersResponse.AuditUser> datas = audit.AuditUsers.ToList();
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = audit.TotalRecords,
+                iTotalRecords = audit.AuditUsers.Count,
+                aaData = datas
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        } 
+
+        public ActionResult AuditUser(int Id)
+        {
+            var data = _auditService.GetUserLogin(new GetAuditUserLoginRequest { Id = Id });
+            var viewModel = data.MapTo<GetAuditUserLoginViewModel>();
+            return PartialView("_AuditUser", viewModel);
+            //return View(viewModel);
         }
     }
 }
