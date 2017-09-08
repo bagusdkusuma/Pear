@@ -199,21 +199,25 @@ namespace DSLNG.PEAR.Services
         private IEnumerable<AuditUser> GetAuditUserData(GetAuditUsersRequest request, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
             var data = DataContext.AuditUsers.AsQueryable();
+            if(request.LoginId.HasValue && request.LoginId != default(int))
+            {
+                data = data.Where(x => x.UserLogin.Id == request.LoginId);
+            }
             if (!string.IsNullOrEmpty(request.Search) && !string.IsNullOrWhiteSpace(request.Search))
             {
                 data = data.Where(x => x.Url.Contains(request.Search) || x.ActionName.Contains(request.Search) || x.ControllerName.Contains(request.Search) || x.UserLogin.User.Username.Contains(request.Search));
             }
-            if (request.StartDate != null)
-            {
-                data = data.Where(x => x.TimeAccessed >= request.StartDate);
-            }
-            if (request.EndDate != null)
-            {
-                data = data.Where(x => x.TimeAccessed <= request.EndDate);
-            }
+            //if (request.StartDate != null)
+            //{
+            //    data = data.Where(x => x.TimeAccessed >= request.StartDate);
+            //}
+            //if (request.EndDate != null)
+            //{
+            //    data = data.Where(x => x.TimeAccessed <= request.EndDate);
+            //}
 
-            data = data.GroupBy(x => x.UserLogin.Id).Select(y => y.OrderByDescending(x => x.TimeAccessed).FirstOrDefault())
-                .OrderByDescending(x => x.TimeAccessed).Include(x => x.UserLogin).Include(x => x.UserLogin.User);
+            //data = data.GroupBy(x => x.UserLogin.Id).Select(y => y.OrderByDescending(x => x.TimeAccessed).FirstOrDefault())
+            //    .OrderByDescending(x => x.TimeAccessed).Include(x => x.UserLogin).Include(x => x.UserLogin.User);
 
             foreach (var sortOrder in sortingDictionary)
             {

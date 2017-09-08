@@ -189,8 +189,12 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<AuditUser, AuditUserLoginResponse.AuditUser>();
             Mapper.CreateMap<User, AuditUserLoginResponse.User>();
             Mapper.CreateMap<AuditUserLoginResponse.User, User>();
+            Mapper.CreateMap<AuditUsersResponse.AuditUser, AuditUser>();
+            Mapper.CreateMap<AuditUser, AuditUsersResponse.AuditUser>();
 
-            Mapper.CreateMap<UserLogin, AuditUserLoginsResponse.UserLogin>();
+            Mapper.CreateMap<User, AuditUserLoginsResponse.UserLogin>();
+            Mapper.CreateMap<UserLogin, AuditUserLoginsResponse.UserLogin>()
+                .ForMember(x=>x.Username,o=>o.MapFrom(z=>z.User.Username));
             Mapper.CreateMap<AuditUser, AuditUserLoginsResponse.UserLogin.AuditUser>();
             Mapper.CreateMap<CreateAuditUserRequest, AuditUser>();
             Mapper.CreateMap<DeleteTransformationRequest, BaseAction>();

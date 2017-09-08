@@ -144,7 +144,7 @@ namespace DSLNG.PEAR.Web.ViewModels.AuditTrail
         public class AuditUser
         {
             public int Id { get; set; }
-            public UserLogin UserLogins { get; set; }
+            //public UserLogin UserLogins { get; set; }
             public string ControllerName { get; set; }
             public string ActionName { get; set; }
             public string Url { get; set; }
@@ -152,16 +152,16 @@ namespace DSLNG.PEAR.Web.ViewModels.AuditTrail
             public string Remarks { get; set; }
             public DateTime TimeAccessed { get; set; }
 
-            public class UserLogin
-            {
-                public int Id { get; set; }
-                public int UserId { get; set; }
-                public string Username { get; set; }
-                public string IpAddress { get; set; }
-                public string HostName { get; set; }
-                public string Browser { get; set; }
-                public DateTime LastLogin { get; set; }
-            }
+            //public class UserLogin
+            //{
+            //    public int Id { get; set; }
+            //    public int UserId { get; set; }
+            //    public string Username { get; set; }
+            //    public string IpAddress { get; set; }
+            //    public string HostName { get; set; }
+            //    public string Browser { get; set; }
+            //    public DateTime LastLogin { get; set; }
+            //}
         }
     }
 }
