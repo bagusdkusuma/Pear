@@ -6,14 +6,14 @@
 <h2>Audit Trail</h2>
 @Html.Partial("_MessageResponse")
 <div class="pull-right" style="margin-bottom: 20px">
-    <form class="form-inline" style="position:relative">        
+    <form class="form-inline" style="position:relative">
         <div class="form-group" style="margin-top: 5px;">
             <label class="labletop">Start Date :</label>
-            <input type="text" name="startDate" id="startDate" class="datepicker"/>
+            <input type="text" name="startDate" id="startDate" class="datepicker" />
         </div>
         <div class="form-group" style="margin-top: 5px;">
             <label class="labletop">End Date :</label>
-            <input type="text" name="endDate" id="endDate" class="datepicker"/>
+            <input type="text" name="endDate" id="endDate" class="datepicker" />
         </div>
         <div class="form-group" style="margin-top: 5px;">
             <input type="button" id="filter-button" value="Go" />
@@ -137,7 +137,7 @@
                 }
             });
 
-            
+
 
             $('.datepicker').datetimepicker({
                 format: "MM/DD/YYYY",
@@ -152,7 +152,7 @@
             $('#filter-button').click(function (event) {
                 event.preventDefault();
                 filterGrid();
-            });            
+            });
 
             //$('#audit-trail-detail-modal').on('show.bs.modal', function (e) {
             //    var $this = $(this);
@@ -187,4 +187,33 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="@Url.Content("~/Scripts/bootstrap-select.min.js")"></script>
+    <style type="text/css">
+        .modal {
+            text-align: center;
+            padding: 0 !important;
+        }
+
+            .modal:before {
+                content: '';
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+                margin-right: -4px; /* Adjusts for spacing */
+            }
+
+        .modal-dialog {
+            display: inline-block;
+            text-align: left;
+            vertical-align: middle;
+            width: 900px;
+            /*max-height:85%;*/
+            /*overflow-y:auto;*/
+        }
+
+        .modal-header {
+            padding-top: 0px;
+            padding-left: 15px;
+        }
+       
+    </style>
 }

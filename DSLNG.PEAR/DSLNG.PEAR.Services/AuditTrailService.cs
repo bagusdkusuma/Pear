@@ -53,7 +53,7 @@ namespace DSLNG.PEAR.Services
             var response = new AuditTrailsResponse();
             try
             {
-                var auditDetails = DataContext.AuditTrails.Where(x => x.RecordId == recordId).OrderByDescending(x => x.UpdateDate).ToList();
+                var auditDetails = DataContext.AuditTrails.Include(x=>x.User).Where(x => x.RecordId == recordId).OrderByDescending(x => x.UpdateDate).ToList();
                 response.AuditTrails = auditDetails.MapTo<AuditTrailsResponse.AuditTrail>();
                 response.IsSuccess = true;
             }

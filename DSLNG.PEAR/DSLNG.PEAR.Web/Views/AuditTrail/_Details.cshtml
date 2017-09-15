@@ -1,9 +1,9 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.AuditTrail.AuditTrailsDetailsViewModel
 @foreach (var item in Model.AuditTrails)
 {
-    <span style="float: left;margin-bottom: 19px;">Event Date : @item.UpdateDate</span>
-    <span style="float: right;">Action Type : @item.Action</span>
-
+    <span style="float: left;margin-bottom: 19px;color: yellow;">Event Date : <b>@item.UpdateDate</b></span>
+    <span style="float: left; margin-left:10px;color:greenyellow;">Updater::From : <b>@item.UserName</b>::@item.ControllerName</span>
+    <span style="float: right;color:yellow;">Action Type : @item.Action</span>
     <table class="table">
         <thead>
             <tr>
