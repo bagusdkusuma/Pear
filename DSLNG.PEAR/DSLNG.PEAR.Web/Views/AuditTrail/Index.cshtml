@@ -57,8 +57,8 @@
                 $('#derModal .modal-body').html($(e.relatedTarget).data('text'));
             })
             var table = $('#audit-trail-table').DataTable({
-                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                "iDisplayLength": -1,
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "iDisplayLength": 10,
                 "bProcessing": true,
                 "bServerSide": true,
                 "sServerMethod": "POST",
