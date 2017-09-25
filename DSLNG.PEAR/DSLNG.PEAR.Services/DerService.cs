@@ -2069,8 +2069,9 @@ namespace DSLNG.PEAR.Services
             int marineCargoDeliveryId = 52;
             int qhseRemarkId = 18;
             int securityRemarkId = 13;
+            int plantModeId = 69;
             var listHighlight = highlights.Where(x => x.HighlightType.Id == overallPerformanceId || x.HighlightType.Id == marineCargoDeliveryId
-            || x.HighlightType.Id == qhseRemarkId || x.HighlightType.Id == securityRemarkId || x.HighlightType.Id == dailyIndicatorId).ToList();
+            || x.HighlightType.Id == qhseRemarkId || x.HighlightType.Id == securityRemarkId || x.HighlightType.Id == dailyIndicatorId || x.HighlightType.Id == plantModeId).ToList();
             var der = new GetDersResponse.Der();
             var activityDate = new DateTime();
             foreach (var item in data)
@@ -2082,6 +2083,7 @@ namespace DSLNG.PEAR.Services
                 der.Qhse = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == qhseRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
                 der.Security = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == securityRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
                 der.DailyIndicator = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == dailyIndicatorId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.PlantMode = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == plantModeId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
                 der.Date = activityDate;
                 response.Ders.Add(der);
             }
