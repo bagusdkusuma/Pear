@@ -2,43 +2,57 @@
 
 <table class="table borderless dafwc">
     <tbody>
-    <tr>
-        <td>
-            <label>Days without DAFWC :</label>
-        </td>
-        <td>
-            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value,
-           Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "days", "N/A", true, 0) 
-        </td>
-        <td>
-            since :
-        </td>
-        <td class="text-right">
-            @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label>Days without LOPC (tier 1 & 2):</label>
-        </td>
-        <td>
-            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value,
-           Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "days","N/A",true,0)
-        </td>
-        <td>
-            since :
-        </td>
-        <td class="text-right">
-            @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark)
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
-            <label> Safe Man-hours since Last DAFWC (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)) : </label>
-</td>
-        <td class="text-right">
-            @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "hours", "N/A", true, 0) 
-        </td>
-    </tr>
+        <tr>
+            <td>
+                <label>Days without DAFWC :</label>
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value,
+           Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "days", "N/A", true, 0)
+            </td>
+            <td>
+                since :
+            </td>
+            <td class="text-right">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Remark)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Days without LOPC (tier 1 & 2):</label>
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value,
+           Model.KpiInformationViewModels.Single(x => x.Position == 1).KpiMeasurement, "days", "N/A", true, 0)
+            </td>
+            <td>
+                since :
+            </td>
+            <td class="text-right">
+                @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Remark)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <label> Safe Man-hours since Last DAFWC (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Remark)) : </label>
+            </td>
+            <td class="text-right">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 2).KpiMeasurement, "hours", "N/A", true, 0)
+            </td>
+        </tr>        
     </tbody>
 </table>
+<table class="table borderless dafwc">
+    <tr>
+        <td style="width: 67%">
+            <label> Total Recordable Injury Frequency Rate-TRIFR (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)) : </label>
+        </td>
+        <td>@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value)</td>
+        <td>
+            <span>actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)</span>
+        </td>
+        <td class="text-right">
+            target : < @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)
+        </td>
+    </tr>
+    </table>

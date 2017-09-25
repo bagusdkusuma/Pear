@@ -246,8 +246,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "hhv":
-                    case "mgdp":                    
-                    case "dafwc":
+                    case "mgdp":                                        
                     case "job-pmts":                    
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
@@ -257,6 +256,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "weekly-maintenance":
                     case "critical-pm":
                     case "loading-duration":
+                    case "dafwc":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
                             break;
@@ -686,7 +686,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "dafwc":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(3);
+                        viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_Dafwc", viewModel);
                     }
                 case "job-pmts":

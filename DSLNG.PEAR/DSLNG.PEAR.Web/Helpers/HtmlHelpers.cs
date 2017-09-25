@@ -456,7 +456,7 @@ namespace DSLNG.PEAR.Web.Helpers
             return val;
         }
 
-        public static MvcHtmlString DisplaySaftyIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget)
+        public static MvcHtmlString DisplaySafetyIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget)
         {
             if (string.IsNullOrEmpty(valueYtd) || string.IsNullOrEmpty(valueTarget))
             {
@@ -485,7 +485,7 @@ namespace DSLNG.PEAR.Web.Helpers
             if (actual < target)
             {
                 //hijau
-                return new MvcHtmlString("<i class='fa fa-circle'></i>");
+                return new MvcHtmlString("<span><i class='fa fa-circle' style='color: green'></i></span>");
             }
             else if (actual == target)
             {

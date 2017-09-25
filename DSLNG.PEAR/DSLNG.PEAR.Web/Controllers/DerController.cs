@@ -546,33 +546,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         return Json(json, JsonRequestBehavior.AllowGet);
                     };
                 #endregion
-                #region dafwc
+                #region DAFWC
                 case "dafwc":
                     {
-                        var viewModel = new DisplayKpiInformationViewModel();
-
-                        for (int i = 0; i < 3; i++)
-                        {
-                            var kpiInformationVm = new DisplayKpiInformationViewModel.KpiInformationViewModel { Position = i };
-                            var item = layout.KpiInformations.FirstOrDefault(x => x.Position == i) ??
-                                       new GetDerLayoutitemResponse.KpiInformationResponse { Position = i };
-                            if (item.Kpi != null)
-                            {
-                                kpiInformationVm = item.MapTo<DisplayKpiInformationViewModel.KpiInformationViewModel>();
-                                if (item.ConfigType.Equals(ConfigType.KpiAchievement))
-                                {
-                                    var achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, PeriodeType.Daily);
-                                    kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
-                                }
-                                else if (item.ConfigType.Equals(ConfigType.KpiTarget))
-                                {
-                                    var achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, PeriodeType.Daily);
-                                    kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
-                                }
-                            }
-
-                            viewModel.KpiInformationViewModels.Add(kpiInformationVm);
-                        }
+                        var viewModel = GetGeneralDerKpiInformations(4, layout, date, PeriodeType.Daily);
+                        var target3 = layout.KpiInformations.SingleOrDefault(x => x.Position == 3);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target3, date));
                         var view = RenderPartialViewToString("~/Views/Der/Display/_Dafwc.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
