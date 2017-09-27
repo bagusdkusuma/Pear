@@ -236,11 +236,12 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "termometer":
                     case "person-on-board":
                     case "total-commitment":
+                    case "temperature":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
                             break;
                         }                    
-                    case "procurement":
+                    case "procurement":                    
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
                             break;
@@ -265,11 +266,6 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "avg-ytd-key-statistic":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 5);
-                            break;
-                        }
-                    case "temperature":
-                        {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
                             break;
                         }
                     case "security":
@@ -648,7 +644,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "temperature":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(2);
+                        viewModel.KpiInformations = GetKpiInformations(1);
                         return PartialView("LayoutType/_Temperature", viewModel);
                     }
 
