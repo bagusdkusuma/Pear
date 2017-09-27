@@ -272,13 +272,22 @@ label {
     width: 92px;
 }
 
-/*.table.qhse-remark {
+.table.kpi-fatality tbody td:not(:first-child) {
+    text-align: right;
+}
+
+.table.kpi-fatality tbody .horizontal-border-none td{
+    border-bottom: none;
+    border-top: none;
+}
+
+.table.kpi-fatality tbody .border-bottom-none td {
+    border-bottom: none;
+}
+    /*.table.qhse-remark {
             height: 72px;
         }*/
-
-.table.qhse-remark thead td,
-.table.weekly-alarm thead td,
-.table.pie thead td {
+    .table.qhse-remark thead td, .table.weekly-alarm thead td, .table.pie thead td {
     background-color: #B7DEE8;
 }
 

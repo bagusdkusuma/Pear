@@ -281,13 +281,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 7);
                             break;
-                        }
-                    case "safety":
+                        }                    
                     case "lng-and-cds-production":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
                             break;
-                        }                    
+                        }
+                    case "safety":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
+                            break;
+                        }
                     case "global-stock-market":
                     case "table-tank":
                         {
@@ -663,7 +667,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(11);
+                        viewModel.KpiInformations = GetKpiInformations(13);
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
                 case "security":
