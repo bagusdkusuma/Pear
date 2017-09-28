@@ -17,8 +17,13 @@
     </thead>
     <tbody>
         <tr class="horizontal-border-none">
-            <td style="text-align:left">@label.ElementAtOrDefault(0)</td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, "cards/day","N/A",false,0)</td>
+            <td style="text-align:left">
+                @label.ElementAtOrDefault(0)
+                <img src="@Url.Content("~/content/img/der-leading.png")" style="position: absolute;right: 3px;height: 51px;"/>
+            </td>
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, "cards/day","N/A",false,0)                
+            </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, string.Empty, "cards/day", "N/A", false, 0)</td>
             <td>
                 @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd)
@@ -29,13 +34,16 @@
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Itd, string.Empty, "cards/day", "N/A", false, 0)</td>
         </tr>
         <tr class="horizontal-border-none">
-            <td style="text-align:left" class="horizontal-border-none">@label.ElementAtOrDefault(1)</td>
+            <td style="text-align:left" class="horizontal-border-none">
+                @label.ElementAtOrDefault(1)
+                
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, "case", "N/A", false, 0)</td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, string.Empty, "case", "N/A", false, 0)</td>
             <td>
                 @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, string.Empty, "case", "N/A", false, 0)</td>
-            <td style="background: #BFBFBF">                
+            <td style="padding: 0 1px 0 1px;">                
+                <div style="background: #BFBFBF;height:20px">&nbsp;</div>
                 @*@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", false, 0)*@
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Itd, string.Empty, "case", "N/A", false, 0)</td>
@@ -58,6 +66,7 @@
         <tr class="border-bottom-none">
             <td style="text-align:left">
                 @label.ElementAtOrDefault(3)
+                <img src="@Url.Content("~/content/img/der-lagging.png")" style="position: absolute;right: 3px;height: 51px;top: 24px;" />            
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, "case", "N/A", false, 0)</td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Mtd, string.Empty, "case", "N/A", false, 0)</td>
@@ -115,7 +124,8 @@
         </tr>
         <tr class="horizontal-border-none">
             <td style="text-align:left">
-                @label.ElementAtOrDefault(7)
+                @label.ElementAtOrDefault(7)                
+            
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, string.Empty, "case", "N/A", false, 0)</td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Mtd, string.Empty, "case", "N/A", false, 0)</td>
@@ -131,6 +141,7 @@
         <tr class="border-bottom-none">
             <td style="text-align:left">
                 @label.ElementAtOrDefault(8)
+                <img src="@Url.Content("~/content/img/der-psm.png")" style="position: absolute;right: 3px;height: 51px;width: 13px;" />
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, string.Empty, "case", "N/A", false, 0)</td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Mtd, string.Empty, "case", "N/A", false, 0)</td>
