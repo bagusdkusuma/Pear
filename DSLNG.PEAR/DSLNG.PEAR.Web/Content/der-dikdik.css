@@ -1370,3 +1370,8 @@ table.flare tbody td {
     position: absolute;
     right: 17px;
 }
+
+.enviromental-label td {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+}

@@ -382,6 +382,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "0-and-1":
                     case "0-and-3":
                     case "3-and-5":
+                    case "3-and-6":
+                    case "3-and-7":
+                    case "3-and-8":
+                    case "3-and-9":
+                    case "3-and-10":
                     case "10-and-2":
                     case "11-and-2":
                     case "11-and-1":
