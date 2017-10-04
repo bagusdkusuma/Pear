@@ -142,6 +142,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.YtdFormula = (DSLNG.PEAR.Web.ViewModels.Kpi.YtdFormula)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.YtdFormula), viewModel.YtdFormulaValue);
                 viewModel.Periode = (DSLNG.PEAR.Web.ViewModels.Kpi.PeriodeType)Enum.Parse(typeof(DSLNG.PEAR.Data.Enums.PeriodeType), viewModel.PeriodeValue);
                 var request = viewModel.MapTo<CreateKpiRequest>();
+                request.ActionName = "Create";
+                request.ControllerName = "KPI";
+                request.UserId = this.UserProfile().UserId;
                 var response = _kpiService.Create(request);
                 TempData["IsSuccess"] = response.IsSuccess;
                 TempData["Message"] = response.Message;
@@ -217,7 +220,9 @@ namespace DSLNG.PEAR.Web.Controllers
                 viewModel.CustomFormula = null;
             }
             var request = viewModel.MapTo<UpdateKpiRequest>();
-
+            request.ActionName = "Update";
+            request.ControllerName = "KPI";
+            request.UserId = this.UserProfile().UserId;
             if (!ModelState.IsValid)
             {
                 return View("Update", viewModel);
