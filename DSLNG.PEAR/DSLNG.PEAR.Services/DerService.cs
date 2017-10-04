@@ -298,6 +298,11 @@ namespace DSLNG.PEAR.Services
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 3 });
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 4 });
             rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 5 });
+            rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 6 });
+            rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 7 });
+            rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 8 });
+            rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 9 });
+            rowAndColumns.Add(new RowAndColumns { Row = 3, Column = 10 });
             rowAndColumns.Add(new RowAndColumns { Row = 4, Column = 0 });
             rowAndColumns.Add(new RowAndColumns { Row = 4, Column = 1 });
             rowAndColumns.Add(new RowAndColumns { Row = 4, Column = 2 });
@@ -2069,8 +2074,9 @@ namespace DSLNG.PEAR.Services
             int marineCargoDeliveryId = 52;
             int qhseRemarkId = 18;
             int securityRemarkId = 13;
+            int plantModeId = 69;
             var listHighlight = highlights.Where(x => x.HighlightType.Id == overallPerformanceId || x.HighlightType.Id == marineCargoDeliveryId
-            || x.HighlightType.Id == qhseRemarkId || x.HighlightType.Id == securityRemarkId || x.HighlightType.Id == dailyIndicatorId).ToList();
+            || x.HighlightType.Id == qhseRemarkId || x.HighlightType.Id == securityRemarkId || x.HighlightType.Id == dailyIndicatorId || x.HighlightType.Id == plantModeId).ToList();
             var der = new GetDersResponse.Der();
             var activityDate = new DateTime();
             foreach (var item in data)
@@ -2082,6 +2088,7 @@ namespace DSLNG.PEAR.Services
                 der.Qhse = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == qhseRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
                 der.Security = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == securityRemarkId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
                 der.DailyIndicator = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == dailyIndicatorId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
+                der.PlantMode = listHighlight.Where(x => x.Date == activityDate && x.HighlightType != null && x.HighlightType.Id == plantModeId).DefaultIfEmpty(new Highlight { Message = string.Empty }).First().Message;
                 der.Date = activityDate;
                 response.Ders.Add(der);
             }

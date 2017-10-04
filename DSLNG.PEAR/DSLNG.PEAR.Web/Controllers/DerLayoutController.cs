@@ -236,18 +236,18 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "termometer":
                     case "person-on-board":
                     case "total-commitment":
+                    case "temperature":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
                             break;
                         }                    
-                    case "procurement":
+                    case "procurement":                    
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
                             break;
                         }
                     case "hhv":
-                    case "mgdp":                    
-                    case "dafwc":
+                    case "mgdp":                                        
                     case "job-pmts":                    
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
@@ -257,6 +257,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "weekly-maintenance":
                     case "critical-pm":
                     case "loading-duration":
+                    case "dafwc":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 4);
                             break;
@@ -265,11 +266,6 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "avg-ytd-key-statistic":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 5);
-                            break;
-                        }
-                    case "temperature":
-                        {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 2);
                             break;
                         }
                     case "security":
@@ -281,18 +277,17 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 7);
                             break;
-                        }
+                        }                    
                     case "lng-and-cds-production":
-                        {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 10);
-                            break;
-                        }
-                    
-                    case "safety":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 11);
                             break;
-                        }                    
+                        }
+                    case "safety":
+                        {
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
+                            break;
+                        }
                     case "global-stock-market":
                     case "table-tank":
                         {
@@ -387,6 +382,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "0-and-1":
                     case "0-and-3":
                     case "3-and-5":
+                    case "3-and-6":
+                    case "3-and-7":
+                    case "3-and-8":
+                    case "3-and-9":
+                    case "3-and-10":
                     case "10-and-2":
                     case "11-and-2":
                     case "11-and-1":
@@ -649,7 +649,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "temperature":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(2);
+                        viewModel.KpiInformations = GetKpiInformations(1);
                         return PartialView("LayoutType/_Temperature", viewModel);
                     }
 
@@ -668,7 +668,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(11);
+                        viewModel.KpiInformations = GetKpiInformations(13);
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
                 case "security":
@@ -686,7 +686,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "dafwc":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(3);
+                        viewModel.KpiInformations = GetKpiInformations(4);
                         return PartialView("LayoutType/_Dafwc", viewModel);
                     }
                 case "job-pmts":
@@ -722,7 +722,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "lng-and-cds-production":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(10);
+                        viewModel.KpiInformations = GetKpiInformations(11);
                         return PartialView("LayoutType/_LngAndCdsProduction", viewModel);
                     }
                 case "weekly-maintenance":

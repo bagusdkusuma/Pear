@@ -375,7 +375,7 @@
                     <thead>
                         <tr>
                             <td>
-                                @{
+                                @*@{
                                     var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
                                     if (row3Col5 != null)
                                     {
@@ -385,7 +385,7 @@
                                     {
                                         <a href="@Url.Action("LayoutItem", new { column = 5, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
                                     }
-                                } WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)
+                                } WEEKLY ALARM MANAGEMENT (3 Apr-10 Apr 2016)*@
                             </td>
                         </tr>
                     </thead>
@@ -396,26 +396,106 @@
                                     <table style="height: 64px;" width="608">
                                         <tbody>
                                             <tr>
-                                                <td>Train Areas</td>
-                                                <td style="text-align: right;">
-                                                    @{
-                                                        var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
-                                                        if (row3Col2 != null)
-                                                        {
-                                                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col2.Id })" class="">Manage</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="@Url.Action("LayoutItem", new { column = 2, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
-                                                        }
-                                                    }
+                                                <td>
+                                                    Emission :
+                                                </td>
+                                                <td>
+                                                    NO2
+                                                </td>
+                                                <td>
+                                                    SO2
+                                                </td>
+                                                <td>
+                                                    Particulate
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Utilities-Off Site Areas</td>
+                                                <td>
+                                                    <img src="@Url.Content("~/Content/img/der-emission.png")" />
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var row3Col6 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 6);
+                                                        if (row3Col6 != null)
+                                                        {
+                                                            <a href="@Url.Action("LayoutItem", new { column = 6, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col6.Id })" class="">Manage</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@Url.Action("LayoutItem", new { column = 6, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                                        }
+
+                                                    }
+                                                    
+                                                </td>
+                                                <td>
+                                                   @{
+                                                       var row3Col7 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 7);
+                                                       if (row3Col7 != null)
+                                                       {
+                                                        <a href="@Url.Action("LayoutItem", new { column = 7, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col7.Id })" class="">Manage</a>
+                                                       }
+                                                       else
+                                                       {
+                                                        <a href="@Url.Action("LayoutItem", new { column = 7, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                                       }
+
+                                                }
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var row3Col8 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 8);
+                                                        if (row3Col8 != null)
+                                                        {
+                                                            <a href="@Url.Action("LayoutItem", new { column = 8, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col8.Id })" class="">Manage</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@Url.Action("LayoutItem", new { column = 8, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                                        }
+
+                                                    }
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4">Effluent Waste Water Discharge of Sewage Treatment Plant :</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="@Url.Content("~/Content/img/der-eff.png")" />
+                                                </td>
+                                                <td colspan="2">
+                                                    @{
+                                                        var row3Col9 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 9);
+                                                        if (row3Col9 != null)
+                                                        {
+                                                            <a href="@Url.Action("LayoutItem", new { column = 9, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col9.Id })" class="">Manage</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@Url.Action("LayoutItem", new { column = 9, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                                        }
+
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @{
+                                                        var row3Col10 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 10);
+                                                        if (row3Col10 != null)
+                                                        {
+                                                            <a href="@Url.Action("LayoutItem", new { column = 10, row = 3, derLayoutId = Model.DerLayoutId, id = row3Col10.Id })" class="">Manage</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@Url.Action("LayoutItem", new { column = 10, row = 3, derLayoutId = Model.DerLayoutId, id = 0 })" class="">Manage</a>
+                                                        }
+
+                                                    }
+                                                </td>
                                             </tr>
                                         </tbody>
-                                    </table>
+                                    </table>    
                                     <p>Note: Nothing to concern, plant operational went well.</p>
                                 </div>
                             </td>

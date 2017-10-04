@@ -272,13 +272,22 @@ label {
     width: 92px;
 }
 
-/*.table.qhse-remark {
+.table.kpi-fatality tbody td:not(:first-child) {
+    text-align: right;
+}
+
+.table.kpi-fatality tbody .horizontal-border-none td{
+    border-bottom: none;
+    border-top: none;
+}
+
+.table.kpi-fatality tbody .border-bottom-none td {
+    border-bottom: none;
+}
+    /*.table.qhse-remark {
             height: 72px;
         }*/
-
-.table.qhse-remark thead td,
-.table.weekly-alarm thead td,
-.table.pie thead td {
+    .table.qhse-remark thead td, .table.weekly-alarm thead td, .table.pie thead td {
     background-color: #B7DEE8;
 }
 
@@ -1351,4 +1360,18 @@ table.flare tbody td {
 
 .commodities tbody > tr > td:first-child {
     text-align: right;
+}
+
+.vertical-text-loading {
+    transform: rotate(270deg);
+    transform-origin: right top 0;
+    background: #1df560;
+    padding: 0px 5px;
+    position: absolute;
+    right: 17px;
+}
+
+.enviromental-label td {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
 }
