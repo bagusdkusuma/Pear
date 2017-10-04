@@ -202,6 +202,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DeleteKPITransformationScheduleRequest, BaseAction>();
             Mapper.CreateMap<SaveKpiTransformationScheduleRequest, BaseAction>();
             Mapper.CreateMap<SaveKpiTransformationScheduleResponse, BaseAction>();
+            Mapper.CreateMap<CreateKpiRequest, BaseAction>();
             
         }
 
