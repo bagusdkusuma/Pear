@@ -182,6 +182,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DeleteDerLayoutItemRequest, BaseAction>();
             Mapper.CreateMap<DeleteFilenameRequest, BaseAction>();
             Mapper.CreateMap<CreateOrUpdateDerRequest, BaseAction>();
+            Mapper.CreateMap<CreateKpiRequest, BaseAction>();
         }
 
         private void ConfigureMixed()

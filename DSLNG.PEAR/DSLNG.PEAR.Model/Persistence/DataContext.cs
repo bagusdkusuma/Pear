@@ -466,7 +466,7 @@ namespace DSLNG.PEAR.Data.Persistence
 
         public int SaveChanges(BaseAction activity)
         {
-            if (activity.UserId == null)
+            if (activity == null || activity.UserId == default(int))
             {
                 return this.SaveChanges();
             }

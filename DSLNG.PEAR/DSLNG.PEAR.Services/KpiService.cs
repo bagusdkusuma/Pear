@@ -186,6 +186,7 @@ namespace DSLNG.PEAR.Services
                 kpi.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
                 kpi.Type = DataContext.Types.FirstOrDefault(x => x.Id == request.TypeId);
                 kpi.Method = DataContext.Methods.FirstOrDefault(x => x.Id == request.MethodId);
+                kpi.CreatedBy = DataContext.Users.FirstOrDefault(x=>x.Id == request.UserId);
                 if (request.RelationModels.Count > 0)
                 {
                     var relation = new List<KpiRelationModel>();
@@ -241,7 +242,7 @@ namespace DSLNG.PEAR.Services
                 updateKpi.Level = DataContext.Levels.FirstOrDefault(x => x.Id == request.LevelId);
                 updateKpi.Type = DataContext.Types.FirstOrDefault(x => x.Id == request.TypeId);
                 updateKpi.Method = DataContext.Methods.FirstOrDefault(x => x.Id == request.MethodId);
-
+                updateKpi.UpdatedBy = DataContext.Users.FirstOrDefault(x => x.Id == request.UserId);
                 var existedkpi = DataContext.Kpis
                     .Where(x => x.Id == request.Id)
                     .Include(x => x.RelationModels.Select(y => y.Kpi))
