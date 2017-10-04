@@ -188,7 +188,7 @@
                 var title = $(e.relatedTarget).data('title');
                 var text = _textDictionary[title + '_' + date];
 
-                $('#derModal h4').text(title + ' - ' + date);
+                $('#derModal h4').text(title + ' - ' + date);                
                 $('#derModal .modal-body').html(text);
             })
             AllowDelete = '@{ @AllowDelete}';

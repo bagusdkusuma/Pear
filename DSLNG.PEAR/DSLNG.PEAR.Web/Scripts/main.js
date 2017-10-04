@@ -171,14 +171,14 @@ Number.prototype.format = function (n, x) {
     return y;
 };
 
-var a = 397053424;
-var b = 397053424.9;
-var c = 397053424.99;
-var d = 397053424.999;
-console.log(a.format(2));
-console.log(b.format(2));
-console.log(c.format(2));
-console.log(d.format(2));
+//var a = 397053424;
+//var b = 397053424.9;
+//var c = 397053424.99;
+//var d = 397053424.999;
+//console.log(a.format(2));
+//console.log(b.format(2));
+//console.log(c.format(2));
+//console.log(d.format(2));
 
 (function (window, $, undefined) {
     var Pear = {};
@@ -3558,9 +3558,9 @@ console.log(d.format(2));
             var toRemove = {};
 
             toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-            toRemove.daily = ['CurrentHour', 'CurrentDay', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.daily = ['CurrentHour', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
             toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
-            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+            toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
             toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
 
             var originalClone = original.clone(true);

@@ -37,7 +37,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Login(UserLoginViewModel user)
         {
             if (ModelState.IsValid)
