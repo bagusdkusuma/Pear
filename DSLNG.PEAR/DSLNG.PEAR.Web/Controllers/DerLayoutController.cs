@@ -248,7 +248,12 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "hhv":
                     case "mgdp":                                        
-                    case "job-pmts":                    
+                    case "job-pmts":
+                    case "no2":
+                    case "so2":
+                    case "ph":
+                    case "particulate":
+                    case "oil-grease":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
@@ -382,11 +387,6 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "0-and-1":
                     case "0-and-3":
                     case "3-and-5":
-                    case "3-and-6":
-                    case "3-and-7":
-                    case "3-and-8":
-                    case "3-and-9":
-                    case "3-and-10":
                     case "10-and-2":
                     case "11-and-2":
                     case "11-and-1":
@@ -407,6 +407,31 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "3-and-4":
                         {
                             viewModel.Type = "pie";
+                            break;
+                        }
+                    case "3-and-6":
+                        {
+                            viewModel.Type = "no2";
+                            break;
+                        }
+                    case "3-and-7":
+                        {
+                            viewModel.Type = "so2";
+                            break;
+                        }
+                    case "3-and-8":
+                        {
+                            viewModel.Type = "particulate";
+                            break;
+                        }
+                    case "3-and-9":
+                        {
+                            viewModel.Type = "ph";
+                            break;
+                        }
+                    case "3-and-10":
+                        {
+                            viewModel.Type = "oil-grease";
                             break;
                         }
                     case "4-and-0":
@@ -813,6 +838,36 @@ namespace DSLNG.PEAR.Web.Controllers
                         return PartialView("LayoutType/_TotalCommitment", viewModel);
 
                     }
+                case "no2":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_NO2", viewModel);
+                    }
+                case "so2":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_SO2", viewModel);
+                    }
+                case "particulate":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_Particulate", viewModel);
+                    }
+                case "ph":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_PH", viewModel);
+                    }
+                case "oil-grease":
+                    {
+                        var viewModel = new DerLayoutItemViewModel();
+                        viewModel.KpiInformations = GetKpiInformations(3);
+                        return PartialView("LayoutType/_OilGrease", viewModel);
+                    }
 
             }
 
@@ -914,6 +969,11 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "person-on-board":
                 case "flare":
                 case "total-commitment":
+                case "no2":
+                case "so2":
+                case "ph":
+                case "particulate":
+                case "oil-grease":
                     {
                         request = layoutItemViewModel.MapTo<SaveLayoutItemRequest>();
                         request.KpiInformations = layoutItemViewModel.KpiInformations.MapTo<SaveLayoutItemRequest.DerKpiInformationRequest>();

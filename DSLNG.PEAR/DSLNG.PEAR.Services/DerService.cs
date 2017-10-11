@@ -619,6 +619,11 @@ namespace DSLNG.PEAR.Services
                 case "person-on-board":
                 case "flare":
                 case "total-commitment":
+                case "no2":
+                case "so2":
+                case "ph":
+                case "particulate":
+                case "oil-grease":
                     {
                         baseResponse = request.Id > 0 ? UpdateKpiInformations(request) : SaveKpiInformations(request);
                         break;

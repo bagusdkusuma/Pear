@@ -15,6 +15,7 @@ using DSLNG.PEAR.Web.ViewModels.Weather;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
 using System.Text;
 using System.Linq.Expressions;
+using System.Web;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -113,6 +114,37 @@ namespace DSLNG.PEAR.Web.Helpers
 
             return !string.IsNullOrEmpty(val) ?
                 string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
+        }
+
+        public static string DisplayTrafficLight(this HtmlHelper htmlHelper, List<string> list)
+        {
+            var numbers = new List<double>();
+            var isValids = new List<bool>();
+            double tempVal;
+            foreach (var item in list)
+            {
+                isValids.Add(ParseIt(item, out tempVal));
+                numbers.Add(tempVal);
+            }
+
+            for (int i = 0; i <= list.Count; i++)
+            {
+                if(isValids[i] && isValids[(list.Count / 2) + i])
+                {
+                    var actual = numbers[i];
+                    var target = numbers[(list.Count / 2) + i];
+                    if(actual > target)
+                    {
+                        return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-red-light.png") + "' style='height:21px' />";
+                    }
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+
+            return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "' style='height:21px' />";
         }
 
 
@@ -319,7 +351,8 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 value = -1;
             }
-            else {
+            else
+            {
                 value = 0;
             }
             //else if ( >= double.Parse(TargetVale) && double.Parse(Value) < 2.2)
@@ -751,7 +784,7 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 //var valtoString = string.Empty;
                 //if (kpiValue != null) {valtoString= kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,#.#########"); }
-                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty)) : (kpiValue.Type == "now" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty) ) : value));
+                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty)) : (kpiValue.Type == "now" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty)) : value));
                 existValue = kpiValue == null ? existValue : kpiValue.Type;
             }
             else
@@ -1173,19 +1206,19 @@ namespace DSLNG.PEAR.Web.Helpers
         {
             var d = Double.Parse(number);
             var length = Math.Truncate(d).ToString().Length;
-            int decimals = 0;            
+            int decimals = 0;
 
             if (length < digits)
             {
                 decimals = digits - length;
-                if(Math.Truncate(d) == d)
+                if (Math.Truncate(d) == d)
                 {
                     decimals = 0;
                 }
             }
 
-            
-            
+
+
             var format = string.Format("N{0}", decimals);
 
             if (round)
@@ -1197,6 +1230,15 @@ namespace DSLNG.PEAR.Web.Helpers
                 int pow = (int)Math.Pow(10, decimals);
                 return (Math.Truncate(d * pow) / pow).ToString(format, CultureInfo.InvariantCulture);
             }
+        }
+
+        private static bool ParseIt(string val, out double result)
+        {
+            double x;
+            var styles = NumberStyles.AllowParentheses | NumberStyles.AllowTrailingSign | NumberStyles.Float | NumberStyles.AllowDecimalPoint;
+            bool isValidDouble = Double.TryParse(val, styles, NumberFormatInfo.InvariantInfo, out x);
+            result = (isValidDouble) ? Math.Round(x, 2) : 0;
+            return isValidDouble;
         }
     }
 

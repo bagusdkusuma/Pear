@@ -943,7 +943,72 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-                    #endregion
+                #endregion
+                case "no2":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_NO2.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                case "so2":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_SO2.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                case "ph":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_PH.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                case "Particulate":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_Particulate.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
+                case "oil-grease":
+                    {
+                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
+                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
+                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        var view = RenderPartialViewToString("~/Views/Der/Display/_OilGrease.cshtml", viewModel);
+                        var json = new { type = layout.Type.ToLowerInvariant(), view };
+                        return Json(json, JsonRequestBehavior.AllowGet);
+                    }
             }
             return Content("Switch case does not matching");
         }
