@@ -969,8 +969,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
                                     if (row11Col1 != null)
                                     {
-
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col1.Id })" class="layout-item highlight-style-12"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col1.Id })" class="layout-item highlight-style-12" style="height:82px"></div>
                                     }
                                 }
                             </td>

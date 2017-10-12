@@ -1,0 +1,20 @@
+﻿@using System.Globalization
+@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
+
+@{
+    var list = new List<string>();
+    for (var i = 0; i < Model.KpiInformationViewModels.Count; i++)
+    {
+        if (i < Model.KpiInformationViewModels.Count / 2)
+        {
+            list.Add(Model.KpiInformationViewModels[i].DerItemValue.Value);
+        }
+        else
+        {
+            list.Add(Model.KpiInformationViewModels[i].DerItemValue.Ytd);
+        }
+
+    }
+}
+@Html.Raw(Html.DisplayTrafficLight(list))
+
