@@ -64,11 +64,21 @@ namespace DSLNG.PEAR.Services
                 if (month == 0)
                 {
                     var lastDay = new DateTime(year, 1, 1);
-                    data = data.Where(x => x.Date.Year == year && x.Date != lastDay);
+                    var earlyNextYear = new DateTime(year + 1, 1, 1);
+                    data = data.Where(x => (x.Date.Year == year && x.Date != lastDay) || x.Date == earlyNextYear);
                 }
                 else
                 {
-                    var earlyNextMonth = new DateTime(year, month + 1, 1);
+                    var earlyNextMonth = new DateTime();
+                    if (month < 12)
+                    {
+                        earlyNextMonth = new DateTime(year, month + 1, 1);
+                    }
+                    else if (month == 12)
+                    {
+                        earlyNextMonth = new DateTime(year + 1, 1, 1);
+                    }
+
                     var earlyThisMonth = new DateTime(year, month, 1);
                     data = data.Where(x => ((x.Date.Year == year && x.Date.Month == month) && x.Date != earlyThisMonth) || x.Date == earlyNextMonth);
                 }
@@ -2059,8 +2069,17 @@ namespace DSLNG.PEAR.Services
                 }
                 else
                 {
-                    var earlyNextMonth = new DateTime(year, month + 1, 1);
-                    var earlyThisMonth = new DateTime(year, month, 1);
+                    //var earlyNextMonth = new DateTime();
+                    //if (month < 12)
+                    //{
+                    //    earlyNextMonth = new DateTime(year, month + 1, 1);
+                    //}
+                    //else if (month == 12)
+                    //{
+                    //    earlyNextMonth = new DateTime(year + 1, 1, 1);
+                    //}
+
+                    //var earlyThisMonth = new DateTime(year, month, 1);
                     highlights = highlights.Where(x => (x.Date.Year == year && x.Date.Month == month));
                 }
             }
@@ -2086,10 +2105,10 @@ namespace DSLNG.PEAR.Services
                 response.Ders.Add(der);
             }
 
-            if(!string.IsNullOrEmpty(trafficLight))
+            if (!string.IsNullOrEmpty(trafficLight))
             {
                 response.Ders = response.Ders.Where(x => x.DailyIndicator.Trim() == trafficLight).ToList();
-            }            
+            }
 
             foreach (var sortOrder in request.SortingDictionary)
             {
@@ -2125,7 +2144,7 @@ namespace DSLNG.PEAR.Services
                 response.IsSuccess = false;
                 response.Message = exception.Message;
             }
-            
+
             return response;
         }
 
