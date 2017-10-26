@@ -196,7 +196,7 @@
             function shortenText(data, title, date) {
                 _textDictionary[title + '_' + moment(new Date(date.match(/\d+/)[0] * 1)).format('DD MMM YYYY')] = data;
                 var textDisplay = data.replace('<p>', '').replace('</p>', '').replace('"', '');
-                var length = 150;
+                var length = 200;
                 if (data.length > length) {
                     textDisplay = data.substring(0, length).replace(/<\/?[^>]+(>|$)/g, "");
                     textDisplay += ' | <a class="read-more" href="#" data-toggle="modal" data-target="#derModal" data-title="' + title + '" data-date="' + moment(new Date(date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') +'">Read More</button>';

@@ -467,7 +467,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     </tbody>
                                 </table>
                             </td>
-                            <td style="width:32%">
+                            <td style="width:31%">                            
                                 <table class="table table-bordered pie">
                                     <thead>
                                         <tr>
@@ -830,6 +830,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     }
                                 }
 
+                                
                                 <table style="width:100%;height:72px;">
                                     <tr style="height:11px; margin-bottom:0px; padding-bottom:0px !important;">
                                         <td style="width:80%; padding-bottom: 0px;margin-bottom: 0px;">
@@ -863,7 +864,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     </tr>
                                 </table>
 
-                                <table style="width:100%;height:78px;">
+                                <table style="width:100%;height:72px;">
                                     <tr>
                                         <td>
                                             <h5 style="text-decoration: underline;"> Maintenance Highlight &amp; Immediate Concern:</h5>
@@ -969,7 +970,6 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
                                     if (row11Col1 != null)
                                     {
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col1.Id })" class="layout-item highlight-style-12" style="height:82px"></div>
                                     }
                                 }
                             </td>
