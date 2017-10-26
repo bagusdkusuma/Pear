@@ -355,12 +355,12 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                         <tr>
                                             <td style="padding:4px;text-align: center">
                                                 @*@{
-                                                    var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
-                                                    if (row3Col5 != null)
-                                                    {
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col5.Id })" class="layout-item highlight-json in-left"></div>
-                                                    }
-                                                }*@
+                                                        var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
+                                                        if (row3Col5 != null)
+                                                        {
+                                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col5.Id })" class="layout-item highlight-json in-left"></div>
+                                                        }
+                                                    }*@
                                                 Environmental Quality Monitoring @*(<span class="weekly-alarm-period"></span>)*@
 
                                             </td>
@@ -374,7 +374,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                     <tbody>
                                                         <tr style="font-weight: bold" class="enviromental-label">
                                                             <td>
-                                                                Emission : 
+                                                                Emission :
                                                             </td>
                                                             <td>
                                                                 NO<sub>2</sub>
@@ -406,7 +406,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                                     {
                                                                         <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col7.Id })" class="layout-item highlight-traffic-light"></div>
                                                                     }
-                                                                }                                                                
+                                                                }
                                                             </td>
                                                             <td>
                                                                 @{
@@ -416,18 +416,18 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                                         <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col8.Id })" class="layout-item highlight-traffic-light"></div>
                                                                     }
                                                                 }
-                                                            </td>                                                            
+                                                            </td>
                                                         </tr>
                                                         <tr style="font-weight: bold">
                                                             <td colspan="4" class="enviromental-label">Effluent Waste Water Discharge of Sewage Treatment Plant :</td>
                                                         </tr>
-                                                        <tr style="font-weight: bold" class="class="enviromental-label"">
+                                                        <tr style="font-weight: bold" class="class=" enviromental-label"">
                                                             <td rowspan="2">
                                                                 <img src="/Content/img/der-eff.png" style="height: 41px;padding: 0;">
                                                             </td>
                                                             <td colspan="2">
                                                                 pH
-                                                            </td>                                                            
+                                                            </td>
                                                             <td>
                                                                 Oil & Grease
                                                             </td>
@@ -453,7 +453,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                </table>                                                
+                                                </table>
                                                 @{
                                                     var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
                                                     if (row3Col2 != null)
@@ -467,7 +467,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     </tbody>
                                 </table>
                             </td>
-                            <td style="width:31%">                            
+                            <td style="width:32%">
                                 <table class="table table-bordered pie">
                                     <thead>
                                         <tr>
@@ -830,7 +830,6 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     }
                                 }
 
-                                
                                 <table style="width:100%;height:72px;">
                                     <tr style="height:11px; margin-bottom:0px; padding-bottom:0px !important;">
                                         <td style="width:80%; padding-bottom: 0px;margin-bottom: 0px;">
@@ -970,6 +969,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
                                     if (row11Col1 != null)
                                     {
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col1.Id })" class="layout-item highlight-style-12" style="height:82px"></div>
                                     }
                                 }
                             </td>
