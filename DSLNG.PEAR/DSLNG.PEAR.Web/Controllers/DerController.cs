@@ -1163,6 +1163,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult Upload(HttpPostedFileBase derFile, string date)
         {
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            theDate = theDate.AddDays(1);
             int revision = 0;
             var title = "DER/" + theDate.ToString("dd-MMM-yyyy");
             string filename = title.Replace('/', '-');
