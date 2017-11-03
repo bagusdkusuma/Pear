@@ -486,7 +486,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region safety
                 case "safety":
                     {
-                        var viewModel = GetGeneralDerKpiInformations(13, layout, date, PeriodeType.Daily);
+                        var viewModel = GetGeneralDerKpiInformations(14, layout, date, PeriodeType.Daily);
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
                         var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
                         var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
@@ -500,19 +500,21 @@ namespace DSLNG.PEAR.Web.Controllers
                         var target10 = layout.KpiInformations.SingleOrDefault(x => x.Position == 10);
                         var target11 = layout.KpiInformations.SingleOrDefault(x => x.Position == 11);
                         var target12 = layout.KpiInformations.SingleOrDefault(x => x.Position == 12);
-                        viewModel.KpiInformationViewModels.Add(AddTarget(13, target0, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(14, target1, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(15, target2, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(16, target3, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(17, target4, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(18, target5, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(19, target6, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(20, target7, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(21, target8, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(22, target9, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(23, target10, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(24, target11, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(25, target12, date));
+                        var target13 = layout.KpiInformations.SingleOrDefault(x => x.Position == 13);
+                        viewModel.KpiInformationViewModels.Add(AddTarget(14, target0, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(15, target1, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(16, target2, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(17, target3, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(18, target4, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(19, target5, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(20, target6, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(21, target7, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(22, target8, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(23, target9, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(24, target10, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(25, target11, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(26, target12, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(27, target13, date));
 
                         var view = RenderPartialViewToString("~/Views/Der/Display/_SafetyTable.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };

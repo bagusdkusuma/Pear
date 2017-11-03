@@ -290,7 +290,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "safety":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 13);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 14);
                             break;
                         }
                     case "global-stock-market":
