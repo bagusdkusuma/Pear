@@ -147,8 +147,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult QhsseSection(string date)
         {
             var viewModel = GetDerValuesPerSection(date,
-               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436 }, //actual KpiIds 
-               new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
+               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436, 
+               /*CR Sept 2017*/ 504, 506, 507,508, 509, 510, 511, 512, 513, 514, 515 }, //actual KpiIds 
+               new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358,
+               /*CR Sept 2017*/ 504, 505, 506, 507,508, 509, 510, 511, 514, 515 }, //target KpiIds
                new int[] { 18, 13, 20, 7, 80, 59 }  //highlightTypeIds
                );
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
