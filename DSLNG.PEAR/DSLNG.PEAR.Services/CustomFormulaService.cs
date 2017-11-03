@@ -52,7 +52,7 @@ namespace DSLNG.PEAR.Services
             {
                 //response.Value = request.JccPrice > 30 ? Math.Round(((0.154 * request.JccPrice) - 0.1) + (0.52 + (0.00023 * (request.BunkerPrice - 575))), 2) : Math.Round(((0.154 * 30) - 0.1) + (0.52 + (0.00023 * (request.BunkerPrice - 575))), 2);
 
-                response.Value = ((0.154 * request.JccPrice) - 0.1) + (0.52 + (0.00023 * (request.BunkerPrice - 575)));
+                response.Value = Math.Round(((0.154 * request.JccPrice) - 0.1),2) + Math.Round((0.52 + (0.00023 * (request.BunkerPrice - 575))),2);
                 //=ROUND(((0.154*C3)-0.1),2)+ROUND((0.52+(0.00023*(C4-575))),2)
 
                 response.IsSuccess = true;
