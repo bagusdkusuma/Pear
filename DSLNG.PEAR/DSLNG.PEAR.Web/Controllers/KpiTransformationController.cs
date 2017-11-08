@@ -18,6 +18,7 @@ using DSLNG.PEAR.Services.Responses;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
+    [Authorize]
     public class KpiTransformationController : BaseController
     {
         private readonly IRoleGroupService _roleService;
@@ -39,6 +40,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _kpiTransformationLogService = kpiTransformationLogService;
         }
         // GET: KpiTransformation
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
             return View();
@@ -46,12 +48,14 @@ namespace DSLNG.PEAR.Web.Controllers
 
         public ActionResult Grid(GridParams gridParams)
         {
+            var userId = UserProfile().UserId;
             var templates = _kpiTransformationService.Get(new GetKpiTransformationsRequest
             {
                 Skip = gridParams.DisplayStart,
                 Take = gridParams.DisplayLength,
                 SortingDictionary = gridParams.SortingDictionary,
-                Search = gridParams.Search
+                Search = gridParams.Search,
+                UserId = userId
             });
 
             var data = new
@@ -64,7 +68,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
-
+        [AuthorizeUser(AccessLevel = "AllowCreate")]
         public ActionResult Create()
         {
             var viewModel = new KpiTransformationViewModel()
@@ -81,6 +85,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowCreate")]
         public ActionResult Create(KpiTransformationViewModel viewModel)
         {
             return Save(viewModel);
@@ -96,6 +101,7 @@ namespace DSLNG.PEAR.Web.Controllers
             @TempData["Message"] = response.Message;
             return RedirectToAction("Index");
         }
+        [AuthorizeUser(AccessLevel = "AllowUpdate")]
         public ActionResult Edit(int id)
         {
             var viewModel = _kpiTransformationService.Get(id).MapTo<KpiTransformationViewModel>();
@@ -110,11 +116,13 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowUpdate")]
         public ActionResult Edit(KpiTransformationViewModel viewModel)
         {
             return Save(viewModel);
         }
 
+        [AuthorizeUser(AccessLevel = "AllowInput")]
         public ActionResult Process(int id)
         {
             var viewModel = _kpiTransformationService.Get(id).MapTo<KpiTransformationViewModel>();
@@ -124,6 +132,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowInput")]
         public ActionResult Process(KpiTransformationScheduleViewModel viewModel)
         {
             var request = viewModel.MapTo<SaveKpiTransformationScheduleRequest>();
@@ -134,6 +143,7 @@ namespace DSLNG.PEAR.Web.Controllers
         }
 
         [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowInput")]
         public ActionResult ProcessDefault(int Id, string date)
         {
             var data = _kpiTransformationService.Get(Id).MapTo<KpiTransformationViewModel>();
@@ -157,13 +167,14 @@ namespace DSLNG.PEAR.Web.Controllers
             TempData["Message"] = resp.Message;
             return RedirectToAction("Index");
         }
-
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Log(int id)
         {
             ViewBag.Id = id;
             return View();
         }
         [HttpPost]
+        [AuthorizeUser(AccessLevel = "AllowDelete")]
         public ActionResult DeleteSchedule(int id)
         {
             int logId = 0;
@@ -197,6 +208,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
 
         }
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult LogDetails(int id)
         {
             ViewBag.Id = id;
