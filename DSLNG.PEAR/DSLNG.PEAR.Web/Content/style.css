@@ -3564,3 +3564,9 @@ tr.der-transaction-error {
     margin: 0 auto;
     pointer-events: all;
 }
+
+.dropdown-menu {
+max-height: 400px;
+overflow-y: auto;
+overflow-x: hidden;
+}
