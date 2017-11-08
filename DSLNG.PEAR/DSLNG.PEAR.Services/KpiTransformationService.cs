@@ -37,12 +37,16 @@ namespace DSLNG.PEAR.Services
         }
         private IEnumerable<KpiTransformation> SortData(int userId, string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
-            var user = DataContext.Users.First(x => x.Id == userId);
             var data = DataContext.KpiTransformations.Include(x => x.RoleGroups).AsQueryable();
-            if (!user.IsSuperAdmin) {
-                var roleId = user.RoleId.Value;
-                data = data.Where(x => x.RoleGroups.Select(y => y.Id).Contains(roleId)).AsQueryable();
+            if (userId != 0) {
+                var user = DataContext.Users.First(x => x.Id == userId);
+                if (!user.IsSuperAdmin)
+                {
+                    var roleId = user.RoleId.Value;
+                    data = data.Where(x => x.RoleGroups.Select(y => y.Id).Contains(roleId)).AsQueryable();
+                }
             }
+            
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Name.Contains(search));
