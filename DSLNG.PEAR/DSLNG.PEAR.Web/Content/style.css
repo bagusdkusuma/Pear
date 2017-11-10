@@ -23,7 +23,8 @@ body {
     }
 
     body.report {
-        background-image: url(/Content/img/report-bg.jpg);
+        background-image: url(/Content/img/bg_5.jpg);
+        /*background-image: url(/Content/img/report-bg.jpg);*/
     }
 
     body.setting {
