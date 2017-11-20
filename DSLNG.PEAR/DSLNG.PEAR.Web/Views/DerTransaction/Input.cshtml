@@ -610,7 +610,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                             $this.removeClass('der-value-empty');
                                         }
                                         $this.addClass('der-value-now');
-                                        if (parseInt($this.attr('data-id')) == 0) {
+                                        if (parseInt($this.attr('data-id')) == 0 || resp.Id == 0) {
                                             $this.attr('data-id', resp.Id);
                                         }
                                     }, $this, 'input-kpi');
