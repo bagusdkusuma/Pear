@@ -24,7 +24,7 @@ namespace DSLNG.PEAR.Services
         public GetKpiTransformationsResponse Get(GetKpiTransformationsRequest request)
         {
             int totalRecord = 0;
-            var data = SortData(request.Search, request.SortingDictionary, out totalRecord);
+            var data = SortData(request.UserId, request.Search, request.SortingDictionary, out totalRecord);
             if (request.Take != -1)
             {
                 data = data.Skip(request.Skip).Take(request.Take);
@@ -35,9 +35,18 @@ namespace DSLNG.PEAR.Services
                 KpiTransformations = data.ToList().MapTo<GetKpiTransformationsResponse.KpiTransformationResponse>()
             };
         }
-        private IEnumerable<KpiTransformation> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
+        private IEnumerable<KpiTransformation> SortData(int userId, string search, IDictionary<string, SortOrder> sortingDictionary, out int TotalRecords)
         {
             var data = DataContext.KpiTransformations.Include(x => x.RoleGroups).AsQueryable();
+            if (userId != 0) {
+                var user = DataContext.Users.First(x => x.Id == userId);
+                if (!user.IsSuperAdmin)
+                {
+                    var roleId = user.RoleId.Value;
+                    data = data.Where(x => x.RoleGroups.Select(y => y.Id).Contains(roleId)).AsQueryable();
+                }
+            }
+            
             if (!string.IsNullOrEmpty(search) && !string.IsNullOrWhiteSpace(search))
             {
                 data = data.Where(x => x.Name.Contains(search));

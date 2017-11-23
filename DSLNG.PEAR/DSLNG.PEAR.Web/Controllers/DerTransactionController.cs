@@ -776,7 +776,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
 
             TempData["ExpandedFileAttachment"] = true;
-            return RedirectToAction("Index", new { date = theDate.ToString("MM/dd/yyyy") });
+            return RedirectToAction("Input", new { date = theDate.ToString("MM/dd/yyyy") });
         }
 
         [HttpPost]
