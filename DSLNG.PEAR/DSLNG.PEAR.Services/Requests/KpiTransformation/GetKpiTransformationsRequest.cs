@@ -10,5 +10,6 @@ namespace DSLNG.PEAR.Services.Requests.KpiTransformation
     {
         public int Skip { get; set; }
         public int Take { get; set; }
+        public int UserId { get; set; }
     }
 }

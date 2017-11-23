@@ -23,7 +23,8 @@ body {
     }
 
     body.report {
-        background-image: url(/Content/img/report-bg.jpg);
+        background-image: url(/Content/img/bg_5.jpg);
+        /*background-image: url(/Content/img/report-bg.jpg);*/
     }
 
     body.setting {
@@ -3563,4 +3564,10 @@ tr.der-transaction-error {
     /* To center horizontally */
     margin: 0 auto;
     pointer-events: all;
+}
+
+.dropdown-menu {
+max-height: 400px;
+overflow-y: auto;
+overflow-x: hidden;
 }

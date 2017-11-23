@@ -133,8 +133,8 @@ namespace DSLNG.PEAR.Services
                     privilege.CreatedDate = DateTime.Now;
                     DataContext.RolePrivileges.Add(privilege);
                 }
-                //DataContext.SaveChanges();
-                DataContext.SaveChanges(baseRequest);
+                DataContext.SaveChanges();
+                //DataContext.SaveChanges(baseRequest);
                 //try to batch update
                 if (request.MenuRolePrivileges.Count > 0)
                 {
@@ -162,7 +162,8 @@ namespace DSLNG.PEAR.Services
                             DataContext.MenuRolePrivileges.Add(menuPrivilege);
                         }
                     }
-                    DataContext.SaveChanges(baseRequest);
+                    //DataContext.SaveChanges(baseRequest);
+                    DataContext.SaveChanges();
                 }
                 response.IsSuccess = true;
                 response.Id = privilege.Id;
