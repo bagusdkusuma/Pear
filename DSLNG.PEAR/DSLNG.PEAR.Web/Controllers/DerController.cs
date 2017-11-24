@@ -974,13 +974,9 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 case "ph":
                     {
-                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
-                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
-                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
-                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(1, target0, date));
                         var view = RenderPartialViewToString("~/Views/Der/Display/_PH.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -1000,13 +996,9 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 case "oil-grease":
                     {
-                        var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
+                        var viewModel = GetGeneralDerKpiInformations(1, layout, date, PeriodeType.Daily);
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);
-                        var target1 = layout.KpiInformations.SingleOrDefault(x => x.Position == 1);
-                        var target2 = layout.KpiInformations.SingleOrDefault(x => x.Position == 2);
-                        viewModel.KpiInformationViewModels.Add(AddTarget(3, target0, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(4, target1, date));
-                        viewModel.KpiInformationViewModels.Add(AddTarget(5, target2, date));
+                        viewModel.KpiInformationViewModels.Add(AddTarget(1, target0, date));
                         var view = RenderPartialViewToString("~/Views/Der/Display/_OilGrease.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -1243,7 +1235,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     if (item.ConfigType.Equals(ConfigType.KpiAchievement))
                     {
                         var achievement = new Services.Responses.KpiAchievement.GetKpiAchievementResponse();
-                        if (item.Kpi.Id == 62)
+                        if (item.Kpi.Id == 62 || item.Kpi.Id == 505)
                         {
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(date.Year, date.Month, 1), PeriodeType.Monthly);
                         }
