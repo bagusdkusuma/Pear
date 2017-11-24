@@ -237,6 +237,8 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "person-on-board":
                     case "total-commitment":
                     case "temperature":
+                    case "ph":
+                    case "oil-grease":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 1);
                             break;
@@ -251,9 +253,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     case "job-pmts":
                     case "no2":
                     case "so2":
-                    case "ph":
                     case "particulate":
-                    case "oil-grease":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 3);
                             break;
@@ -693,7 +693,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(13);
+                        viewModel.KpiInformations = GetKpiInformations(14);
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
                 case "security":
@@ -859,13 +859,13 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "ph":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(3);
+                        viewModel.KpiInformations = GetKpiInformations(1);
                         return PartialView("LayoutType/_PH", viewModel);
                     }
                 case "oil-grease":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(3);
+                        viewModel.KpiInformations = GetKpiInformations(1);
                         return PartialView("LayoutType/_OilGrease", viewModel);
                     }
 

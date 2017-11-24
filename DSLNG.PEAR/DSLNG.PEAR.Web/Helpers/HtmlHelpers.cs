@@ -116,6 +116,20 @@ namespace DSLNG.PEAR.Web.Helpers
                 string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
 
+        public static string DisplayTrafficLight(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget)
+        {
+            if (string.IsNullOrEmpty(kpiInformation.DerItemValue.Value)) {
+                return string.Empty;
+            }
+            double target;
+            double actual;
+            ParseIt(kpiInformation.DerItemValue.Value, out actual);
+            ParseIt(kpiInformationTarget.DerItemValue.Value, out target);
+            if (actual >= target) {
+                return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "' style='height:21px' />";
+            }
+            return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-red-light.png") + "' style='height:21px' />";
+        }
         public static string DisplayTrafficLight(this HtmlHelper htmlHelper, List<string> list)
         {
             var numbers = new List<double>();

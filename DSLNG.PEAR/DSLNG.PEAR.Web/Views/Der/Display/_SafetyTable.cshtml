@@ -26,7 +26,7 @@
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, string.Empty, "cards/day", "N/A", false, 0)</td>
             <td>
-                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd)
+                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd)
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Ytd, string.Empty, "cards/day", "N/A", false, 0)</td>
             <td>                
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd, string.Empty, "cards/day", "N/A", false, 0)
@@ -40,13 +40,14 @@
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, "case", "N/A", false, 0)</td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Mtd, string.Empty, "case", "N/A", false, 0)</td>
             <td>
-                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd)
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Ytd, string.Empty, "case", "N/A", false, 0)</td>
-            <td style="padding: 0 1px 0 1px;">                
-                <div style="background: #BFBFBF;height:20px">&nbsp;</div>
-                @*@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 14).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", false, 0)*@
+                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 27).DerItemValue.Ytd)
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Ytd, string.Empty, "case", "N/A", false, 0)</td>
+            @*<td style="padding: 0 1px 0 1px;">*@                
+                @*<div style="background: #BFBFBF;height:20px">&nbsp;</div>*@
+            <td>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 27).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", false, 0)
             </td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Itd, string.Empty, "case", "N/A", false, 0)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 13).DerItemValue.Itd, string.Empty, "case", "N/A", false, 0)</td>
         </tr>
         <tr class="horizontal-border-none">
             <td style="text-align:left">
