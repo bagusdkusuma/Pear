@@ -141,7 +141,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 numbers.Add(tempVal);
             }
 
-            for (int i = 0; i <= list.Count; i++)
+            for (int i = 0; i < list.Count / 2; i++)
             {
                 if(isValids[i] && isValids[(list.Count / 2) + i])
                 {
