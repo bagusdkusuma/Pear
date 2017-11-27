@@ -85,7 +85,7 @@ namespace DSLNG.PEAR.Web.Helpers
         }
 
         public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
-           bool isRounded = true, int trailingDecimal = 2)
+           bool isRounded = true, int trailingDecimal = 2, bool decimalAfterInt = true)
         {
             if (!string.IsNullOrEmpty(val) && (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement == "day"))
             {
@@ -108,12 +108,12 @@ namespace DSLNG.PEAR.Web.Helpers
                 }
                 else
                 {
-                    return string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement);
+                    return string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal, decimalAfterInt), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement);
                 }
             }
 
             return !string.IsNullOrEmpty(val) ?
-                string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
+                string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal, decimalAfterInt), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
 
         public static string DisplayTrafficLight(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget)
@@ -491,13 +491,20 @@ namespace DSLNG.PEAR.Web.Helpers
 
             return string.Empty;
         }
-        private static string RoundIt(bool isRounded, string val, int number = 2)
+        private static string RoundIt(bool isRounded, string val, int number = 2, bool decimalAfterInt = true)
         {
             if (isRounded)
             {
                 /*double v = double.Parse(val);
                 val = Math.Round(v, 2).ToString(CultureInfo.InvariantCulture);*/
-                return ParseToNumber(val, number);
+                int resultNumber;
+                if (decimalAfterInt || !int.TryParse(val, out resultNumber))
+                {
+                    return ParseToNumber(val, number);
+                }
+                else {
+                    return resultNumber.ToString();
+                }
             }
 
             return val;
