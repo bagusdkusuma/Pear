@@ -37,26 +37,20 @@ namespace DSLNG.PEAR.Services
 
         public GetKpiToSeriesResponse GetKpiToSeries(GetKpiToSeriesRequest request)
         {
-            if (request.MeasurementId != 0)
-            {
-                return new GetKpiToSeriesResponse
-                {
-                    KpiList = DataContext.Kpis
-                    .Include(x => x.Measurement)
-                    .Where(x => x.Name.Contains(request.Term) && x.Measurement.Id == request.MeasurementId).Take(20).ToList()
-                    .MapTo<GetKpiToSeriesResponse.Kpi>()
-                };
+            var query = DataContext.Kpis
+                    .Include(x => x.Measurement).Where(x => x.Name.Contains(request.Term)).AsQueryable();
+            if (request.MeasurementId != 0) {
+                query = query.Where(x => x.Measurement.Id == request.MeasurementId);
             }
-            else
-            {
-                return new GetKpiToSeriesResponse
-               {
-                   KpiList = DataContext.Kpis
-                   .Include(x => x.Measurement)
-                   .Where(x => x.Name.Contains(request.Term)).Take(20).ToList()
-                   .MapTo<GetKpiToSeriesResponse.Kpi>()
-               };
+            if (request.PeriodeType.HasValue) {
+                query = query.Where(x => x.Period == request.PeriodeType.Value);
             }
+            
+            return new GetKpiToSeriesResponse
+            {
+                KpiList = query.Take(20).ToList()
+                .MapTo<GetKpiToSeriesResponse.Kpi>()
+            };
         }
 
         public GetKpiResponse GetKpi(GetKpiRequest request)
