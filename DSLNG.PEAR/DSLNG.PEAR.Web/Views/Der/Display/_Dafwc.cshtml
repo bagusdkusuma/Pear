@@ -52,7 +52,7 @@
             <span>actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)</span>
         </td>
         <td class="text-right">
-            target : < @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)
+            target : < @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", true, 0)
         </td>
     </tr>
     </table>

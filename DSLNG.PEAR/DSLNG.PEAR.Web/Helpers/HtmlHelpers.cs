@@ -124,7 +124,7 @@ namespace DSLNG.PEAR.Web.Helpers
             double target;
             double actual;
             ParseIt(kpiInformation.DerItemValue.Value, out actual);
-            ParseIt(kpiInformationTarget.DerItemValue.Value, out target);
+            ParseIt(kpiInformationTarget.DerItemValue.Ytd, out target);
             if (actual >= target) {
                 return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "' style='height:21px' />";
             }
