@@ -981,7 +981,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
                     }
-                case "Particulate":
+                case "particulate":
                     {
                         var viewModel = GetGeneralDerKpiInformations(3, layout, date, PeriodeType.Daily);
                         var target0 = layout.KpiInformations.SingleOrDefault(x => x.Position == 0);

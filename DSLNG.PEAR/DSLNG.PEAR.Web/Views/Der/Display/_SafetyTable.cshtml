@@ -105,7 +105,7 @@
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Ytd, string.Empty, "cases", "N/A", true, 2, false)
             </td>
             <td>                
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 19).DerItemValue.Ytd, string.Empty, "cases", "N/A", true, 2, false)
+                &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 19).DerItemValue.Ytd, string.Empty, "cases", "N/A", true, 2, false)
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Itd, string.Empty, "case", "N/A", true, 2, false)</td>
         </tr>
@@ -205,10 +205,10 @@
                 <span style="font-weight: bold">@label.ElementAtOrDefault(12)</span> (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Remark))
             </td>
             <td>
-                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 26).DerItemValue.Ytd)
-                actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 26).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", true, 2, false)
+                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 26).DerItemValue.Ytd)
+                actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 2, false)
             </td>
-            <td>target : &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Itd, string.Empty, string.Empty, "N/A", true, 2, false)</td>
+            <td>target : &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 26).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", true, 2, false)</td>
         </tr>
     </tbody>
 </table>
