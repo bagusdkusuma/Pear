@@ -1,8 +1,8 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
 @{
-    string[] label = { "SLC-PSLC submitted", "Near Miss", "No of PTW audited", "Fatality/Disability", "DAFW (Days Away From Work)"
+    string[] label = { "SLC submitted", "Near Miss Report", "No of PTW audited", "Fatality/Disability", "DAFW (Days Away From Work)"
             , "RWC + MTC (no of injury)", "LOPC tier 3; <=0.3bbl/50kg", "First Aid"
-            , "Overdue SCE inspection ", "Process override w/o appr", "PTW audit PSM finding", "Overdue Temp MOC", "DCS Alarm Rate-Per Panel Operator per Hour" };
+            , "Overdue SCE inspection ", "Process override w/o appr", "PTW audit PSM submitted", "Overdue Temp MOC", "DCS Alarm Rate-Per Panel Operator per Hour" };
 }
 <table class="table table-bordered kpi-fatality">
     <thead>
@@ -111,6 +111,22 @@
         </tr>
         <tr class="horizontal-border-none">
             <td style="text-align:left">
+                @label.ElementAtOrDefault(7)
+
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, string.Empty, "case", "N/A", true, 2, false)</td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Mtd, string.Empty, "case", "N/A", true, 2, false)</td>
+            <td>
+                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Ytd)
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd, string.Empty, "cases", "N/A", true, 2, false)
+            </td>
+            <td>
+                &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Ytd, string.Empty, "cases", "N/A", true, 2, false)
+            </td>
+            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Itd, string.Empty, "case", "N/A", true, 2, false)</td>
+        </tr>
+        <tr class="horizontal-border-none">
+            <td style="text-align:left">
                 @label.ElementAtOrDefault(6)
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, string.Empty, "case", "N/A", true, 2, false)</td>
@@ -123,22 +139,7 @@
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Itd, string.Empty, "case", "N/A", true, 2, false)</td>
         </tr>
-        <tr class="horizontal-border-none">
-            <td style="text-align:left">
-                @label.ElementAtOrDefault(7)                
-            
-            </td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, string.Empty, "case", "N/A", true, 2, false)</td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Mtd, string.Empty, "case", "N/A", true, 2, false)</td>
-            <td>
-                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Ytd)
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Ytd, string.Empty, "cases", "N/A", true, 2, false)
-            </td>
-            <td>                
-               &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 21).DerItemValue.Ytd, string.Empty, "cases", "N/A", true, 2, false)
-            </td>
-            <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Itd, string.Empty, "case", "N/A", true, 2, false)</td>
-        </tr>
+        
         <tr class="border-bottom-none">
             <td style="text-align:left">
                 @label.ElementAtOrDefault(8)

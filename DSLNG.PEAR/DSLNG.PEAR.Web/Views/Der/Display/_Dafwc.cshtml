@@ -49,10 +49,10 @@
         </td>
         <td>@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value)</td>
         <td>
-            <span>actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 0)</span>
+            <span>actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 2, false)</span>
         </td>
         <td class="text-right">
-            target : < @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", true, 0)
+            target : < @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", true, 2, false)
         </td>
     </tr>
     </table>
