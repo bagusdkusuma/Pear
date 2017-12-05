@@ -188,7 +188,7 @@
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
                 <!--242-->
-                <td><label class="control-label">SLC-PSLC submitted 24H</label></td>
+                <td><label class="control-label">SLC submitted 24H</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 504, 232, "number")
@@ -196,7 +196,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Near-Miss 24H</label></td>
+                <td><label class="control-label">Near-Miss Report 24H</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 285, 233, "number")
@@ -236,21 +236,22 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">LOPC tier-3; <=0.3bbl/50kg 24H</label></td>
+                <td><label class="control-label">First Aid 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 238, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 238, "number")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">First Aid 24H</label></td>
+                <td><label class="control-label">LOPC minor</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 239, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 239, "number")
                     </span>
                 </td>
             </tr>
+            
             <tr>
                 <td><label class="control-label">Overdue SCE Inspection 24H</label></td>
                 <td>
@@ -268,7 +269,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">PTW audit PSM finding 24H</label></td>
+                <td><label class="control-label">PS incident investigation compliance 24H</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 510, 242, "number")
@@ -298,7 +299,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Near-Miss 24H</label></td>
+                <td><label class="control-label">Near-Miss Report 24H</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 505, 245, "number", "empty", "yearly-target")
@@ -337,19 +338,20 @@
                     </span>
                 </td>
             </tr>
-            <tr>
-                <td><label class="control-label">LOPC tier-3; <=0.3bbl/50kg 24H</label></td>
-                <td>
-                    <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 250, "number", "empty", "yearly-target")
-                    </span>
-                </td>
-            </tr>
+           
             <tr>
                 <td><label class="control-label">First Aid 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 251, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 250, "number", "empty", "yearly-target")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">LOPC minor</label></td>
+                <td>
+                    <span class="col-sm-8">
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 251, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -370,7 +372,7 @@
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">PTW audit PSM finding 24H</label></td>
+                <td><label class="control-label">PS incident investigation compliance 24H</label></td>
                 <td>
                     <span class="col-sm-8">
                         @Html.DisplayKpiInformationInput(Model.KpiInformations, 510, 254, "number", "empty", "yearly-target")

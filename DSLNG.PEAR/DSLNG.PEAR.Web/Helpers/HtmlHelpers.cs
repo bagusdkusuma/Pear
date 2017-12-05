@@ -116,19 +116,36 @@ namespace DSLNG.PEAR.Web.Helpers
                 string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal, decimalAfterInt), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
         }
 
-        public static string DisplayTrafficLight(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget)
+        public static string DisplayTrafficLight(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, 
+            DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget, string style, string type)
         {
             if (string.IsNullOrEmpty(kpiInformation.DerItemValue.Value)) {
                 return string.Empty;
             }
+
+           
             double target;
             double actual;
             ParseIt(kpiInformation.DerItemValue.Value, out actual);
             ParseIt(kpiInformationTarget.DerItemValue.Ytd, out target);
-            if (actual >= target) {
-                return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "' style='height:21px' />";
+
+            switch (type)
+            {
+                case "ph":
+                    if(actual >= 6 && actual <=9)
+                    {
+                        return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "'" + style + "' />";
+                    } 
+                    break;
+                default:
+                    if (actual <= 10)
+                    {
+                        return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "'" + style + "' />";
+                    }
+                    break;
             }
-            return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-red-light.png") + "' style='height:21px' />";
+            
+            return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-red-light.png") + "'" + style + " />";
         }
         public static string DisplayTrafficLight(this HtmlHelper htmlHelper, List<string> list)
         {
@@ -149,7 +166,7 @@ namespace DSLNG.PEAR.Web.Helpers
                     var target = numbers[(list.Count / 2) + i];
                     if(actual > target)
                     {
-                        return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-red-light.png") + "' style='height:21px' />";
+                        return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-red-light.png") + "' style='height:29px;display: block;margin: 0 auto;' />";
                     }
                 }
                 else
@@ -158,7 +175,7 @@ namespace DSLNG.PEAR.Web.Helpers
                 }
             }
 
-            return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "' style='height:21px' />";
+            return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "' style='height:29px;display: block;margin: 0 auto;' />";
         }
 
 
