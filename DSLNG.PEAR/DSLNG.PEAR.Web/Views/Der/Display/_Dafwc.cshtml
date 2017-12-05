@@ -45,10 +45,10 @@
 <table class="table borderless dafwc">
     <tr>
         <td style="width: 67%">
-            <label> Total Recordable Injury Frequency Rate-TRIFR (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)) : </label>
+            <label> Total Recordable Injury Frequency -TRIF (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)) : </label>
         </td>
         <td>@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value)</td>
-        <td>
+        <td class="text-right">
             <span>actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 2, false)</span>
         </td>
         <td class="text-right">

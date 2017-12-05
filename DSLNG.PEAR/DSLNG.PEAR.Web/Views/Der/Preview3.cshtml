@@ -376,13 +376,13 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                             <td>
                                                                 Emission :
                                                             </td>
-                                                            <td>
+                                                            <td style="text-align: center">
                                                                 NO<sub>2</sub>
                                                             </td>
-                                                            <td>
+                                                            <td style="text-align: center">
                                                                 SO<sub>2</sub>
                                                             </td>
-                                                            <td>
+                                                            <td style="text-align: center">
                                                                 Particulate
                                                             </td>
                                                         </tr>
@@ -423,9 +423,9 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                         </tr>
                                                         <tr style="font-weight: bold" class="class=" enviromental-label"">
                                                             <td rowspan="2">
-                                                                <img src="/Content/img/der-eff.png" style="height: 41px;padding: 0;">
+                                                                <img src="/Content/img/der-eff.png" style="height: 52px;padding: 0;">
                                                             </td>
-                                                            <td colspan="2">
+                                                            <td colspan="2" style="text-align: center">
                                                                 pH
                                                             </td>
                                                             <td>
@@ -442,6 +442,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                                                     }
                                                                 }
                                                             </td>
+                                                           
                                                             <td>
                                                                 @{
                                                                     var row3Col10 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 10);
