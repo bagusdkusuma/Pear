@@ -827,8 +827,8 @@ namespace DSLNG.PEAR.Web.Helpers
             }
             else
             {
-                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? kpiValue.Remark : (kpiValue.Type == "now" ? kpiValue.Remark : value));
-                existValue = kpiValue == null ? existValue : (string.IsNullOrEmpty(kpiValue.Remark) ? existValue : kpiValue.Type);
+                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? kpiValue.Remark.Replace("prev--","") : (kpiValue.Type == "now" ? kpiValue.Remark.Replace("prev--", "") : value));
+                existValue = kpiValue == null ? existValue : (string.IsNullOrEmpty(kpiValue.Remark) || kpiValue.Remark.StartsWith("prev--") ? (kpiValue.Remark.StartsWith("prev--")? "prev" : existValue) : kpiValue.Type);
             }
             return new ValueObject { Value = value, ExistValue = existValue, Id = kpiValue == null ? 0 : kpiValue.Id };
         }

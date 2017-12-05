@@ -407,11 +407,12 @@ namespace DSLNG.PEAR.Services
                             var isTodayValue = target.Periode == request.Date;
                             if (isTodayValue)
                             {
+                                var prevTarget = targets.FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode == previousDate && x.PeriodeType == PeriodeType.Daily);
                                 kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
                                     Value = target.Value.HasValue ? target.Value : null,
-                                    Remark = target.Remark,
+                                    Remark = string.IsNullOrEmpty(target.Remark) ? (prevTarget != null ? "prev--" + prevTarget.Remark : target.Remark) : target.Remark,
                                     Type = "now",
                                     Id = target.Id
                                 };
@@ -419,13 +420,14 @@ namespace DSLNG.PEAR.Services
                             else
                             {
                                 var todayValue = targets.FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode == request.Date && x.PeriodeType == PeriodeType.Daily);
+                                var prevTarget = targets.FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode == previousDate && x.PeriodeType == PeriodeType.Daily);
                                 if (todayValue != null)
                                 {
                                     kpiInformation.DailyTarget = new GetKpiInformationValuesResponse.KpiValue
                                     {
                                         Date = todayValue.Periode,
                                         Value = todayValue.Value.HasValue ? todayValue.Value : null,
-                                        Remark = todayValue.Remark,
+                                        Remark = string.IsNullOrEmpty(todayValue.Remark) ? (prevTarget != null ? "prev--" + prevTarget.Remark : todayValue.Remark) : todayValue.Remark,
                                         Type = "now",
                                         Id = todayValue.Id
                                     };
