@@ -307,6 +307,7 @@
     <Compile Include="Responses\InputData\GetInputDataResponse.cs" />
     <Compile Include="Responses\InputData\GetInputDatasResponse.cs" />
     <Compile Include="Responses\InputData\SaveOrUpdateInputDataResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\GetKpiAchievementLessThanOrEqualResponse.cs" />
     <Compile Include="Responses\KpiInformation\GetKpiTransformationResponse.cs" />
     <Compile Include="Responses\KpiInformation\GetKpiTransformationsResponse.cs" />
     <Compile Include="Responses\KpiInformation\SaveKpiTransformationResponse.cs" />

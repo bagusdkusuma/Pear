@@ -24,6 +24,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, RangeFilter rangeFilter);
         GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, RangeFilter rangeFilter, YtdFormula ytdFormula);
         GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, PeriodeType periodeType);
+        GetKpiAchievementLessThanOrEqualResponse GetKpiAchievementLessThanOrEqual(int kpiId, DateTime date, PeriodeType periodeType);
         BaseResponse DeleteKpiAchievement(int kpiId, DateTime periode, PeriodeType periodeType);
         BaseResponse DeleteKpiAchievement(DeleteKpiAchievementRequest request);
         UpdateKpiAchievementItemResponse UpdateOriginalData(UpdateKpiAchievementItemRequest request);

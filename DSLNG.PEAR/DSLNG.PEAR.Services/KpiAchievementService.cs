@@ -859,6 +859,71 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetKpiAchievementLessThanOrEqualResponse GetKpiAchievementLessThanOrEqual(int kpiId, DateTime date, PeriodeType periodeType) {
+
+            var response = new GetKpiAchievementLessThanOrEqualResponse();
+            try
+            {
+                var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                var data = DataContext.KpiAchievements.Include(x => x.Kpi).Where(x => x.Kpi.Id == kpiId && x.Periode <= date).AsQueryable();
+                var result = new KpiAchievement();
+                switch (periodeType)
+                {
+                    case PeriodeType.Daily:
+                    case PeriodeType.Monthly:
+                    case PeriodeType.Yearly:
+                        {
+                            result = data.FirstOrDefault(x => x.PeriodeType == periodeType);
+                            break;
+                        }
+
+                }
+
+                var kpiResponse = new GetKpiAchievementLessThanOrEqualResponse.KpiResponse
+                {
+                    Id = kpi.Id,
+                    Measurement = kpi.Measurement.Name,
+                    Name = kpi.Name,
+                    Remark = kpi.Remark,
+                };
+                if (result == null)
+                {
+                    return new GetKpiAchievementLessThanOrEqualResponse
+                    {
+                        IsSuccess = false,
+                        Message = "There is no actual value at this periode of time"
+                    };
+                }
+                else
+                {
+                    return new GetKpiAchievementLessThanOrEqualResponse
+                    {
+                        Id = result.Id,
+                        Periode = result.Periode,
+                        Value = (result != null) && result.Periode == date? result.Value.ToString() : "no invtgtn",
+                        Mtd = (result != null) && result.Periode.Month == date.Month && result.Periode.Year == date.Year ? result.Mtd.ToString() : "no invtgtn",
+                        Ytd = (result != null) && result.Periode.Year == date.Year ? result.Ytd.ToString() : "no invtgtn",
+                        Itd = (result != null) ? result.Itd.ToString() : "no invtgtn",
+                        Remark = (result != null) ? result.Remark : null,
+                        Kpi = kpiResponse,
+                        Deviation = (result != null) ? result.Deviation : null,
+                        MtdDeviation = (result != null) ? result.MtdDeviation : null,
+                        YtdDeviation = (result != null) ? result.YtdDeviation : null,
+                        ItdDeviation = (result != null) ? result.ItdDeviation : null,
+                        IsSuccess = true
+                    };
+                }
+
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+
+            return response;
+        }
+
         public GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, PeriodeType periodeType)
         {
             var response = new GetKpiAchievementResponse();

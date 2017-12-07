@@ -178,7 +178,7 @@
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, string.Empty, "%", "N/A", true, 2, false)</td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Mtd, string.Empty, "%", "N/A", true, 2, false)</td>
             <td>
-                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, Model.KpiInformationViewModels.Single(x => x.Position == 24).DerItemValue.Ytd)
+                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, "100")
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, string.Empty, "%", "N/A", true, 2, false)
             </td>
             <td>
@@ -207,9 +207,9 @@
             </td>
             <td style="border-left: 0;border-right: 0;">
                 @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 26).DerItemValue.Ytd)
-                actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 2, false)
+                actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 2, true)
             </td>
-            <td style="border-left: 0;">target : &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 26).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", true, 2, false)</td>
+            <td style="border-left: 0;">target : &lt; @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 26).DerItemValue.Ytd, string.Empty, string.Empty, "N/A", true, 2, true)</td>
         </tr>
     </tbody>
 </table>
