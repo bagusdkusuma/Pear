@@ -87,6 +87,9 @@ namespace DSLNG.PEAR.Web.Helpers
         public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
            bool isRounded = true, int trailingDecimal = 2, bool decimalAfterInt = true)
         {
+            if (!string.IsNullOrEmpty(val) && val == "no invtgtn") {
+                return val;
+            }
             if (!string.IsNullOrEmpty(val) && (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement == "day"))
             {
                 if (double.Parse(RoundIt(true, val, 2)) > 0)
@@ -529,6 +532,10 @@ namespace DSLNG.PEAR.Web.Helpers
 
         public static MvcHtmlString DisplaySafetyIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget)
         {
+            if (!string.IsNullOrEmpty(valueYtd) && valueYtd == "no invtgtn") {
+                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
+            }
+
             if (string.IsNullOrEmpty(valueYtd) || string.IsNullOrEmpty(valueTarget))
             {
                 return new MvcHtmlString(string.Empty);

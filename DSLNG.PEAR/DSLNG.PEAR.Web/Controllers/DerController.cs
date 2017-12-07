@@ -32,6 +32,7 @@ using System.Text.RegularExpressions;
 using DSLNG.PEAR.Web.Attributes;
 using Newtonsoft.Json.Linq;
 using DSLNG.PEAR.Services.Requests.DerLoadingSchedule;
+using DSLNG.PEAR.Services.Responses.KpiAchievement;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -1235,6 +1236,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     if (item.ConfigType.Equals(ConfigType.KpiAchievement))
                     {
                         var achievement = new Services.Responses.KpiAchievement.GetKpiAchievementResponse();
+                        GetKpiAchievementLessThanOrEqualResponse specialAchievement = null;
                         if (item.Kpi.Id == 62 || item.Kpi.Id == 505)
                         {
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(date.Year, date.Month, 1), PeriodeType.Monthly);
@@ -1244,11 +1246,18 @@ namespace DSLNG.PEAR.Web.Controllers
                             var prevMonth = date.AddMonths(-1);
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(prevMonth.Year, prevMonth.Month, 1), PeriodeType.Monthly);
                         }
+                        else if (item.Kpi.Id == 358)
+                        {
+                            specialAchievement = _kpiAchievementService.GetKpiAchievementLessThanOrEqual(item.Kpi.Id, date, PeriodeType.Daily);
+                        }
                         else
                         {
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, periodeType);
                         }
                         kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
+                        if (specialAchievement != null) {
+                            kpiInformationVm.DerItemValue = specialAchievement.MapTo<DerItemValueViewModel>();
+                        }
                     }
                     else if (item.ConfigType.Equals(ConfigType.KpiTarget))
                     {

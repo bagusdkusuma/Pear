@@ -4,6 +4,6 @@
         <label>Avg Ambient Temperature &#176;C:</label>
     </td>
     <td>
-        @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, string.Empty, "N/A", false) <sup>o</sup>C
+        @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, string.Empty, "N/A", true, 2) <sup>o</sup>C
     </td>
 </tr>
