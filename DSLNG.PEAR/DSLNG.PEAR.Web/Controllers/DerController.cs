@@ -1246,7 +1246,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             var prevMonth = date.AddMonths(-1);
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(prevMonth.Year, prevMonth.Month, 1), PeriodeType.Monthly);
                         }
-                        else if (item.Kpi.Id == 358)
+                        else if (item.Kpi.Id == 510)
                         {
                             specialAchievement = _kpiAchievementService.GetKpiAchievementLessThanOrEqual(item.Kpi.Id, date, PeriodeType.Daily);
                         }
