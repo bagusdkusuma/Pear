@@ -44,11 +44,13 @@
 </table>
 <table class="table borderless dafwc">
     <tr>
-        <td style="width: 67%">
+        <td style="width: 71%">
             <label> Total Recordable Injury Frequency -TRIF (as of @Html.DisplayDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Remark)) : </label>
         </td>
-        <td>@Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd)</td>
-        <td class="text-right">
+        <td style="width: 14.9%" class="text-right">
+            <span class="indicator absolute">
+                @Html.DisplayKpiIndicatorType2(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Ytd)
+            </span>
             <span>actual : @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 2, false)</span>
         </td>
         <td class="text-right">

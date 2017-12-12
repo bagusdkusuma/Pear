@@ -1133,6 +1133,10 @@ namespace DSLNG.PEAR.Services
                         }
 
                     }
+                    //special case
+                    //if (request.Id == 65) {
+
+                    //}
                 }
                 #endregion
                 #region insert
@@ -1578,6 +1582,25 @@ namespace DSLNG.PEAR.Services
                                 kpiAchievement.MtdDeviation = "1";
                                 kpiAchievement.YtdDeviation = "1";
                                 kpiAchievement.ItdDeviation = "1";
+                            }
+                            //special case
+                            if (request.Id == 65) {
+                                var kpiActual519 = DataContext.KpiAchievements.SingleOrDefault(x => x.Kpi.Id == 519 && x.Periode == request.Periode && x.PeriodeType == request.PeriodeType);
+                                if (kpiActual519 != null)
+                                {
+                                    kpiActual519.Value = kpiAchievement.Mtd - 17;
+                                }
+                                else {
+                                    kpiActual519 = new KpiAchievement();
+                                    kpiActual519.Periode = request.Periode;
+                                    kpiActual519.PeriodeType = request.PeriodeType;
+                                    kpiActual519.CreatedBy = user;
+                                    kpiActual519.UpdatedBy = user;
+                                    kpiActual519.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == 519);
+                                    kpiActual519.Value = kpiAchievement.Mtd - 17;
+                                    DataContext.KpiAchievements.Add(kpiActual519);
+                                    //save actual daily for 519
+                                }
                             }
                             DataContext.SaveChanges(action);
                             break;
