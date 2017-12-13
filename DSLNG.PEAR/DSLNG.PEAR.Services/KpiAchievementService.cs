@@ -11,6 +11,7 @@ using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Requests.CustomFormula;
+using System.Globalization;
 
 namespace DSLNG.PEAR.Services
 {
@@ -1067,6 +1068,15 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateKpiAchievementItemResponse();
             try
             {
+                //check method value
+                var involvedKpi = DataContext.Kpis.Include(x => x.Method).SingleOrDefault(x => x.Id == request.KpiId);
+                if (!string.Equals(involvedKpi.Method.Name, "Manual Input", StringComparison.InvariantCultureIgnoreCase)) {
+                    response.Id = request.Id;
+                    response.IsSuccess = true;
+                    response.Message = "KPI Achievement item has been updated successfully";
+                    return response;
+                }
+
                 var action = request.MapTo<BaseAction>();
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
                 var kpiAchievement = request.MapTo<KpiAchievement>();
@@ -1584,7 +1594,7 @@ namespace DSLNG.PEAR.Services
                                 kpiAchievement.ItdDeviation = "1";
                             }
                             //special case
-                            if (request.Id == 65) {
+                            if (request.KpiId == 65) {
                                 var kpiActual519 = DataContext.KpiAchievements.SingleOrDefault(x => x.Kpi.Id == 519 && x.Periode == request.Periode && x.PeriodeType == request.PeriodeType);
                                 if (kpiActual519 != null)
                                 {
@@ -1601,6 +1611,7 @@ namespace DSLNG.PEAR.Services
                                     DataContext.KpiAchievements.Add(kpiActual519);
                                     //save actual daily for 519
                                 }
+                                DataContext.SaveChanges(action);
                             }
                             DataContext.SaveChanges(action);
                             break;

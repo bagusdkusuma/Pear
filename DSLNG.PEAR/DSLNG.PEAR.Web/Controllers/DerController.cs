@@ -788,7 +788,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "indicative-commercial-price":
                     {
                         var monthlyDate = new DateTime(date.Year, date.Month, 1);
-                        var viewModel = GetGeneralDerKpiInformations(5, layout, monthlyDate, PeriodeType.Monthly);
+                        var viewModel = GetGeneralDerKpiInformations(5, layout, monthlyDate, PeriodeType.Monthly, date);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_IndicativeCommercialPrice.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -1219,7 +1219,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        private DisplayKpiInformationViewModel GetGeneralDerKpiInformations(int numberOfKpi, GetDerLayoutitemResponse layout, DateTime date, PeriodeType periodeType)
+        private DisplayKpiInformationViewModel GetGeneralDerKpiInformations(int numberOfKpi, GetDerLayoutitemResponse layout, DateTime date, PeriodeType periodeType, DateTime? originalDate = null)
         {
             var viewModel = new DisplayKpiInformationViewModel();
 
@@ -1240,6 +1240,9 @@ namespace DSLNG.PEAR.Web.Controllers
                         if (item.Kpi.Id == 62 || item.Kpi.Id == 505)
                         {
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(date.Year, date.Month, 1), PeriodeType.Monthly);
+                        }
+                        else if (item.Kpi.Id == 519 && originalDate.HasValue) {
+                            achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, originalDate.Value, PeriodeType.Daily);
                         }
                         else if (item.Kpi.Id == 385)
                         {
