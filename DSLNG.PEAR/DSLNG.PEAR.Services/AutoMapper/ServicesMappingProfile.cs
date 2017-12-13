@@ -137,6 +137,7 @@ using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
 using DSLNG.PEAR.Services.Responses.AuditTrail;
 using DSLNG.PEAR.Services.Requests.DerTransaction;
 using DSLNG.PEAR.Services.Requests.AuditTrail;
+using DSLNG.PEAR.Services.Requests;
 
 namespace DSLNG.PEAR.Services.AutoMapper
 {
@@ -166,6 +167,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<Data.Entities.AuditTrail, AuditTrailResponse>();
             Mapper.CreateMap<Data.Entities.AuditTrail, AuditTrailsResponse.AuditTrail>()
                 .ForMember(k => k.UserName, o => o.MapFrom(z => z.User.Username));
+            Mapper.CreateMap<BaseRequest, BaseAction>();
             Mapper.CreateMap<DerDeleteRequest, BaseAction>();
             Mapper.CreateMap<CreateDerInputFileRequest, BaseAction>();
             Mapper.CreateMap<DeleteKpiAchievementRequest, BaseAction>();
