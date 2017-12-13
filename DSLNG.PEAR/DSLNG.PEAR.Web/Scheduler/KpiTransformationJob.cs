@@ -35,10 +35,11 @@ namespace DSLNG.PEAR.Web.Scheduler
                     var kpiTransformationScheduleService = new KpiTransformationScheduleService(dataContext);
                     var kpiService = new KpiService(dataContext);
                     #region loop date
-                    for (var date = kpiTransformationSchedule.Start; date <= kpiTransformationSchedule.End; date = Increment(kpiTransformationSchedule, date))
+                    foreach (var kpi in kpiTransformationSchedule.SelectedKpis)
                     {
-                        foreach (var kpi in kpiTransformationSchedule.SelectedKpis)
+                        for (var date = kpiTransformationSchedule.Start; date <= kpiTransformationSchedule.End; date = Increment(kpiTransformationSchedule, date))
                         {
+                        
                             try
                             {
                                 var kpiTransformed = kpi.CustomFormula;
