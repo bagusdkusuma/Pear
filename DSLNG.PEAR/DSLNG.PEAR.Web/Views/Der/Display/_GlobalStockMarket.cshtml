@@ -104,19 +104,19 @@
         </tr>
     </tbody>
 </table>
-
+<span id="brenfut" data-val="@Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value"></span>
 <script type="text/javascript">
     $(document).ready(function () {
 
-        var brenfut = @Html.Raw(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value);
-        //$('.brenfut-first').append(brenfut.a.label + ':' + brenfut.a.value);
-        //$('.brenfut-second').append(brenfut.b.label + ':' + brenfut.b.value);
-        //$('.brenfut-third').append(brenfut.c.label + ':' + brenfut.c.value);
-        //$('.brenfut-fourth').append(brenfut.d.label + ':' + brenfut.d.value);
-        $('.brenfut-first').append(brenfut.a.label);
-        $('.brenfut-second').append(brenfut.b.label);
-        $('.brenfut-third').append(brenfut.c.label);
-        $('.brenfut-fourth').append(brenfut.d.label);
+        var brenfut = $('#brenfut').data('val');
+        console.log(brenfut);
+        if (brenfut != '') {
+            $('.brenfut-first').append(brenfut.a.label);
+            $('.brenfut-second').append(brenfut.b.label);
+            $('.brenfut-third').append(brenfut.c.label);
+            $('.brenfut-fourth').append(brenfut.d.label);
+        }
+
 
     });
 </script>
