@@ -892,8 +892,13 @@ namespace DSLNG.PEAR.Services
                 {
                     return new GetKpiAchievementLessThanOrEqualResponse
                     {
-                        IsSuccess = false,
-                        Message = "There is no actual value at this periode of time"
+                        Periode = date,
+                        Value = "no invtgtn",
+                        Mtd = "no invtgtn",
+                        Ytd = "no invtgtn",
+                        Itd = "no invtgtn",
+                        Kpi = kpiResponse,
+                        IsSuccess = true
                     };
                 }
                 else
