@@ -11,6 +11,7 @@ using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Requests.CustomFormula;
+using DSLNG.PEAR.Services.Requests;
 
 namespace DSLNG.PEAR.Services
 {
@@ -630,7 +631,7 @@ namespace DSLNG.PEAR.Services
             var response = new BaseResponse();
             try
             {
-                var action = request.MapTo<BaseAction>();
+                var action = ((BaseRequest)request).MapTo<BaseAction>();
                 int deletedCounter = 0;
                 int updatedCounter = 0;
                 int addedCounter = 0;
