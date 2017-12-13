@@ -1497,36 +1497,52 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                 }
                             }
                             else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
-
-                                var js = JSON.parse(data.view);
-                                var transform = [];
-                                transform['a'] = getIconForIctInfraFirstColumn(js.a);
-                                transform['b'] = getIconForIctInfraSecondColumn(js.b);
-                                transform['c'] = getIconForIctInfraThirdColumn(js.c);
-                                var html = '<table class="table borderless ict-infra"><tbody>';
-                                html +=
-                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
-                                html += '</tbody></table>';
-                                that.replaceWith(html);
+                                try {
+                                    var js = JSON.parse(data.view);
+                                    var transform = [];
+                                    transform['a'] = getIconForIctInfraFirstColumn(js.a);
+                                    transform['b'] = getIconForIctInfraSecondColumn(js.b);
+                                    transform['c'] = getIconForIctInfraThirdColumn(js.c);
+                                    var html = '<table class="table borderless ict-infra"><tbody>';
+                                    html +=
+                                        '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
+                                    html += '</tbody></table>';
+                                    that.replaceWith(html);
+                                } catch (e) {
+                                    console.log('highlight-json-ict-infra');
+                                    console.log(e);
+                                    console.log(data);
+                                }
                             }
                             else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                                var js = JSON.parse(data.view);
-                                var transform = [];
-                                transform['a'] = getIconForGsFm(js.a);
-                                transform['b'] = getIconForGsFm(js.b);
-                                transform['c'] = getIconForGsFm(js.c);
-                                var html = '<table class="table borderless gs-fm"><tbody>';
-                                html +=
-                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
-                                html += '</tbody></table>';
-                                that.replaceWith(html);
+                                try {
+                                    var js = JSON.parse(data.view);
+                                    var transform = [];
+                                    transform['a'] = getIconForGsFm(js.a);
+                                    transform['b'] = getIconForGsFm(js.b);
+                                    transform['c'] = getIconForGsFm(js.c);
+                                    var html = '<table class="table borderless gs-fm"><tbody>';
+                                    html +=
+                                        '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
+                                    html += '</tbody></table>';
+                                    that.replaceWith(html);
+                                } catch (e) {
+                                    console.log('highlight-json-gs-fm');
+                                    console.log(e);
+                                    console.log(data);
+                                }
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-weekly-alarm')) {
-                                var parsed = JSON.parse(data.view);
-                                $('.weekly-alarm-processtrain').html(parsed.processtrain);
-                                $('.weekly-alarm-period').html(parsed.period);
-                                $('.weekly-alarm-note').html(parsed.remark);
-                                $('.weekly-alarm-utilities').html(parsed.utilities);
-
+                                try {
+                                    var parsed = JSON.parse(data.view);
+                                    $('.weekly-alarm-processtrain').html(parsed.processtrain);
+                                    $('.weekly-alarm-period').html(parsed.period);
+                                    $('.weekly-alarm-note').html(parsed.remark);
+                                    $('.weekly-alarm-utilities').html(parsed.utilities);
+                                } catch (e) {
+                                    console.log('highlight-json-weekly-alarm');
+                                    console.log(e);
+                                    console.log(data);
+                                }
                             }
                             else if (data.type == 'weather' || data.type == 'temperature') {
                                 that.replaceWith(data.view);
