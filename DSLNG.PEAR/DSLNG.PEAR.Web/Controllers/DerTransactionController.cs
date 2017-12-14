@@ -397,7 +397,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             ControllerName = "Der Input Form",
                             ActionName = string.Format("UpdateKPI daily-actual KPI:{0}", viewModel.KpiId)
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 case "monthly-actual":
@@ -414,7 +414,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             ControllerName = "Der Input Form",
                             ActionName = string.Format("UpdateKPI monthly-actual KPI:{0}", viewModel.KpiId)
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 case "yearly-actual":
@@ -431,7 +431,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             ControllerName = "Der Input Form",
                             ActionName = string.Format("UpdateKPI yearly-actual KPI:{0}",viewModel.KpiId)
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 // case gila-gilaan
@@ -449,7 +449,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             ControllerName = "Der Input Form",
                             ActionName = string.Format("UpdateKPI monthly-actual-prev KPI:{0}",viewModel.KpiId)
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 case "monthly-actual-jcc":
@@ -512,7 +512,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             ControllerName = "Der Input Form",
                             ActionName = string.Format("UpdateKPI monthly-actual-dafwc KPI:{0}", viewModel.KpiId)
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 default:
