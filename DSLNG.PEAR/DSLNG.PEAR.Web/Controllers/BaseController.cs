@@ -23,6 +23,7 @@ namespace DSLNG.PEAR.Web.Controllers
         public const string TemplateDirectory = "~/Content/TemplateFiles/";
         //private UserProfileSessionData _userinfo;
         private readonly IMenuService _menuService = ObjectFactory.Container.GetInstance<IMenuService>();
+        private readonly IAuditTrailService _auditService = ObjectFactory.Container.GetInstance<IAuditTrailService>();
         public virtual new CustomPrincipal User
         {
             get
@@ -187,6 +188,17 @@ namespace DSLNG.PEAR.Web.Controllers
                 });
             }
 
+            if (Session["LoginUser"] != null && !filterContext.RequestContext.RouteData.Values["Action"].ToString().Equals("SiteMap")
+                && !filterContext.RequestContext.RouteData.Values["Action"].ToString().Contains("Grid") && !filterContext.RequestContext.RouteData.Values["Controller"].ToString().Contains("Audit") && !filterContext.RequestContext.RouteData.Values["Controller"].ToString().Contains("Home"))
+            {
+                var request = new Services.Requests.AuditTrail.CreateAuditUserRequest();
+                request.UserId = this.UserProfile().UserId;
+                request.Login_Id = this.UserProfile().LoginId;
+                request.ControllerName = filterContext.RequestContext.RouteData.Values["Controller"].ToString();
+                request.ActionName = filterContext.RequestContext.RouteData.Values["Action"].ToString();
+                request.Url = filterContext.RequestContext.HttpContext.Request.Url.AbsolutePath;
+                _auditService.CreateAuditUserRequest(request);
+            }
             base.OnActionExecuted(filterContext);
             filterContext.Controller.ViewBag.BodyClass = "";
             var absolutePath = filterContext.RequestContext.HttpContext.Request.Url.AbsolutePath;

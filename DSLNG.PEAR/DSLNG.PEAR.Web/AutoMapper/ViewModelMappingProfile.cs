@@ -220,6 +220,16 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
         private void ConfigureAuditTrail()
         {
+            Mapper.CreateMap<AuditUserLoginsResponse, GetUserLoginViewModel>();
+            Mapper.CreateMap<AuditUserLoginsResponse.UserLogin, GetUserLoginViewModel.UserLogin>();
+            Mapper.CreateMap<AuditUserLoginResponse, GetAuditUserLoginViewModel>();
+            Mapper.CreateMap<AuditUserLoginResponse.AuditUser, GetAuditUserLoginViewModel.AuditUser>();
+            Mapper.CreateMap<AuditUserLoginResponse.User, GetAuditUserLoginViewModel.User>();
+            Mapper.CreateMap<AuditUserResponse, GetAuditUserViewModel>();
+            Mapper.CreateMap<AuditUserResponse.UserLogin, GetAuditUserViewModel.UserLogin>();
+            Mapper.CreateMap<AuditUsersResponse, GetAuditUsersViewModel>();
+            Mapper.CreateMap<AuditUsersResponse.AuditUser, GetAuditUsersViewModel.AuditUser>();
+
             Mapper.CreateMap<AuditTrailsResponse, GetAuditTrailViewModel>();
             Mapper.CreateMap<AuditTrailsResponse.AuditTrail, GetAuditTrailViewModel.AuditTrail>();
             Mapper.CreateMap<AuditTrailResponse, AuditTrailsDetailsViewModel>();
@@ -1229,6 +1239,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
 
             Mapper.CreateMap<GetDerLayoutitemResponse.KpiInformationResponse, DisplayKpiInformationViewModel.KpiInformationViewModel>();
             Mapper.CreateMap<GetKpiAchievementResponse, DerItemValueViewModel>();
+            Mapper.CreateMap<GetKpiAchievementLessThanOrEqualResponse, DerItemValueViewModel>();
             Mapper.CreateMap<GetKpiTargetItemResponse, DerItemValueViewModel>();
 
         }

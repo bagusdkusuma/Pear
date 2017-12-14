@@ -30,6 +30,7 @@ namespace DSLNG.PEAR.Services.Responses.Der
             public string DailyIndicator { get; set; }
             public string Qhse { get; set; }
             public string Security { get; set; }
+            public string PlantMode { get; set; }
         }
     }
 }

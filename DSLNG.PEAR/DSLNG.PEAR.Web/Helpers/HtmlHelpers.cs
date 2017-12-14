@@ -15,6 +15,7 @@ using DSLNG.PEAR.Web.ViewModels.Weather;
 using DSLNG.PEAR.Web.ViewModels.Der.Display;
 using System.Text;
 using System.Linq.Expressions;
+using System.Web;
 
 namespace DSLNG.PEAR.Web.Helpers
 {
@@ -84,8 +85,11 @@ namespace DSLNG.PEAR.Web.Helpers
         }
 
         public static string DisplayCompleteDerValue(this HtmlHelper htmlHelper, string val, string measurement, string defaultMeasurement, string defaultVal = "N/A",
-           bool isRounded = true, int trailingDecimal = 2)
+           bool isRounded = true, int trailingDecimal = 2, bool decimalAfterInt = true)
         {
+            if (!string.IsNullOrEmpty(val) && val == "no invtgtn") {
+                return val;
+            }
             if (!string.IsNullOrEmpty(val) && (!string.IsNullOrEmpty(defaultMeasurement) && defaultMeasurement == "day"))
             {
                 if (double.Parse(RoundIt(true, val, 2)) > 0)
@@ -107,12 +111,74 @@ namespace DSLNG.PEAR.Web.Helpers
                 }
                 else
                 {
-                    return string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement);
+                    return string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal, decimalAfterInt), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement);
                 }
             }
 
             return !string.IsNullOrEmpty(val) ?
-                string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
+                string.Format("{0} {1}", RoundIt(isRounded, val, trailingDecimal, decimalAfterInt), string.IsNullOrEmpty(measurement) ? defaultMeasurement : measurement) : defaultVal;
+        }
+
+        public static string DisplayTrafficLight(this HtmlHelper htmlHelper, DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformation, 
+            DisplayKpiInformationViewModel.KpiInformationViewModel kpiInformationTarget, string style, string type)
+        {
+            if (string.IsNullOrEmpty(kpiInformation.DerItemValue.Value)) {
+                return string.Empty;
+            }
+
+           
+            double target;
+            double actual;
+            ParseIt(kpiInformation.DerItemValue.Value, out actual);
+            ParseIt(kpiInformationTarget.DerItemValue.Ytd, out target);
+
+            switch (type)
+            {
+                case "ph":
+                    if(actual >= 6 && actual <=9)
+                    {
+                        return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "'" + style + "' />";
+                    } 
+                    break;
+                default:
+                    if (actual <= 10)
+                    {
+                        return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "'" + style + "' />";
+                    }
+                    break;
+            }
+            
+            return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-red-light.png") + "'" + style + " />";
+        }
+        public static string DisplayTrafficLight(this HtmlHelper htmlHelper, List<string> list)
+        {
+            var numbers = new List<double>();
+            var isValids = new List<bool>();
+            double tempVal;
+            foreach (var item in list)
+            {
+                isValids.Add(ParseIt(item, out tempVal));
+                numbers.Add(tempVal);
+            }
+
+            for (int i = 0; i < list.Count / 2; i++)
+            {
+                if(isValids[i] && isValids[(list.Count / 2) + i])
+                {
+                    var actual = numbers[i];
+                    var target = numbers[(list.Count / 2) + i];
+                    if(actual > target)
+                    {
+                        return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-red-light.png") + "' style='height:29px;display: block;margin: 0 auto;' />";
+                    }
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+
+            return "<img src='" + VirtualPathUtility.ToAbsolute("~/content/img/der-green-light.png") + "' style='height:29px;display: block;margin: 0 auto;' />";
         }
 
 
@@ -319,7 +385,8 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 value = -1;
             }
-            else {
+            else
+            {
                 value = 0;
             }
             //else if ( >= double.Parse(TargetVale) && double.Parse(Value) < 2.2)
@@ -444,20 +511,31 @@ namespace DSLNG.PEAR.Web.Helpers
 
             return string.Empty;
         }
-        private static string RoundIt(bool isRounded, string val, int number = 2)
+        private static string RoundIt(bool isRounded, string val, int number = 2, bool decimalAfterInt = true)
         {
             if (isRounded)
             {
                 /*double v = double.Parse(val);
                 val = Math.Round(v, 2).ToString(CultureInfo.InvariantCulture);*/
-                return ParseToNumber(val, number);
+                int resultNumber;
+                if (decimalAfterInt || !int.TryParse(val, out resultNumber))
+                {
+                    return ParseToNumber(val, number);
+                }
+                else {
+                    return resultNumber.ToString();
+                }
             }
 
             return val;
         }
 
-        public static MvcHtmlString DisplaySaftyIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget)
+        public static MvcHtmlString DisplaySafetyIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget)
         {
+            if (!string.IsNullOrEmpty(valueYtd) && valueYtd == "no invtgtn") {
+                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
+            }
+
             if (string.IsNullOrEmpty(valueYtd) || string.IsNullOrEmpty(valueTarget))
             {
                 return new MvcHtmlString(string.Empty);
@@ -485,7 +563,7 @@ namespace DSLNG.PEAR.Web.Helpers
             if (actual < target)
             {
                 //hijau
-                return new MvcHtmlString("<i class='fa fa-circle'></i>");
+                return new MvcHtmlString("<span><i class='fa fa-circle' style='color: green'></i></span>");
             }
             else if (actual == target)
             {
@@ -751,7 +829,7 @@ namespace DSLNG.PEAR.Web.Helpers
             {
                 //var valtoString = string.Empty;
                 //if (kpiValue != null) {valtoString= kpiValue.Value == 0 ? kpiValue.Value.ToString() : kpiValue.Value.ToString("#,#.#########"); }
-                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty)) : (kpiValue.Type == "now" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty) ) : value));
+                value = kpiValue == null ? value : (defaultValueDefined == "prev" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty)) : (kpiValue.Type == "now" ? (kpiValue.Value == 0 ? kpiValue.Value.ToString() : (kpiValue.Value.HasValue ? kpiValue.Value.Value.ToString("#,0.#########") : string.Empty)) : value));
                 existValue = kpiValue == null ? existValue : kpiValue.Type;
             }
             else
@@ -1173,19 +1251,19 @@ namespace DSLNG.PEAR.Web.Helpers
         {
             var d = Double.Parse(number);
             var length = Math.Truncate(d).ToString().Length;
-            int decimals = 0;            
+            int decimals = 0;
 
             if (length < digits)
             {
                 decimals = digits - length;
-                if(Math.Truncate(d) == d)
+                if (Math.Truncate(d) == d)
                 {
                     decimals = 0;
                 }
             }
 
-            
-            
+
+
             var format = string.Format("N{0}", decimals);
 
             if (round)
@@ -1197,6 +1275,15 @@ namespace DSLNG.PEAR.Web.Helpers
                 int pow = (int)Math.Pow(10, decimals);
                 return (Math.Truncate(d * pow) / pow).ToString(format, CultureInfo.InvariantCulture);
             }
+        }
+
+        private static bool ParseIt(string val, out double result)
+        {
+            double x;
+            var styles = NumberStyles.AllowParentheses | NumberStyles.AllowTrailingSign | NumberStyles.Float | NumberStyles.AllowDecimalPoint;
+            bool isValidDouble = Double.TryParse(val, styles, NumberFormatInfo.InvariantInfo, out x);
+            result = (isValidDouble) ? Math.Round(x, 2) : 0;
+            return isValidDouble;
         }
     }
 

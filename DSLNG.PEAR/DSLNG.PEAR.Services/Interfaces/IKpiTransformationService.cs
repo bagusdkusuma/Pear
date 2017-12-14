@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         SaveKpiTransformationResponse Save(SaveKpiTransformationRequest request);
         GetKpiTransformationsResponse Get(GetKpiTransformationsRequest request);
         GetKpiTransformationResponse Get(int id);
-        BaseResponse Delete(int id); 
+        BaseResponse Delete(int id);
+        BaseResponse Delete(DeleteTransformationRequest request);
     }
 }

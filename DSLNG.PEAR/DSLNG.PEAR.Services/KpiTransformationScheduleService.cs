@@ -74,7 +74,7 @@ namespace DSLNG.PEAR.Services
 
         public SaveKpiTransformationScheduleResponse Save(SaveKpiTransformationScheduleRequest request)
         {
-
+            var action = request.MapTo<BaseAction>();
             var kpiTransformationSchedule = request.MapTo<KpiTransformationSchedule>();
             var kpiTransformation = DataContext.KpiTransformations.Single(x => x.Id == request.KpiTransformationId);
             kpiTransformationSchedule.KpiTransformation = kpiTransformation;
@@ -91,7 +91,7 @@ namespace DSLNG.PEAR.Services
                 kpiTransformationSchedule.SelectedKpis.Add(kpi);
             }
             DataContext.KpiTransformationSchedules.Add(kpiTransformationSchedule);
-            DataContext.SaveChanges();
+            DataContext.SaveChanges(action);
             kpiTransformationSchedule = DataContext.KpiTransformationSchedules.Include(x => x.KpiTransformation).Include(x => x.SelectedKpis)
                 .Include(x => x.SelectedKpis.Select(y => y.Method)).First(x => x.Id == kpiTransformationSchedule.Id);
             var response = new SaveKpiTransformationScheduleResponse
@@ -101,6 +101,8 @@ namespace DSLNG.PEAR.Services
             };
             kpiTransformationSchedule.MapPropertiesToInstance<SaveKpiTransformationScheduleResponse>(response);
             response.UserId = request.UserId;
+            response.ControllerName = request.ControllerName;
+            response.ActionName = request.ActionName;
             return response;
         }
 
@@ -179,10 +181,44 @@ namespace DSLNG.PEAR.Services
                 {
                     response.Message = string.Format("Batch Delete Not Success, only {0} schedule deleted, and {1} failed to delete. {2}", succeed, failed, failedDeleted);
                 }
-                else {
+                else
+                {
                     response.Message = string.Format("Successfully Delete {0} schedule, and {1} failed to delete. {2}", succeed, failed, failedDeleted);
                 }
-                
+
+            }
+            return response;
+        }
+
+        public BaseResponse Delete(DeleteKPITransformationScheduleRequest request)
+        {
+            var response = new BaseResponse();
+            try
+            {
+                var action = request.MapTo<BaseAction>();
+                var schedule = DataContext.KpiTransformationSchedules
+                    .Include(x => x.Logs)
+                    .FirstOrDefault(x => x.Id == request.Id);
+                if (schedule != null)
+                {
+                    if (schedule.Logs.Count > 0)
+                    {
+                        foreach (var log in schedule.Logs.ToList())
+                        {
+                            DataContext.KpiTransformationLogs.Remove(log);
+                        }
+                        DataContext.SaveChanges(action);
+                    }
+                    DataContext.KpiTransformationSchedules.Remove(schedule);
+                    DataContext.SaveChanges(action);
+                }
+                response.IsSuccess = true;
+                response.Message = string.Format("Schedule for {0:MMM dd yyyy H:mm:ss} deleted Successfully", schedule.ProcessingDate);
+            }
+            catch (DbUpdateException e)
+            {
+                response.IsSuccess = false;
+                response.Message = e.Message;
             }
             return response;
         }

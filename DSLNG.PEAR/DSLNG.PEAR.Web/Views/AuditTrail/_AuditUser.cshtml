@@ -1,0 +1,137 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.AuditTrail.GetAuditUserLoginViewModel
+@{
+    //ViewBag.Title = "AuditUser";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+    var uname = Model.UserLoggedIn.FullName != null ? Model.UserLoggedIn.FullName : Model.UserLoggedIn.Username;
+}
+<div>
+    <label>
+        Last Login Date : @Model.LastLogin.ToString("dd MMM yyyy - h:mm:ss WIB")
+    </label>
+    
+</div>
+<div>
+    <label>
+        User/IP/Hostname : @uname /@Model.IpAddress/@Model.HostName
+    </label>
+</div>
+<div class="pull-right" style="margin-bottom: 20px">
+    
+    <form class="form-inline" style="position:relative">
+        <input id="loginId" hidden="hidden" value="@Model.Id" />
+        @*<div class="form-group" style="margin-top: 5px;">
+            <input type="button" id="filter-button" value="Go" />
+        </div>*@
+    </form>
+</div>
+<table id="audit-user-table" class="rgw-tbl-bp rgw-tbl table-transparent table table-responsive" cellspacing="0" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Last Accessed</th>
+            <th>Module Name</th>
+            <th>Action</th>
+            <th>Full URL</th>
+        </tr>
+    </thead>
+</table>
+
+@*@section Scripts{*@
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var usertable = $('#audit-user-table').DataTable({
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "iDisplayLength": 10,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sServerMethod": "POST",
+                "sAjaxSource": '@Url.Action("AuditUserGrid", "AuditTrail")',
+                "fnServerParams": function (aoData) {
+                    aoData.push({
+                        name: "loginId", value: $('#loginId').val()
+                    });
+                },
+                "order": [[0, "desc"]],
+                "oSearch": {
+                    //"sSearch": $('#month').val() + '-' + $('#year').val()
+                },
+                "aoColumns": [
+                    {
+                        "sWidth" : "20%",
+                        "mDataProp": "TimeAccessed", "name": "TimeAccessed", "className": "dt-body-left",
+                        "mRender": function (data, type, row, pos) {
+                            return moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY h:mm:ss');
+                        }
+
+                    },
+                    //{
+                    //    "mDataProp": "TimeAccessed", "name": "TimeAccessed", "className": "dt-body-left",
+                    //    "mRender": function (data, type, row, pos) {
+                    //        return moment(new Date(data.match(/\d+/)[0] * 1)).format('h:mm:ss');
+                    //    }
+
+                    //},
+                    {
+                        "sWidth": "20%",
+                        "mDataProp": "ControllerName", "name": "ControllerName", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "sWidth": "20%",
+                        "mDataProp": "ActionName", "name": "ActionName", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    },
+                    {
+                        "sWidth": "40%",
+                        "mDataProp": "Url", "name": "Url", "className": "dt-body-left", "orderable": false,
+                        "mRender": function (data, type, row, pos) {
+                            return data;
+                        }
+                    }
+                ],
+                rowCallback: function (row, data) {
+                    // Set the checked state of the checkbox in the table
+                    //$('input.is-active', row).prop('checked', data.IsActive == 1);
+                }
+            });
+
+            function filterUserGrid() {
+                usertable.draw();
+            }
+
+            $('#user-filter-button').click(function (event) {
+                event.preventDefault();
+                filterUserGrid();
+            });
+
+            //$('#audit-trail-detail-modal').on('show.bs.modal', function (e) {
+            //    var $this = $(this);
+            //    console.log($this.data('url'));
+            //    console.log($this.attr('data-url'))
+            //    console.log(e);
+            //    $.ajax({
+            //        url: $this.data('url'),
+            //        method: 'GET',
+            //        success: function (data) {
+            //            $('.audit-trail-detail-modal-content').html('as');
+            //            //$('#audit-trail-detail-modal').modal('show');
+            //        }
+            //    });
+            //});
+        });
+    </script>
+
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap-select.min.css")">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="@Url.Content("~/Scripts/bootstrap-select.min.js")"></script>
+@*}*@
+
+
+
+

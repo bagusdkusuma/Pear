@@ -1,0 +1,32 @@
+﻿@model DSLNG.PEAR.Web.ViewModels.AuditTrail.GetAuditUserLoginViewModel
+@{
+    var uname = Model.UserLoggedIn.FullName != null ? Model.UserLoggedIn.FullName : Model.UserLoggedIn.Username;
+    <label>
+        Last Login Date : @Model.LastLogin.ToString("dd MMM yyyy")
+    </label>
+    <label>
+        User/IP/Hostname : @uname /@Model.IpAddress/@Model.HostName
+    </label>
+    @*<span style="float: right;">User/IP/Hostname : @Model.UserLoggedIn.FullName/@Model.IpAddress/@Model.HostName</span>*@
+    <table class="table-transparent table table-responsive">
+        <thead>
+            <tr>
+                <th>Last Accessed</th>
+                <th>Module Name</th>
+                <th>Action</th>
+                <th>Full URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AuditUsers)
+            {
+                <tr style="border-bottom: 1px solid #ffffff">
+                    <td>@item.TimeAccessed.ToString("dd-MMM-yyyy hh:mm:ss")</td>
+                    <td>@item.ControllerName</td>
+                    <td>@item.ActionName</td>
+                    <td>@item.Url</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

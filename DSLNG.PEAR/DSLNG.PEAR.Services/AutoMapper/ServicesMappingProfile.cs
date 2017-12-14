@@ -136,6 +136,7 @@ using DSLNG.PEAR.Services.Responses.KpiTransformationLog;
 using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
 using DSLNG.PEAR.Services.Responses.AuditTrail;
 using DSLNG.PEAR.Services.Requests.DerTransaction;
+using DSLNG.PEAR.Services.Requests.AuditTrail;
 using DSLNG.PEAR.Services.Requests;
 
 namespace DSLNG.PEAR.Services.AutoMapper
@@ -184,7 +185,27 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<DeleteDerLayoutItemRequest, BaseAction>();
             Mapper.CreateMap<DeleteFilenameRequest, BaseAction>();
             Mapper.CreateMap<CreateOrUpdateDerRequest, BaseAction>();
+
+            Mapper.CreateMap<UserLogin, LoginUserResponse.Login>();
+            Mapper.CreateMap<UserLogin, AuditUserLoginResponse>();
+            Mapper.CreateMap<AuditUser, AuditUserLoginResponse.AuditUser>();
+            Mapper.CreateMap<User, AuditUserLoginResponse.User>();
+            Mapper.CreateMap<AuditUserLoginResponse.User, User>();
+            Mapper.CreateMap<AuditUsersResponse.AuditUser, AuditUser>();
+            Mapper.CreateMap<AuditUser, AuditUsersResponse.AuditUser>();
+
+            Mapper.CreateMap<User, AuditUserLoginsResponse.UserLogin>();
+            Mapper.CreateMap<UserLogin, AuditUserLoginsResponse.UserLogin>()
+                .ForMember(x=>x.Username,o=>o.MapFrom(z=>z.User.Username));
+            Mapper.CreateMap<AuditUser, AuditUserLoginsResponse.UserLogin.AuditUser>();
+            Mapper.CreateMap<CreateAuditUserRequest, AuditUser>();
+            Mapper.CreateMap<DeleteTransformationRequest, BaseAction>();
+            Mapper.CreateMap<SaveKpiTransformationRequest, BaseAction>();
+            Mapper.CreateMap<DeleteKPITransformationScheduleRequest, BaseAction>();
+            Mapper.CreateMap<SaveKpiTransformationScheduleRequest, BaseAction>();
+            Mapper.CreateMap<SaveKpiTransformationScheduleResponse, BaseAction>();
             Mapper.CreateMap<CreateKpiRequest, BaseAction>();
+            
         }
 
         private void ConfigureMixed()

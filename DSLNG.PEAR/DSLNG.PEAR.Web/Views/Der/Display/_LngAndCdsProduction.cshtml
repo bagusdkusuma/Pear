@@ -1,9 +1,9 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
-        <style>
-            .mche-rundown-bar-wrapper .bar-percentage {
-                height:17px;
-            }
-        </style>
+<style>
+    .mche-rundown-bar-wrapper .bar-percentage {
+        height: 17px;
+    }
+</style>
 <table class="table table-bordered top-bottom-border production">
     <thead>
         <tr>
@@ -105,7 +105,7 @@
         </tr>
         <tr>
             <td>
-               MCHE R/D Temp :
+                MCHE R/D Temp :
             </td>
             <td style="position:relative" class="mche-rundown-bar-wrapper">
                 @*@McheRundownPercentage(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value)*@
@@ -113,19 +113,23 @@
 
             </td>
             <td style="text-align:right;border-right:none;">
-                LNG HHV : <span class="indicator">@Html.DisplayKpiIndicatorType3(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value)</span>
+                LNG HHV : <span class="indicator">@Html.DisplayKpiIndicatorType3(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value)</span>
             </td>
             <td style="border-left:none">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 7).KpiMeasurement, "btu/scf")
-
             </td>
-            <td colspan="2" style="text-align:right;border-right:none;">
-                CDS Reid Vapor Pressure (RVP) : <span class="indicator">@Html.DisplayKpiIndicatorType1(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value)</span>
-
+            <td style="text-align:right;border-right:none;">
+                CDS/Gas Ratio :                
             </td>
-            <td style="border-left:none">
-                <span class="indicator left-side" style="margin-right: 50px;"><i class="fa @Html.DisplayDerRemark(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Remark)"></i></span>
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "Psia")
+            <td style="text-align:right;border-right:none;    border-left: none;">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).KpiMeasurement, "bbl/MMscf")
+            </td>
+            <td style="text-align: right">
+                <span class="indicator absolute">@Html.DisplayKpiIndicatorType1(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value)</span>
+                CDS RVP : 
+                <span style="text-align:right">
+                    @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 8).KpiMeasurement, "Psia")
+                </span>
 
             </td>
         </tr>
@@ -134,11 +138,12 @@
 
 @helper McheRundownPercentage(string val)
 {
-    if (!string.IsNullOrEmpty(val)) {
-        var parsed = double.Parse(val);
-        if (parsed > 100) { parsed = 100; }
-        <div class="bar-percentage">
-            <div style="width:@string.Format(@"{0}%", parsed.ToString())">&nbsp;</div>
-        </div>
-    }
+if (!string.IsNullOrEmpty(val))
+{
+    var parsed = double.Parse(val);
+    if (parsed > 100) { parsed = 100; }
+    <div class="bar-percentage">
+        <div style="width:@string.Format(@"{0}%", parsed.ToString())">&nbsp;</div>
+    </div>
+}
 } 

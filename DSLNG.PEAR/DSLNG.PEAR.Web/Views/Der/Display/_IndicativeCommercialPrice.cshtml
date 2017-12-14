@@ -1,52 +1,53 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayKpiInformationViewModel
 <style>
-    .first-row {
-        height: 20pt;
-    }
-
     .next-row {
         height: 11pt;
     }
-  
-    
 </style>
 <table class="table table-bordered indicative">
     <thead>
-    <tr>
-        <td colspan="3" class="indicative-titlehead">
-            <div class="indicative-titlediv">
-                DSLNG Indicative Commercial Price (JCC based)-USD/MMbtu
-            </div>
-            
-        </td>
-    </tr>
+        <tr>
+            <td colspan="3">
+                DSLNG Indicative Commercial Price
+            </td>
+        </tr>
     </thead>
     <tbody>
-    <tr>
-        <td style="width: 34%" class="next-row">
-            <div class="next-row">
-                Feed Gas (GSA)
-            </div>
-        </td>
-        <td>
-            JOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
-        </td>
-        <td style="width: 34%;" class="next-row">
-            PEP @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty)
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div class="next-row">
-                LNG Price (SPA)
-            </div>
-        </td>
-        <td>
-            FOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, string.Empty)
-        </td>
-        <td>
-            DES @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, string.Empty, string.Empty)
-        </td>
-    </tr>
+        <tr>
+            <td style="width: 34%" class="next-row">
+                <div class="next-row">
+                    Condensate (CSPA)
+                </div>
+            </td>
+            <td colspan="2">
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "USD/bbl")
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 34%" class="next-row">
+                <div class="next-row">
+                    Feed Gas (GSA)
+                </div>
+            </td>
+            <td>
+                JOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+            <td style="width: 34%;" class="next-row">
+                PEP @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="next-row">
+                    LNG Price (SPA)
+                </div>
+            </td>
+            <td>
+                FOB @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+            <td>
+                DES @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, string.Empty, string.Empty)
+            </td>
+        </tr>
     </tbody>
 </table>

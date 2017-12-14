@@ -1,5 +1,6 @@
 ﻿
 using DSLNG.PEAR.Data.Enums;
+using DSLNG.PEAR.Services.Requests;
 using System;
 using System.Collections.Generic;
 
@@ -17,6 +18,8 @@ namespace DSLNG.PEAR.Services.Responses.KpiTransformationSchedule
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int UserId { get; set; }
+        public string ControllerName { get; set; }
+        public string ActionName { get; set; }
         public class KpiResponse
         {
             public int Id { get; set; }

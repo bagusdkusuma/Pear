@@ -28,6 +28,8 @@ namespace DSLNG.PEAR.Data.Persistence
         }
 
         public IDbSet<AuditTrail> AuditTrails { get; set; }
+        public IDbSet<UserLogin> UserLogins { get; set; }
+        public IDbSet<AuditUser> AuditUsers { get; set; }
         public IDbSet<Activity> Activities { get; set; }
         public IDbSet<Artifact> Artifacts { get; set; }
         public IDbSet<ArtifactSerie> ArtifactSeries { get; set; }
@@ -345,7 +347,7 @@ namespace DSLNG.PEAR.Data.Persistence
                     cs.MapRightKey("RolePrivilege_Id");
                     cs.ToTable("UserRolePrivileges");
                 });
-
+            
             //modelBuilder.Entity<KpiTransformation>()
             //  .HasOptional(s => s.Schedule)
             //  .WithRequired(ad => ad.KpiTransformation).Map(x => x.MapKey("KpiTransformationId"));

@@ -147,8 +147,10 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult QhsseSection(string date)
         {
             var viewModel = GetDerValuesPerSection(date,
-               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436 }, //actual KpiIds 
-               new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
+               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436, 
+               /*CR Sept 2017*/ 504, 506, 507,508, 509, 518, 511, 512, 513, 514, 515 }, //actual KpiIds 
+               new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358,
+               /*CR Sept 2017*/ 504, 505, 506, 507,508, 509, 518, 511, 514, 515 }, //target KpiIds
                new int[] { 18, 13, 20, 7, 80, 59 }  //highlightTypeIds
                );
             var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
@@ -382,7 +384,39 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (viewModel.Type)
             {
                 case "daily-actual":
+                    {
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
+                            ControllerName = "Der Input Form",
+                            ActionName = string.Format("UpdateKPI daily-actual KPI:{0}", viewModel.KpiId)
+                        };
+                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
                 case "monthly-actual":
+                    {
+                        var request = new UpdateKpiAchievementItemRequest
+                        {
+                            Periode = theDate,
+                            PeriodeType = periodeType,
+                            Id = viewModel.Id,
+                            KpiId = viewModel.KpiId,
+                            UserId = UserProfile().UserId,
+                            Value = viewModel.ValueType == "value" ? viewModel.Value : null,
+                            Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
+                            ControllerName = "Der Input Form",
+                            ActionName = string.Format("UpdateKPI monthly-actual KPI:{0}", viewModel.KpiId)
+                        };
+                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        return Json(resp);
+                    }
                 case "yearly-actual":
                     {
                         var request = new UpdateKpiAchievementItemRequest
@@ -395,7 +429,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI yearly-actual"
+                            ActionName = string.Format("UpdateKPI yearly-actual KPI:{0}",viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
                         return Json(resp);
@@ -413,7 +447,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI monthly-actual-prev"
+                            ActionName = string.Format("UpdateKPI monthly-actual-prev KPI:{0}",viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
                         return Json(resp);
@@ -430,7 +464,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI monthly-actual-jcc"
+                            ActionName = string.Format("UpdateKPI monthly-actual-jcc KPI:{0}", viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateCustomJccFormula(request);
                         return Json(resp);
@@ -447,7 +481,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI monthly-actual-bunker"
+                            ActionName = string.Format("UpdateKPI monthly-actual-bunker KPI:{0}", viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateCustomBunkerPriceFormula(request);
                         return Json(resp);
@@ -476,7 +510,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = value,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI monthly-actual-dafwc"
+                            ActionName = string.Format("UpdateKPI monthly-actual-dafwc KPI:{0}", viewModel.KpiId)
                         };
                         var resp = _kpiAchievementService.UpdateOriginalData(request);
                         return Json(resp);
@@ -493,7 +527,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = "UpdateKPI Save KPI Target Request"
+                            ActionName = string.Format("UpdateKPI Save KPI Target Request KPI:{0}", viewModel.KpiId)
                         };
                         var resp = _kpiTargetService.UpdateOriginalData(request);
                         return Json(resp);
@@ -507,7 +541,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var req = viewModel.MapTo<SaveHighlightRequest>();
             req.UserId = UserProfile().UserId;
             req.ControllerName = "Der Input Form";
-            req.ActionName = "Update Highlight";
+            req.ActionName = string.Format("Update Highlight HighlightType:{0}", viewModel.TypeId);
 
             var resp = _highlightService.SaveHighlight(req);
             return Json(resp);
@@ -526,7 +560,7 @@ namespace DSLNG.PEAR.Web.Controllers
             req.TypeId = viewModel.TypeId;
             req.UserId = UserProfile().UserId;
             req.ControllerName = "Der Input Form";
-            req.ActionName = "Update Infra GSM";
+            req.ActionName = string.Format("Update Infra GSM HighlightType:{0}",viewModel.TypeId);
 
             if (existingHighlight.Id == 0)
             {
@@ -557,7 +591,7 @@ namespace DSLNG.PEAR.Web.Controllers
             req.TypeId = viewModel.TypeId;
             req.UserId = UserProfile().UserId;
             req.ControllerName = "Der Input Form";
-            req.ActionName = "Update Brenfutt";
+            req.ActionName = string.Format("Update Brenfutt HighlightType:{0}",viewModel.TypeId);
             if (existingHighlight.Id == 0)
             {
                 req.Message = "{\"a\" : { \"label\" : \"\", \"value\" : \"\" },\"b\" : { \"label\" : \"\", \"value\" : \"\" },\"c\" : { \"label\" : \"\", \"value\" : \"\" },\"d\" : { \"label\" : \"\", \"value\" : \"\" } }";

@@ -19,6 +19,11 @@ namespace DSLNG.PEAR.Web.Scheduler
     {
         public void Process(SaveKpiTransformationScheduleResponse kpiTransformationSchedule)
         {
+            var action = new DSLNG.PEAR.Data.Entities.BaseAction {
+                UserId = kpiTransformationSchedule.UserId,
+                ControllerName = kpiTransformationSchedule.ControllerName,
+                ActionName = kpiTransformationSchedule.ActionName
+            };
             var kpiPattern = @"k(\d+)";
             JobManager.AddJob(() =>
             {
@@ -30,10 +35,11 @@ namespace DSLNG.PEAR.Web.Scheduler
                     var kpiTransformationScheduleService = new KpiTransformationScheduleService(dataContext);
                     var kpiService = new KpiService(dataContext);
                     #region loop date
-                    for (var date = kpiTransformationSchedule.Start; date <= kpiTransformationSchedule.End; date = Increment(kpiTransformationSchedule, date))
+                    foreach (var kpi in kpiTransformationSchedule.SelectedKpis)
                     {
-                        foreach (var kpi in kpiTransformationSchedule.SelectedKpis)
+                        for (var date = kpiTransformationSchedule.Start; date <= kpiTransformationSchedule.End; date = Increment(kpiTransformationSchedule, date))
                         {
+                        
                             try
                             {
                                 var kpiTransformed = kpi.CustomFormula;
@@ -146,7 +152,9 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                 Periode = date,
                                                 PeriodeType = kpiTransformationSchedule.PeriodeType,
                                                 Value = null,
-                                                UserId = kpiTransformationSchedule.UserId
+                                                UserId = kpiTransformationSchedule.UserId,
+                                                ControllerName = action.ControllerName,
+                                                ActionName = action.ActionName
                                             };
 
                                             if (kpiTransformed != kpi.CustomFormula)
@@ -250,7 +258,9 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                     PeriodeType = PeriodeType.Yearly,
                                                     Value = kpiActualRequest.Ytd.ToString(),
                                                     UserId = kpiTransformationSchedule.UserId,
-                                                    Itd = kpiActualRequest.Itd
+                                                    Itd = kpiActualRequest.Itd,
+                                                    ControllerName = action.ControllerName,
+                                                    ActionName = action.ActionName
                                                 };
                                                 switch (kpiTransformationSchedule.PeriodeType)
                                                 {
@@ -267,7 +277,9 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                             Value = kpiActualRequest.Mtd.ToString(),
                                                             UserId = kpiTransformationSchedule.UserId,
                                                             Ytd = kpiActualRequest.Ytd,
-                                                            Itd = kpiActualRequest.Itd
+                                                            Itd = kpiActualRequest.Itd,
+                                                            ControllerName = action.ControllerName,
+                                                            ActionName = action.ActionName
                                                         };
                                                         kpiAchievementService.UpdateKpiAchievementItem(kpiActualMonthlyRequest);
                                                         //kpiAchievementService.UpdateKpiAchievementItem(kpi.Id, PeriodeType.Monthly, new DateTime(date.Year, date.Month, 1), kpiActualRequest.Mtd, kpiTransformationSchedule.UserId);
@@ -319,7 +331,9 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                 Id = existingKpiActual.IsSuccess ? existingKpiActual.Id : 0,
                                                 KpiId = kpi.Id,
                                                 UserId = kpiTransformationSchedule.UserId,
-                                                Value = new Expression(kpiTransformed).Evaluate().ToString()
+                                                Value = new Expression(kpiTransformed).Evaluate().ToString(),
+                                                ControllerName = action.ControllerName,
+                                                ActionName = action.ActionName
                                             };
                                             var resp = kpiAchievementService.UpdateOriginalData(request);
                                             if (resp.IsSuccess)
@@ -374,7 +388,9 @@ namespace DSLNG.PEAR.Web.Scheduler
                                         KpiId = kpi.Id,
                                         UserId = kpiTransformationSchedule.UserId,
                                         Value = existingKpiActual.Value.ToString(),
-                                        Remark = existingKpiActual.Remark
+                                        Remark = existingKpiActual.Remark,
+                                        ControllerName = action.ControllerName,
+                                        ActionName = action.ActionName
                                     };
                                     var resp = kpiAchievementService.UpdateOriginalData(request);
                                     if (resp.IsSuccess)

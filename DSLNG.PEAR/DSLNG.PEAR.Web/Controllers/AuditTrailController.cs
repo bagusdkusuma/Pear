@@ -81,5 +81,69 @@ namespace DSLNG.PEAR.Web.Controllers
             var viewModel = response.MapTo<AuditTrailsDetailsViewModel>();
             return PartialView("_Details", viewModel);
         }
+
+        public ActionResult UserLogin()
+        {
+            return View();
+        }
+
+        public ActionResult LoginGrid(GridParams gridParams)
+        {
+            var audit = _auditService.GetUserLogins(new GetAuditUserLoginsRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                Search = gridParams.Search,
+                SortingDictionary = gridParams.SortingDictionary,
+                StartDate = string.IsNullOrEmpty(Request["StartDate"]) ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0) : DateTime.ParseExact(Request["StartDate"], "MM/dd/yyyy", CultureInfo.InvariantCulture),
+                EndDate = string.IsNullOrEmpty(Request["EndDate"]) ? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59) : DateTime.ParseExact(Request["EndDate"], "MM/dd/yyyy", CultureInfo.InvariantCulture)
+            });
+            IList<AuditUserLoginsResponse.UserLogin> datas = audit.UserLogins.ToList();
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = audit.TotalRecords,
+                iTotalRecords = audit.UserLogins.Count,
+                aaData = datas
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LoginDetails(int Id)
+        {
+            var data = _auditService.GetUserLogin(new GetAuditUserLoginRequest { Id = Id });
+            var viewModel = data.MapTo<GetAuditUserLoginViewModel>();
+            return PartialView("_LoginDetails",viewModel);
+        }
+
+        public ActionResult AuditUserGrid(GridParams gridParams, int loginId)
+        {
+            var audit = _auditService.GetAuditUsers(new GetAuditUsersRequest
+            {
+                Skip = gridParams.DisplayStart,
+                Take = gridParams.DisplayLength,
+                Search = gridParams.Search,
+                SortingDictionary = gridParams.SortingDictionary,
+                LoginId = loginId
+            });
+
+            IList<AuditUsersResponse.AuditUser> datas = audit.AuditUsers.ToList();
+            var data = new
+            {
+                sEcho = gridParams.Echo + 1,
+                iTotalDisplayRecords = audit.TotalRecords,
+                iTotalRecords = audit.AuditUsers.Count,
+                aaData = datas
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        } 
+
+        public ActionResult AuditUser(int Id)
+        {
+            var data = _auditService.GetUserLogin(new GetAuditUserLoginRequest { Id = Id });
+            var viewModel = data.MapTo<GetAuditUserLoginViewModel>();
+            return PartialView("_AuditUser", viewModel);
+            //return View(viewModel);
+        }
     }
 }

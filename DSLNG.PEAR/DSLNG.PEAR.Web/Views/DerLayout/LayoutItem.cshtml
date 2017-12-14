@@ -101,6 +101,11 @@
                 case 'person-on-board':
                 case 'flare':
                 case 'total-commitment':
+                case 'no2':
+                case 'so2':
+                case 'particulate':
+                case 'oil-grease':
+                case 'ph':
                     {
                         $.ajax({
                             url: '@Url.Action("LayoutSetting", "DerLayout", new { type = "_type_" })'.replace('_type_', that.val()),
