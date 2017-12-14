@@ -1,4 +1,4 @@
-@model DSLNG.PEAR.Web.ViewModels.Der.DerDisplayViewModel
+﻿@model DSLNG.PEAR.Web.ViewModels.Der.DerDisplayViewModel
 @{
     Layout = null;
 }
@@ -249,7 +249,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                 <td colspan="2">
                     <table style="width:100%">
                         <tr class="safty-management-row">
-                            <td style="width:40%;border-right:1px solid #444">
+                            <td style="width:43%;border-right:1px solid #444">
                                 @{
                                     var row2Col0 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 0);
                                     if (row2Col0 != null)
@@ -258,7 +258,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     }
                                 }
                             </td>
-                            <td style="width:29%;border-right:1px solid #444">
+                            <td style="width:25%;border-right:1px solid #444">
                                 <table class="table borderless weather">
                                     <tbody>
                                         @{
@@ -301,7 +301,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     </tbody>
                                 </table>
                             </td>
-                            <td style="width:31%">
+                            <td style="width:32%">
                                 @{
                                     var row2Col2 = Model.Items.FirstOrDefault(x => x.Row == 2 && x.Column == 2);
                                     if (row2Col2 != null)
@@ -318,7 +318,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                 <td colspan="2">
                     <table style="width:100%">
                         <tr>
-                            <td style="width:40%;border-right:1px solid #444">
+                            <td style="width:43%;border-right:1px solid #444">
                                 @{
                                     var row3Col0 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 0);
                                     if (row3Col0 != null)
@@ -327,12 +327,12 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     }
                                 }
                             </td>
-                            <td style="width:29%;border-right:1px solid #444">
+                            <td style="width:25%;border-right:1px solid #444">
                                 <table class="qhse-remark table table-bordered">
                                     <thead>
                                         <tr>
                                             <td class="text-center">
-                                                QHSE & PSM Remark
+                                                QHSE & PSM Highlight
                                             </td>
                                         </tr>
                                     </thead>
@@ -353,15 +353,15 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                 <table class="weekly-alarm table borderless">
                                     <thead>
                                         <tr>
-                                            <td style="padding:4px  ">
-                                                @{
-                                                    var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
-                                                    if (row3Col5 != null)
-                                                    {
-                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col5.Id })" class="layout-item highlight-json in-left"></div>
-                                                    }
-                                                }
-                                                WEEKLY ALARM MANAGEMENT (<span class="weekly-alarm-period"></span>)
+                                            <td style="padding:4px;text-align: center">
+                                                @*@{
+                                                        var row3Col5 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 5);
+                                                        if (row3Col5 != null)
+                                                        {
+                                                            <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col5.Id })" class="layout-item highlight-json in-left"></div>
+                                                        }
+                                                    }*@
+                                                Environmental Quality Monitoring @*(<span class="weekly-alarm-period"></span>)*@
 
                                             </td>
                                         </tr>
@@ -372,17 +372,89 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                             <td>
                                                 <table style="height: 64px;" width="608">
                                                     <tbody>
-                                                        <tr>
-                                                            <td>Train Areas</td>
-                                                            <td class="weekly-alarm-processtrain" style="text-align: right;"></td>
+                                                        <tr style="font-weight: bold" class="enviromental-label">
+                                                            <td>
+                                                                Emission :
+                                                            </td>
+                                                            <td style="text-align: center">
+                                                                NO<sub>2</sub>
+                                                            </td>
+                                                            <td style="text-align: center">
+                                                                SO<sub>2</sub>
+                                                            </td>
+                                                            <td style="text-align: center">
+                                                                Particulate
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Utilities-Off Site Areas</td>
-                                                            <td class="weekly-alarm-utilities" style="text-align: right;"></td>
+                                                            <td style="padding: 0">
+                                                                <img src="@Url.Content("~/Content/img/der-emission.png")" style="height:38px" />
+                                                            </td>
+                                                            <td>
+                                                                @{
+                                                                    var row3Col6 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 6);
+                                                                    if (row3Col6 != null)
+                                                                    {
+                                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col6.Id })" class="layout-item highlight-traffic-light"></div>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                @{
+                                                                    var row3Col7 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 7);
+                                                                    if (row3Col7 != null)
+                                                                    {
+                                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col7.Id })" class="layout-item highlight-traffic-light"></div>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                @{
+                                                                    var row3Col8 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 8);
+                                                                    if (row3Col8 != null)
+                                                                    {
+                                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col8.Id })" class="layout-item highlight-traffic-light"></div>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="font-weight: bold">
+                                                            <td colspan="4" class="enviromental-label">Effluent Waste Water Discharge of Sewage Treatment Plant :</td>
+                                                        </tr>
+                                                        <tr style="font-weight: bold" class="class=" enviromental-label"">
+                                                            <td rowspan="2">
+                                                                <img src="/Content/img/der-eff.png" style="height: 52px;padding: 0;">
+                                                            </td>
+                                                            <td colspan="2" style="text-align: center;font-size:12px">
+                                                                pH
+                                                            </td>
+                                                            <td>
+                                                                Oil & Grease
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                @{
+                                                                    var row3Col9 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 9);
+                                                                    if (row3Col9 != null)
+                                                                    {
+                                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col9.Id })" class="layout-item highlight-traffic-light"></div>
+                                                                    }
+                                                                }
+                                                            </td>
+                                                           
+                                                            <td>
+                                                                @{
+                                                                    var row3Col10 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 10);
+                                                                    if (row3Col10 != null)
+                                                                    {
+                                                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row3Col10.Id })" class="layout-item highlight-traffic-light"></div>
+                                                                    }
+                                                                }
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <p class="weekly-alarm-note"></p>
                                                 @{
                                                     var row3Col2 = Model.Items.FirstOrDefault(x => x.Row == 3 && x.Column == 2);
                                                     if (row3Col2 != null)
@@ -396,7 +468,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     </tbody>
                                 </table>
                             </td>
-                            <td style="width:31%">
+                            <td style="width:32%">
                                 <table class="table table-bordered pie">
                                     <thead>
                                         <tr>
@@ -898,8 +970,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     var row11Col1 = Model.Items.FirstOrDefault(x => x.Row == 11 && x.Column == 1);
                                     if (row11Col1 != null)
                                     {
-
-                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col1.Id })" class="layout-item highlight-style-12" style="height: 82px"></div>
+                                        <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row11Col1.Id })" class="layout-item highlight-style-12" style="height:82px"></div>
                                     }
                                 }
                             </td>
@@ -1352,8 +1423,8 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                             data.type === "security" || data.type === "lng-and-cds" || data.type === "dafwc" || data.type === "job-pmts" || data.type === "total-feed-gas"
                             || data.type === "weekly-maintenance" || data.type === "critical-pm" || data.type === "procurement" || data.type === "indicative-commercial-price" ||
                                 data.type === "plant-availability" || data.type === "economic-indicator" || data.type === "mgdp" || data.type === "hhv" || data.type === "lng-and-cds-production"
-                                || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board'
-                            || data.type === 'total-commitment') {
+                            || data.type === "nls" || data.type === "key-equipment-status" || data.type === "wave" || data.type === "table-tank" || data.type === "global-stock-market" || data.type === "loading-duration" || data.type === 'person-on-board'
+                            || data.type === 'total-commitment' || data.type === 'no2' || data.type === 'so2' || data.type === 'ph' || data.type === 'particulate' || data.type === 'oil-grease') {
 
                             if (data.type === "highlight" && that.hasClass('daily-highlight')) {
                                 var type = "absolute";
@@ -1426,39 +1497,63 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                 }
                             }
                             else if (data.type === "highlight" && that.hasClass('highlight-json-ict-infra')) {
-
-                                var js = JSON.parse(data.view);
-                                var transform = [];
-                                transform['a'] = getIconForIctInfraFirstColumn(js.a);
-                                transform['b'] = getIconForIctInfraSecondColumn(js.b);
-                                transform['c'] = getIconForIctInfraThirdColumn(js.c);
-                                var html = '<table class="table borderless ict-infra"><tbody>';
-                                html +=
-                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
-                                html += '</tbody></table>';
-                                that.replaceWith(html);
+                                try {
+                                    var js = JSON.parse(data.view);
+                                    var transform = [];
+                                    transform['a'] = getIconForIctInfraFirstColumn(js.a);
+                                    transform['b'] = getIconForIctInfraSecondColumn(js.b);
+                                    transform['c'] = getIconForIctInfraThirdColumn(js.c);
+                                    var html = '<table class="table borderless ict-infra"><tbody>';
+                                    html +=
+                                        '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image002.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image004.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image006.png")" alt="" width="52" height="25"></td>';
+                                    html += '</tbody></table>';
+                                    that.replaceWith(html);
+                                } catch (e) {
+                                    console.log('highlight-json-ict-infra');
+                                    console.log(e);
+                                    console.log(data);
+                                }
                             }
                             else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
-                                var js = JSON.parse(data.view);
-                                var transform = [];
-                                transform['a'] = getIconForGsFm(js.a);
-                                transform['b'] = getIconForGsFm(js.b);
-                                transform['c'] = getIconForGsFm(js.c);
-                                var html = '<table class="table borderless gs-fm"><tbody>';
-                                html +=
-                                    '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
-                                html += '</tbody></table>';
-                                that.replaceWith(html);
+                                try {
+                                    var js = JSON.parse(data.view);
+                                    var transform = [];
+                                    transform['a'] = getIconForGsFm(js.a);
+                                    transform['b'] = getIconForGsFm(js.b);
+                                    transform['c'] = getIconForGsFm(js.c);
+                                    var html = '<table class="table borderless gs-fm"><tbody>';
+                                    html +=
+                                        '<td style="width:10px">' + transform['a'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image008.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['b'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image010.png")" alt="" width="52" height="25"></td><td style="width:10px">' + transform['c'] + '</td><td style="width:75px;"><img src="@Url.Content("~/content/images/clip_image012.png")" alt="" width="52" height="25"></td>';
+                                    html += '</tbody></table>';
+                                    that.replaceWith(html);
+                                } catch (e) {
+                                    console.log('highlight-json-gs-fm');
+                                    console.log(e);
+                                    console.log(data);
+                                }
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-weekly-alarm')) {
-                                var parsed = JSON.parse(data.view);
-                                $('.weekly-alarm-processtrain').html(parsed.processtrain);
-                                $('.weekly-alarm-period').html(parsed.period);
-                                $('.weekly-alarm-note').html(parsed.remark);
-                                $('.weekly-alarm-utilities').html(parsed.utilities);
-
+                                try {
+                                    var parsed = JSON.parse(data.view);
+                                    $('.weekly-alarm-processtrain').html(parsed.processtrain);
+                                    $('.weekly-alarm-period').html(parsed.period);
+                                    $('.weekly-alarm-note').html(parsed.remark);
+                                    $('.weekly-alarm-utilities').html(parsed.utilities);
+                                } catch (e) {
+                                    console.log('highlight-json-weekly-alarm');
+                                    console.log(e);
+                                    console.log(data);
+                                }
                             }
                             else if (data.type == 'weather' || data.type == 'temperature') {
                                 that.replaceWith(data.view);
+                            }
+                            else if (data.type == 'highlight' && that.hasClass('highlight-traffic-light')) {
+                                if (data.view.trim().indexOf('1') > -1) {
+                                    that.html('<img src="@Url.Content("~/content/img/der-green-light.png")" style="height:21px" />');
+                                } else if (data.view.trim().indexOf('0') > -1) {
+                                    that.html('<img src="@Url.Content("~/content/img/der-red-light.png")" style="height:21px" />');
+                                }
+
                             }
                                 //else if (data.type === 'security') {
                                 //    var html = data.view;

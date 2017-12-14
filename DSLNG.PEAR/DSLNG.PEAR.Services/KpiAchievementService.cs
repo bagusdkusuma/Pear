@@ -860,6 +860,76 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetKpiAchievementLessThanOrEqualResponse GetKpiAchievementLessThanOrEqual(int kpiId, DateTime date, PeriodeType periodeType) {
+
+            var response = new GetKpiAchievementLessThanOrEqualResponse();
+            try
+            {
+                var kpi = DataContext.Kpis.Include(x => x.Measurement).Single(x => x.Id == kpiId);
+                var data = DataContext.KpiAchievements.Include(x => x.Kpi).Where(x => x.Kpi.Id == kpiId && x.Periode <= date).AsQueryable();
+                var result = new KpiAchievement();
+                switch (periodeType)
+                {
+                    case PeriodeType.Daily:
+                    case PeriodeType.Monthly:
+                    case PeriodeType.Yearly:
+                        {
+                            result = data.FirstOrDefault(x => x.PeriodeType == periodeType);
+                            break;
+                        }
+
+                }
+
+                var kpiResponse = new GetKpiAchievementLessThanOrEqualResponse.KpiResponse
+                {
+                    Id = kpi.Id,
+                    Measurement = kpi.Measurement.Name,
+                    Name = kpi.Name,
+                    Remark = kpi.Remark,
+                };
+                if (result == null)
+                {
+                    return new GetKpiAchievementLessThanOrEqualResponse
+                    {
+                        Periode = date,
+                        Value = "no invtgtn",
+                        Mtd = "no invtgtn",
+                        Ytd = "no invtgtn",
+                        Itd = "no invtgtn",
+                        Kpi = kpiResponse,
+                        IsSuccess = true
+                    };
+                }
+                else
+                {
+                    return new GetKpiAchievementLessThanOrEqualResponse
+                    {
+                        Id = result.Id,
+                        Periode = result.Periode,
+                        Value = (result != null) && result.Periode == date? result.Value.ToString() : "no invtgtn",
+                        Mtd = (result != null) && result.Periode.Month == date.Month && result.Periode.Year == date.Year ? result.Mtd.ToString() : "no invtgtn",
+                        Ytd = (result != null) && result.Periode.Year == date.Year ? result.Ytd.ToString() : "no invtgtn",
+                        Itd = (result != null) ? result.Itd.ToString() : "no invtgtn",
+                        Remark = (result != null) ? result.Remark : null,
+                        Kpi = kpiResponse,
+                        Deviation = (result != null) ? result.Deviation : null,
+                        MtdDeviation = (result != null) ? result.MtdDeviation : null,
+                        YtdDeviation = (result != null) ? result.YtdDeviation : null,
+                        ItdDeviation = (result != null) ? result.ItdDeviation : null,
+                        IsSuccess = true
+                    };
+                }
+
+            }
+            catch (Exception exception)
+            {
+                response.Message = exception.Message;
+            }
+
+
+            return response;
+        }
+
         public GetKpiAchievementResponse GetKpiAchievement(int kpiId, DateTime date, PeriodeType periodeType)
         {
             var response = new GetKpiAchievementResponse();
@@ -1003,6 +1073,15 @@ namespace DSLNG.PEAR.Services
             var response = new UpdateKpiAchievementItemResponse();
             try
             {
+                //check method value
+                var involvedKpi = DataContext.Kpis.Include(x => x.Method).SingleOrDefault(x => x.Id == request.KpiId);
+                if (!string.Equals(involvedKpi.Method.Name, "Manual Input", StringComparison.InvariantCultureIgnoreCase)) {
+                    response.Id = request.Id;
+                    response.IsSuccess = true;
+                    response.Message = "KPI Achievement item has been updated successfully";
+                    return response;
+                }
+
                 var action = request.MapTo<BaseAction>();
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
                 var kpiAchievement = request.MapTo<KpiAchievement>();
@@ -1069,6 +1148,10 @@ namespace DSLNG.PEAR.Services
                         }
 
                     }
+                    //special case
+                    //if (request.Id == 65) {
+
+                    //}
                 }
                 #endregion
                 #region insert
@@ -1514,6 +1597,26 @@ namespace DSLNG.PEAR.Services
                                 kpiAchievement.MtdDeviation = "1";
                                 kpiAchievement.YtdDeviation = "1";
                                 kpiAchievement.ItdDeviation = "1";
+                            }
+                            //special case
+                            if (request.KpiId == 65) {
+                                var kpiActual519 = DataContext.KpiAchievements.SingleOrDefault(x => x.Kpi.Id == 519 && x.Periode == request.Periode && x.PeriodeType == request.PeriodeType);
+                                if (kpiActual519 != null)
+                                {
+                                    kpiActual519.Value = kpiAchievement.Mtd - 17;
+                                }
+                                else {
+                                    kpiActual519 = new KpiAchievement();
+                                    kpiActual519.Periode = request.Periode;
+                                    kpiActual519.PeriodeType = request.PeriodeType;
+                                    kpiActual519.CreatedBy = user;
+                                    kpiActual519.UpdatedBy = user;
+                                    kpiActual519.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == 519);
+                                    kpiActual519.Value = kpiAchievement.Mtd - 17;
+                                    DataContext.KpiAchievements.Add(kpiActual519);
+                                    //save actual daily for 519
+                                }
+                                DataContext.SaveChanges(action);
                             }
                             DataContext.SaveChanges(action);
                             break;

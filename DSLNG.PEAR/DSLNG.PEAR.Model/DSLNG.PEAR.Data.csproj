@@ -78,6 +78,7 @@
     <Compile Include="Entities\ArtifactStack.cs" />
     <Compile Include="Entities\ArtifactTank.cs" />
     <Compile Include="Entities\AuditTrail.cs" />
+    <Compile Include="Entities\AuditUser.cs" />
     <Compile Include="Entities\BaseAction.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Blueprint\BusinessPostureIdentification.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Entities\Periode.cs" />
     <Compile Include="Entities\StaticHighlightPrivilege.cs" />
     <Compile Include="Entities\TransactionConfig.cs" />
+    <Compile Include="Entities\UserLogin.cs" />
     <Compile Include="Entities\Vessel.cs" />
     <Compile Include="Entities\VesselSchedule.cs" />
     <Compile Include="Entities\Wave.cs" />

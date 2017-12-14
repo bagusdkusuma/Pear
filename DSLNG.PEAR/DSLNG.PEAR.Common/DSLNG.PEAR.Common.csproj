@@ -57,6 +57,7 @@
     <Compile Include="Contants\PathConstant.cs" />
     <Compile Include="Extensions\AutoMapperExtensions.cs" />
     <Compile Include="Helpers\DateHelpers.cs" />
+    <Compile Include="Helpers\DomainHelper.cs" />
     <Compile Include="Helpers\SerializationHelper.cs" />
     <Compile Include="Helpers\SIPrefix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

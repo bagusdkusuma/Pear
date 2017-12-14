@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse Get(int Id);
         void UpdateStatus(int id, KpiTransformationStatus status);
         BaseResponse Delete(int id);
+        BaseResponse Delete(DeleteKPITransformationScheduleRequest request);
         BaseResponse BatchDelete(int[] ids);
     }
 }

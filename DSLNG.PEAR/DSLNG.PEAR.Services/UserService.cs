@@ -198,6 +198,21 @@ namespace DSLNG.PEAR.Services
                     response.IsSuccess = false;
                     response.Message = string.Format("Failed login using email <{0}> and password <{1}>", request.Email, request.Password);
                 }
+                if (response.IsSuccess)
+                {
+                    var userlogin = new UserLogin
+                    {
+                        User = user,
+                        IpAddress = request.IpAddress,
+                        Browser = request.Browser,
+                        HostName = request.HostName,
+                        LastLogin = DateTime.Now
+                    };
+                    DataContext.UserLogins.Add(userlogin);
+                    DataContext.SaveChanges();
+                    response.UserLogin = userlogin.MapTo<LoginUserResponse.Login>();
+                    response.UserLogin.Id = userlogin.Id;
+                }
             }
             catch (System.InvalidOperationException x)
             {

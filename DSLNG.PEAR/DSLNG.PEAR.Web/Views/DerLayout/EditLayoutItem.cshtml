@@ -124,6 +124,21 @@
                 case "total-commitment":
                     Html.RenderPartial("~/Views/DerLayout/LayoutType/_TotalCommitment.Edit.cshtml", Model);
                     break;
+                case "no2":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_NO2.Edit.cshtml", Model);
+                    break;
+                case "so2":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_SO2.Edit.cshtml", Model);
+                    break;
+                case "particulate":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_Particulate.Edit.cshtml", Model);
+                    break;
+                case "ph":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_PH.Edit.cshtml", Model);
+                    break;
+                case "oil-grease":
+                    Html.RenderPartial("~/Views/DerLayout/LayoutType/_OilGrease.Edit.cshtml", Model);
+                    break;
             }
         }
     </div>
@@ -359,6 +374,11 @@
             case "person-on-board":
             case "flare":
             case "total-commitment":
+            case "no2":
+            case "so2":
+            case "particulate":
+            case "ph":
+            case "no2oil-grease":
                 {
                     window.Pear.Artifact.Designer._kpiAutoComplete($('.layout-type-area'));
                     break;

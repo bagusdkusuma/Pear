@@ -82,6 +82,7 @@ namespace DSLNG.PEAR.Services
         {
             try
             {
+                var action = request.MapTo<BaseAction>();
                 if (request.Id == 0)
                 {
                     var kpiTransformation = new KpiTransformation { Name = request.Name, PeriodeType = request.PeriodeType };
@@ -98,7 +99,7 @@ namespace DSLNG.PEAR.Services
                         kpiTransformation.Kpis.Add(kpi);
                     }
                     DataContext.KpiTransformations.Add(kpiTransformation);
-                    DataContext.SaveChanges();
+                    DataContext.SaveChanges(action);
                 }
                 else
                 {
@@ -135,7 +136,7 @@ namespace DSLNG.PEAR.Services
                         }
                         kpiTransformation.Kpis.Add(kpi);
                     }
-                    DataContext.SaveChanges();
+                    DataContext.SaveChanges(action);
                 }
                 return new SaveKpiTransformationResponse
                 {
@@ -172,6 +173,42 @@ namespace DSLNG.PEAR.Services
                     .First(x => x.Id == id);
                 DataContext.KpiTransformations.Remove(item);
                 DataContext.SaveChanges();
+                return new BaseResponse
+                {
+                    IsSuccess = true,
+                    Message = string.Format("{0} deleted Successfully", item.Name)
+                };
+            }
+            catch (DbUpdateException e)
+            {
+                if (e.InnerException.InnerException.Message.Contains("dbo.KpiTransformations"))
+                {
+                    return new BaseResponse
+                    {
+                        IsSuccess = false,
+                        Message = "This Item still Used by KpiTransformationService"
+                    };
+                }
+                return new BaseResponse
+                {
+                    IsSuccess = false,
+                    Message = "An error occured while trying to delete this item"
+                };
+            }
+        }
+
+        public BaseResponse Delete(DeleteTransformationRequest request)
+        {
+            try
+            {
+                var action = request.MapTo<BaseAction>();
+                var item = DataContext.KpiTransformations
+                    .Include(x => x.Kpis)
+                    .Include(x => x.Schedules)
+                    .Include(x => x.Schedules.Select(y => y.Logs))
+                    .First(x => x.Id == request.Id);
+                DataContext.KpiTransformations.Remove(item);
+                DataContext.SaveChanges(action);
                 return new BaseResponse
                 {
                     IsSuccess = true,

@@ -7,6 +7,7 @@
     .dataTables_filter {
         display: none;
     }
+
     .glyphicon.glyphicon-one-fine-dot-1:before {
         content: "\25cf";
         font-size: 1.5em;
@@ -36,9 +37,11 @@
         font-size: 1.5em;
         color: green;
     }
+
     .bootstrap-select > .dropdown-toggle {
         width: 161px !important;
     }
+
     .dd-glyphicon {
         vertical-align: top;
         top: -4px;
@@ -68,7 +71,7 @@
             <label class="labletop">Traffic Light :</label>
             <select class="selectpicker" id="traffic-light" style="width:50%">
                 <option value=""> Select All</option>
-                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-1" value="1" @(Model.TrafficLight == "1" ? "selected" : "")> -- Normal Shut Down</option>                
+                <option data-icon="dd-glyphicon glyphicon-one-fine-dot-1" value="1" @(Model.TrafficLight == "1" ? "selected" : "")> -- Normal Shut Down</option>
                 <option data-icon="dd-glyphicon glyphicon-one-fine-dot-3" value="3" @(Model.TrafficLight == "3" ? "selected" : "")> -- Alert</option>
                 <option data-icon="dd-glyphicon glyphicon-one-fine-dot-4" value="4" @(Model.TrafficLight == "4" ? "selected" : "")> -- Need Attention</option>
                 <option data-icon="dd-glyphicon glyphicon-one-fine-dot-5" value="5" @(Model.TrafficLight == "5" ? "selected" : "")> -- Normal Ops</option>
@@ -163,8 +166,8 @@
 
             </div>
             @*<div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>*@
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
         </div>
     </div>
 </div>
@@ -215,7 +218,17 @@
                     {
                         "mDataProp": "Date", "name": "Date", "className": "dt-body-left",
                         "mRender": function (data, type, row, pos) {
-                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + '</a>';
+                            var plantMode = '';
+                            console.log(row['PlantMode']);
+                            if (row['PlantMode'].toLowerCase().indexOf('holding') > -1) {
+                                plantMode = '<span style="display:block;color:green">Holding</span>';
+                            } else if (row['PlantMode'].toLowerCase().indexOf('loading') > -1) {
+                                plantMode = '<span style="display:block;color:blue">Loading</span>';
+                            } else if (row['PlantMode'].toLowerCase().indexOf('shutdown') > -1) {
+                                plantMode = '<span style="display:block;color:red">Shut Down</span>';
+                            }
+                            return '<a href="#"  id="der-versions" data-toggle="modal" data-target="#der-versions-modal" data-pos="' + pos.row + '">' + moment(new Date(data.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + '</a>'
+                                + plantMode;
                         }
 
                     },
@@ -375,12 +388,11 @@
             });
         });
     </script>
-<link rel="stylesheet" href="@Url.Content("~/Content/bootstrap-select.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap-select.min.css")">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="@Url.Content("~/Scripts/bootstrap-select.min.js")"></script>
-    <style>        
-
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="@Url.Content("~/Scripts/bootstrap-select.min.js")"></script>
+    <style>
         .glyphicon-one-fine-red-dot:before {
             content: "\25cf";
             font-size: 10px;
@@ -396,7 +408,5 @@
             content: "\25cb";
             font-size: 3em;
         }
-
-        
     </style>
 }

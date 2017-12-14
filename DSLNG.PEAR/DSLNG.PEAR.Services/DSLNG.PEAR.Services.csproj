@@ -126,8 +126,13 @@
     <Compile Include="MirConfigurationService.cs" />
     <Compile Include="MirDataTableService.cs" />
     <Compile Include="ProcessBlueprintService.cs" />
+    <Compile Include="Requests\AuditTrail\CreateAuditUserRequest.cs" />
     <Compile Include="Requests\AuditTrail\GetAuditTrailRequest.cs" />
     <Compile Include="Requests\AuditTrail\GetAuditTrailsRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditUserLoginRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditUserLoginsRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditUserRequest.cs" />
+    <Compile Include="Requests\AuditTrail\GetAuditUsersRequest.cs" />
     <Compile Include="Requests\BaseRequest.cs" />
     <Compile Include="Requests\CustomFormula\GetCustomFormulaRequest.cs" />
     <Compile Include="Requests\DerLoadingSchedule\GetDerLoadingSchedulesRequest.cs" />
@@ -153,6 +158,7 @@
     <Compile Include="Requests\KpiTransformationLog\SaveKpiTransformationLogRequest.cs" />
     <Compile Include="Requests\KpiTransformationSchedule\GetKpiTransformationSchedulesRequest.cs" />
     <Compile Include="Requests\KpiTransformationSchedule\SaveKpiTransformationScheduleRequest.cs" />
+    <Compile Include="Requests\KpiTransformation\DeleteTransformationRequest.cs" />
     <Compile Include="Requests\KpiTransformation\GetKpiTransformationsRequest.cs" />
     <Compile Include="Requests\KpiTransformation\SaveKpiTransformationRequest.cs" />
     <Compile Include="Requests\Menu\GetMenuPrivilegeRequest.cs" />
@@ -301,6 +307,7 @@
     <Compile Include="Responses\InputData\GetInputDataResponse.cs" />
     <Compile Include="Responses\InputData\GetInputDatasResponse.cs" />
     <Compile Include="Responses\InputData\SaveOrUpdateInputDataResponse.cs" />
+    <Compile Include="Responses\KpiAchievement\GetKpiAchievementLessThanOrEqualResponse.cs" />
     <Compile Include="Responses\KpiInformation\GetKpiTransformationResponse.cs" />
     <Compile Include="Responses\KpiInformation\GetKpiTransformationsResponse.cs" />
     <Compile Include="Responses\KpiInformation\SaveKpiTransformationResponse.cs" />

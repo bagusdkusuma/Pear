@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using DSLNG.PEAR.Common.Extensions;
 using System.Web.Script.Serialization;
+using DSLNG.PEAR.Common.Helpers;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -68,7 +69,12 @@ namespace DSLNG.PEAR.Web.Controllers
 
         private bool IsValid(string email, string password)
         {
-            var user = _userService.Login(new LoginUserRequest { Email = email, Password = password });
+            var hostname = string.Empty;
+            if (Request.ServerVariables["REMOTE_ADDR"] != null)
+            {
+              hostname = DomainHelper.GetComputerName(Request.ServerVariables["REMOTE_ADDR"]);
+            }
+            var user = _userService.Login(new LoginUserRequest { Email = email, Password = password, IpAddress = Request.UserHostAddress, Browser = Request.UserAgent, HostName = hostname });
             if (user != null && user.IsSuccess)
             {
                 /* Try Get Current User Role
@@ -85,7 +91,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         roleName.Add(new KeyValuePair<int, string>(role.Id, role.Name));
                     }
                 }
-                var profileData = new UserProfileSessionData { UserId = user.Id, Email = user.Email, Name = user.Username, RoleId = user.RoleId, RoleName = user.RoleName, RedirectUrl = user.ChangeModel, IsSuperAdmin = user.IsSuperAdmin, RolePrivilegeName = roleName };
+                var profileData = new UserProfileSessionData { UserId = user.Id, Email = user.Email, Name = user.Username, RoleId = user.RoleId, RoleName = user.RoleName, RedirectUrl = user.ChangeModel, IsSuperAdmin = user.IsSuperAdmin, RolePrivilegeName = roleName, LoginId = user.UserLogin.Id };
                 this.Session["LoginUser"] = profileData;
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 UserViewModel serializedModel = new UserViewModel
@@ -96,9 +102,10 @@ namespace DSLNG.PEAR.Web.Controllers
                     RoleId = user.RoleId,
                     RoleName = user.RoleName,
                     IsActive = user.IsActive,
-                    IsSuperAdmin = user.IsSuperAdmin
+                    IsSuperAdmin = user.IsSuperAdmin,
+                    LoginId = user.UserLogin.Id
                 };
-                
+
                 string userData = serializer.Serialize(serializedModel);
                 //FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
                 //    version: 1,
@@ -115,6 +122,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 cp.RoleName = serializedModel.RoleName;
                 cp.IsSuperAdmin = serializedModel.IsSuperAdmin;
                 cp.Email = serializedModel.Email;
+                cp.LoginId = serializedModel.LoginId;
                 HttpContext.User = cp;
                 FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
                     1,
