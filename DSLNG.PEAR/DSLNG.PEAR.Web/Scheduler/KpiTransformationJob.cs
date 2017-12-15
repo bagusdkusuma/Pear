@@ -171,7 +171,8 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                         KpiTransformationScheduleId = kpiTransformationSchedule.Id,  PeriodeType = kpiTransformationSchedule.PeriodeType,
                                                         Periode = date,
                                                         Status = KpiTransformationStatus.Error, MethodId = kpi.MethodId,
-                                                        Notes = "Infinite Result"
+                                                        Notes = "Infinite Result",
+                                                        NeedCleanRowWhenError = true
                                                     };
                                                     logService.Save(logRequest);
                                                     complete = false;
@@ -193,7 +194,8 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                         KpiTransformationScheduleId = kpiTransformationSchedule.Id,  PeriodeType = kpiTransformationSchedule.PeriodeType,
                                                         Periode = date,
                                                         Status = KpiTransformationStatus.Error, MethodId = kpi.MethodId,
-                                                        Notes = "Infinite Result"
+                                                        Notes = "Infinite Result",
+                                                        NeedCleanRowWhenError = true
                                                     };
                                                     logService.Save(logRequest);
                                                     complete = false;
@@ -215,7 +217,8 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                         KpiTransformationScheduleId = kpiTransformationSchedule.Id,  PeriodeType = kpiTransformationSchedule.PeriodeType,
                                                         Periode = date,
                                                         Status = KpiTransformationStatus.Error, MethodId = kpi.MethodId,
-                                                        Notes = "Infinite Result"
+                                                        Notes = "Infinite Result",
+                                                        NeedCleanRowWhenError = true
                                                     };
                                                     logService.Save(logRequest);
                                                     complete = false;
@@ -237,7 +240,8 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                         KpiTransformationScheduleId = kpiTransformationSchedule.Id,  PeriodeType = kpiTransformationSchedule.PeriodeType,
                                                         Periode = date,
                                                         Status = KpiTransformationStatus.Error, MethodId = kpi.MethodId,
-                                                        Notes = "Infinite Result"
+                                                        Notes = "Infinite Result",
+                                                        NeedCleanRowWhenError = true
                                                     };
                                                     logService.Save(logRequest);
                                                     complete = false;

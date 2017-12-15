@@ -13,5 +13,6 @@ namespace DSLNG.PEAR.Services.Requests.KpiTransformationLog
         public KpiTransformationStatus Status { get; set; }
         public int MethodId { get; set; }
         public string Notes { get; set; }
+        public bool NeedCleanRowWhenError { get; set; }
     }
 }

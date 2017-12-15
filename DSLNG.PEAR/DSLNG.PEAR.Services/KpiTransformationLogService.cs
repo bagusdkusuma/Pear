@@ -91,7 +91,7 @@ namespace DSLNG.PEAR.Services
             DataContext.KpiTransformationLogs.Add(kpiTransformationLog);
 
             //remove related kpi if error
-            if (request.Status == Data.Enums.KpiTransformationStatus.Error && request.MethodId == 1)
+            if (request.Status == Data.Enums.KpiTransformationStatus.Error && request.MethodId == 1 && request.NeedCleanRowWhenError)
             {
                 var achievements = DataContext.KpiAchievements.Where(
                    x => x.Kpi.Id == request.KpiId && x.Periode == request.Periode && x.PeriodeType == request.PeriodeType).ToList();
