@@ -36,6 +36,7 @@ namespace DSLNG.PEAR.Services.Requests.KpiAchievement
         //public int UserId { get; set; }
         public bool UpdateDeviation { get; set; }
         public string UpdateFrom { get; set; }
+        public string ValueType { get; set; }
     }
 
     public class BatchUpdateKpiAchievementRequest : BaseRequest

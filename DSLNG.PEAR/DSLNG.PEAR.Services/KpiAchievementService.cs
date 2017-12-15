@@ -1075,7 +1075,8 @@ namespace DSLNG.PEAR.Services
             {
                 //check method value
                 var involvedKpi = DataContext.Kpis.Include(x => x.Method).SingleOrDefault(x => x.Id == request.KpiId);
-                if (checkManualInput && !string.Equals(involvedKpi.Method.Name, "Manual Input", StringComparison.InvariantCultureIgnoreCase)) {
+                if (checkManualInput && !string.Equals(involvedKpi.Method.Name, "Manual Input", StringComparison.InvariantCultureIgnoreCase)
+                    && request.ValueType.ToLowerInvariant() != "remark") {
                     response.Id = request.Id;
                     response.IsSuccess = true;
                     response.Message = "KPI Achievement item has been updated successfully";
