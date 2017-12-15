@@ -11,6 +11,7 @@ namespace DSLNG.PEAR.Services.Requests.KpiTransformationLog
         public DateTime Periode { get; set; }
         public PeriodeType PeriodeType { get; set; }
         public KpiTransformationStatus Status { get; set; }
+        public int MethodId { get; set; }
         public string Notes { get; set; }
     }
 }
