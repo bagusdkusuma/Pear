@@ -179,11 +179,12 @@ namespace DSLNG.PEAR.Services
                             var isTodayValue = actual.Periode == request.Date;
                             if (isTodayValue)
                             {
+                                var prevActual = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == previousDate && x.PeriodeType == PeriodeType.Daily);
                                 kpiInformation.DailyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = actual.Periode,
                                     Value = actual.Value.HasValue ? actual.Value : null,
-                                    Remark = actual.Remark,
+                                    Remark = string.IsNullOrEmpty(actual.Remark) ? (prevActual != null ? "prev--" + prevActual.Remark : actual.Remark) : actual.Remark,
                                     Id = actual.Id,
                                     Type = "now"
                                 };
@@ -191,6 +192,7 @@ namespace DSLNG.PEAR.Services
                             else
                             {
                                 //var todayValue = achievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date && x.PeriodeType == PeriodeType.Daily);
+                                var prevActual = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == previousDate && x.PeriodeType == PeriodeType.Daily);
                                 var todayValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date && x.PeriodeType == PeriodeType.Daily);
                                 if (todayValue != null)
                                 {
@@ -198,7 +200,7 @@ namespace DSLNG.PEAR.Services
                                     {
                                         Date = todayValue.Periode,
                                         Value = todayValue.Value ?? null,
-                                        Remark = todayValue.Remark,
+                                        Remark = string.IsNullOrEmpty(todayValue.Remark) ? (prevActual != null ? "prev--" + prevActual.Remark : todayValue.Remark) : todayValue.Remark,
                                         Id = todayValue.Id,
                                         Type = "now"
                                     };
@@ -259,13 +261,15 @@ namespace DSLNG.PEAR.Services
                                 isCurrentMonthValue = actual.Periode.Month == request.Date.Month && actual.Periode.Year == request.Date.Year && actual.PeriodeType == PeriodeType.Monthly;
                             }
                             //var isCurrentMonthValue = actual.Periode.Month == request.Date.Month && actual.Periode.Year == request.Date.Year && actual.PeriodeType == PeriodeType.Monthly;
+                           
                             if (isCurrentMonthValue)
                             {
+                                var prevActual = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date.AddMonths(-1) && x.PeriodeType == PeriodeType.Monthly);
                                 kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = actual.Periode,
                                     Value = actual.Value.HasValue ? actual.Value : null,
-                                    Remark = actual.Remark,
+                                    Remark = string.IsNullOrEmpty(actual.Remark) ? (prevActual != null ? "prev--" + prevActual.Remark : actual.Remark) : actual.Remark,
                                     Type = "now",
                                     Id = actual.Id
                                 };
@@ -273,13 +277,14 @@ namespace DSLNG.PEAR.Services
                             else
                             {
                                 var currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Monthly);
+                                var prevActual = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date.AddMonths(-1) && x.PeriodeType == PeriodeType.Monthly);
                                 if (currentMonthValue != null)
                                 {
                                     kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
                                     {
                                         Date = currentMonthValue.Periode,
                                         Value = currentMonthValue.Value.HasValue ? currentMonthValue.Value : null,
-                                        Remark = currentMonthValue.Remark,
+                                        Remark = string.IsNullOrEmpty(currentMonthValue.Remark) ? (prevActual != null ? "prev--" + prevActual.Remark : currentMonthValue.Remark) : currentMonthValue.Remark,
                                         Id = currentMonthValue.Id,
                                         Type = "now"
                                     };
@@ -331,11 +336,12 @@ namespace DSLNG.PEAR.Services
                             var isCurrentYearValue = actual.Periode.Year == request.Date.Year && actual.PeriodeType == PeriodeType.Yearly;
                             if (isCurrentYearValue)
                             {
+                                var prevActual = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date.AddYears(-1) && x.PeriodeType == PeriodeType.Yearly);
                                 kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = actual.Periode,
                                     Value = actual.Value.HasValue ? actual.Value : null,
-                                    Remark = actual.Remark,
+                                    Remark = string.IsNullOrEmpty(actual.Remark) ? (prevActual != null ? "prev--" + prevActual.Remark : actual.Remark) : actual.Remark,
                                     Type = "now",
                                     Id = actual.Id
                                 };
@@ -345,11 +351,12 @@ namespace DSLNG.PEAR.Services
                                 var currentYearValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Yearly);
                                 if (currentYearValue != null)
                                 {
+                                    var prevActual = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date.AddYears(-1) && x.PeriodeType == PeriodeType.Yearly);
                                     kpiInformation.YearlyActual = new GetKpiInformationValuesResponse.KpiValue
                                     {
                                         Date = currentYearValue.Periode,
                                         Value = currentYearValue.Value.HasValue ? currentYearValue.Value : null,
-                                        Remark = currentYearValue.Remark,
+                                        Remark = string.IsNullOrEmpty(currentYearValue.Remark) ? (prevActual != null ? "prev--" + prevActual.Remark : currentYearValue.Remark) : currentYearValue.Remark,
                                         Id = currentYearValue.Id,
                                         Type = "now"
                                     };
@@ -468,11 +475,12 @@ namespace DSLNG.PEAR.Services
                             //var currentMonthTarget = target.Periode.Year  == request.Date.Year && target.Periode.Month == request.Date.Month && target.PeriodeType == PeriodeType.Monthly;
                             if (currentMonthTarget)
                             {
+                                var prevTarget = targets.FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode == request.Date.AddMonths(-1) && x.PeriodeType == PeriodeType.Monthly);
                                 kpiInformation.MonthlyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
                                     Value = target.Value ?? null,
-                                    Remark = target.Remark,
+                                    Remark = string.IsNullOrEmpty(target.Remark) ? (prevTarget != null ? "prev--" + prevTarget.Remark : target.Remark) : target.Remark,
                                     Type = "now",
                                     Id = target.Id
                                 };
@@ -499,11 +507,12 @@ namespace DSLNG.PEAR.Services
                             var currentYearValue = target.Periode.Year == request.Date.Year && target.PeriodeType == PeriodeType.Yearly;
                             if (currentYearValue)
                             {
+                                var prevTarget = targets.FirstOrDefault(x => x.Kpi.Id == target.Kpi.Id && x.Periode == request.Date.AddYears(-1) && x.PeriodeType == PeriodeType.Yearly);
                                 kpiInformation.YearlyTarget = new GetKpiInformationValuesResponse.KpiValue
                                 {
                                     Date = target.Periode,
                                     Value = target.Value ?? null,
-                                    Remark = target.Remark,
+                                    Remark = string.IsNullOrEmpty(target.Remark) ? (prevTarget != null ? "prev--" + prevTarget.Remark : target.Remark) : target.Remark,
                                     Type = "now",
                                     Id = target.Id
                                 };
