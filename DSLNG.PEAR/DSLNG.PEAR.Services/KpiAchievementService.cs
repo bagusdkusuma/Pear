@@ -1100,14 +1100,18 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
                 KpiAchievement prevAchievement = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Periode == prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
-                if (prevAchievement != null && kpiAchievement.Value != null)
+                if(request.ValueType.ToLowerInvariant() != "remark")
                 {
-                    kpiAchievement.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
+                    if (prevAchievement != null && kpiAchievement.Value != null)
+                    {
+                        kpiAchievement.Deviation = CompareKpiValue(prevAchievement.Value, kpiAchievement.Value);
+                    }
+                    else
+                    {
+                        kpiAchievement.Deviation = "1";
+                    }
                 }
-                else
-                {
-                    kpiAchievement.Deviation = "1";
-                }
+                
                 #region existing data
                 if (request.Id > 0)
                 {
