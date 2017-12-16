@@ -529,6 +529,25 @@ namespace DSLNG.PEAR.Web.Helpers
 
             return val;
         }
+        public static MvcHtmlString DisplaySafetyComplienceIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget)
+        {
+            if (!string.IsNullOrEmpty(valueYtd) && valueYtd == "no invtgtn")
+            {
+                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
+            }
+
+            var ytd = double.Parse(valueYtd);
+            var target = double.Parse(valueTarget);
+            if (ytd == target)
+            {
+                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
+                
+            }
+            else
+            {
+                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle' style='color:red'></i></span>");
+            }
+        }
 
         public static MvcHtmlString DisplaySafetyIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget)
         {

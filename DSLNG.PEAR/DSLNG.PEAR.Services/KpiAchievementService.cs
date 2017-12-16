@@ -874,7 +874,7 @@ namespace DSLNG.PEAR.Services
                     case PeriodeType.Monthly:
                     case PeriodeType.Yearly:
                         {
-                            result = data.FirstOrDefault(x => x.PeriodeType == periodeType);
+                            result = data.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.PeriodeType == periodeType);
                             break;
                         }
 
