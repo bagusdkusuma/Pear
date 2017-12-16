@@ -1076,7 +1076,7 @@ namespace DSLNG.PEAR.Services
                 //check method value
                 var involvedKpi = DataContext.Kpis.Include(x => x.Method).SingleOrDefault(x => x.Id == request.KpiId);
                 if (checkManualInput && !string.Equals(involvedKpi.Method.Name, "Manual Input", StringComparison.InvariantCultureIgnoreCase)
-                    && request.ValueType.ToLowerInvariant() != "remark") {
+                    && !string.Equals(request.ValueType, "remark", StringComparison.InvariantCultureIgnoreCase)) {
                     response.Id = request.Id;
                     response.IsSuccess = true;
                     response.Message = "KPI Achievement item has been updated successfully";
@@ -1100,7 +1100,7 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
                 KpiAchievement prevAchievement = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Periode == prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
-                if(request.ValueType.ToLowerInvariant() != "remark")
+                if(!string.Equals(request.ValueType, "remark", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (prevAchievement != null && kpiAchievement.Value != null)
                     {
