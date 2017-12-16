@@ -11,7 +11,6 @@ using DSLNG.PEAR.Services.Requests.KpiAchievement;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using DSLNG.PEAR.Services.Responses;
 using DSLNG.PEAR.Services.Requests.CustomFormula;
-using System.Globalization;
 using DSLNG.PEAR.Services.Requests;
 
 namespace DSLNG.PEAR.Services
@@ -875,7 +874,7 @@ namespace DSLNG.PEAR.Services
                     case PeriodeType.Monthly:
                     case PeriodeType.Yearly:
                         {
-                            result = data.FirstOrDefault(x => x.PeriodeType == periodeType);
+                            result = data.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.PeriodeType == periodeType);
                             break;
                         }
 
@@ -1069,14 +1068,15 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public UpdateKpiAchievementItemResponse UpdateOriginalData(UpdateKpiAchievementItemRequest request)
+        public UpdateKpiAchievementItemResponse UpdateOriginalData(UpdateKpiAchievementItemRequest request, bool checkManualInput = false)
         {
             var response = new UpdateKpiAchievementItemResponse();
             try
             {
                 //check method value
                 var involvedKpi = DataContext.Kpis.Include(x => x.Method).SingleOrDefault(x => x.Id == request.KpiId);
-                if (!string.Equals(involvedKpi.Method.Name, "Manual Input", StringComparison.InvariantCultureIgnoreCase)) {
+                if (checkManualInput && !string.Equals(involvedKpi.Method.Name, "Manual Input", StringComparison.InvariantCultureIgnoreCase)
+                    && request.ValueType.ToLowerInvariant() != "remark") {
                     response.Id = request.Id;
                     response.IsSuccess = true;
                     response.Message = "KPI Achievement item has been updated successfully";
@@ -1676,7 +1676,7 @@ namespace DSLNG.PEAR.Services
             {
                 var action = request.MapTo<BaseAction>();
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
-                var origin = UpdateOriginalData(request);
+                var origin = UpdateOriginalData(request, true);
                 if (origin.IsSuccess)
                 {
                     var jccPrice = double.Parse(request.Value);
@@ -1827,7 +1827,7 @@ namespace DSLNG.PEAR.Services
             {
                 var action = request.MapTo<BaseAction>();
                 var user = DataContext.Users.First(x => x.Id == request.UserId);
-                var origin = UpdateOriginalData(request);
+                var origin = UpdateOriginalData(request, true);
 
                 /*
                  * Try to Update Dependend Object/KPI

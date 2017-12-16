@@ -582,6 +582,12 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                             var type = $this.data('type');
                             var tabindex = $this.attr('tabindex');
                             var nextTabindex = parseInt(tabindex) + 1;
+
+                            //special cases;
+                            if (nextTabindex == 136) {
+                                nextTabindex += 1;
+                            }
+
                             var id = $this.attr('data-id');
                             var value = $this.val() == '' ? $(this).attr('placeholder') : $this.val();
                             var numeric = false;

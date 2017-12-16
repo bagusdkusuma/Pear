@@ -89,6 +89,19 @@ namespace DSLNG.PEAR.Services
             } 
             kpiTransformationLog.Kpi = kpi;
             DataContext.KpiTransformationLogs.Add(kpiTransformationLog);
+
+            //remove related kpi if error
+            if (request.Status == Data.Enums.KpiTransformationStatus.Error && request.MethodId == 1 && request.NeedCleanRowWhenError)
+            {
+                var achievements = DataContext.KpiAchievements.Where(
+                   x => x.Kpi.Id == request.KpiId && x.Periode == request.Periode && x.PeriodeType == request.PeriodeType).ToList();
+                foreach (var achievement in achievements)
+                {
+                    DataContext.KpiAchievements.Remove(achievement);
+                }
+                DataContext.SaveChanges();
+            }
+
             DataContext.SaveChanges();
             return new SaveKpiTransformationLogResponse { IsSuccess = true, Message = "You have been successfully saved kpi transformation log" };
         }

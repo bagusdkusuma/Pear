@@ -395,9 +395,10 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = string.Format("UpdateKPI daily-actual KPI:{0}", viewModel.KpiId)
+                            ActionName = string.Format("UpdateKPI daily-actual KPI:{0}", viewModel.KpiId),
+                            ValueType = viewModel.ValueType
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 case "monthly-actual":
@@ -412,9 +413,10 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = string.Format("UpdateKPI monthly-actual KPI:{0}", viewModel.KpiId)
+                            ActionName = string.Format("UpdateKPI monthly-actual KPI:{0}", viewModel.KpiId),
+                            ValueType = viewModel.ValueType
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 case "yearly-actual":
@@ -429,9 +431,10 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = string.Format("UpdateKPI yearly-actual KPI:{0}",viewModel.KpiId)
+                            ActionName = string.Format("UpdateKPI yearly-actual KPI:{0}",viewModel.KpiId),
+                            ValueType = viewModel.ValueType
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 // case gila-gilaan
@@ -447,9 +450,10 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = string.Format("UpdateKPI monthly-actual-prev KPI:{0}",viewModel.KpiId)
+                            ActionName = string.Format("UpdateKPI monthly-actual-prev KPI:{0}",viewModel.KpiId),
+                            ValueType = viewModel.ValueType
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 case "monthly-actual-jcc":
@@ -464,7 +468,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = string.Format("UpdateKPI monthly-actual-jcc KPI:{0}", viewModel.KpiId)
+                            ActionName = string.Format("UpdateKPI monthly-actual-jcc KPI:{0}", viewModel.KpiId),
                         };
                         var resp = _kpiAchievementService.UpdateCustomJccFormula(request);
                         return Json(resp);
@@ -481,7 +485,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = viewModel.ValueType == "value" ? viewModel.Value : null,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = string.Format("UpdateKPI monthly-actual-bunker KPI:{0}", viewModel.KpiId)
+                            ActionName = string.Format("UpdateKPI monthly-actual-bunker KPI:{0}", viewModel.KpiId),
                         };
                         var resp = _kpiAchievementService.UpdateCustomBunkerPriceFormula(request);
                         return Json(resp);
@@ -510,9 +514,10 @@ namespace DSLNG.PEAR.Web.Controllers
                             Value = value,
                             Remark = viewModel.ValueType == "remark" ? viewModel.Value : null,
                             ControllerName = "Der Input Form",
-                            ActionName = string.Format("UpdateKPI monthly-actual-dafwc KPI:{0}", viewModel.KpiId)
+                            ActionName = string.Format("UpdateKPI monthly-actual-dafwc KPI:{0}", viewModel.KpiId),
+                            ValueType = viewModel.ValueType
                         };
-                        var resp = _kpiAchievementService.UpdateOriginalData(request);
+                        var resp = _kpiAchievementService.UpdateOriginalData(request, true);
                         return Json(resp);
                     }
                 default:

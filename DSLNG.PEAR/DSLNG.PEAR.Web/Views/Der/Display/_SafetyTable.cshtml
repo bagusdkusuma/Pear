@@ -178,7 +178,7 @@
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, string.Empty, "%", "N/A", true, 2, false)</td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Mtd, string.Empty, "%", "N/A", true, 2, false)</td>
             <td>
-                @Html.DisplaySafetyIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, "100")
+                @Html.DisplaySafetyComplienceIndicator(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, "100")
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Ytd, string.Empty, "%", "N/A", true, 2, false)
             </td>
             <td>
