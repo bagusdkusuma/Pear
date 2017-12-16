@@ -962,26 +962,18 @@
         <label class="control-label subtitle">Ambient Temp :</label>
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">Hi (&#8451;)</label></td>
+                <td><label class="control-label">CDS 24H Density (Kg/m<sup>3</sup>)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 185, 134, "oC")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 108, 134, "Kg/m3", "prev")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">Low (&#8451;)</label></td>
+                <td><label class="control-label"> Avg Ambient temp (&#8451;)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 184, 135, "oC")
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td><label class="control-label">CDS Density (Kg/m<sup>3</sup>)</label></td>
-                <td>
-                    <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 108, 136, "Kg/m3", "prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 185, 135, "oC")
                     </span>
                 </td>
             </tr>
