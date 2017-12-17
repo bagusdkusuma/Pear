@@ -124,7 +124,7 @@
             <td style="text-align:right;border-right:none;    border-left: none;">
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 10).KpiMeasurement, "bbl/MMscf")
             </td>
-            <td style="text-align: right">
+            <td style="text-align: right; position: relative">
                 <span class="indicator absolute">@Html.DisplayKpiIndicatorType1(Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value)</span>
                 CDS RVP : 
                 <span style="text-align:right">
