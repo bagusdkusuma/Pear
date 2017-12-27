@@ -944,7 +944,8 @@ h5 {
 
 span.indicator .fa-circle,
 span.indicator.green fa-circle {
-    color: #5bbb75;
+    /*color: #5bbb75;*/
+    color: green;
 }
 /*td > span > .fa-circle, td > span > .fa-times-circle, td > span > .fa-exclamation-circle {
             position: absolute;
