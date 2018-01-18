@@ -135,7 +135,7 @@ namespace DSLNG.PEAR.Services
                 (x.PeriodeType == PeriodeType.Yearly && (x.Periode.Year == request.Date.Year || x.Periode.Year == previousYear.Year)) ||
                 (x.PeriodeType == PeriodeType.Monthly && (x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year 
                 || x.Periode.Month == previousMonth.Month && x.Periode.Year == previousMonth.Year 
-                || x.Periode.Month == previous2Month.Month && x.Periode.Year == previousMonth.Year)))).ToList();
+                || x.Periode.Month == previous2Month.Month && x.Periode.Year == previous2Month.Year)))).ToList();
             var kpiIdsForTarget = request.TargetKpiIds;
             //var targets = GetTargets(kpiIdsForTarget, request.Date);
             var targets = DataContext.KpiTargets.Include(x => x.Kpi)
@@ -254,7 +254,12 @@ namespace DSLNG.PEAR.Services
                             bool isCurrentMonthValue = false;
                             if (actual.Kpi.Id == 385)
                             {
-                                isCurrentMonthValue = actual.Periode.Month == request.Date.AddMonths(-1).Month && actual.Periode.Year == request.Date.Year && actual.PeriodeType == PeriodeType.Monthly;
+                                var y = request.Date.Year;
+                                if(request.Date.Month == 1)
+                                {
+                                    y = y - 1;
+                                }
+                                isCurrentMonthValue = actual.Periode.Month == request.Date.AddMonths(-1).Month && actual.Periode.Year == y && actual.PeriodeType == PeriodeType.Monthly;
                             }
                             else
                             {
