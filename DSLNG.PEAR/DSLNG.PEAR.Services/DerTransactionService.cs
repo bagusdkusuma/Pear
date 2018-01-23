@@ -282,7 +282,16 @@ namespace DSLNG.PEAR.Services
                             else
                             {
                                 var currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.Month && x.Periode.Year == request.Date.Year && x.PeriodeType == PeriodeType.Monthly);
-                                var prevActual = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date.AddMonths(-1) && x.PeriodeType == PeriodeType.Monthly);
+                                if (actual.Kpi.Id == 385)
+                                {
+                                    var y = request.Date.Year;
+                                    if (request.Date.Month == 1)
+                                    {
+                                        y = y - 1;
+                                    }
+                                    currentMonthValue = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode.Month == request.Date.AddMonths(-1).Month && x.Periode.Year == y && x.PeriodeType == PeriodeType.Monthly);
+                                }
+                                    var prevActual = achievements.FirstOrDefault(x => x.Kpi.Id == actual.Kpi.Id && x.Periode == request.Date.AddMonths(-1) && x.PeriodeType == PeriodeType.Monthly);
                                 if (currentMonthValue != null)
                                 {
                                     kpiInformation.MonthlyActual = new GetKpiInformationValuesResponse.KpiValue
