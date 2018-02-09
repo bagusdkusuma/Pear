@@ -536,17 +536,19 @@ namespace DSLNG.PEAR.Web.Helpers
                 return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
             }
 
-            var ytd = double.Parse(valueYtd);
-            var target = double.Parse(valueTarget);
-            if (ytd == target)
+            if(!string.IsNullOrEmpty(valueYtd) && !string.IsNullOrEmpty(valueTarget))
             {
-                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
-                
+                var ytd = double.Parse(valueYtd);
+                var target = double.Parse(valueTarget);
+                if (ytd == target)
+                {
+                    return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle'></i></span>");
+                }
             }
-            else
-            {
-                return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle' style='color:red'></i></span>");
-            }
+           
+           
+
+            return new MvcHtmlString("<span class='indicator absolute'><i class='fa fa-circle' style='color:red'></i></span>");
         }
 
         public static MvcHtmlString DisplaySafetyIndicator(this HtmlHelper htmlHelper, string valueYtd, string valueTarget)
