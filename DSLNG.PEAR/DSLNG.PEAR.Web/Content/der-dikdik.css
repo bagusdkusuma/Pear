@@ -1376,3 +1376,11 @@ table.flare tbody td {
     padding-bottom: 0 !important;
     padding-top: 0 !important;
 }
+
+.dubai-crude {
+    line-height: 1;
+    height: 20pt;
+    width: 74px;
+    text-align: right;
+    margin-left: 52px;
+}
