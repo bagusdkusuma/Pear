@@ -927,7 +927,7 @@ Number.prototype.format = function (n, x) {
             gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
             var last = config.PlotBands.length - 1;
             for (var i in config.PlotBands) {
-                gradient.addColorStop(config.PlotBands[i].from / config.PlotBands[last].from, config.PlotBands[i].color);
+                gradient.addColorStop(config.PlotBands[i].from / config.PlotBands[last].to, config.PlotBands[i].color);
             }
             ctx.fillStyle = gradient;
             ctx.fillRect(3, 0, canvas.width - 3, canvas.height);
@@ -937,9 +937,9 @@ Number.prototype.format = function (n, x) {
             console.log($label.html());
             console.log(config.PlotBands);
             console.log(last);*/
-            var point = config.Series.data[0] / config.PlotBands[last].from * (canvas.width - 6) + 3;
+            var point = config.Series.data[0] / config.PlotBands[last].to * (canvas.width - 6) + 3;
             var basePoint = 6;
-            var maxPoint = config.PlotBands[last].from * (canvas.width - 6) + 3
+            var maxPoint = config.PlotBands[last].to * (canvas.width - 6) + 3
             if (point - 3 < 0) {
                 point = basePoint;
             } else if (point > maxPoint) {
