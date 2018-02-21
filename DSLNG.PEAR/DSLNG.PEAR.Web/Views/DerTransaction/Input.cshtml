@@ -427,7 +427,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
 
         function validateExtension(filename) {
             var ext = getFileExtension(filename);
-            if ($.inArray(ext, ['jpg', 'jpeg', 'gif', 'png', 'pdf', 'msg', 'txt', 'csv', 'xls', 'xlsx', 'xlt', 'doc', 'docx', 'ppt', 'pptx', 'odt', 'rar', 'zip', '7z']) === -1) {
+            if ($.inArray(ext.toLowerCase(), ['jpg', 'jpeg', 'gif', 'png', 'pdf', 'msg', 'txt', 'csv', 'xls', 'xlsx', 'xlt', 'doc', 'docx', 'ppt', 'pptx', 'odt', 'rar', 'zip', '7z']) === -1) {
                 var msg = "Invalid file extension for "+ ext + " in " + filename;
                 alert(msg);
                 $("#invalidList").append(msg + "<br/>");

@@ -202,7 +202,7 @@
                 var ext = getFileExtension(this.value);
                 var file = e.target.files[0];
 
-                if (ext != 'pdf') {
+                if (ext.toLowerCase() != 'pdf') {
                     $('#btnUpload').attr('disabled', true);
                     alert('This is not an allowed file type.');
                     this.value = '';
