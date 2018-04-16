@@ -126,7 +126,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="Upload" />
+                    <input type="submit" class="btn btn-primary" value="Upload" id="btnUpload" />
                     <button type="button" class="btn btn-darkblue" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -183,12 +183,51 @@
                     AllowDelete = true;
                 }
             }
+
+            function getFileExtension(filename) {
+                return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+            }
+
+            function validate(filename) {
+                if (filename.match(/[^a-zA-Z0-9\.\s\-\_\(\)\+]/g)) {
+                    alert("You have a not allowed character on " + filename);
+                    return false;
+                } else
+                    return true;
+            }
+            $('#der-upload-modal').on('show.bs.modal', function (e) {
+                $('#btnUpload').attr('disabled', true);
+            });
+            $('INPUT[type="file"]').change(function (e) {
+                var ext = getFileExtension(this.value);
+                var file = e.target.files[0];
+
+                if (ext.toLowerCase() != 'pdf') {
+                    $('#btnUpload').attr('disabled', true);
+                    alert('This is not an allowed file type.');
+                    this.value = '';
+                }
+
+                if (validate(file.name) && ext == 'pdf') {
+                    $('#btnUpload').attr('disabled', false);
+                } else {
+                    $('#btnUpload').attr('disabled', true);
+                }
+                
+                //if (ext == 'pdf' && validate(file.name)) {
+                //    $('#btnUpload').attr('disabled', false);
+                //} else {
+                //    $('#btnUpload').attr('disabled', true);
+                //    alert('This is not an allowed file type.');
+                //    this.value = '';
+                //}
+            });
             $('#derModal').on('show.bs.modal', function (e) {
                 var date = $(e.relatedTarget).data('date');
                 var title = $(e.relatedTarget).data('title');
                 var text = _textDictionary[title + '_' + date];
 
-                $('#derModal h4').text(title + ' - ' + date);                
+                $('#derModal h4').text(title + ' - ' + date);
                 $('#derModal .modal-body').html(text);
             })
             AllowDelete = '@{ @AllowDelete}';
@@ -199,7 +238,7 @@
                 var length = 200;
                 if (data.length > length) {
                     textDisplay = data.substring(0, length).replace(/<\/?[^>]+(>|$)/g, "");
-                    textDisplay += ' | <a class="read-more" href="#" data-toggle="modal" data-target="#derModal" data-title="' + title + '" data-date="' + moment(new Date(date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') +'">Read More</button>';
+                    textDisplay += ' | <a class="read-more" href="#" data-toggle="modal" data-target="#derModal" data-title="' + title + '" data-date="' + moment(new Date(date.match(/\d+/)[0] * 1)).format('DD MMM YYYY') + '">Read More</button>';
                 }
                 return textDisplay;
             }

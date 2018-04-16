@@ -327,6 +327,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                             <label>File</label>
                                             <input class="form-control" type="file" id="files" name="files" required multiple>
                                             <span class="field-validation-valid" data-valmsg-for="Weight" data-valmsg-replace="true"></span>
+                                            <label id="invalidList"></label>
                                         </div>
                                         <div class="form-group form-list">
                                             <label>Date</label>
@@ -335,7 +336,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     </div>
 
                                     <div class="modal-footer">
-                                        <input type="submit" class="btn-master-rgw btn btn-primary" value="Upload" />
+                                        <input type="submit" class="btn-master-rgw btn btn-primary" value="Upload" id="btnUpload" />
                                         <button type="button" class="btn btn-master-rgw btn-primary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
@@ -409,6 +410,53 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
 
 @section Scripts {
     <script type="text/javascript">
+        function validate(filename) {
+            if (filename.match(/[^a-zA-Z0-9\.\s\-\_\(\)\[\]\+]/g)) {
+                var msg = "You have a not allowed character on " + filename;
+                alert(msg);
+                
+                $("#invalidList").append(msg + "<br/>");
+                return false;
+            } else
+                return true;
+        }
+
+        function getFileExtension(filename) {
+            return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+        }
+
+        function validateExtension(filename) {
+            var ext = getFileExtension(filename);
+            if ($.inArray(ext.toLowerCase(), ['jpg', 'jpeg', 'gif', 'png', 'pdf', 'msg', 'txt', 'csv', 'xls', 'xlsx', 'xlt', 'doc', 'docx', 'ppt', 'pptx', 'odt', 'rar', 'zip', '7z']) === -1) {
+                var msg = "Invalid file extension for "+ ext + " in " + filename;
+                alert(msg);
+                $("#invalidList").append(msg + "<br/>");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        $("#invalidList").empty();
+        $('#activity-upload-modal').on('show.bs.modal', function (e) {
+            $('#btnUpload').attr('disabled', true);
+        });
+        $('INPUT[type="file"]').change(function (e) {
+            $("#invalidList").empty();
+            var files = e.target.files;
+            var success = false;
+            var err = 0;
+            for (var i = 0; i < files.length; ++i) {
+                if (!validate(files[i].name)) { ++err; };
+                if (!validateExtension(files[i].name)) { ++err;};
+            }
+
+            if (err > 0) {
+                $('#btnUpload').attr('disabled', true);
+            } else {
+                $('#btnUpload').attr('disabled', false);
+            }
+        });
         function getQueryVariable(variable) {
             var query = window.location.search.substring(1);
             var vars = query.split('&');
