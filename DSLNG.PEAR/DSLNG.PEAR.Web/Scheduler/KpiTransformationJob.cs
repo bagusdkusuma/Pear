@@ -90,16 +90,16 @@ namespace DSLNG.PEAR.Web.Scheduler
                                                     switch (kpiTransformationSchedule.PeriodeType)
                                                     {
                                                         case PeriodeType.Daily:
-                                                            mtdTransformed = Regex.Replace(mtdTransformed, "k" + g.Value, relatedKpiActual.Mtd.ToString(), RegexOptions.IgnoreCase);
-                                                            ytdTransformed = Regex.Replace(ytdTransformed, "k" + g.Value, relatedKpiActual.Ytd.ToString(), RegexOptions.IgnoreCase);
-                                                            itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
+                                                            mtdTransformed = Regex.Replace(mtdTransformed, "k" + g.Value, (relatedKpiActual.Mtd % 1) == 0 ? relatedKpiActual.Mtd.ToString() + ".00": relatedKpiActual.Mtd.ToString(), RegexOptions.IgnoreCase);
+                                                            ytdTransformed = Regex.Replace(ytdTransformed, "k" + g.Value, (relatedKpiActual.Ytd % 1) == 0 ? relatedKpiActual.Ytd.ToString() + ".00" : relatedKpiActual.Ytd.ToString(), RegexOptions.IgnoreCase);
+                                                            itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, (relatedKpiActual.Itd % 1) == 0 ? relatedKpiActual.Itd.ToString() + ".00" : relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
                                                             break;
                                                         case PeriodeType.Monthly:
-                                                            ytdTransformed = Regex.Replace(ytdTransformed, "k" + g.Value, relatedKpiActual.Ytd.ToString(), RegexOptions.IgnoreCase);
-                                                            itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
+                                                            ytdTransformed = Regex.Replace(ytdTransformed, "k" + g.Value, (relatedKpiActual.Ytd % 1) == 0 ? relatedKpiActual.Ytd.ToString() + ".00" : relatedKpiActual.Ytd.ToString(), RegexOptions.IgnoreCase);
+                                                            itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, (relatedKpiActual.Itd % 1) == 0 ? relatedKpiActual.Itd.ToString() + ".00" : relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
                                                             break;
                                                         case PeriodeType.Yearly:
-                                                            itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
+                                                            itdTransformed = Regex.Replace(itdTransformed, "k" + g.Value, (relatedKpiActual.Itd % 1) == 0 ? relatedKpiActual.Itd.ToString() + ".00" : relatedKpiActual.Itd.ToString(), RegexOptions.IgnoreCase);
                                                             break;
                                                         default:
                                                             break;
