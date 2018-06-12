@@ -1511,8 +1511,8 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     that.replaceWith(html);
                                 } catch (e) {
                                     console.log('highlight-json-ict-infra');
-                                    console.log(e);
-                                    console.log(data);
+                                    //console.log(e);
+                                    //console.log(data);
                                 }
                             }
                             else if (data.type === "highlight" && that.hasClass('highlight-json-gs-fm')) {
@@ -1529,11 +1529,12 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     that.replaceWith(html);
                                 } catch (e) {
                                     console.log('highlight-json-gs-fm');
-                                    console.log(e);
-                                    console.log(data);
+                                    //console.log(e);
+                                    //console.log(data);
                                 }
                             } else if (data.type === "highlight" && that.hasClass('highlight-json-weekly-alarm')) {
                                 try {
+                                    //console.log(data.view.trim());
                                     var parsed = JSON.parse(data.view);
                                     $('.weekly-alarm-processtrain').html(parsed.processtrain);
                                     $('.weekly-alarm-period').html(parsed.period);
@@ -1541,8 +1542,8 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                     $('.weekly-alarm-utilities').html(parsed.utilities);
                                 } catch (e) {
                                     console.log('highlight-json-weekly-alarm');
-                                    console.log(e);
-                                    console.log(data);
+                                    //console.log(e);
+                                    //console.log(data);
                                 }
                             }
                             else if (data.type == 'weather' || data.type == 'temperature') {
