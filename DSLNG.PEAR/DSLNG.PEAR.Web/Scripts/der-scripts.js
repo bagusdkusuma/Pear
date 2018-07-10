@@ -519,6 +519,7 @@ Number.prototype.format = function (n, x) {
                     align: 'high',
                     rotation: 0,
                     y: -10,
+                    x: container.is('.row1col0') ? 15 : 0,
                     offset: 15,
                     style: {
                         fontSize: '9px',
