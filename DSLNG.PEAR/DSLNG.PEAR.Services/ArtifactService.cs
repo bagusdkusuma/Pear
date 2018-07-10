@@ -46,7 +46,7 @@ namespace DSLNG.PEAR.Services
                         response.VolumeInventory = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == volumeInventory.Id)
                                 .GroupBy(x => x.Kpi.Id)
-                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
                     }
                     break;
                 case YtdFormula.Average:
@@ -54,7 +54,7 @@ namespace DSLNG.PEAR.Services
                         response.VolumeInventory = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == volumeInventory.Id)
                                     .GroupBy(x => x.Kpi.Id)
-                                    .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
+                                    .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
                     }
                     break;
             }
@@ -66,7 +66,7 @@ namespace DSLNG.PEAR.Services
                         response.DaysToTankTop = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                                 x.Periode >= start && x.Periode <= end && x.Kpi.Id == daysToTankTop.Id)
                                 .GroupBy(x => x.Kpi.Id)
-                                .Select(x => x.Sum(y => y.Value).Value).FirstOrDefault();
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
                     }
                     break;
                 case YtdFormula.Average:
@@ -74,7 +74,7 @@ namespace DSLNG.PEAR.Services
                         response.DaysToTankTop = DataContext.KpiAchievements.Where(x => x.PeriodeType == request.PeriodeType &&
                                     x.Periode >= start && x.Periode <= end && x.Kpi.Id == daysToTankTop.Id)
                                     .GroupBy(x => x.Kpi.Id)
-                                    .Select(x => x.Average(y => y.Value).Value).FirstOrDefault();
+                                    .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
                     }
                     break;
             }
