@@ -1190,10 +1190,13 @@ namespace DSLNG.PEAR.Services
                     }
                     else
                     {
-                        kpiAchievement.CreatedBy = user;
-                        kpiAchievement.UpdatedBy = user;
-                        kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
-                        DataContext.KpiAchievements.Add(kpiAchievement);
+                        if (kpiAchievement.Value != null || kpiAchievement.Remark != null)
+                        {
+                            kpiAchievement.CreatedBy = user;
+                            kpiAchievement.UpdatedBy = user;
+                            kpiAchievement.Kpi = DataContext.Kpis.FirstOrDefault(x => x.Id == request.KpiId);
+                            DataContext.KpiAchievements.Add(kpiAchievement);
+                        }
                     }
                     //Masih bikin data double, sebab 2 field dengan arah yang sama dan kpi yang sama bisa jadi memiliki data-id yang beda, karena saat return data-id dari service
                     //data-id untuk field yang lainnya belum terupdate
