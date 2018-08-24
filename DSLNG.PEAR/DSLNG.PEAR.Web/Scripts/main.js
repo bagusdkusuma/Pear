@@ -1383,7 +1383,7 @@ Number.prototype.format = function (n, x) {
                 }
             },
             title: {
-                title: data.BarChart.Title,
+                text: data.BarChart.Title,
                 style: {
                     color: '#fff'
                 }
