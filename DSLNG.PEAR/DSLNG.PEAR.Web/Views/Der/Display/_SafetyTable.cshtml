@@ -22,7 +22,7 @@
                 <img src="@Url.Content("~/content/img/der-leading.png")" style="position: absolute;right: 3px;height: 51px;"/>
             </td>
             <td>
-                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, "cards/day","N/A",false,0)                
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, string.Empty, "cards","N/A",false,0)                
             </td>
             <td>@Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Mtd, string.Empty, "cards/day", "N/A", true, 2, false)</td>
             <td>
