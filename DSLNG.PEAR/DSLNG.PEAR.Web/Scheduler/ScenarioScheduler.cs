@@ -40,7 +40,7 @@ namespace DSLNG.PEAR.Web.Scheduler
                     }
                 }
             }).ToRunEvery(1).Months().OnTheFirst(DayOfWeek.Monday).At(0, 0);
-            Schedule<QueueJob>().ToRunEvery(60).Seconds();
+            
             
             //
         }
