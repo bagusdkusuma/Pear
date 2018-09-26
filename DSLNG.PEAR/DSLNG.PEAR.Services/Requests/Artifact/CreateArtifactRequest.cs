@@ -43,6 +43,8 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public bool Is3D { get; set; }
         public bool ShowLegend { get; set; }
         public bool AsNetbackChart { get; set; }
+        public string SeriesType { get; set; }
+
         public class SeriesRequest
         {
             public SeriesRequest()
@@ -109,6 +111,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public bool IsOpposite { get; set; }
             public double? FractionScale { get; set; }
             public double? MaxFractionScale { get; set; }
+            public string SeriesType { get; set; }
             //public class SeriesRequest
             //{
             //    public SeriesRequest()

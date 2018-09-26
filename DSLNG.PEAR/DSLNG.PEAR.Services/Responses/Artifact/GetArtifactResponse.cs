@@ -42,6 +42,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
         public bool Remark { get; set; }
         public bool Is3D { get; set; }
         public bool ShowLegend { get; set; }
+        public string SeriesType { get; set; }
 
         public class SeriesResponse
         {
@@ -109,6 +110,7 @@ namespace DSLNG.PEAR.Services.Responses.Artifact
             public bool IsOpposite { get; set; }
             public double? FractionScale { get; set; }
             public double? MaxFractionScale { get; set; }
+            public string SeriesType { get; set; }
         }
 
     }

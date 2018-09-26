@@ -387,10 +387,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var barChart = new BarChartViewModel();
                         barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
-                        barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
+                        barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });                        
                         this.SetValueAxes(barChart.ValueAxes, false);
 
                         viewModel.BarChart = artifact.MapPropertiesToInstance<BarChartViewModel>(barChart);
+                        //viewModel.BarChart.SeriesType = artifact.SeriesType;
                         var series = new BarChartViewModel.SeriesViewModel();
                         series.Stacks.Add(new BarChartViewModel.StackViewModel());
                         viewModel.BarChart.Series.Insert(0, series);
@@ -1098,7 +1099,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.UserId = this.UserProfile().UserId;
                         request.ControllerName = "Artifact";
                         request.ActionName = "Edit";
-                        viewModel.MultiaxisChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);                        
                         _artifactServie.Update(request);
                     }
                     break;

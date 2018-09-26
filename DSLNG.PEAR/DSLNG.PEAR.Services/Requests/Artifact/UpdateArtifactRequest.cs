@@ -42,6 +42,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
         public bool Remark { get; set; }
         public bool Is3D { get; set; }
         public bool ShowLegend { get; set; }
+        public string SeriesType { get; set; }
 
         public class SeriesRequest
         {
@@ -102,6 +103,7 @@ namespace DSLNG.PEAR.Services.Requests.Artifact
             public ValueAxis ValueAxis { get; set; }
             public string GraphicType { get; set; }
             public IList<SeriesRequest> Series { get; set; }
+            public string SeriesType { get; set; }
             public string ValueAxisTitle { get; set; }
             public string ValueAxisColor { get; set; }
             public bool IsOpposite { get; set; }

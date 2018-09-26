@@ -17,9 +17,11 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public IList<SeriesViewModel> Series { get; set; }
         public IList<SelectListItem> ValueAxes { get; set; }
         public IList<SelectListItem> SeriesTypes { get; set; }
+        public string SeriesType { get; set; }
         public class SeriesViewModel
         {
-            public SeriesViewModel() {
+            public SeriesViewModel()
+            {
                 Stacks = new List<StackViewModel>();
             }
             [Display(Name = "Kpi")]

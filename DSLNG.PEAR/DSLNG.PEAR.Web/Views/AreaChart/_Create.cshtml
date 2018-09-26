@@ -2,7 +2,7 @@
 
 <div class="form-group form-list">
     @Html.LabelFor(model => model.AreaChart.Series)
-    @Html.DropDownList("seriesType", Model.AreaChart.SeriesTypes, new { id = "seriesType", @class = "form-control" })
+    @Html.DropDownListFor(m => m.AreaChart.SeriesType, Model.AreaChart.SeriesTypes, "Select Series Type", new { id = "seriesType", @class = "form-control series-type" })
     <input type="button" value="Add Series" class="btn btn-lightblue" id="add-series" />
 </div>
 

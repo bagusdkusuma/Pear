@@ -413,6 +413,7 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetCartesianChartDataResponse.SeriesResponse, BarChartDataViewModel.SeriesViewModel>();
             Mapper.CreateMap<BarChartViewModel, CreateArtifactRequest>()
               .ForMember(x => x.Series, o => o.MapFrom(s => s.Series.MapTo<CreateArtifactRequest.SeriesRequest>()));
+              
 
             Mapper.CreateMap<BarChartViewModel.SeriesViewModel, CreateArtifactRequest.SeriesRequest>()
                .ForMember(x => x.Stacks, o => o.MapFrom(s => s.Stacks.MapTo<CreateArtifactRequest.StackRequest>()));
@@ -505,10 +506,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel, MultiaxisChartDataViewModel.ChartViewModel.SeriesViewModel>();
             Mapper.CreateMap<MultiaxisChartViewModel, CreateArtifactRequest>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, CreateArtifactRequest.ChartRequest>()
-                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesCreateResolver>());
+                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesCreateResolver>())
+                .ForMember(x => x.SeriesType, o => o.ResolveUsing<MultiaxisSeriesTypeUpdateResolver>());
             Mapper.CreateMap<MultiaxisChartViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<MultiaxisChartViewModel.ChartViewModel, UpdateArtifactRequest.ChartRequest>()
-                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesUpdateResolver>());
+                .ForMember(x => x.Series, o => o.ResolveUsing<MultiaxisSeriesUpdateResolver>())
+                .ForMember(x => x.SeriesType, o => o.ResolveUsing<MultiaxisSeriesTypeUpdateResolver>());
             Mapper.CreateMap<GetMultiaxisChartDataResponse.ChartResponse.SeriesViewModel.MarkerViewModel, MultiaxisChartDataViewModel.ChartViewModel.SeriesViewModel.MarkerViewModel>();
 
             //combo mapping
@@ -520,10 +523,12 @@ namespace DSLNG.PEAR.Web.AutoMapper
             Mapper.CreateMap<GetComboChartDataResponse.ChartResponse.SeriesViewModel, ComboChartDataViewModel.ChartViewModel.SeriesViewModel>();
             Mapper.CreateMap<ComboChartViewModel, CreateArtifactRequest>();
             Mapper.CreateMap<ComboChartViewModel.ChartViewModel, CreateArtifactRequest.ChartRequest>()
-                .ForMember(x => x.Series, o => o.ResolveUsing<ComboSeriesCreateResolver>());
+                .ForMember(x => x.Series, o => o.ResolveUsing<ComboSeriesCreateResolver>())
+                .ForMember(x => x.SeriesType, o => o.ResolveUsing<ComboSeriesTypeUpdateResolver>());
             Mapper.CreateMap<ComboChartViewModel, UpdateArtifactRequest>();
             Mapper.CreateMap<ComboChartViewModel.ChartViewModel, UpdateArtifactRequest.ChartRequest>()
-                .ForMember(x => x.Series, o => o.ResolveUsing<ComboSeriesUpdateResolver>());
+                .ForMember(x => x.Series, o => o.ResolveUsing<ComboSeriesUpdateResolver>())
+                .ForMember(x => x.SeriesType, o => o.ResolveUsing<ComboSeriesTypeUpdateResolver>());
             Mapper.CreateMap<LineChartViewModel.SeriesViewModel, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<AreaChartViewModel.SeriesViewModel, GetComboChartDataRequest.ChartRequest.SeriesRequest>();
             Mapper.CreateMap<AreaChartViewModel.StackViewModel, GetComboChartDataRequest.ChartRequest.StackRequest>();
@@ -1382,6 +1387,40 @@ namespace DSLNG.PEAR.Web.AutoMapper
             }
 
             return list;
+        }
+    }
+
+    public class MultiaxisSeriesTypeUpdateResolver : ValueResolver<MultiaxisChartViewModel.ChartViewModel, string>
+    {
+        protected override string ResolveCore(MultiaxisChartViewModel.ChartViewModel source)
+        {
+            switch (source.GraphicType)
+            {
+                case "line":
+                    return source.LineChart.SeriesType;
+                case "area":
+                    return source.AreaChart.SeriesType;
+                default:
+                    return source.BarChart.SeriesType;
+
+            }
+        }
+    }
+
+    public class ComboSeriesTypeUpdateResolver : ValueResolver<ComboChartViewModel.ChartViewModel, string>
+    {
+        protected override string ResolveCore(ComboChartViewModel.ChartViewModel source)
+        {
+            switch (source.GraphicType)
+            {
+                case "line":
+                    return source.LineChart.SeriesType;
+                case "area":
+                    return source.AreaChart.SeriesType;
+                default:
+                    return source.BarChart.SeriesType;
+
+            }
         }
     }
 }

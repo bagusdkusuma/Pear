@@ -17,10 +17,10 @@
                 <div class="col-sm-6">
                     <div class="form-group form-list">
                         @{
-        //if (i != 0)
-        //{
-        //    Model.MultiaxisChart.GraphicTypes.Where(x => x.Value == Model.MultiaxisChart.Charts[i].GraphicType).First().Selected = true;
-        //}
+                            //if (i != 0)
+                            //{
+                            //    Model.MultiaxisChart.GraphicTypes.Where(x => x.Value == Model.MultiaxisChart.Charts[i].GraphicType).First().Selected = true;
+                            //}
                             @Html.LabelFor(model => model.MultiaxisChart.Charts[i].GraphicType)
                             @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].GraphicType, new SelectList(Model.MultiaxisChart.GraphicTypes, "Value", "Text", Model.MultiaxisChart.Charts[i].GraphicType), new { @class = "form-control multiaxis-graphic-type", data_graph_url = Url.Action("MultiaxisSettings", "Artifact") })
                             @Html.ValidationMessageFor(model => model.MultiaxisChart.Charts[i].GraphicType)
@@ -29,10 +29,10 @@
                 </div>
                 <div class="col-sm-6">
                     @{
-        //if (i != 0)
-        //{
-        //    Model.MultiaxisChart.Measurements.Where(x => x.Value == Model.MultiaxisChart.Charts[i].MeasurementId.ToString()).First().Selected = true;
-        //}
+                        //if (i != 0)
+                        //{
+                        //    Model.MultiaxisChart.Measurements.Where(x => x.Value == Model.MultiaxisChart.Charts[i].MeasurementId.ToString()).First().Selected = true;
+                        //}
                     }
                     <div class="form-group form-list">
                         @Html.LabelFor(model => model.MultiaxisChart.Charts[i].MeasurementId)
@@ -42,10 +42,10 @@
                 </div>
                 <div class="col-sm-6  value-axis-holder">
                     @{
-        //if (i != 0)
-        //{
-        //    Model.MultiaxisChart.ValueAxes.Where(x => x.Value == Model.MultiaxisChart.Charts[i].ValueAxis).First().Selected = true;
-        //}
+                        //if (i != 0)
+                        //{
+                        //    Model.MultiaxisChart.ValueAxes.Where(x => x.Value == Model.MultiaxisChart.Charts[i].ValueAxis).First().Selected = true;
+                        //}
                         <div class="form-group form-list">
                             @Html.LabelFor(model => model.MultiaxisChart.Charts[i].ValueAxis)
                             @Html.DropDownListFor(model => model.MultiaxisChart.Charts[i].ValueAxis, new SelectList(Model.MultiaxisChart.ValueAxes, "Value", "Text", Model.MultiaxisChart.Charts[i].ValueAxis), new { @class = "form-control value-axis-opt" })
@@ -93,21 +93,21 @@
                 </div>
                 <div class="col-sm-6 chart-settings">
                     @{
-        if (i != 0)
-        {
-            switch (Model.MultiaxisChart.Charts[i].GraphicType)
-            {
-                case "line":
-                    Html.RenderPartial("~/Views/MultiaxisChart/_LineChartEdit.cshtml", Model.MultiaxisChart.Charts[i].LineChart, new ViewDataDictionary { { "ChartIndex", i } });
-                    break;
-                case "area":
-                    Html.RenderPartial("~/Views/MultiaxisChart/_AreaChartEdit.cshtml", Model.MultiaxisChart.Charts[i].AreaChart, new ViewDataDictionary { { "ChartIndex", i } });
-                    break;
-                default:
-                    Html.RenderPartial("~/Views/MultiaxisChart/_BarChartEdit.cshtml", Model.MultiaxisChart.Charts[i].BarChart, new ViewDataDictionary { { "ChartIndex", i } });
-                    break;
-            }
-        }
+                        if (i != 0)
+                        {
+                            switch (Model.MultiaxisChart.Charts[i].GraphicType)
+                            {
+                                case "line":
+                                    Html.RenderPartial("~/Views/MultiaxisChart/_LineChartEdit.cshtml", Model.MultiaxisChart.Charts[i].LineChart, new ViewDataDictionary { { "ChartIndex", i } });
+                                    break;
+                                case "area":
+                                    Html.RenderPartial("~/Views/MultiaxisChart/_AreaChartEdit.cshtml", Model.MultiaxisChart.Charts[i].AreaChart, new ViewDataDictionary { { "ChartIndex", i } });
+                                    break;
+                                default:
+                                    Html.RenderPartial("~/Views/MultiaxisChart/_BarChartEdit.cshtml", Model.MultiaxisChart.Charts[i].BarChart, new ViewDataDictionary { { "ChartIndex", i } });
+                                    break;
+                            }
+                        }
                     }
                 </div>
             </div>

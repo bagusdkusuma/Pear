@@ -2,7 +2,22 @@
 
 <div class="form-group form-list">
     @Html.LabelFor(model => model.Series)
-    @Html.DropDownList("seriesType", Model.SeriesTypes, new { id = "seriesType", @class = "form-control series-type" })
+    <select class="form-control series-type" id="seriesType" name="MultiaxisChart.Charts[@ViewData["ChartIndex"]].AreaChart.SeriesType">
+        <option value="">Select Series Type</option>
+        @foreach (var s in Model.SeriesTypes)
+        {
+            if (s.Value == Model.SeriesType)
+            {
+                <option value="@s.Value" selected="selected">@s.Text</option>
+            }
+            else
+            {
+                <option value="@s.Value">@s.Text</option>
+
+            }
+        }
+    </select>
+    @*@Html.DropDownList("seriesType", Model.SeriesTypes, new { id = "seriesType", @class = "form-control series-type" })*@
     <input type="button" value="Add Series" class="btn btn-lightblue" id="add-series" />
 </div>
 

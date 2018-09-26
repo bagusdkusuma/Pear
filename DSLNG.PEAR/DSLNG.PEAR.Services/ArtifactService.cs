@@ -3202,7 +3202,7 @@ namespace DSLNG.PEAR.Services
             artifact.Is3D = request.Is3D;
 
             artifact.FractionScale = request.FractionScale;
-
+            artifact.SeriesType = request.SeriesType;
             DataContext.SaveChanges(action);
             return new UpdateArtifactResponse();
         }

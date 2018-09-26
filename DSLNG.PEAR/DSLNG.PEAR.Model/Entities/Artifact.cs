@@ -26,6 +26,7 @@ namespace DSLNG.PEAR.Data.Entities
         [Required]
         public string HeaderTitle { get; set; }
 
+        public string SeriesType { get; set; }
         public ICollection<ArtifactSerie> Series { get; set; }
         public ICollection<ArtifactPlot> Plots { get; set; }
         public ICollection<ArtifactRow> Rows { get; set; }

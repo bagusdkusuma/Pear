@@ -25,5 +25,6 @@ namespace DSLNG.PEAR.Data.Entities
         public double? FractionScale { get; set; }
         public double? MaxFractionScale { get; set; }
         public bool IsOpposite { get; set; }
+        public string SeriesType { get; set; }  
     }
 }

@@ -11,20 +11,24 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
 {
     public class BarChartViewModel
     {
-        public BarChartViewModel() {
+        public BarChartViewModel()
+        {
             ValueAxes = new List<SelectListItem>();
             Series = new List<SeriesViewModel>();
             SeriesTypes = new List<SelectListItem>();
         }
+
         public IList<SelectListItem> ValueAxes { get; set; }
         public IList<SeriesViewModel> Series { get; set; }
         public IList<SelectListItem> SeriesTypes { get; set; }
+        public string SeriesType { get; set; }
         public class SeriesViewModel
         {
-            public SeriesViewModel() {
+            public SeriesViewModel()
+            {
                 Stacks = new List<StackViewModel>();
             }
-            [Display(Name="Kpi")]
+            [Display(Name = "Kpi")]
             public int KpiId { get; set; }
             public string KpiName { get; set; }
             public string Label { get; set; }
@@ -36,7 +40,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
 
         public class StackViewModel
         {
-            [Display(Name="Kpi")]
+            [Display(Name = "Kpi")]
             public int KpiId { get; set; }
             public string KpiName { get; set; }
             public string Label { get; set; }
