@@ -28,6 +28,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -109,6 +110,9 @@
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EPPlus, Version=4.5.2.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.2.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="FluentScheduler, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentScheduler.5.0.0\lib\net40\FluentScheduler.dll</HintPath>
       <Private>True</Private>
@@ -118,6 +122,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <HintPath>..\packages\ExcelPackage.1.0.0\lib\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -145,6 +154,7 @@
       <HintPath>..\packages\NReco.PdfGenerator.1.1.12.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="StructureMap, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -171,6 +181,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -860,6 +871,7 @@
     <Compile Include="Controllers\AuditTrailController.cs" />
     <Compile Include="Controllers\DerImageController.cs" />
     <Compile Include="Controllers\DerLoadingScheduleController.cs" />
+    <Compile Include="ViewModels\Artifact\ExportSettingViewModel.cs" />
     <Compile Include="ViewModels\AuditTrail\AuditTrailsDetailsViewModel.cs" />
     <Compile Include="ViewModels\AuditTrail\GetAuditTrailViewModel.cs" />
     <Compile Include="ViewModels\DerTransaction\ActivityViewModel.cs" />
@@ -1240,6 +1252,7 @@
     <Content Include="Views\DerLayout\LayoutType\_OilGrease.cshtml" />
     <Content Include="Views\DerLayout\LayoutType\_OilGrease.Edit.cshtml" />
     <Content Include="Views\Der\Display\_EnvironmentalPartialView.cshtml" />
+    <Content Include="Views\Artifact\_ExportSetting.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

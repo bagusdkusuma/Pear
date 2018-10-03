@@ -19,6 +19,16 @@ using System.Data.SqlClient;
 using NReco.ImageGenerator;
 using DSLNG.PEAR.Services.Responses.Artifact;
 using DSLNG.PEAR.Web.Attributes;
+using System.IO;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using DSLNG.PEAR.Services.Responses;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Runtime.InteropServices;
+using System.Reflection;
+using OfficeOpenXml;
+using System.Drawing;
+using DSLNG.PEAR.Services.Responses.KpiAchievement;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -29,19 +39,21 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IKpiService _kpiService;
         private readonly IArtifactService _artifactServie;
         private readonly IHighlightService _highlightService;
+        private readonly IKpiAchievementService _kpiAchievementService;
 
         public ArtifactController(IMeasurementService measurementService,
             IKpiService kpiService,
             IArtifactService artifactServcie,
-            IHighlightService highlightService)
+            IHighlightService highlightService, IKpiAchievementService kpiAchievementService)
         {
             _measurementService = measurementService;
             _kpiService = kpiService;
             _artifactServie = artifactServcie;
             _highlightService = highlightService;
+            _kpiAchievementService = kpiAchievementService;
         }
 
-        [AuthorizeUser(AccessLevel ="AllowView")]
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
             return View();
@@ -120,7 +132,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
             {
                 Take = -1,
-                SortingDictionary = new Dictionary<string, SortOrder> { {"Name", SortOrder.Ascending}}
+                SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
             }).Measurements
                 .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
 
@@ -131,7 +143,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(viewModel);
         }
 
-        [AuthorizeUser(AccessLevel ="AllowUpdate")]
+        [AuthorizeUser(AccessLevel = "AllowUpdate")]
         public ActionResult Edit(int id)
         {
             var artifact = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
@@ -152,7 +164,8 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicTypes.Add(new SelectListItem { Value = "pie", Text = "Pie" });
 
 
-            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest {
+            viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+            {
                 Take = -1,
                 SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
             }).Measurements
@@ -205,7 +218,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "barachievement", Text = "Bar Achievement" });
                         multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
                         multiaxisChart.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
-                        multiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest {
+                        multiaxisChart.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
                             Take = -1,
                             SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
                         }).Measurements
@@ -354,14 +368,14 @@ namespace DSLNG.PEAR.Web.Controllers
                         foreach (var row in artifact.Rows)
                         {
                             viewModel.Tabular.Rows.Add(new TabularViewModel.RowViewModel
-                                {
-                                    KpiId = row.KpiId,
-                                    KpiName = row.KpiName,
-                                    PeriodeType = row.PeriodeType.ToString(),
-                                    EndInDisplay = ParseDateToString(row.PeriodeType, row.End),
-                                    StartInDisplay = ParseDateToString(row.PeriodeType, row.Start),
-                                    RangeFilter = row.RangeFilter.ToString()
-                                });
+                            {
+                                KpiId = row.KpiId,
+                                KpiName = row.KpiName,
+                                PeriodeType = row.PeriodeType.ToString(),
+                                EndInDisplay = ParseDateToString(row.PeriodeType, row.End),
+                                StartInDisplay = ParseDateToString(row.PeriodeType, row.Start),
+                                RangeFilter = row.RangeFilter.ToString()
+                            });
                         }
                         /*foreach (var item in viewModel.Tabular.Rows)
                         {
@@ -387,7 +401,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     {
                         var barChart = new BarChartViewModel();
                         barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.SingleStack.ToString(), Text = "Single Stack" });
-                        barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });                        
+                        barChart.SeriesTypes.Add(new SelectListItem { Value = SeriesType.MultiStacks.ToString(), Text = "Multi Stacks" });
                         this.SetValueAxes(barChart.ValueAxes, false);
 
                         viewModel.BarChart = artifact.MapPropertiesToInstance<BarChartViewModel>(barChart);
@@ -480,7 +494,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         viewModel.GraphicTypes.Add(new SelectListItem { Value = "line", Text = "Line" });
                         viewModel.GraphicTypes.Add(new SelectListItem { Value = "area", Text = "Area" });
                         viewModel.Charts.Add(chart);
-                        viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest {
+                        viewModel.Measurements = _measurementService.GetMeasurements(new GetMeasurementsRequest
+                        {
                             Take = -1,
                             SortingDictionary = new Dictionary<string, SortOrder> { { "Name", SortOrder.Ascending } }
                         }).Measurements
@@ -715,7 +730,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 if (!name.Equals("Hourly") && !name.Equals("Weekly"))
                 {
                     periodeTypes.Add(new SelectListItem { Text = name, Value = name });
-                }   
+                }
             }
         }
 
@@ -736,7 +751,7 @@ namespace DSLNG.PEAR.Web.Controllers
             rangeFilters.Add(new SelectListItem { Value = RangeFilter.AllExistingYears.ToString(), Text = "All Existing Years" });
         }
 
-        [AuthorizeUser(AccessLevel ="AllowView")]
+        [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult View(int id)
         {
             var artifactResp = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
@@ -851,9 +866,9 @@ namespace DSLNG.PEAR.Web.Controllers
                                     Start = rowViewModel.StartAfterParsed
                                 });
                         }*/
-                        
+
                         viewModel.Tabular.MapPropertiesToInstance<GetTabularDataRequest>(request);
-                        
+
                         var chartData = _artifactServie.GetTabularData(request);
                         previewViewModel.GraphicType = viewModel.GraphicType;
                         previewViewModel.Tabular = new TabularDataViewModel();
@@ -1099,7 +1114,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         request.UserId = this.UserProfile().UserId;
                         request.ControllerName = "Artifact";
                         request.ActionName = "Edit";
-                        viewModel.MultiaxisChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);                        
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<UpdateArtifactRequest>(request);
                         _artifactServie.Update(request);
                     }
                     break;
@@ -1199,7 +1214,8 @@ namespace DSLNG.PEAR.Web.Controllers
 
         }
 
-        public ActionResult Delete(int id) {
+        public ActionResult Delete(int id)
+        {
             var request = new DeleteArtifactRequest();
             request.Id = id;
             request.UserId = this.UserProfile().UserId;
@@ -1211,14 +1227,15 @@ namespace DSLNG.PEAR.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Print(int id) { 
+        public ActionResult Print(int id)
+        {
             var secretNumber = Guid.NewGuid().ToString();
             ArtifactCloneController.SecretNumber = secretNumber;
-            var displayUrl = Url.Action("Display", "ArtifactClone", new { id = id, secretNumber = secretNumber },this.Request.Url.Scheme);
+            var displayUrl = Url.Action("Display", "ArtifactClone", new { id = id, secretNumber = secretNumber }, this.Request.Url.Scheme);
             var htmlToImageConverter = new HtmlToImageConverter();
             htmlToImageConverter.Height = 350;
             htmlToImageConverter.Width = 500;
-            return File(htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png), "image/png","TheGraph.png");
+            return File(htmlToImageConverter.GenerateImageFromFile(displayUrl, ImageFormat.Png), "image/png", "TheGraph.png");
         }
 
         public ActionResult GraphicSetting(int id)
@@ -1260,7 +1277,7 @@ namespace DSLNG.PEAR.Web.Controllers
             previewViewModel.MaxFractionScale = artifactResp.MaxFractionScale;
             previewViewModel.AsNetbackChart = artifactResp.AsNetbackChart;
 
-            artifactResp.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType); 
+            artifactResp.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType);
             artifactResp.RangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), viewModel.RangeFilter);
             artifactResp.Start = viewModel.StartAfterParsed;
             artifactResp.End = viewModel.EndAfterParsed;
@@ -1271,7 +1288,8 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult HighlightSetting(ArtifactDesignerViewModel viewModel)
         {
-            var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest {
+            var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+            {
                 Id = 0,
                 PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType),
                 Date = viewModel.StartAfterParsed,
@@ -1281,6 +1299,162 @@ namespace DSLNG.PEAR.Web.Controllers
             highlight.PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType);
             highlight.Date = viewModel.StartAfterParsed.Value;
             return Json(highlight, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ExportSetting(int id)
+        {
+            var artifact = _artifactServie.GetArtifact(new GetArtifactRequest { Id = id });
+            var kpis = new List<SelectListItem>();
+            switch (artifact.GraphicType.ToLowerInvariant())
+            {
+                case "multiaxis":
+                    foreach (var chart in artifact.Charts)
+                    {
+                        foreach (var kpi in GetKpisAsSelectListItem(chart))
+                        {
+                            kpis.Add(new SelectListItem { Value = kpi.Value, Text = kpi.Text });
+                        }
+                    }
+                    break;
+            }
+            var viewModel = new ExportSettingViewModel();
+            viewModel.Kpis = kpis;
+            viewModel.PeriodeType = artifact.PeriodeType.ToString();
+            //SetPeriodeTypes(viewModel.PeriodeTypes);
+            //SetRangeFilters(viewModel.RangeFilters);
+            //SetValueAxes(viewModel.ValueAxes);
+            //artifact.MapPropertiesToInstance<ArtifactDesignerViewModel>(viewModel);
+
+            viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, artifact.Start);
+            viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, artifact.End);
+            return PartialView("_ExportSetting", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ExportSetting(ExportSettingViewModel viewModel)
+        {
+            var kpiActuals = viewModel.KpiIds
+                .Where(x => !string.IsNullOrEmpty(x))
+                .Select(x => Int32.Parse(x)).ToArray();
+            var data = _kpiAchievementService.GetKpiAchievements(kpiActuals, viewModel.StartAfterParsed, viewModel.EndAfterParsed, viewModel.PeriodeType);
+            //var pivot = data.KpiAchievements.GroupBy(x => x.Periode);
+
+            //foreach(var x in pivot)
+            //{
+            //    foreach(var y in x.Key)
+            //    {
+
+            //    }
+            //}
+            Dictionary<DateTime, IList<GetKpiAchievementResponse>> dictionaries =
+                new Dictionary<DateTime, IList<GetKpiAchievementResponse>>();
+            IList<GetKpiAchievementResponse> list = new List<GetKpiAchievementResponse>();
+            foreach (var item in data.KpiAchievements)
+            {
+                list = data.KpiAchievements.Where(x => x.Periode == item.Periode).OrderBy(x => x.Kpi.Id).ToList();
+
+                if (!dictionaries.Keys.Contains(item.Periode))
+                {
+                    dictionaries.Add(item.Periode, list);
+                }
+                else
+                {
+                    dictionaries[item.Periode] = list;
+                }
+            }
+
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A3"].Value = "Date";
+            ws.Cells["B3"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
+            ws.Cells["C3"].Value = "By: Johnny Depp";
+
+            ws.Cells["A4"].Value = "Dashboard Name";
+            ws.Cells["B4"].Value = ": NAMADASHBOARD";
+
+            ws.Cells["A3"].Value = "Date";
+            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+
+            ws.Cells["A6:A7"].Value = "Periode";
+            ws.Cells["A6:A7"].Merge = true;
+
+            int kpiRowStart = 8;
+            int kpiColStart = 2;
+            IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
+
+            foreach (var dictionary in dictionaries)
+            {
+                foreach (var val in dictionary.Value)
+                {
+                    ws.Cells[6, kpiColStart].Value = val.Kpi.Name;
+                    kpiColStart++;
+                }
+                break;
+            }
+            kpiColStart = 1;
+            foreach (var dictionary in dictionaries)
+            {
+                ws.Cells[kpiRowStart, kpiColStart].Value = dictionary.Key.ToString();
+                foreach (var val in dictionary.Value)
+                {
+                    kpiColStart++;
+                    ws.Cells[kpiRowStart, kpiColStart].Value = val.Value.ToString();
+                }
+                kpiRowStart++;
+                kpiColStart = 1;
+            }
+
+            //int rowStart = 7;
+            //foreach (var item in viewModel.KpiIds)
+            //{
+
+            //    ws.Row(rowStart).Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+            //    ws.Row(rowStart).Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml(string.Format("pink")));
+
+            //    ws.Cells[string.Format("A{0}", rowStart)].Value = "Val";
+            //    ws.Cells[string.Format("B{0}", rowStart)].Value = "Text";
+            //    rowStart++;
+            //}
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+
+
+            var result = new BaseResponse { IsSuccess = true };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        private IList<SelectListItem> GetKpisAsSelectListItem(GetArtifactResponse.ChartResponse chart)
+        {
+            var kpis = new List<SelectListItem>();
+            switch (chart.GraphicType.ToLowerInvariant())
+            {
+                case "bar":
+                    foreach (var serie in chart.Series)
+                    {
+                        if (serie.Stacks.Count > 0)
+                        {
+                            foreach (var stack in serie.Stacks)
+                            {
+                                kpis.Add(new SelectListItem { Value = stack.KpiId.ToString(), Text = stack.Label });
+                            }
+                        }
+                        else
+                        {
+                            kpis.Add(new SelectListItem { Value = serie.KpiId.ToString(), Text = serie.Label });
+                        }
+                    }
+
+                    return kpis;
+            }
+
+            return new List<SelectListItem>();
         }
 
         private string ParseDateToString(PeriodeType periodeType, DateTime? date)

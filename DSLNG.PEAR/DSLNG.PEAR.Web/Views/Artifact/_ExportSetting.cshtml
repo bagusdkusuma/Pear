@@ -1,0 +1,111 @@
+﻿@using DSLNG.PEAR.Data.Enums
+@model DSLNG.PEAR.Web.ViewModels.Artifact.ExportSettingViewModel
+<style>
+    label {
+        width: 120px;
+    }
+</style>
+@*@{ 
+    var id = "graphic-type";
+    var title = Model.HeaderTitle;
+    if(Model.HighlightTypeId > 0)
+    {
+        if (string.IsNullOrEmpty(Model.HeaderTitle))
+        {
+            title = "Highlight";
+        }
+    }
+}*@
+
+<div class="form-inline whitebox">
+    @*@Html.HiddenFor(model => model.GraphicType, new { @class = "form-control", id = "graphic-type" })*@
+    @Html.HiddenFor(model => model.PeriodeType, new { @class = "form-control" })
+    <div class="form-inline whitebox">
+        <div id="general-export-settings">
+            <div class="form-group form-list">
+                @*@{
+                    if (Model.HighlightTypeId > 0)
+                    {
+                        <h4>Highlight Settings</h4>
+                    }
+                    else
+                    {
+                        <h4>Graph Settings</h4>
+                    }
+                }*@
+                
+                <hr/>
+            </div>
+            @*<div class="form-group form-list">
+                @Html.LabelFor(model => model.PeriodeType)
+                @Html.DropDownListFor(model => model.PeriodeType, Model.PeriodeTypes, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodeType)
+            </div>*@
+
+            @*<div id="range-filter-holder">
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.RangeFilter)
+                    @Html.DropDownListFor(model => model.RangeFilter, Model.RangeFilters, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RangeFilter)
+                </div>
+            </div>*@
+
+            <div @*class="@(string.IsNullOrEmpty(Model.RangeFilter) ? string.Empty : Model.RangeFilter.ToLowerInvariant())"*@>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.KpiId)
+                    @Html.DropDownList("KpiIds", Model.Kpis, "Select KPI", new { @class= "select2-multiple2", @style="width: 200px" })
+                    @Html.ValidationMessageFor(model => model.KpiId)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.StartInDisplay)
+                    @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                    @Html.ValidationMessageFor(model => model.StartInDisplay)
+                </div>
+
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.EndInDisplay)
+                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                    @Html.ValidationMessageFor(model => model.EndInDisplay)
+                </div>
+            </div>            
+        </div>
+        
+        @{
+            if (Model.PeriodeType == PeriodeType.Yearly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Monthly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Weekly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Daily.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Hourly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY hh:00 A"></span>
+            }
+        }
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {        
+        @*var headerTitle = @Html.Raw(Json.Encode(title));
+        var mt = $('.modal-title')
+        mt.text(headerTitle);*@
+
+        $('.select2-multiple2').select2MultiCheckboxes({
+            templateSelection: function (selected, total) {
+                return "Selected " + selected.length + " of " + total;
+            }
+        })
+    });
+</script>

@@ -6328,6 +6328,166 @@ Number.prototype.format = function (n, x) {
             }
         });
     }
+    var getExportChart = function (el) {        
+        var artifactHolder = el.closest('.artifact-holder');
+        _artifactHolder = artifactHolder;
+        _highchartsContainter = el.closest('.highcharts-container');
+        console.log('as');
+        console.log(artifactHolder);
+        console.log(_highchartsContainer);
+
+        var artifactId = artifactHolder.attr('data-artifact-id');
+        var chart = artifactHolder.highcharts();
+        console.log(chart);
+        var url = '/Artifact/ExportSetting/' + artifactId;
+
+        $('body').append($('<div/>').addClass('modal-loader').css({
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: 'rgba(0,0,0,.5)',
+            backgroundImage: 'url("/Content/img/ajax-loader2.gif")',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 1000,
+        }));
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function (data) {
+                $('.export-setting-content').hide();
+                $('.export-setting-content').html(data);
+                $('.export-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
+
+                $('.export-setting-content').show();
+                $('#export-setting').modal('show');
+
+                function rangeDatePicker() {
+                    var format = $('#datetime-attr').attr('data-datepickerformat');
+                    $('.datepicker').datetimepicker({
+                        format: format,
+                    });
+                    $('.datepicker').change(function (e) {
+                    });
+                    $('#PeriodeType').change(function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        var clearValue = $('.datepicker').each(function (i, val) {
+                            $(val).val('');
+                            if ($(val).data("DateTimePicker") !== undefined) {
+                                $(val).data("DateTimePicker").destroy();
+                            }
+                        });
+                        switch ($this.val().toLowerCase().trim()) {
+                            case 'hourly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY hh:00 A"
+                                });
+                                break;
+                            case 'daily':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY"
+                                });
+                                break;
+                            case 'weekly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY",
+                                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                                });
+                                break;
+                            case 'monthly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/YYYY"
+                                });
+                                break;
+                            case 'yearly':
+                                $('.datepicker').datetimepicker({
+                                    format: "YYYY"
+                                });
+                                break;
+                            default:
+
+                        }
+                    });
+                };
+                function rangeControl() {
+                    $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+                    });
+                    var original = $('#RangeFilter').clone(true);
+                    var rangeFilterSetup = function (periodeType) {
+                        var graphicType = $('#graphic-type').val();
+                        var toRemove = {};
+                        switch (graphicType) {
+                            case "tabular":
+                            case "tank":
+                            case "speedometer":
+                            case "traffic":
+                            case "pie":
+                                toRemove.hourly = ['AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                break;
+                            default:
+                                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                break;
+                        }
+                        var originalClone = original.clone(true);
+                        originalClone.find('option').each(function (i, val) {
+                            if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                                originalClone.find(val).remove();
+                            }
+                        });
+                        $('#RangeFilter').replaceWith(originalClone);
+                    };
+
+                    rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
+                    $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+
+                        rangeFilterSetup($this.val().toLowerCase().trim());
+                        $('.graphic-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
+                        $('#range-holder').removeAttr('class');
+                    });
+
+                };
+                function specificDate() {
+                    $(".datepicker").on("dp.change", function (e) {
+                        if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                            $('#EndInDisplay').val($('#StartInDisplay').val());
+                        }
+                    });
+                };
+                rangeControl();
+                rangeDatePicker();
+                specificDate();
+                var search = searchArtifactConfig(_configs, artifactId);
+                if (search.isExisted == true) {
+                    $('.export-setting-content #PeriodeType').val(search.config.PeriodeType).change();
+                    $('.export-setting-content #RangeFilter').val(search.config.RangeFilter).change();
+                    $('.datepicker').datetimepicker({
+                        format: search.dateformat,
+                    });
+                    $('.export-setting-content #StartInDisplay').val(search.config.StartInDisplay);
+                    $('.export-setting-content #EndInDisplay').val(search.config.EndInDisplay);
+                    $('#range-holder').removeClass();
+                    $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
+                }
+            }
+        });
+    }
 
     $('.artifact-holder').on('click', '.tank-subtitle', function () {
         getGraphicSetting($(this));
@@ -6415,11 +6575,18 @@ Number.prototype.format = function (n, x) {
 
     if ($('#user-profile-session-data').length > 0) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
+            text: "Export Excel",
+            onclick: function () {
+                getExportChart($(this.renderTo));
+            }
+        });
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
             text: "Change Periode",
             onclick: function () {
                 getGraphicSetting($(this.renderTo));
             }
         });
+        
     }
 
     if ($('#user-profile-session-data').length > 0 && $('#user-profile-session-data').data('issuperadmin') == true) {

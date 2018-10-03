@@ -1948,5 +1948,38 @@ namespace DSLNG.PEAR.Services
 
             return response;
         }
+
+        public GetAchievementsResponse GetKpiAchievements(int[] kpiIds, DateTime? start, DateTime? end, string periodeType)
+        {
+            PeriodeType pType = (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+            var response = new GetAchievementsResponse();
+            try
+            {
+                var kpiAchievement = DataContext.KpiAchievements
+                    .Include(x => x.Kpi)
+                    .OrderBy(x => x.Kpi.Order)
+                    .Where(x => kpiIds.Contains(x.Kpi.Id) && x.PeriodeType == pType && x.Periode >= start.Value && x.Periode <= end.Value)
+                    .ToList();
+                if (kpiAchievement.Count > 0)
+                {
+                    foreach (var item in kpiAchievement)
+                    {
+                        response.KpiAchievements.Add(item.MapTo<GetKpiAchievementResponse>());
+                    }
+                }
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.IsSuccess = false;
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.IsSuccess = false;
+                response.Message = argumentNullException.Message;
+            }
+            return response;
+        }
     }
 }

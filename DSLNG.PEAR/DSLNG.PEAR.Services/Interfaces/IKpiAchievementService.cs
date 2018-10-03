@@ -30,6 +30,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         UpdateKpiAchievementItemResponse UpdateOriginalData(UpdateKpiAchievementItemRequest request, bool checkManualInput = false);
         UpdateKpiAchievementItemResponse UpdateCustomJccFormula(UpdateKpiAchievementItemRequest request);
         UpdateKpiAchievementItemResponse UpdateCustomBunkerPriceFormula(UpdateKpiAchievementItemRequest request);
+        GetAchievementsResponse GetKpiAchievements(int[] kpiIds, DateTime? start, DateTime? end, string periodeType);
     }
 
 }

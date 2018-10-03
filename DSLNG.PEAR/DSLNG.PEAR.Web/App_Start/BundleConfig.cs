@@ -19,6 +19,7 @@ namespace DSLNG.PEAR.Web.App_Start
                 //"~/Content/datepicker/js/bootstrap-datepicker.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
                         "~/Content/select2/dist/js/select2.js",
+                        "~/Content/select2/dist/js/select2.multi-checkboxes.js",
                         "~/Scripts/highcharts.js",
                         "~/Scripts/highcharts-3d.src.js",
                 //"~/Scripts/highcharts-more.js",
