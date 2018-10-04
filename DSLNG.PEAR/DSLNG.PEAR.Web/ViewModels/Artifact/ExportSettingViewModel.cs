@@ -17,12 +17,15 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         }
 
         public IList<SelectListItem> Kpis { get; set; }
+        [Display(Name = "KPI")]
         public string KpiId { get; set; }
         public string[] KpiIds { get; set; }
         public string PeriodeType { get; set; }
 
+        [Required]
         [Display(Name = "Start")]
         public string StartInDisplay { get; set; }
+        [Required]
         [Display(Name = "End")]
         public string EndInDisplay { get; set; }
 
@@ -72,5 +75,12 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
                 return DateTime.ParseExact(this.EndInDisplay, "MM/dd/yyyy hh:mm tt", CultureInfo.InvariantCulture);
             }
         }
+
+        [Required]
+        [StringLength(300, ErrorMessage = "Minimum File Name is 7 Characters", MinimumLength = 7)]
+        [Display(Name = "File Name")]
+        public string FileName { get; set; }
+
+        public string Name { get; set; }
     }
 }

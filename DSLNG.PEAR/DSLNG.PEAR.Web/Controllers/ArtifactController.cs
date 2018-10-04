@@ -29,6 +29,7 @@ using System.Reflection;
 using OfficeOpenXml;
 using System.Drawing;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
+using OfficeOpenXml.Style;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -1333,19 +1334,27 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult ExportSetting(ExportSettingViewModel viewModel)
         {
-            var kpiActuals = viewModel.KpiIds
-                .Where(x => !string.IsNullOrEmpty(x))
-                .Select(x => Int32.Parse(x)).ToArray();
+           
+            var labelDictionaries = new Dictionary<int, List<string>>();
+            foreach (var item in viewModel.KpiIds)
+            {
+                var split = item.Split('|');
+                if (split.Length > 2)
+                {
+                    var kpiId = Int32.Parse(split[0]);
+                    if (!labelDictionaries.Keys.Contains(kpiId))
+                    {
+                        labelDictionaries.Add(kpiId, new List<string> { split[1], split[2] });
+                    }
+                    else
+                    {
+                        labelDictionaries[kpiId] = new List<string> { split[1], split[2] };
+                    }
+                }
+            }
+            var kpiActuals = labelDictionaries.Keys.Select(x => x).ToArray();
             var data = _kpiAchievementService.GetKpiAchievements(kpiActuals, viewModel.StartAfterParsed, viewModel.EndAfterParsed, viewModel.PeriodeType);
-            //var pivot = data.KpiAchievements.GroupBy(x => x.Periode);
 
-            //foreach(var x in pivot)
-            //{
-            //    foreach(var y in x.Key)
-            //    {
-
-            //    }
-            //}
             Dictionary<DateTime, IList<GetKpiAchievementResponse>> dictionaries =
                 new Dictionary<DateTime, IList<GetKpiAchievementResponse>>();
             IList<GetKpiAchievementResponse> list = new List<GetKpiAchievementResponse>();
@@ -1368,16 +1377,20 @@ namespace DSLNG.PEAR.Web.Controllers
 
             ws.Cells["A3"].Value = "Date";
             ws.Cells["B3"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
-            ws.Cells["C3"].Value = "By: Johnny Depp";
+            ws.Cells["C3"].Value = "By: " + UserProfile().Name;
 
             ws.Cells["A4"].Value = "Dashboard Name";
-            ws.Cells["B4"].Value = ": NAMADASHBOARD";
+            ws.Cells["B4"].Value = ": " + viewModel.Name;
 
             ws.Cells["A3"].Value = "Date";
-            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy} at {0:H: mm tt}", DateTimeOffset.Now);
+            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}", DateTimeOffset.Now);
 
             ws.Cells["A6:A7"].Value = "Periode";
             ws.Cells["A6:A7"].Merge = true;
+            ws.Cells["A6:A7"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A6:A7"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["A6:A7"].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+            ws.Cells["A6:A7"].Style.Font.Bold = true;
 
             int kpiRowStart = 8;
             int kpiColStart = 2;
@@ -1387,7 +1400,15 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 foreach (var val in dictionary.Value)
                 {
-                    ws.Cells[6, kpiColStart].Value = val.Kpi.Name;
+                    ws.Cells[6, kpiColStart].Value = string.Format("{0}, {1} ({2})", val.Kpi.Id, val.Kpi.Name, val.Kpi.KpiMeasurement);
+                    ws.Cells[6, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[6, kpiColStart].Style.Font.Bold = true;
+                    ws.Cells[6, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                    ws.Cells[7, kpiColStart].Value = labelDictionaries.Single(x => x.Key == val.Kpi.Id).Value[1];
+                    ws.Cells[7, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[7, kpiColStart].Style.Font.Bold = true;
+                    ws.Cells[7, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     kpiColStart++;
                 }
                 break;
@@ -1395,11 +1416,16 @@ namespace DSLNG.PEAR.Web.Controllers
             kpiColStart = 1;
             foreach (var dictionary in dictionaries)
             {
-                ws.Cells[kpiRowStart, kpiColStart].Value = dictionary.Key.ToString();
+                ws.Cells[kpiRowStart, kpiColStart].Value = FormatDate(dictionary.Key, viewModel.PeriodeType);
+                ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
                 foreach (var val in dictionary.Value)
                 {
                     kpiColStart++;
                     ws.Cells[kpiRowStart, kpiColStart].Value = val.Value.ToString();
+                    ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 }
                 kpiRowStart++;
                 kpiColStart = 1;
@@ -1421,13 +1447,27 @@ namespace DSLNG.PEAR.Web.Controllers
 
             Response.Clear();
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("content-disposition", "attachment; filename=DemoExcel.xls");
+            Response.AddHeader("content-disposition", "attachment; filename=" + viewModel.FileName + ".xls");
             Response.BinaryWrite(pck.GetAsByteArray());
             Response.End();
 
 
             var result = new BaseResponse { IsSuccess = true };
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        private string FormatDate(DateTime dateTime, string periodeType)
+        {
+            PeriodeType pType = (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+            switch (pType)
+            {
+                case PeriodeType.Yearly:
+                    return dateTime.ToString("yyyy");
+                case PeriodeType.Monthly:
+                    return dateTime.ToString("MMMM-yyyy");
+                default:
+                    return dateTime.ToString("dd-MMMM-yyyy");
+            }
         }
 
         private IList<SelectListItem> GetKpisAsSelectListItem(GetArtifactResponse.ChartResponse chart)
@@ -1442,12 +1482,22 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             foreach (var stack in serie.Stacks)
                             {
-                                kpis.Add(new SelectListItem { Value = stack.KpiId.ToString(), Text = stack.Label });
+                                kpis.Add(new SelectListItem
+                                {
+                                    Value = string.Format(@"{0}|{1}|{2}", stack.KpiId.ToString(), serie.ValueAxis, stack.Label)
+                                    ,
+                                    Text = stack.Label
+                                });
                             }
                         }
                         else
                         {
-                            kpis.Add(new SelectListItem { Value = serie.KpiId.ToString(), Text = serie.Label });
+                            kpis.Add(new SelectListItem
+                            {
+                                Value =
+                                string.Format(@"{0}|{1}|{2}", serie.KpiId.ToString(), serie.ValueAxis, serie.Label),
+                                Text = serie.Label
+                            });
                         }
                     }
 

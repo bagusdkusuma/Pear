@@ -112,6 +112,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="@Url.Action("ExportSetting", "Artifact")" method="post" id="export-setting-form" class="form-horizontal">
+                        @Html.HiddenFor(m => m.Name)
                         <div class="export-setting-content">
                             <p>&nbsp;</p>
                         </div>

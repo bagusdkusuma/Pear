@@ -1956,7 +1956,7 @@ namespace DSLNG.PEAR.Services
             try
             {
                 var kpiAchievement = DataContext.KpiAchievements
-                    .Include(x => x.Kpi)
+                    .Include(x => x.Kpi.Measurement)
                     .OrderBy(x => x.Kpi.Order)
                     .Where(x => kpiIds.Contains(x.Kpi.Id) && x.PeriodeType == pType && x.Periode >= start.Value && x.Periode <= end.Value)
                     .ToList();

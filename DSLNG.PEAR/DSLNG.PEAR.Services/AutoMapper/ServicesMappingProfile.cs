@@ -1037,7 +1037,9 @@ namespace DSLNG.PEAR.Services.AutoMapper
 
             Mapper.CreateMap<KpiAchievement, GetKpiAchievementsConfigurationResponse.KpiAchievement>();
             Mapper.CreateMap<KpiAchievement, GetKpiAchievementResponse>();
-            Mapper.CreateMap<Kpi, GetKpiAchievementResponse.KpiResponse>();
+                
+            Mapper.CreateMap<Kpi, GetKpiAchievementResponse.KpiResponse>()
+                .ForMember(x => x.KpiMeasurement, y => y.MapFrom(z => z.Measurement != null ? z.Measurement.Name : string.Empty));
 
             Mapper.CreateMap<KpiAchievement, GetAchievementsResponse>();
             Mapper.CreateMap<Kpi, GetAchievementsResponse>();

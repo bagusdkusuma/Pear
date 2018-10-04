@@ -6360,6 +6360,9 @@ Number.prototype.format = function (n, x) {
             success: function (data) {
                 $('.export-setting-content').hide();
                 $('.export-setting-content').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
                 $('.export-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
 
                 $('.export-setting-content').show();
@@ -6505,6 +6508,10 @@ Number.prototype.format = function (n, x) {
         $('body').children('.modal-loader').remove();
     });
 
+    $('#export-setting').on('show.bs.modal', function () {
+        $('body').children('.modal-loader').remove();
+    });
+
     $('#graphic-setting').on('submit', '#graphic-setting-form', function (e) {
         e.preventDefault();
         $.ajax({
@@ -6524,7 +6531,20 @@ Number.prototype.format = function (n, x) {
                 $('#graphic-setting').modal('hide');
             }
         })
-    })
+    });
+
+
+    //$('#export-setting').on('submit', '#export-setting-form', function (e) {
+    //    e.preventDefault();
+    //    $.ajax({
+    //        url: $('#export-setting-form').attr('action'),
+    //        data: $('#export-setting-form').serialize(),
+    //        method: 'POST',
+    //        success: function (data2) {
+    //            $('#export-setting').modal('hide');
+    //        }
+    //    })
+    //})
 
     $('#highlight-setting').on('submit', '#highlight-setting-form', function (e) {
         e.preventDefault();
@@ -6567,6 +6587,10 @@ Number.prototype.format = function (n, x) {
 
     $('#graphic-setting').on('hidden.bs.modal', function () {
         $('.graphic-setting-content').html('');
+    });
+
+    $('#highlight-setting').on('hidden.bs.modal', function () {
+        $('.highlight-setting-content').html('');
     });
 
     $('#highlight-setting').on('hidden.bs.modal', function () {
