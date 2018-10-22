@@ -25,5 +25,6 @@ namespace DSLNG.PEAR.Services.Interfaces
 
         GetKpiTargetItemResponse GetKpiTarget(int kpiId, DateTime date, RangeFilter rangeFilter);
         UpdateKpiTargetItemResponse UpdateOriginalData(SaveKpiTargetRequest request);
+        GetKpiTargetsResponse GetKpiTargets(int[] kpiIds, DateTime? start, DateTime? end, string periodeType);
     }
 }

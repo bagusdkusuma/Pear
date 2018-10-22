@@ -1,7 +1,11 @@
 ﻿
 
+using DSLNG.PEAR.Data.Enums;
 using DSLNG.PEAR.Services.Requests.Artifact;
 using DSLNG.PEAR.Services.Responses.Artifact;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace DSLNG.PEAR.Services.Interfaces
 {
@@ -22,5 +26,6 @@ namespace DSLNG.PEAR.Services.Interfaces
         GetPieDataResponse GetPieData(GetPieDataRequest request);
         GetComboChartDataResponse GetComboChartData(GetComboChartDataRequest request);
         DeleteArtifactResponse Delete(DeleteArtifactRequest request);
+        string[] GetPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes, out string timeInformation);
     }
 }

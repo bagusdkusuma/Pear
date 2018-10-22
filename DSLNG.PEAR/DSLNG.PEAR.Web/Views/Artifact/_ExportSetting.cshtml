@@ -7,13 +7,15 @@
 </style>
 
 <div class="form-inline whitebox">
-    @Html.HiddenFor(model => model.PeriodeType, new { @class = "form-control" })
+    @Html.TextBoxFor(model => model.PeriodeType, new { @class = "form-control" })
+    @Html.TextBoxFor(model => model.RangeFilter)
+    @Html.TextBoxFor(model => model.GraphicType)
     <div class="form-inline whitebox">
         <div id="general-export-settings">
             <div class="form-group form-list">
                 <hr />
             </div>
-          
+
             <div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.KpiId)

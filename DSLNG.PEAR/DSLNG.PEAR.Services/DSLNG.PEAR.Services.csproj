@@ -186,6 +186,7 @@
     <Compile Include="Requests\Wave\GetWaveRequest.cs" />
     <Compile Include="Requests\Wave\GetWavesRequest.cs" />
     <Compile Include="Requests\Wave\SaveWaveRequest.cs" />
+    <Compile Include="Responses\Artifact\ExportSettingData.cs" />
     <Compile Include="Responses\AuditTrail\AuditTrailResponse.cs" />
     <Compile Include="Responses\AuditTrail\AuditTrailsResponse.cs" />
     <Compile Include="Responses\CustomFormula\GetCustomFormulaResponse.cs" />

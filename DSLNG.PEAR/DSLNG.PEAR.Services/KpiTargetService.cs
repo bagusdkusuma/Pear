@@ -45,7 +45,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
         public GetPmsConfigsResponse GetPmsConfigs(GetPmsConfigsRequest request)
         {
             var pmsSummary = DataContext.PmsSummaries
@@ -891,8 +890,6 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-
-
         public AllKpiTargetsResponse GetAllKpiTargetByRole(GetKpiTargetsConfigurationRequest request)
         {
             var response = new AllKpiTargetsResponse();
@@ -1022,6 +1019,39 @@ namespace DSLNG.PEAR.Services
             catch (Exception exception)
             {
                 response.Message = exception.Message;
+            }
+            return response;
+        }
+
+        public GetKpiTargetsResponse GetKpiTargets(int[] kpiIds, DateTime? start, DateTime? end, string periodeType)
+        {
+            PeriodeType pType = (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+            var response = new GetKpiTargetsResponse();
+            try
+            {
+                var kpiTarget = DataContext.KpiTargets
+                    .Include(x => x.Kpi.Measurement)
+                    .OrderBy(x => x.Kpi.Order)
+                    .Where(x => kpiIds.Contains(x.Kpi.Id) && x.PeriodeType == pType && x.Periode >= start.Value && x.Periode <= end.Value)
+                    .ToList();
+                if (kpiTarget.Count > 0)
+                {
+                    foreach (var item in kpiTarget)
+                    {
+                        response.KpiTargets.Add(item.MapTo<GetKpiTargetsResponse.KpiTarget>());
+                    }
+                }
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.IsSuccess = false;
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.IsSuccess = false;
+                response.Message = argumentNullException.Message;
             }
             return response;
         }

@@ -34,7 +34,7 @@ namespace DSLNG.PEAR.Services
             response.DaysToTankTopUnit = daysToTankTop.Measurement.Name;
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
-            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
+            this.GetPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
             var start = dateTimePeriodes[0];
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
             switch (volumeInventory.YtdFormula)
@@ -145,7 +145,7 @@ namespace DSLNG.PEAR.Services
                     row.RangeFilter = timeValue.RangeFilter;
                 }
 
-                this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes,
+                this.GetPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes,
                                   out timeInformation);
 
                 if (oldRangeFilter.Equals(RangeFilter.SpecificYear) || oldRangeFilter.Equals(RangeFilter.SpecificMonth) || oldRangeFilter.Equals(RangeFilter.SpecificDay))
@@ -153,7 +153,7 @@ namespace DSLNG.PEAR.Services
                     timeInformation = ChangeTimeInformationFromSpecificToInterval(row.Start, row.End, oldRangeFilter);
                 }
 
-                //this._getPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes, out timeInformation);
+                //this.GetPeriodes(row.PeriodeType, row.RangeFilter, row.Start, row.End, out dateTimePeriodes, out timeInformation);
                 var start = dateTimePeriodes[0];
                 var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
                 var rowResponse = new GetTabularDataResponse.RowResponse();
@@ -287,7 +287,7 @@ namespace DSLNG.PEAR.Services
                 request.RangeFilter = timeValue.RangeFilter;
             }
 
-            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes,
+            this.GetPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes,
                               out timeInformation);
 
             if (oldRangeFilter.Equals(RangeFilter.SpecificYear) || oldRangeFilter.Equals(RangeFilter.SpecificMonth) || oldRangeFilter.Equals(RangeFilter.SpecificDay))
@@ -533,7 +533,7 @@ namespace DSLNG.PEAR.Services
             var kpi = DataContext.Kpis.Where(x => x.Id == request.Series.KpiId).First();
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
-            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
+            this.GetPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
             var start = dateTimePeriodes[0];
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
 
@@ -801,7 +801,7 @@ namespace DSLNG.PEAR.Services
             var kpi = DataContext.Kpis.First(x => x.Id == request.Series.KpiId);
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
-            this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
+            this.GetPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
             var start = dateTimePeriodes[0];
             var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
 
@@ -1040,7 +1040,7 @@ namespace DSLNG.PEAR.Services
             var response = new GetCartesianChartDataResponse();
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
-            response.Periodes = this._getPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
+            response.Periodes = this.GetPeriodes(request.PeriodeType, request.RangeFilter, request.Start, request.End, out dateTimePeriodes, out timeInformation);
             response.TimePeriodes = dateTimePeriodes;
             response.Subtitle = timeInformation;
             IList<GetCartesianChartDataResponse.SeriesResponse> seriesResponse = new List<GetCartesianChartDataResponse.SeriesResponse>();
@@ -1163,7 +1163,7 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        private string[] _getPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes, out string timeInformation) //, out string timeInformation
+        public string[] GetPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes, out string timeInformation) //, out string timeInformation
         {
             //var ci = new CultureInfo("en-GB");
             var periodes = new List<string>();
@@ -3403,9 +3403,13 @@ namespace DSLNG.PEAR.Services
             }
             return dt.AddDays(-1 * diff).Date;
         }
-    
 
-    class DateTimeValue
+        //public string[] GetPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes, out string timeInformation)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        class DateTimeValue
     {
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }

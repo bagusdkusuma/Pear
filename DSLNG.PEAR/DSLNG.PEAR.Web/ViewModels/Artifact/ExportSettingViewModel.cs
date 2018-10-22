@@ -21,6 +21,8 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string KpiId { get; set; }
         public string[] KpiIds { get; set; }
         public string PeriodeType { get; set; }
+        public string RangeFilter { get; set; }
+        public string GraphicType { get; set; }
 
         [Required]
         [Display(Name = "Start")]
