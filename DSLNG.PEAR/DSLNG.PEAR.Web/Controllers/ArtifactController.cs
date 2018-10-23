@@ -42,6 +42,10 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IHighlightService _highlightService;
         private readonly IKpiAchievementService _kpiAchievementService;
         private readonly IKpiTargetService _kpiTargetService;
+        private const int _prevIndex = -10000;
+        private const int _totalIndex = -20000;
+        private const int _exceedIndex = -30000;
+        private const int _remainIndex = -40000;
 
         public ArtifactController(IMeasurementService measurementService,
             IKpiService kpiService,
@@ -1312,6 +1316,7 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (artifact.GraphicType.ToLowerInvariant())
             {
                 case "multiaxis":
+                case "combo":
                     foreach (var chart in artifact.Charts)
                     {
                         foreach (var kpi in GetKpisAsSelectListItem(chart))
@@ -1321,6 +1326,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                     break;
                 case "baraccumulative":
+                default:
                     foreach (var kpi in GetKpisAsSelectListItem(artifact))
                     {
                         kpis.Add(new SelectListItem { Value = kpi.Value, Text = kpi.Text });
@@ -1369,7 +1375,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 var split = item.Split('|');
                 if (split.Length > 2)
                 {
-                    var kpiIndex = split[0] + "-" + split[1];
+                    var kpiIndex = split[0] + "|" + split[1];
                     if (!labelDictionaries.Keys.Contains(kpiIndex))
                     {
                         labelDictionaries.Add(kpiIndex, new List<string> { split[0], split[1], split[2] });
@@ -1401,82 +1407,95 @@ namespace DSLNG.PEAR.Web.Controllers
                 exportData.Add(new ExportSettingData { Periode = x.Periode, KpiId = x.KpiId, KpiName = x.KpiName, MeasurementName = x.MeasurementName, Value = x.Value, ValueAxes = ValueAxis.KpiTarget.ToString() });
             }
 
+
             var periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType);
             var rangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), viewModel.RangeFilter);
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
             _artifactServie.GetPeriodes(periodeType, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, out dateTimePeriodes, out timeInformation);
 
-            var existedKpis = exportData.GroupBy(x => x.KpiId).Select(g => g.First()).ToList();
-            existedKpis = ModifyKpis(existedKpis, viewModel.GraphicType);
+
+
+            //var existedKpis = GetExistedKpis(exportData);
+            //existedKpis = ModifyKpis(existedKpis, viewModel.GraphicType);
+            var exportKpis = ModifyKpis(viewModel.KpiIds);
             IDictionary<DateTime, IDictionary<string, ExportSettingData>> d = new Dictionary<DateTime, IDictionary<string, ExportSettingData>>();
             IList<DateTime> existedPeriodes = new List<DateTime>();
             foreach (var periode in dateTimePeriodes)
             {
                 var data = new Dictionary<string, ExportSettingData>();
-                foreach (var existedKpi in existedKpis)
+                foreach (var exportKpi in exportKpis)
                 {
-                    if (existedKpi.KpiName == "Previous Accumulation")
+                    if (exportKpi.KpiName == "Previous Accumulation")
                     {
-                        var item = new ExportSettingData { KpiId = existedKpi.KpiId, KpiName = existedKpi.KpiName, KpiReferenceId = existedKpi.KpiReferenceId, MeasurementName = existedKpi.MeasurementName, Periode = periode, ValueAxes = existedKpi.ValueAxes };
-                        item.Value = existedPeriodes.Count == 0 ? 0 : exportData.Where(x => existedPeriodes.Contains(x.Periode) && x.KpiId == existedKpi.KpiReferenceId).Sum(x => x.Value.Value);
-                        data.Add(existedKpi.KpiId.ToString(), item);
+                        var previousIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                        item.Value = existedPeriodes.Count == 0 ? 0 : exportData.Where(x => existedPeriodes.Contains(x.Periode) && x.KpiId == exportKpi.KpiReferenceId && x.ValueAxes == exportKpi.ValueAxes).Sum(x => x.Value.Value);
+                        data.Add(previousIndex, item);
                     }
-                    else if (existedKpi.KpiName == "Total")
+                    else if (exportKpi.KpiName == "Total")
                     {
-                        var item = new ExportSettingData { KpiId = existedKpi.KpiId, KpiName = existedKpi.KpiName, KpiReferenceId = existedKpi.KpiReferenceId, MeasurementName = existedKpi.MeasurementName, Periode = periode, ValueAxes = existedKpi.ValueAxes };
-                        //var previousValue = existedPeriodes.Count == 0 ? 0 : exportData.Where(x => existedPeriodes.Contains(x.Periode) && x.KpiId == existedKpi.KpiReferenceId).Sum(x => x.Value.Value);
-                        if(data[(existedKpi.KpiId - 1).ToString()].Value.HasValue && data[existedKpi.KpiReferenceId.ToString()].Value.HasValue)
+                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
+                        var previousIndex = string.Format(@"{0}|{1}", (_prevIndex - exportKpi.KpiId).ToString(), exportKpi.ValueAxes);
+                        var totalIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                        if (data[previousIndex].Value.HasValue && data[currentIndex].Value.HasValue)
                         {
-                            item.Value = (data[(existedKpi.KpiId - 1).ToString()].Value) +
-                                 (data[existedKpi.KpiReferenceId.ToString()].Value);
+                            item.Value = (data[previousIndex].Value) + (data[currentIndex].Value);
                         }
-                        
-                        data.Add(existedKpi.KpiId.ToString(), item);
+
+                        data.Add(totalIndex, item);
+                    }
+                    else if (exportKpi.KpiName == "Remain")
+                    {
+                        var target = _kpiTargetService.GetKpiTarget(exportKpi.KpiReferenceId, periode, periodeType);
+                        var remainIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
+                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                        item.Value = 0;
+                        if (target.Value.HasValue && data[currentIndex].Value.HasValue)
+                        {
+                            if ((target.Value.Value) - (data[currentIndex].Value) > 0)
+                            {
+                                item.Value = (target.Value.Value) - (data[currentIndex].Value);
+                            }
+                        }
+                        data.Add(remainIndex, item);
+                    }
+                    else if (exportKpi.KpiName == "Exceed")
+                    {
+                        var target = _kpiTargetService.GetKpiTarget(exportKpi.KpiReferenceId, periode, periodeType);
+                        var exceedIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
+                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                        item.Value = 0;
+                        if (target.Value.HasValue && data[currentIndex].Value.HasValue)
+                        {
+                            if ((target.Value.Value) - (data[currentIndex].Value) < 0)
+                            {
+                                item.Value = (target.Value.Value) - (data[currentIndex].Value);
+                            }
+                        }
+                        data.Add(exceedIndex, item);
                     }
                     else
                     {
-                        var val = exportData.Where(x => x.Periode == periode && x.KpiId == existedKpi.KpiId).FirstOrDefault();
+                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                        var val = exportData.Where(x => x.Periode == periode && x.KpiId == exportKpi.KpiId && x.ValueAxes == exportKpi.ValueAxes).FirstOrDefault();
                         if (val == null)
                         {
-                            var item = new ExportSettingData { KpiId = existedKpi.KpiId, KpiName = existedKpi.KpiName, KpiReferenceId = existedKpi.KpiId, MeasurementName = existedKpi.MeasurementName, Periode = periode, ValueAxes = existedKpi.ValueAxes };
-                            data.Add(existedKpi.KpiId.ToString(), item);
+                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                            data.Add(currentIndex, item);
                         }
                         else
                         {
-                            data.Add(existedKpi.KpiId.ToString(), val);
+                            data.Add(currentIndex, val);
                         }
                     }
                 }
                 d.Add(periode, data);
                 existedPeriodes.Add(periode);
             }
-
-            //foreach(var periode in dateTimePeriodes)
-            //{
-            //    var tempData = new List<ExportSettingData>();
-            //    tempData = exportData.Where(x => x.Periode == periode).OrderBy(x => x.KpiId).ToList();
-            //    foreach (var existedKpi in existedKpis)
-            //    {
-            //        if (tempData.Where(x => x.KpiId == existedKpi.KpiId && x.KpiName != "Previous Accumulation").FirstOrDefault() == null)
-            //        {
-            //            tempData.Add(new ExportSettingData { Periode = periode, KpiId = existedKpi.KpiId, KpiName = existedKpi.KpiName, MeasurementName = existedKpi.MeasurementName, Value = null, ValueAxes = existedKpi.ValueAxes });
-            //        } 
-            //        else if (tempData.Where(x => x.KpiId == existedKpi.KpiId && x.KpiName == "Previous Accumulation").FirstOrDefault() == null)
-            //        {
-            //            tempData.Add(new ExportSettingData { Periode = periode, KpiId = existedKpi.KpiId, KpiName = existedKpi.KpiName, MeasurementName = existedKpi.MeasurementName, Value = null, ValueAxes = existedKpi.ValueAxes });
-            //        }
-            //    }
-
-            //    if (!dictionaries.Keys.Contains(periode))
-            //    {
-            //        dictionaries.Add(periode, tempData);
-            //    }
-            //    else
-            //    {
-            //        dictionaries[periode] = tempData;
-            //    }
-            //}
 
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
@@ -1506,8 +1525,17 @@ namespace DSLNG.PEAR.Web.Controllers
             {
                 foreach (var kpi in dictionary.Value)
                 {
-                    ws.Cells[6, kpiColStart].Value = string.Format("{0}, {1} ({2})", kpi.Value.KpiId, kpi.Value.KpiName, kpi.Value.MeasurementName);
-                    ws.Cells[7, kpiColStart].Value = string.Format("{0})", kpi.Value.KpiName);
+                    ws.Cells[6, kpiColStart].Value = kpi.Value.KpiId > 0 ?
+                        string.Format("{0}, {1} ({2})", kpi.Value.KpiId, kpi.Value.KpiName, kpi.Value.MeasurementName) :
+                        string.Format("{0} ({1})", kpi.Value.KpiName, kpi.Value.MeasurementName);
+                    ws.Cells[6, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[6, kpiColStart].Style.Font.Bold = true;
+                    ws.Cells[6, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[7, kpiColStart].Value = kpi.Value.KpiId > 0 ?
+                        labelDictionaries.Single(x => x.Key == kpi.Value.KpiId + "|" + kpi.Value.ValueAxes).Value[2] : string.Empty;
+                    ws.Cells[7, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[7, kpiColStart].Style.Font.Bold = true;
+                    ws.Cells[7, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     kpiColStart++;
                 }
                 break;
@@ -1517,6 +1545,8 @@ namespace DSLNG.PEAR.Web.Controllers
             foreach (var dictionary in d)
             {
                 ws.Cells[kpiRowStart, kpiColStart].Value = FormatDate(dictionary.Key, viewModel.PeriodeType);
+                ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 foreach (var val in dictionary.Value)
                 {
                     kpiColStart++;
@@ -1527,43 +1557,6 @@ namespace DSLNG.PEAR.Web.Controllers
                 kpiRowStart++;
                 kpiColStart = 1;
             }
-
-            //foreach (var dictionary in dictionaries)
-            //{
-            //    foreach (var val in dictionary.Value)
-            //    {
-            //        ws.Cells[6, kpiColStart].Value = string.Format("{0}, {1} ({2})", val.KpiId, val.KpiName, val.MeasurementName);
-            //        ws.Cells[6, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-            //        ws.Cells[6, kpiColStart].Style.Font.Bold = true;
-            //        ws.Cells[6, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            //        ws.Cells[7, kpiColStart].Value = labelDictionaries.Single(x => x.Key == val.KpiId + "-" + val.ValueAxes).Value[1];
-            //        ws.Cells[7, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-            //        ws.Cells[7, kpiColStart].Style.Font.Bold = true;
-            //        ws.Cells[7, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            //        kpiColStart++;
-            //    }
-            //    break;
-            //}
-            //kpiColStart = 1;
-            //foreach (var dictionary in dictionaries)
-            //{
-            //    ws.Cells[kpiRowStart, kpiColStart].Value = FormatDate(dictionary.Key, viewModel.PeriodeType);
-            //    ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            //    ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-
-            //    foreach (var val in dictionary.Value)
-            //    {
-            //        kpiColStart++;
-            //        ws.Cells[kpiRowStart, kpiColStart].Value = val.Value.ToString();
-            //        ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            //        ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-            //    }
-            //    kpiRowStart++;
-            //    kpiColStart = 1;
-            //}
-
-
 
             ws.Cells["A:AZ"].AutoFitColumns();
 
@@ -1578,23 +1571,108 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        private List<ExportSettingData> GetExistedKpis(IList<ExportSettingData> existedKpis)
+        {
+            var data = new List<ExportSettingData>();
+            IDictionary<string, ExportSettingData> dictionary = new Dictionary<string, ExportSettingData>();
+            foreach (var kpi in existedKpis)
+            {
+                var key = string.Format(@"{0}|{1}|{2}", kpi.KpiId, kpi.ValueAxes, kpi.KpiGraphicType);
+                if (!dictionary.ContainsKey(key))
+                {
+                    dictionary.Add(key, kpi);
+                    data.Add(kpi);
+                }
+            }
+
+            return data;
+        }
+
+        private List<KpiExport> ModifyKpis(string[] kpiIds)
+        {
+            var listKpiId = kpiIds.Select(x => Int32.Parse(x.Split('|')[0])).ToList();
+
+            var kpis = _kpiService.GetKpis(listKpiId);
+            var kpiExports = new List<KpiExport>();
+            foreach (var kpi in kpiIds)
+            {
+                var key = kpi.Split('|');
+                var kpiExport = new KpiExport
+                {
+                    KpiId = Int32.Parse(key[0]),
+                    ValueAxes = key[1],
+                    KpiName = key[2],
+                    KpiGraphicType = key[3],
+                    MeasurementName = kpis.Kpis.First(x => x.Id == Int32.Parse(key[0])).Measurement.Name
+                };
+
+                if (kpiExport.KpiGraphicType == "baraccumulative")
+                {
+                    kpiExports.Add(new KpiExport { KpiId = _prevIndex - kpiExport.KpiId, KpiReferenceId = kpiExport.KpiId, KpiName = "Previous Accumulation", ValueAxes = kpiExport.ValueAxes, MeasurementName = kpiExport.MeasurementName });
+                    kpiExports.Add(kpiExport);
+                    kpiExports.Add(new KpiExport { KpiId = _totalIndex - kpiExport.KpiId, KpiReferenceId = kpiExport.KpiId, KpiName = "Total", ValueAxes = kpiExport.ValueAxes, MeasurementName = kpiExport.MeasurementName });
+                }
+                else if (kpiExport.KpiGraphicType == "barachievement")
+                {
+                    kpiExports.Add(kpiExport);
+                    kpiExports.Add(new KpiExport { KpiId = _remainIndex - kpiExport.KpiId, KpiReferenceId = kpiExport.KpiId, KpiName = "Remain", ValueAxes = kpiExport.ValueAxes, MeasurementName = kpiExport.MeasurementName });
+                    kpiExports.Add(new KpiExport { KpiId = _exceedIndex - kpiExport.KpiId, KpiReferenceId = kpiExport.KpiId, KpiName = "Exceed", ValueAxes = kpiExport.ValueAxes, MeasurementName = kpiExport.MeasurementName });
+                }
+                else
+                {
+                    kpiExports.Add(kpiExport);
+                }
+            }
+
+            return kpiExports;
+        }
+
         private List<ExportSettingData> ModifyKpis(List<ExportSettingData> existedKpis, string graphicType)
         {
+
             var modifiedKpis = new List<ExportSettingData>();
-            switch (graphicType.ToLowerInvariant())
+            foreach (var kpi in existedKpis)
             {
-                case "baraccumulative":
-                    foreach (var kpi in existedKpis)
-                    {
-                        modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId, KpiReferenceId = kpi.KpiId, KpiName = "Previous Accumulation", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
-                        modifiedKpis.Add(kpi);
-                        modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId + 1, KpiReferenceId = kpi.KpiId, KpiName = "Total", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
-                    }
-                    break;
-                default:
-                    modifiedKpis = existedKpis;
-                    break;
+                if (kpi.KpiGraphicType == "baraccumulative")
+                {
+                    modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId, KpiReferenceId = kpi.KpiId, KpiName = "Previous Accumulation", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
+                    modifiedKpis.Add(kpi);
+                    modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId + 1, KpiReferenceId = kpi.KpiId, KpiName = "Total", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
+                }
+                else if (kpi.KpiGraphicType == "barachievement")
+                {
+                    modifiedKpis.Add(kpi);
+                    modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId, KpiReferenceId = kpi.KpiId, KpiName = "Remain", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
+                    modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId + 1, KpiReferenceId = kpi.KpiId, KpiName = "Exceed", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
+                }
+                else
+                {
+                    modifiedKpis.Add(kpi);
+                }
             }
+            //switch (graphicType.ToLowerInvariant())
+            //{
+            //    case "baraccumulative":
+            //        foreach (var kpi in existedKpis)
+            //        {
+            //            modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId, KpiReferenceId = kpi.KpiId, KpiName = "Previous Accumulation", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
+            //            modifiedKpis.Add(kpi);
+            //            modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId + 1, KpiReferenceId = kpi.KpiId, KpiName = "Total", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
+            //        }
+            //        break;
+            //    case "barachievement":
+            //        foreach (var kpi in existedKpis)
+            //        {
+            //            modifiedKpis.Add(kpi);
+            //            modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId, KpiReferenceId = kpi.KpiId, KpiName = "Remain", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
+            //            modifiedKpis.Add(new ExportSettingData { KpiId = 0 - kpi.KpiId + 1, KpiReferenceId = kpi.KpiId, KpiName = "Exceed", MeasurementName = kpi.MeasurementName, Periode = kpi.Periode, Value = null, ValueAxes = kpi.ValueAxes });
+
+            //        }
+            //        break;
+            //    default:
+            //        modifiedKpis = existedKpis;
+            //        break;
+            //}
 
             return modifiedKpis;
         }
@@ -1619,6 +1697,7 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (chart.GraphicType.ToLowerInvariant())
             {
                 case "bar":
+                case "barachievement":
                     {
                         foreach (var serie in chart.Series)
                         {
@@ -1628,8 +1707,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 {
                                     kpis.Add(new SelectListItem
                                     {
-                                        Value = string.Format(@"{0}|{1}|{2}", stack.KpiId.ToString(), chart.ValueAxis, stack.Label)
-                                        ,
+                                        Value = string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), chart.ValueAxis == ValueAxis.Custom ? serie.ValueAxis : chart.ValueAxis, stack.Label, chart.GraphicType),
                                         Text = stack.Label
                                     });
                                 }
@@ -1639,7 +1717,7 @@ namespace DSLNG.PEAR.Web.Controllers
                                 kpis.Add(new SelectListItem
                                 {
                                     Value =
-                                    string.Format(@"{0}|{1}|{2}", serie.KpiId.ToString(), chart.ValueAxis, serie.Label),
+                                    string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis == ValueAxis.Custom ? serie.ValueAxis : chart.ValueAxis, serie.Label, chart.GraphicType),
                                     Text = serie.Label
                                 });
                             }
@@ -1655,7 +1733,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             kpis.Add(new SelectListItem
                             {
                                 Value =
-                                string.Format(@"{0}|{1}|{2}", serie.KpiId.ToString(), serie.ValueAxis, serie.Label),
+                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis, serie.Label, chart.GraphicType),
                                 Text = serie.Label
                             });
 
@@ -1676,11 +1754,11 @@ namespace DSLNG.PEAR.Web.Controllers
                 kpis.Add(new SelectListItem
                 {
                     Value =
-                    string.Format(@"{0}|{1}|{2}", serie.KpiId.ToString(), artifact.ValueAxis, serie.Label),
+                    string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), artifact.ValueAxis == ValueAxis.Custom ?
+                    serie.ValueAxis : artifact.ValueAxis, serie.Label, artifact.GraphicType),
                     Text = serie.Label
                 });
             }
-
             return kpis;
         }
 

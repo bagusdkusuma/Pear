@@ -154,6 +154,29 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
+        public GetKpisResponse GetKpis(List<int> kpiIds)
+        {
+            GetKpisResponse response = new GetKpisResponse();
+            response.Kpis = new List<GetKpisResponse.Kpi>();
+            var kpis = DataContext.Kpis
+                .Include(x => x.Measurement)
+                .Where(x => kpiIds.Contains(x.Id))
+                .ToList();
+            
+            foreach(var kpi in kpis)
+            {
+                response.Kpis.Add(new GetKpisResponse.Kpi
+                {
+                    Id = kpi.Id,
+                    Name = kpi.Name,
+                    Measurement = new GetKpisResponse.Measurement { Name = kpi.Measurement.Name }
+                });
+            }
+
+            response.IsSuccess = true;
+            return response;
+        }
+
         public CreateKpiResponse Create(CreateKpiRequest request)
         {
             var response = new CreateKpiResponse();

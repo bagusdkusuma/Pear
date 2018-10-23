@@ -419,7 +419,7 @@ namespace DSLNG.PEAR.Services.AutoMapper
             Mapper.CreateMap<KpiTarget, GetKpiTargetsResponse.KpiTarget>()
                .ForMember(k => k.KpiName, o => o.MapFrom(k => k.Kpi.Name))
                .ForMember(k => k.KpiId, o => o.MapFrom(k => k.Kpi.Id))
-               .ForMember(k => k.KpiName, o => o.MapFrom(k => k.Kpi.Measurement != null ? k.Kpi.Measurement.Name : string.Empty ))
+               .ForMember(k => k.MeasurementName, o => o.MapFrom(k => k.Kpi.Measurement != null ? k.Kpi.Measurement.Name : string.Empty ))
                .ForMember(k => k.PeriodeType, o => o.MapFrom(k => k.PeriodeType.ToString()));
 
             Mapper.CreateMap<Artifact, GetArtifactsToSelectResponse.ArtifactResponse>()

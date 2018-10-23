@@ -1055,5 +1055,30 @@ namespace DSLNG.PEAR.Services
             }
             return response;
         }
+
+        public GetKpiTargetItemResponse GetKpiTarget(int kpiId, DateTime date, PeriodeType periodeType)
+        {
+            var response = new GetKpiTargetItemResponse();
+            
+            var kpiTarget = DataContext.KpiTargets
+                .Include(x => x.Kpi)
+                .Where(x => x.PeriodeType == periodeType &&
+                         x.Periode == date && x.Kpi.Id == kpiId).FirstOrDefault();
+
+            if(kpiTarget != null)
+            {
+                response.Kpi = new GetKpiTargetItemResponse.KpiResponse
+                {
+                    Id = kpiTarget.Kpi.Id,
+                    Name = kpiTarget.Kpi.Name
+                };
+                response.Value = kpiTarget.Value;
+                response.Periode = kpiTarget.Periode;
+                response.PeriodeType = kpiTarget.PeriodeType;
+            }
+
+            return response;
+
+        }
     }
 }

@@ -22,5 +22,6 @@ namespace DSLNG.PEAR.Services.Interfaces
 
         bool IsValidKpi(GetKpiByRole request);
         IList<Kpi> DownloadKpis();
+        GetKpisResponse GetKpis(List<int> kpiIds);
     }
 }
