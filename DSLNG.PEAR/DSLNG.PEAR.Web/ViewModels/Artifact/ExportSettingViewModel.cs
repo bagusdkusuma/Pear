@@ -25,10 +25,10 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string GraphicType { get; set; }
 
         [Required]
-        [Display(Name = "Start")]
+        [Display(Name = "From")]
         public string StartInDisplay { get; set; }
         [Required]
-        [Display(Name = "End")]
+        [Display(Name = "To")]
         public string EndInDisplay { get; set; }
 
         public DateTime? StartAfterParsed
@@ -84,5 +84,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string FileName { get; set; }
 
         public string Name { get; set; }
+
+        public bool AsNetBackChart { get; set; }
     }
 }

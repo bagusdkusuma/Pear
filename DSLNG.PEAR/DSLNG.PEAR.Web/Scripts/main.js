@@ -3884,7 +3884,8 @@ Number.prototype.format = function (n, x) {
             var btn = '<div class="btn-group chart-button">' +
                 '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
                 '<ul class="dropdown-menu pull-right">' +
-                '<li><a class="tank-subtitle" href="javascript:;">Change Periode</a></li>';
+                '<li><a class="tank-subtitle" href="javascript:;">Change Periode</a></li>' + 
+                '<li><a class="tank-export" href="javascript:;">Export To Excel</a></li>';
             if ($('#user-profile-session-data').data('issuperadmin') == true) {
                 btn += '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>';
             }

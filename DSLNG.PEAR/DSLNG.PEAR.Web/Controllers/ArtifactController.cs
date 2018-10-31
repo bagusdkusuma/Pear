@@ -30,6 +30,7 @@ using OfficeOpenXml;
 using System.Drawing;
 using DSLNG.PEAR.Services.Responses.KpiAchievement;
 using OfficeOpenXml.Style;
+using DSLNG.PEAR.Common.Contants;
 
 namespace DSLNG.PEAR.Web.Controllers
 {
@@ -46,6 +47,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private const int _totalIndex = -20000;
         private const int _exceedIndex = -30000;
         private const int _remainIndex = -40000;
+        private const int _percentageIndex = -5000;
 
         public ArtifactController(IMeasurementService measurementService,
             IKpiService kpiService,
@@ -1326,6 +1328,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                     break;
                 case "baraccumulative":
+                case "pie":
                 default:
                     foreach (var kpi in GetKpisAsSelectListItem(artifact))
                     {
@@ -1338,6 +1341,8 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.PeriodeType = artifact.PeriodeType.ToString();
             viewModel.RangeFilter = artifact.RangeFilter.ToString();
             viewModel.GraphicType = artifact.GraphicType;
+            viewModel.AsNetBackChart = artifact.AsNetbackChart;
+            viewModel.Name = artifact.HeaderTitle;
 
             var currentYear = DateTime.Now.Date.Year;
             var currentMonth = DateTime.Now.Month;
@@ -1386,40 +1391,27 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
                 }
             }
-            var kpiActuals = labelDictionaries.Where(x => x.Value.ElementAtOrDefault(1) == "KpiActual").Select(x => Int32.Parse(x.Value.ElementAt(0))).ToArray();
-            var kpiTargets = labelDictionaries.Where(x => x.Value.ElementAtOrDefault(1) == "KpiTarget").Select(x => Int32.Parse(x.Value.ElementAt(0))).ToArray();
-            var dataActuals = _kpiAchievementService.GetKpiAchievements(kpiActuals, viewModel.StartAfterParsed, viewModel.EndAfterParsed, viewModel.PeriodeType);
-            var dataTargets = _kpiTargetService.GetKpiTargets(kpiTargets, viewModel.StartAfterParsed, viewModel.EndAfterParsed, viewModel.PeriodeType);
-
-            //var existedTargetKpis = dataTargets.KpiTargets.GroupBy(x => x.KpiId).Select(g => g.First()).ToList();
-
-            Dictionary<DateTime, IList<ExportSettingData>> dictionaries =
-                new Dictionary<DateTime, IList<ExportSettingData>>();
-            IList<ExportSettingData> exportData = new List<ExportSettingData>();
-
-            foreach (var x in dataActuals.KpiAchievements)
-            {
-                exportData.Add(new ExportSettingData { Periode = x.Periode, KpiId = x.Kpi.Id, KpiName = x.Kpi.Name, MeasurementName = x.Kpi.KpiMeasurement, Value = x.Value, ValueAxes = ValueAxis.KpiActual.ToString() });
-            }
-
-            foreach (var x in dataTargets.KpiTargets)
-            {
-                exportData.Add(new ExportSettingData { Periode = x.Periode, KpiId = x.KpiId, KpiName = x.KpiName, MeasurementName = x.MeasurementName, Value = x.Value, ValueAxes = ValueAxis.KpiTarget.ToString() });
-            }
-
 
             var periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType);
             var rangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), viewModel.RangeFilter);
+
             IList<DateTime> dateTimePeriodes = new List<DateTime>();
             string timeInformation;
-            _artifactServie.GetPeriodes(periodeType, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, out dateTimePeriodes, out timeInformation);
 
-
-
-            //var existedKpis = GetExistedKpis(exportData);
-            //existedKpis = ModifyKpis(existedKpis, viewModel.GraphicType);
+            IList<ExportSettingData> exportData = new List<ExportSettingData>();
+            switch (viewModel.GraphicType.ToLowerInvariant())
+            {
+                case "pie":
+                    exportData = _artifactServie.GetPieExportExcelData(labelDictionaries,rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
+                    break;
+                default:
+                    _artifactServie.GetPeriodes(periodeType, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, out dateTimePeriodes, out timeInformation);
+                    exportData = _artifactServie.GetExportExcelData(labelDictionaries, viewModel.StartAfterParsed, viewModel.EndAfterParsed, viewModel.PeriodeType);
+                    break;
+            }
+            
             var exportKpis = ModifyKpis(viewModel.KpiIds);
-            IDictionary<DateTime, IDictionary<string, ExportSettingData>> d = new Dictionary<DateTime, IDictionary<string, ExportSettingData>>();
+            IDictionary<DateTime, IDictionary<string, ExportSettingData>> dataDictionary = new Dictionary<DateTime, IDictionary<string, ExportSettingData>>();
             IList<DateTime> existedPeriodes = new List<DateTime>();
             foreach (var periode in dateTimePeriodes)
             {
@@ -1436,7 +1428,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     else if (exportKpi.KpiName == "Total")
                     {
                         var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
-                        var previousIndex = string.Format(@"{0}|{1}", (_prevIndex - exportKpi.KpiId).ToString(), exportKpi.ValueAxes);
+                        var previousIndex = string.Format(@"{0}|{1}", (_prevIndex - exportKpi.KpiReferenceId).ToString(), exportKpi.ValueAxes);
                         var totalIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
                         var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
                         if (data[previousIndex].Value.HasValue && data[currentIndex].Value.HasValue)
@@ -1473,28 +1465,74 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             if ((target.Value.Value) - (data[currentIndex].Value) < 0)
                             {
-                                item.Value = (target.Value.Value) - (data[currentIndex].Value);
+                                item.Value = -((target.Value.Value) - (data[currentIndex].Value));
                             }
                         }
                         data.Add(exceedIndex, item);
                     }
+                    else if (exportKpi.KpiName == "Percentage")
+                    {
+                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
+                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                        item.Value = 0;
+                        if (data[currentIndex].Value.HasValue)
+                        {
+                            item.Value = (data[currentIndex].Value / exportData.Select(x => x.Value).Sum()) * 100;
+                        }
+                    }
                     else
                     {
-                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
-                        var val = exportData.Where(x => x.Periode == periode && x.KpiId == exportKpi.KpiId && x.ValueAxes == exportKpi.ValueAxes).FirstOrDefault();
-                        if (val == null)
+                        if (!viewModel.AsNetBackChart)
                         {
-                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
-                            data.Add(currentIndex, item);
+                            var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                            var val = exportData.Where(x => x.Periode == periode && x.KpiId == exportKpi.KpiId && x.ValueAxes == exportKpi.ValueAxes).FirstOrDefault();
+                            if (val == null)
+                            {
+                                var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                                data.Add(currentIndex, item);
+                            }
+                            else
+                            {
+                                data.Add(currentIndex, val);
+                            }
                         }
                         else
                         {
-                            data.Add(currentIndex, val);
+                            var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                            item.Value = exportData.Where(x => x.KpiId == exportKpi.KpiId && x.ValueAxes == exportKpi.ValueAxes).Average(x => x.Value);
+                            data.Add(currentIndex, item);
                         }
                     }
                 }
-                d.Add(periode, data);
+                dataDictionary.Add(periode, data);
                 existedPeriodes.Add(periode);
+            }
+            string newDateTimeInformation = string.Empty;
+            if (viewModel.AsNetBackChart)
+            {
+                var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MinValue : dateTimePeriodes[0];
+                var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MaxValue : dateTimePeriodes[dateTimePeriodes.Count - 1];
+                switch (periodeType)
+                {
+                    case PeriodeType.Hourly:
+                        newDateTimeInformation = start.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Daily:
+                        newDateTimeInformation = start.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Monthly:
+                        newDateTimeInformation = start.ToString("MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("MMM yy", CultureInfo.InvariantCulture);
+                        break;
+                    case PeriodeType.Yearly:
+                        newDateTimeInformation = start.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                        break;
+                }                
+            }
+
+            if(viewModel.GraphicType.ToLowerInvariant() == "pie")
+            {
+                newDateTimeInformation = string.IsNullOrEmpty(timeInformation) ? timeInformation : string.Empty;
             }
 
             ExcelPackage pck = new ExcelPackage();
@@ -1521,7 +1559,7 @@ namespace DSLNG.PEAR.Web.Controllers
             int kpiColStart = 2;
             IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
 
-            foreach (var dictionary in d)
+            foreach (var dictionary in dataDictionary)
             {
                 foreach (var kpi in dictionary.Value)
                 {
@@ -1537,25 +1575,30 @@ namespace DSLNG.PEAR.Web.Controllers
                     ws.Cells[7, kpiColStart].Style.Font.Bold = true;
                     ws.Cells[7, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     kpiColStart++;
+
                 }
                 break;
+
             }
 
             kpiColStart = 1;
-            foreach (var dictionary in d)
+            foreach (var dictionary in dataDictionary)
             {
-                ws.Cells[kpiRowStart, kpiColStart].Value = FormatDate(dictionary.Key, viewModel.PeriodeType);
+                ws.Cells[kpiRowStart, kpiColStart].Value = string.IsNullOrEmpty(newDateTimeInformation) ? FormatDate(dictionary.Key, viewModel.PeriodeType) : newDateTimeInformation;
                 ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 foreach (var val in dictionary.Value)
                 {
                     kpiColStart++;
-                    ws.Cells[kpiRowStart, kpiColStart].Value = val.Value.Value.ToString();
+                    ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
+                    ws.Cells[kpiRowStart, kpiColStart].Value = val.Value.Value;
                     ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 }
                 kpiRowStart++;
                 kpiColStart = 1;
+                if (viewModel.AsNetBackChart) break;
+
             }
 
             ws.Cells["A:AZ"].AutoFitColumns();
@@ -1570,6 +1613,8 @@ namespace DSLNG.PEAR.Web.Controllers
             var result = new BaseResponse { IsSuccess = true };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
 
         private List<ExportSettingData> GetExistedKpis(IList<ExportSettingData> existedKpis)
         {
@@ -1617,6 +1662,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     kpiExports.Add(kpiExport);
                     kpiExports.Add(new KpiExport { KpiId = _remainIndex - kpiExport.KpiId, KpiReferenceId = kpiExport.KpiId, KpiName = "Remain", ValueAxes = kpiExport.ValueAxes, MeasurementName = kpiExport.MeasurementName });
                     kpiExports.Add(new KpiExport { KpiId = _exceedIndex - kpiExport.KpiId, KpiReferenceId = kpiExport.KpiId, KpiName = "Exceed", ValueAxes = kpiExport.ValueAxes, MeasurementName = kpiExport.MeasurementName });
+                }
+                else if (kpiExport.KpiGraphicType == "pie")
+                {
+                    kpiExports.Add(kpiExport);
+                    kpiExports.Add(new KpiExport { KpiId = _percentageIndex - kpiExport.KpiId, KpiReferenceId = kpiExport.KpiId, KpiName = "Percentage", ValueAxes = kpiExport.ValueAxes, MeasurementName = kpiExport.MeasurementName });
                 }
                 else
                 {
@@ -1726,6 +1776,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         return kpis;
                     }
                 case "line":
+                case "pie":
                     {
                         foreach (var serie in chart.Series)
                         {
@@ -1733,7 +1784,7 @@ namespace DSLNG.PEAR.Web.Controllers
                             kpis.Add(new SelectListItem
                             {
                                 Value =
-                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis, serie.Label, chart.GraphicType),
+                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis == ValueAxis.Custom ? serie.ValueAxis : chart.ValueAxis, serie.Label, chart.GraphicType),
                                 Text = serie.Label
                             });
 
@@ -1751,13 +1802,30 @@ namespace DSLNG.PEAR.Web.Controllers
             var kpis = new List<SelectListItem>();
             foreach (var serie in artifact.Series)
             {
-                kpis.Add(new SelectListItem
+                if (serie.Stacks.Count > 0)
                 {
-                    Value =
-                    string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), artifact.ValueAxis == ValueAxis.Custom ?
-                    serie.ValueAxis : artifact.ValueAxis, serie.Label, artifact.GraphicType),
-                    Text = serie.Label
-                });
+                    foreach (var stack in serie.Stacks)
+                    {
+                        kpis.Add(new SelectListItem
+                        {
+                            Value =
+                    string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), artifact.ValueAxis == ValueAxis.Custom ?
+                    serie.ValueAxis : artifact.ValueAxis, stack.Label, artifact.GraphicType),
+                            Text = stack.Label
+                        });
+                    }
+                }
+                else
+                {
+                    kpis.Add(new SelectListItem
+                    {
+                        Value =
+                   string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), artifact.ValueAxis == ValueAxis.Custom ?
+                   serie.ValueAxis : artifact.ValueAxis, serie.Label, artifact.GraphicType),
+                        Text = string.IsNullOrEmpty(serie.Label) ? serie.KpiName : serie.Label
+                    });
+                }
+
             }
             return kpis;
         }

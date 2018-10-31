@@ -5,11 +5,12 @@
         width: 120px;
     }
 </style>
-
 <div class="form-inline whitebox">
-    @Html.TextBoxFor(model => model.PeriodeType, new { @class = "form-control" })
-    @Html.TextBoxFor(model => model.RangeFilter)
-    @Html.TextBoxFor(model => model.GraphicType)
+    @Html.HiddenFor(model => model.PeriodeType, new { @class = "form-control" })
+    @Html.HiddenFor(model => model.RangeFilter)
+    @Html.HiddenFor(model => model.GraphicType)
+    @Html.HiddenFor(model => model.AsNetBackChart)
+    @Html.HiddenFor(model => model.Name)
     <div class="form-inline whitebox">
         <div id="general-export-settings">
             <div class="form-group form-list">
@@ -24,18 +25,18 @@
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.StartInDisplay)
-                    @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                    @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control", autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.StartInDisplay)
                 </div>
 
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.EndInDisplay)
-                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control" })
+                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control", autocomplete="off" })
                     @Html.ValidationMessageFor(model => model.EndInDisplay)
                 </div>
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.FileName)
-                    @Html.TextBoxFor(model => model.FileName)
+                    @Html.TextBoxFor(model => model.FileName, new { @class = "filename" })
                     @Html.ValidationMessageFor(model => model.FileName)
                 </div>
             </div>
@@ -73,11 +74,27 @@
         var mt = $('.modal-title')
         mt.text(headerTitle);*@
 
+       
         $('.select2-multiple2').select2MultiCheckboxes({
             templateSelection: function (selected, total) {
                 return "Selected " + selected.length + " of " + total;
             }
         })
+        $('.select2-multiple2 > option').prop('selected', true);
+        $('.select2-multiple2').select2MultiCheckboxes('refresh');
 
+        if ($('.filename').val().length < 7) {
+            $('.export').prop('disabled', true);
+        }
+
+        $('.filename').change(function () {
+            if ($(this).val().length >= 7) {
+                $('.export').prop('disabled', false);
+            } else {
+                $('.export').prop('disabled', true);
+            }
+        });
+
+        $('.modal-title-export').html('@Model.Name');
     });
 </script>
