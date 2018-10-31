@@ -28,6 +28,7 @@ namespace DSLNG.PEAR.Services.Interfaces
         DeleteArtifactResponse Delete(DeleteArtifactRequest request);
         string[] GetPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes, out string timeInformation);
         IList<ExportSettingData> GetExportExcelData(Dictionary<string, List<string>> labelDictionaries, DateTime? start, DateTime? end, string periodeType);
-        IList<ExportSettingData> GetPieExportExcelData(Dictionary<string, List<string>> labelDictionaries, RangeFilter rangeFilter, DateTime? requestStart, DateTime? requestEnd, PeriodeType periodeType, ArtifactValueInformation valueInformation, out IList<DateTime> dateTimePeriodes, out string timeInformation);
+        IList<ExportSettingData> GetExportExcelPieData(Dictionary<string, List<string>> labelDictionaries, RangeFilter rangeFilter, DateTime? requestStart, DateTime? requestEnd, PeriodeType periodeType, ArtifactValueInformation valueInformation, out IList<DateTime> dateTimePeriodes, out string timeInformation);
+        IList<ExportSettingData> GetExportExcelTankData(Dictionary<string, List<string>> labelDictionaries, RangeFilter rangeFilter, DateTime? requestStart, DateTime? requestEnd, PeriodeType periodeType, ArtifactValueInformation valueInformation, out IList<DateTime> dateTimePeriodes, out string timeInformation);
     }
 }

@@ -3434,7 +3434,7 @@ namespace DSLNG.PEAR.Services
             return exportData;
         }
 
-        public IList<ExportSettingData> GetPieExportExcelData(Dictionary<string, List<string>> labelDictionaries, RangeFilter rangeFilter, DateTime? requestStart, DateTime? requestEnd, PeriodeType periodeType, ArtifactValueInformation valueInformation,
+        public IList<ExportSettingData> GetExportExcelPieData(Dictionary<string, List<string>> labelDictionaries, RangeFilter rangeFilter, DateTime? requestStart, DateTime? requestEnd, PeriodeType periodeType, ArtifactValueInformation valueInformation,
             out IList<DateTime> dateTimePeriodes, out string timeInformation)
         {
 
@@ -3646,17 +3646,164 @@ namespace DSLNG.PEAR.Services
                             break;
                     }
 
-                    if(dateTimePeriodes.Count > 0)
+                    if (dateTimePeriodes.Count > 0)
                     {
                         dateTimePeriodes[0] = latestActual.Periode;
                     }
                 }
-                
+
                 list.Add(data);
             }
 
             return list;
         }
+
+        public IList<ExportSettingData> GetExportExcelTankData(Dictionary<string, List<string>> labelDictionaries, RangeFilter rangeFilter, DateTime? requestStart, DateTime? requestEnd, PeriodeType periodeType, ArtifactValueInformation valueInformation, out IList<DateTime> dateTimePeriodes, out string timeInformation)
+        {
+            IList<ExportSettingData> list = new List<ExportSettingData>();
+            var volumeExportData = new ExportSettingData();
+            var volumeInventoryKpi = labelDictionaries.FirstOrDefault(x => x.Value.Count > 3 ? x.Value[3] == "volume" : false).Value;
+            var volumeInventory = new Kpi();
+            if (volumeInventoryKpi != null)
+            {
+                var id = Int32.Parse(volumeInventoryKpi[0]);
+                volumeInventory = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == id).First();
+                volumeExportData.KpiId = volumeInventory.Id;
+                volumeExportData.KpiName = volumeInventory.Name;
+                volumeExportData.MeasurementName = volumeInventory.Measurement.Name;
+                volumeExportData.ValueAxes = ValueAxis.KpiActual.ToString();
+                volumeExportData.KpiGraphicType = "tank";
+            }
+            //response.VolumeInventoryUnit = volumeInventory.Measurement.Name;
+            var daysToTankExportData = new ExportSettingData();
+            var daysToTankTopKpi = labelDictionaries.FirstOrDefault(x => x.Value.Count > 3 ? x.Value[3] == "days" : false).Value;
+            var daysToTankTop = new Kpi();
+            if (daysToTankTopKpi != null)
+            {
+                var id = Int32.Parse(daysToTankTopKpi[0]);
+                daysToTankTop = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == id).First();
+                daysToTankExportData.KpiId = daysToTankTop.Id;
+                daysToTankExportData.KpiName = daysToTankTop.Name;
+                daysToTankExportData.MeasurementName = daysToTankTop.Measurement.Name;
+                daysToTankExportData.ValueAxes = ValueAxis.KpiActual.ToString();
+                daysToTankExportData.KpiGraphicType = "tank";
+            }
+
+            //var daysToTankTop = DataContext.Kpis.Include(x => x.Measurement).Where(x => x.Id == request.Tank.DaysToTankTopId).First();
+            //response.DaysToTankTopUnit = daysToTankTop.Measurement.Name;
+            //IList<DateTime> dateTimePeriodes = new List<DateTime>();
+            //string timeInformation;
+            this.GetPeriodes(periodeType, rangeFilter, requestStart, requestEnd, out dateTimePeriodes, out timeInformation);
+            var start = dateTimePeriodes[0];
+            var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
+            volumeExportData.Periode = start;
+            daysToTankExportData.Periode = start;
+
+            switch (volumeInventory.YtdFormula)
+            {
+
+                case YtdFormula.Sum:
+                default:
+                    {
+                        volumeExportData.Value = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == volumeInventory.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                    }
+                    break;
+                case YtdFormula.Average:
+                    {
+                        volumeExportData.Value = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                                   x.Periode >= start && x.Periode <= end && x.Kpi.Id == volumeInventory.Id)
+                                    .GroupBy(x => x.Kpi.Id)
+                                    .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                    }
+                    break;
+            }
+            switch (daysToTankTop.YtdFormula)
+            {
+                case YtdFormula.Sum:
+                default:
+                    {
+                        daysToTankExportData.Value = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                                x.Periode >= start && x.Periode <= end && x.Kpi.Id == daysToTankTop.Id)
+                                .GroupBy(x => x.Kpi.Id)
+                                .Select(x => x.Sum(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                    }
+                    break;
+                case YtdFormula.Average:
+                    {
+                        daysToTankExportData.Value = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                                    x.Periode >= start && x.Periode <= end && x.Kpi.Id == daysToTankTop.Id)
+                                    .GroupBy(x => x.Kpi.Id)
+                                    .Select(x => x.Average(y => (double?)y.Value ?? 0)).FirstOrDefault();
+                    }
+                    break;
+            }
+            KpiAchievement latestVolInventory = null;
+            if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
+                       (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
+                       (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
+                       (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
+            {
+                var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+              x.Periode <= end && x.Kpi.Id == volumeInventory.Id && (x.Value != null && x.Value.Value != 0))
+              .OrderByDescending(x => x.Periode).FirstOrDefault();
+                if (actual != null)
+                {
+                    latestVolInventory = actual;
+                    volumeExportData.Value = actual.Value.Value;
+                    volumeExportData.Periode = actual.Periode;
+                    if (dateTimePeriodes.Count > 0)
+                    {
+                        dateTimePeriodes[0] = actual.Periode;
+                    }
+                }
+            }
+            if (latestVolInventory != null)
+            {
+                if ((periodeType == PeriodeType.Hourly && rangeFilter == RangeFilter.CurrentHour) ||
+                      (periodeType == PeriodeType.Daily && rangeFilter == RangeFilter.CurrentDay) ||
+                      (periodeType == PeriodeType.Monthly && rangeFilter == RangeFilter.CurrentMonth) ||
+                      (periodeType == PeriodeType.Yearly && rangeFilter == RangeFilter.CurrentYear))
+                {
+                    var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == periodeType &&
+                  x.Periode == latestVolInventory.Periode && x.Kpi.Id == daysToTankTop.Id && (x.Value != null && x.Value.Value != 0))
+                  .OrderByDescending(x => x.Periode).FirstOrDefault();
+                    if (actual != null)
+                    {
+                        daysToTankExportData.Value = actual.Value.Value;
+                        daysToTankExportData.Periode = actual.Periode;
+                        if (dateTimePeriodes.Count > 0)
+                        {
+                            dateTimePeriodes[0] = actual.Periode;
+                        }
+                    }
+                    switch (periodeType)
+                    {
+                        case PeriodeType.Hourly:
+                            timeInformation = latestVolInventory.Periode.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Daily:
+                            timeInformation = latestVolInventory.Periode.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Monthly:
+                            timeInformation = latestVolInventory.Periode.ToString("MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Yearly:
+                            timeInformation = latestVolInventory.Periode.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                            break;
+                    }
+                }
+            }
+
+            volumeExportData.Periode = dateTimePeriodes[0];
+            daysToTankExportData.Periode = dateTimePeriodes[0];
+            list.Add(volumeExportData);
+            list.Add(daysToTankExportData);
+            return list;
+        }
+
         //public string[] GetPeriodes(PeriodeType periodeType, RangeFilter rangeFilter, DateTime? Start, DateTime? End, out IList<DateTime> dateTimePeriodes, out string timeInformation)
         //{
         //    throw new NotImplementedException();

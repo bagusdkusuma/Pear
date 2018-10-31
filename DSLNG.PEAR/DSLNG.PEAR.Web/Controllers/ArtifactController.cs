@@ -1327,6 +1327,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     }
                     break;
+                case "tank":
                 case "baraccumulative":
                 case "pie":
                 default:
@@ -1383,11 +1384,11 @@ namespace DSLNG.PEAR.Web.Controllers
                     var kpiIndex = split[0] + "|" + split[1];
                     if (!labelDictionaries.Keys.Contains(kpiIndex))
                     {
-                        labelDictionaries.Add(kpiIndex, new List<string> { split[0], split[1], split[2] });
+                        labelDictionaries.Add(kpiIndex, new List<string> { split[0], split[1], split[2], split[3] });
                     }
                     else
                     {
-                        labelDictionaries[kpiIndex] = new List<string> { split[0], split[1], split[2] };
+                        labelDictionaries[kpiIndex] = new List<string> { split[0], split[1], split[2], split[3] };
                     }
                 }
             }
@@ -1402,14 +1403,17 @@ namespace DSLNG.PEAR.Web.Controllers
             switch (viewModel.GraphicType.ToLowerInvariant())
             {
                 case "pie":
-                    exportData = _artifactServie.GetPieExportExcelData(labelDictionaries,rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
+                    exportData = _artifactServie.GetExportExcelPieData(labelDictionaries, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
+                    break;
+                case "tank":
+                    exportData = _artifactServie.GetExportExcelTankData(labelDictionaries, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
                     break;
                 default:
                     _artifactServie.GetPeriodes(periodeType, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, out dateTimePeriodes, out timeInformation);
                     exportData = _artifactServie.GetExportExcelData(labelDictionaries, viewModel.StartAfterParsed, viewModel.EndAfterParsed, viewModel.PeriodeType);
                     break;
             }
-            
+
             var exportKpis = ModifyKpis(viewModel.KpiIds);
             IDictionary<DateTime, IDictionary<string, ExportSettingData>> dataDictionary = new Dictionary<DateTime, IDictionary<string, ExportSettingData>>();
             IList<DateTime> existedPeriodes = new List<DateTime>();
@@ -1527,10 +1531,10 @@ namespace DSLNG.PEAR.Web.Controllers
                     case PeriodeType.Yearly:
                         newDateTimeInformation = start.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
                         break;
-                }                
+                }
             }
 
-            if(viewModel.GraphicType.ToLowerInvariant() == "pie")
+            if (viewModel.GraphicType.ToLowerInvariant() == "pie")
             {
                 newDateTimeInformation = string.IsNullOrEmpty(timeInformation) ? timeInformation : string.Empty;
             }
@@ -1800,33 +1804,55 @@ namespace DSLNG.PEAR.Web.Controllers
         private IList<SelectListItem> GetKpisAsSelectListItem(GetArtifactResponse artifact)
         {
             var kpis = new List<SelectListItem>();
-            foreach (var serie in artifact.Series)
+            if (artifact.GraphicType.ToLowerInvariant() == "tank")
             {
-                if (serie.Stacks.Count > 0)
+                var daysToTankTop = _kpiService.GetKpi(new GetKpiRequest { Id = artifact.Tank.DaysToTankTopId });
+                var volumeInventory = _kpiService.GetKpi(new GetKpiRequest { Id = artifact.Tank.VolumeInventoryId });
+                kpis.Add(new SelectListItem
                 {
-                    foreach (var stack in serie.Stacks)
+                    Value =
+                        string.Format(@"{0}|{1}|{2}|{3}", artifact.Tank.DaysToTankTopId.ToString(), ValueAxis.KpiActual, artifact.Tank.DaysToTankTopTitle, "days"),
+                    Text = string.IsNullOrEmpty(artifact.Tank.DaysToTankTopTitle) ? artifact.Tank.DaysToTankTopTitle : daysToTankTop.Name
+                });
+
+                kpis.Add(new SelectListItem
+                {
+                    Value =
+                        string.Format(@"{0}|{1}|{2}|{3}", artifact.Tank.VolumeInventoryId.ToString(), ValueAxis.KpiActual, volumeInventory.Name, "volume"),
+                    Text = volumeInventory.Name
+                });
+            }
+            else
+            {
+                foreach (var serie in artifact.Series)
+                {
+                    if (serie.Stacks.Count > 0)
+                    {
+                        foreach (var stack in serie.Stacks)
+                        {
+                            kpis.Add(new SelectListItem
+                            {
+                                Value =
+                        string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), artifact.ValueAxis == ValueAxis.Custom ?
+                        serie.ValueAxis : artifact.ValueAxis, stack.Label, artifact.GraphicType),
+                                Text = stack.Label
+                            });
+                        }
+                    }
+                    else
                     {
                         kpis.Add(new SelectListItem
                         {
                             Value =
-                    string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), artifact.ValueAxis == ValueAxis.Custom ?
-                    serie.ValueAxis : artifact.ValueAxis, stack.Label, artifact.GraphicType),
-                            Text = stack.Label
+                       string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), artifact.ValueAxis == ValueAxis.Custom ?
+                       serie.ValueAxis : artifact.ValueAxis, serie.Label, artifact.GraphicType),
+                            Text = string.IsNullOrEmpty(serie.Label) ? serie.KpiName : serie.Label
                         });
                     }
-                }
-                else
-                {
-                    kpis.Add(new SelectListItem
-                    {
-                        Value =
-                   string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), artifact.ValueAxis == ValueAxis.Custom ?
-                   serie.ValueAxis : artifact.ValueAxis, serie.Label, artifact.GraphicType),
-                        Text = string.IsNullOrEmpty(serie.Label) ? serie.KpiName : serie.Label
-                    });
-                }
 
+                }
             }
+           
             return kpis;
         }
 

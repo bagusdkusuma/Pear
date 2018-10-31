@@ -6497,6 +6497,10 @@ Number.prototype.format = function (n, x) {
         getGraphicSetting($(this));
     });
 
+    $('.artifact-holder').on('click', '.tank-export', function () {
+        getExportChart($(this));
+    });
+
     $('.highlight-holder').on('click', '.highlight-change-periode', function () {
         getHighlightSetting($(this));
     });
