@@ -1344,6 +1344,7 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.GraphicType = artifact.GraphicType;
             viewModel.AsNetBackChart = artifact.AsNetbackChart;
             viewModel.Name = artifact.HeaderTitle;
+            viewModel.ArtifactId = artifact.Id;
 
             var currentYear = DateTime.Now.Date.Year;
             var currentMonth = DateTime.Now.Month;
@@ -1376,19 +1377,22 @@ namespace DSLNG.PEAR.Web.Controllers
         public ActionResult ExportSetting(ExportSettingViewModel viewModel)
         {
             var labelDictionaries = new Dictionary<string, List<string>>();
-            foreach (var item in viewModel.KpiIds)
+            if (viewModel.KpiIds != null)
             {
-                var split = item.Split('|');
-                if (split.Length > 2)
+                foreach (var item in viewModel.KpiIds)
                 {
-                    var kpiIndex = split[0] + "|" + split[1];
-                    if (!labelDictionaries.Keys.Contains(kpiIndex))
+                    var split = item.Split('|');
+                    if (split.Length > 2)
                     {
-                        labelDictionaries.Add(kpiIndex, new List<string> { split[0], split[1], split[2], split[3] });
-                    }
-                    else
-                    {
-                        labelDictionaries[kpiIndex] = new List<string> { split[0], split[1], split[2], split[3] };
+                        var kpiIndex = item;
+                        if (!labelDictionaries.Keys.Contains(kpiIndex))
+                        {
+                            labelDictionaries.Add(kpiIndex, new List<string> { split[0], split[1], split[2], split[3] });
+                        }
+                        else
+                        {
+                            labelDictionaries[kpiIndex] = new List<string> { split[0], split[1], split[2], split[3] };
+                        }
                     }
                 }
             }
@@ -1402,6 +1406,26 @@ namespace DSLNG.PEAR.Web.Controllers
             IList<ExportSettingData> exportData = new List<ExportSettingData>();
             switch (viewModel.GraphicType.ToLowerInvariant())
             {
+                case "tabular":
+                    var artifact = _artifactServie.GetArtifact(new GetArtifactRequest { Id = viewModel.ArtifactId });
+                    var request = new GetTabularDataRequest();
+                    request.Actual = artifact.Actual;
+                    request.Target = artifact.Target;
+                    request.Rows = artifact.Rows.Select(x => new GetTabularDataRequest.RowRequest { KpiId = x.KpiId, End = x.End, KpiName = x.KpiName, PeriodeType = x.PeriodeType, RangeFilter = x.RangeFilter, Start = x.Start }).ToList();
+                    var data = _artifactServie.GetTabularData(request);
+                    return ExportTabular(data, viewModel.Name, viewModel.FileName);
+
+                    //foreach (var item in data.Rows.Where(x => x.Actual.HasValue))
+                    //{
+                    //    exportData.Add(new ExportSettingData { KpiId = 1, KpiName = item.KpiName, MeasurementName = item.Measurement, Periode = item.PeriodeDateTime, Value = item.Actual, ValueAxes = ValueAxis.KpiActual.ToString() });
+                    //}
+
+                    //foreach (var item in data.Rows.Where(x => x.Target.HasValue))
+                    //{
+                    //    exportData.Add(new ExportSettingData { KpiId = 1, KpiName = item.KpiName, MeasurementName = item.Measurement, Periode = item.PeriodeDateTime, Value = item.Target, ValueAxes = ValueAxis.KpiTarget.ToString() });
+                    //}
+                    //timeInformation = string.Empty;
+                    break;
                 case "pie":
                     exportData = _artifactServie.GetExportExcelPieData(labelDictionaries, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
                     break;
@@ -1618,7 +1642,113 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        private ActionResult ExportTabular(GetTabularDataResponse data, string graphicName, string fileName)
+        {
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
+            ws.Cells["A3"].Value = "Date";
+            ws.Cells["B3"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
+            ws.Cells["C3"].Value = "By: " + UserProfile().Name;
+
+            ws.Cells["A4"].Value = "Dashboard Name";
+            ws.Cells["B4"].Value = ": " + graphicName;
+
+            ws.Cells["A3"].Value = "Date";
+            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}", DateTimeOffset.Now);
+            
+            int kpiRowStart = 8;
+            int kpiColStart = 2;
+            IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
+            
+
+            var labels = new List<string>();
+            labels.Add("KPI Name");
+            labels.Add("Periode");
+            if (data.Actual)
+            {
+                labels.Add("Actual");
+            }
+
+            if (data.Target)
+            {
+                labels.Add("Target");
+            }
+
+            if (data.Remark)
+            {
+                labels.Add("Remark");
+            }
+            var headerIndex = 1;
+            foreach(var label in labels)
+            {
+                ws.Cells[6, headerIndex].Value = label;
+                ws.Cells[6, headerIndex].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                ws.Cells[6, headerIndex].Style.Font.Bold = true;
+                ws.Cells[6, headerIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                headerIndex++;
+            }
+
+            int rowStart = 7;
+            foreach (var row in data.Rows)
+            {
+                int idx = 1;
+                ws.Cells[rowStart, idx].Value = string.Format("{0}, {1} ({2})", row.KpiId, row.KpiName, row.Measurement);
+                ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                idx++;
+
+                ws.Cells[rowStart, idx].Value = row.Periode;
+                ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                if (data.Actual)
+                {
+                    idx++;
+                    ws.Cells[rowStart, idx].Value = row.Actual;
+                    ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                    ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
+                }
+
+                if (data.Target)
+                {
+                    idx++;
+                    ws.Cells[rowStart, idx].Value = row.Target;
+                    ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                    ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
+                }
+
+                if (data.Remark)
+                {
+                    idx++;
+                    ws.Cells[rowStart, idx].Value = row.Remark;
+                    ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                    ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
+                }
+                rowStart++;
+
+            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + ".xls");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+
+
+            var result = new BaseResponse { IsSuccess = true };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         private List<ExportSettingData> GetExistedKpis(IList<ExportSettingData> existedKpis)
         {
@@ -1852,7 +1982,7 @@ namespace DSLNG.PEAR.Web.Controllers
 
                 }
             }
-           
+
             return kpis;
         }
 

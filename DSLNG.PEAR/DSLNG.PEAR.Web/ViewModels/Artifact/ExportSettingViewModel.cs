@@ -23,6 +23,7 @@ namespace DSLNG.PEAR.Web.ViewModels.Artifact
         public string PeriodeType { get; set; }
         public string RangeFilter { get; set; }
         public string GraphicType { get; set; }
+        public int ArtifactId { get; set; }
 
         [Required]
         [Display(Name = "From")]

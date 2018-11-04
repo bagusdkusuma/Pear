@@ -161,10 +161,12 @@ namespace DSLNG.PEAR.Services
                 var start = dateTimePeriodes[0];
                 var end = dateTimePeriodes[dateTimePeriodes.Count - 1];
                 var rowResponse = new GetTabularDataResponse.RowResponse();
+                rowResponse.KpiId = kpi.Id;
                 rowResponse.KpiName = kpi.Name;
                 rowResponse.Measurement = kpi.Measurement.Name;
                 rowResponse.PeriodeType = row.PeriodeType.ToString();
                 rowResponse.Periode = timeInformation;//start.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                rowResponse.PeriodeDateTime = dateTimePeriodes.Count > 0 ? dateTimePeriodes[0] : DateTime.Now;
                 if (request.Remark)
                 {
                     var actual = DataContext.KpiAchievements.Where(x => x.PeriodeType == row.PeriodeType &&

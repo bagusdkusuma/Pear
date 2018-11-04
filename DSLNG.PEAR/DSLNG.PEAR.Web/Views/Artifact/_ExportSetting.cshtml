@@ -11,6 +11,7 @@
     @Html.HiddenFor(model => model.GraphicType)
     @Html.HiddenFor(model => model.AsNetBackChart)
     @Html.HiddenFor(model => model.Name)
+    @Html.HiddenFor(model => model.ArtifactId)
     <div class="form-inline whitebox">
         <div id="general-export-settings">
             <div class="form-group form-list">
@@ -31,7 +32,7 @@
 
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.EndInDisplay)
-                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control", autocomplete="off" })
+                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control", autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.EndInDisplay)
                 </div>
                 <div class="form-group form-list">
