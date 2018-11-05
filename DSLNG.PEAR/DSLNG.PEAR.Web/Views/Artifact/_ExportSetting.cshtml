@@ -5,6 +5,9 @@
         width: 120px;
     }
 </style>
+@{ 
+//Model.EndInDisplay = Model.StartInDisplay;
+}
 <div class="form-inline whitebox">
     @Html.HiddenFor(model => model.PeriodeType, new { @class = "form-control" })
     @Html.HiddenFor(model => model.RangeFilter)
@@ -32,7 +35,8 @@
 
                 <div class="form-group form-list">
                     @Html.LabelFor(model => model.EndInDisplay)
-                    @Html.TextBoxFor(model => model.EndInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control", autocomplete = "off" })
+                    <input autocomplete="off" class="datepicker form-control valid" data-provide="datepicker" data-val="true" data-val-required="The To field is required." id="EndInDisplay" name="EndInDisplay" type="text" value="@Model.StartInDisplay">
+                    @*@Html.TextBox("EndInDisplay", Model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control", autocomplete = "off" })*@
                     @Html.ValidationMessageFor(model => model.EndInDisplay)
                 </div>
                 <div class="form-group form-list">
@@ -72,7 +76,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var totalKpi = @Model.Kpis.Count;
-        $('.select2-multiple2').select2MultiCheckboxes('destroy');
 
         $('.select2-multiple2').prepend(`<option value="*">Select All</option>`);
         $('.select2-multiple2').select2MultiCheckboxes({
@@ -83,12 +86,9 @@
         });
         $('.select2-multiple2 > option').prop('selected', true);
         var select2Value = $('#KpiIds').val();
-        console.log(select2Value);
 
-        $(document).on('change', '.select2-multiple2', function () {
-
+        $('.select2-multiple2').change(function () {
             var value = $(this).val();
-            console.log(value);
             if (value) {
                 var counter = value.length;
                 if (select2Value.indexOf('*') > -1 && value.indexOf('*') == -1) {
@@ -110,8 +110,6 @@
                     $(this).val(value);
                     counter = value.length;
                 }
-                
-
             } else {
                 $(this).val([]);
                 var counter = 0;
@@ -122,13 +120,12 @@
             $('.select2-selection__rendered').text("Selected " + counter + " of " + totalKpi);
         });
 
-        //$('.select2-multiple2').select2MultiCheckboxes('refresh');
 
         if ($('.filename').val().length < 7) {
             $('.export').prop('disabled', true);
         }
 
-        $('.filename').change(function () {
+        $('.filename').keyup(function () {
             if ($(this).val().length >= 7) {
                 $('.export').prop('disabled', false);
             } else {
@@ -137,5 +134,13 @@
         });
 
         $('.modal-title-export').html('@Model.Name');
+        setTimeout(function () {
+            $('#StartInDisplay').data("DateTimePicker").minDate(moment("@Model.StartAfterParsed"));
+            $('#EndInDisplay').data("DateTimePicker").maxDate(moment("@Model.EndAfterParsed"));
+            $('#StartInDisplay.datepicker').on('dp.change', function (e) {
+                $('#EndInDisplay').data("DateTimePicker").minDate(e.date);
+            });
+        }, 500);
+
     });
 </script>

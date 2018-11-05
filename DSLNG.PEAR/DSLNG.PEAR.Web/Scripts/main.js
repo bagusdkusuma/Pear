@@ -6543,19 +6543,21 @@ Number.prototype.format = function (n, x) {
         })
     });
 
-
     //$('#export-setting').on('submit', '#export-setting-form', function (e) {
     //    e.preventDefault();
-    //    $.ajax({
-    //        url: $('#export-setting-form').attr('action'),
-    //        data: $('#export-setting-form').serialize(),
-    //        method: 'POST',
-    //        success: function (data2) {
-    //            $('#export-setting').modal('hide');
-    //        }
-    //    })
-    //})
 
+    //    alert('as');
+    //    $('#export-setting').modal('hide');
+    //});
+
+    $('.btn-export').click(function (e) {
+        e.preventDefault();
+
+        //alert('as');
+        $('#export-setting').modal('hide');
+        $('#export-setting-form').submit();
+    });
+    
     $('#highlight-setting').on('submit', '#highlight-setting-form', function (e) {
         e.preventDefault();
         $.ajax({
@@ -6609,7 +6611,7 @@ Number.prototype.format = function (n, x) {
 
     if ($('#user-profile-session-data').length > 0) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
-            text: "Export Excel",
+            text: "Export To Excel",
             onclick: function () {
                 getExportChart($(this.renderTo));
             }

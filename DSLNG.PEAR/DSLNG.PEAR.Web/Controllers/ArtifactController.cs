@@ -1658,7 +1658,7 @@ namespace DSLNG.PEAR.Web.Controllers
             ws.Cells["B4"].Value = ": " + graphicName;
 
             ws.Cells["A3"].Value = "Date";
-            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}", DateTimeOffset.Now);
+            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
             
             int kpiRowStart = 8;
             int kpiColStart = 2;
