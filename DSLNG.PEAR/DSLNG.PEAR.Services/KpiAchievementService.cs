@@ -860,7 +860,8 @@ namespace DSLNG.PEAR.Services
             return response;
         }
 
-        public GetKpiAchievementLessThanOrEqualResponse GetKpiAchievementLessThanOrEqual(int kpiId, DateTime date, PeriodeType periodeType) {
+        public GetKpiAchievementLessThanOrEqualResponse GetKpiAchievementLessThanOrEqual(int kpiId, DateTime date, PeriodeType periodeType)
+        {
 
             var response = new GetKpiAchievementLessThanOrEqualResponse();
             try
@@ -906,7 +907,7 @@ namespace DSLNG.PEAR.Services
                     {
                         Id = result.Id,
                         Periode = result.Periode,
-                        Value = (result != null) && result.Periode == date? result.Value.ToString() : "no invtgtn",
+                        Value = (result != null) && result.Periode == date ? result.Value.ToString() : "no invtgtn",
                         Mtd = (result != null) && result.Periode.Month == date.Month && result.Periode.Year == date.Year ? result.Mtd.ToString() : "no invtgtn",
                         Ytd = (result != null) && result.Periode.Year == date.Year ? result.Ytd.ToString() : "no invtgtn",
                         Itd = (result != null) ? result.Itd.ToString() : "no invtgtn",
@@ -1076,7 +1077,8 @@ namespace DSLNG.PEAR.Services
                 //check method value
                 var involvedKpi = DataContext.Kpis.Include(x => x.Method).SingleOrDefault(x => x.Id == request.KpiId);
                 if (checkManualInput && !string.Equals(involvedKpi.Method.Name, "Manual Input", StringComparison.InvariantCultureIgnoreCase)
-                    && !string.Equals(request.ValueType, "remark", StringComparison.InvariantCultureIgnoreCase)) {
+                    && !string.Equals(request.ValueType, "remark", StringComparison.InvariantCultureIgnoreCase))
+                {
                     response.Id = request.Id;
                     response.IsSuccess = true;
                     response.Message = "KPI Achievement item has been updated successfully";
@@ -1100,7 +1102,7 @@ namespace DSLNG.PEAR.Services
                         break;
                 }
                 KpiAchievement prevAchievement = DataContext.KpiAchievements.OrderByDescending(x => x.Periode).FirstOrDefault(x => x.Periode == prevDate && x.PeriodeType == request.PeriodeType && x.Kpi.Id == request.KpiId);
-                if(!string.Equals(request.ValueType, "remark", StringComparison.InvariantCultureIgnoreCase))
+                if (!string.Equals(request.ValueType, "remark", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (prevAchievement != null && kpiAchievement.Value != null)
                     {
@@ -1111,7 +1113,7 @@ namespace DSLNG.PEAR.Services
                         kpiAchievement.Deviation = "1";
                     }
                 }
-                
+
                 #region existing data
                 if (request.Id > 0)
                 {
@@ -1607,13 +1609,15 @@ namespace DSLNG.PEAR.Services
                                 kpiAchievement.ItdDeviation = "1";
                             }
                             //special case
-                            if (request.KpiId == 65) {
+                            if (request.KpiId == 65)
+                            {
                                 var kpiActual519 = DataContext.KpiAchievements.SingleOrDefault(x => x.Kpi.Id == 519 && x.Periode == request.Periode && x.PeriodeType == request.PeriodeType);
                                 if (kpiActual519 != null)
                                 {
                                     kpiActual519.Value = kpiAchievement.Mtd - 17;
                                 }
-                                else {
+                                else
+                                {
                                     kpiActual519 = new KpiAchievement();
                                     kpiActual519.Periode = request.Periode;
                                     kpiActual519.PeriodeType = request.PeriodeType;
@@ -1965,6 +1969,58 @@ namespace DSLNG.PEAR.Services
                     foreach (var item in kpiAchievement)
                     {
                         response.KpiAchievements.Add(item.MapTo<GetKpiAchievementResponse>());
+                    }
+                }
+                response.IsSuccess = true;
+            }
+            catch (InvalidOperationException invalidOperationException)
+            {
+                response.IsSuccess = false;
+                response.Message = invalidOperationException.Message;
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                response.IsSuccess = false;
+                response.Message = argumentNullException.Message;
+            }
+            return response;
+        }
+
+        public GetAchievementsResponse GetKpiEconomics(int[] kpiIds, DateTime? start, DateTime? end, string periodeType)
+        {
+            PeriodeType pType = (PeriodeType)Enum.Parse(typeof(PeriodeType), periodeType);
+            var response = new GetAchievementsResponse();
+            try
+            {
+                var scenarioId = 0;
+                var scenario = DataContext.Scenarios.FirstOrDefault(x => x.IsDashboard == true);
+                if (scenario != null)
+                {
+                    scenarioId = scenario.Id;
+                }
+
+                var kpiEconomics = DataContext.KeyOperationDatas
+                    .Include(x => x.Kpi.Measurement)
+                    .OrderBy(x => x.Kpi.Order)
+                    .Where(x => kpiIds.Contains(x.Kpi.Id) && x.PeriodeType == pType && x.Periode >= start.Value && x.Periode <= end.Value && x.Scenario.Id == scenarioId)
+                    .ToList();
+                if (kpiEconomics.Count > 0)
+                {
+                    foreach (var item in kpiEconomics)
+                    {
+                        response.KpiAchievements.Add(new GetKpiAchievementResponse
+                        {
+                            Kpi = new GetKpiAchievementResponse.KpiResponse
+                            {
+                                Id = item.Kpi.Id,
+                                Name = item.Kpi.Name,
+                                Measurement = item.Kpi.Measurement.Name,
+                                KpiMeasurement = item.Kpi.Measurement.Name,
+                            },
+                            Value = item.Value,
+                            Periode = item.Periode,
+                            PeriodeType = item.PeriodeType
+                        });
                     }
                 }
                 response.IsSuccess = true;

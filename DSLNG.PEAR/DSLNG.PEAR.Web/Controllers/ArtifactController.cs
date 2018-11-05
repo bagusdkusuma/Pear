@@ -1360,6 +1360,18 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, 1, 1));
                     viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, 1));
                     break;
+                case RangeFilter.CurrentDay:
+                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, currentDay));
+                    viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, currentDay));
+                    break;
+                case RangeFilter.CurrentMonth:
+                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, 1));
+                    viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, 1));
+                    break;
+                case RangeFilter.CurrentYear:
+                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, 1, 1));
+                    viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, 12, 1));
+                    break;
                 default:
                     viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, artifact.Start);
                     viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, artifact.End);
@@ -1376,6 +1388,8 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult ExportSetting(ExportSettingViewModel viewModel)
         {
+            viewModel.KpiIds = viewModel.KpiIds.Select(x => x).Where(x => x != "*").ToArray();
+
             var labelDictionaries = new Dictionary<string, List<string>>();
             if (viewModel.KpiIds != null)
             {
@@ -1384,7 +1398,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     var split = item.Split('|');
                     if (split.Length > 2)
                     {
-                        var kpiIndex = item;
+                        var kpiIndex = split[0] + "|" + split[1];
                         if (!labelDictionaries.Keys.Contains(kpiIndex))
                         {
                             labelDictionaries.Add(kpiIndex, new List<string> { split[0], split[1], split[2], split[3] });
@@ -1414,17 +1428,6 @@ namespace DSLNG.PEAR.Web.Controllers
                     request.Rows = artifact.Rows.Select(x => new GetTabularDataRequest.RowRequest { KpiId = x.KpiId, End = x.End, KpiName = x.KpiName, PeriodeType = x.PeriodeType, RangeFilter = x.RangeFilter, Start = x.Start }).ToList();
                     var data = _artifactServie.GetTabularData(request);
                     return ExportTabular(data, viewModel.Name, viewModel.FileName);
-
-                    //foreach (var item in data.Rows.Where(x => x.Actual.HasValue))
-                    //{
-                    //    exportData.Add(new ExportSettingData { KpiId = 1, KpiName = item.KpiName, MeasurementName = item.Measurement, Periode = item.PeriodeDateTime, Value = item.Actual, ValueAxes = ValueAxis.KpiActual.ToString() });
-                    //}
-
-                    //foreach (var item in data.Rows.Where(x => x.Target.HasValue))
-                    //{
-                    //    exportData.Add(new ExportSettingData { KpiId = 1, KpiName = item.KpiName, MeasurementName = item.Measurement, Periode = item.PeriodeDateTime, Value = item.Target, ValueAxes = ValueAxis.KpiTarget.ToString() });
-                    //}
-                    //timeInformation = string.Empty;
                     break;
                 case "pie":
                     exportData = _artifactServie.GetExportExcelPieData(labelDictionaries, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);

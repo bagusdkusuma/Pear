@@ -71,18 +71,58 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        @*var headerTitle = @Html.Raw(Json.Encode(title));
-        var mt = $('.modal-title')
-        mt.text(headerTitle);*@
+        var totalKpi = @Model.Kpis.Count;
+        $('.select2-multiple2').select2MultiCheckboxes('destroy');
 
-       
+        $('.select2-multiple2').prepend(`<option value="*">Select All</option>`);
         $('.select2-multiple2').select2MultiCheckboxes({
+            placeholder: "Choose KPI",
             templateSelection: function (selected, total) {
-                return "Selected " + selected.length + " of " + total;
+                return "Selected " + totalKpi + " of " + totalKpi;
             }
-        })
+        });
         $('.select2-multiple2 > option').prop('selected', true);
-        $('.select2-multiple2').select2MultiCheckboxes('refresh');
+        var select2Value = $('#KpiIds').val();
+        console.log(select2Value);
+
+        $(document).on('change', '.select2-multiple2', function () {
+
+            var value = $(this).val();
+            console.log(value);
+            if (value) {
+                var counter = value.length;
+                if (select2Value.indexOf('*') > -1 && value.indexOf('*') == -1) {
+                    $(this).val([]);
+                    var counter = 0;
+                }
+
+                if (select2Value.indexOf('*') == -1 && value.indexOf('*') > -1) {
+                    var selected = [];
+                    $(this).find("option").each(function (i, e) {
+                        selected[selected.length] = $(e).attr("value");
+                    });
+                    $(this).val(selected);
+                    counter = selected.length - 1;
+                }
+
+                if (select2Value.indexOf('*') > -1 && value.indexOf('*') > -1) {
+                    value.splice(value.indexOf('*'), 1);
+                    $(this).val(value);
+                    counter = value.length;
+                }
+                
+
+            } else {
+                $(this).val([]);
+                var counter = 0;
+                value = [];
+            }
+
+            select2Value = value;
+            $('.select2-selection__rendered').text("Selected " + counter + " of " + totalKpi);
+        });
+
+        //$('.select2-multiple2').select2MultiCheckboxes('refresh');
 
         if ($('.filename').val().length < 7) {
             $('.export').prop('disabled', true);

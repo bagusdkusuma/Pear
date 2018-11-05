@@ -3414,8 +3414,10 @@ namespace DSLNG.PEAR.Services
         {
             var kpiActuals = labelDictionaries.Where(x => x.Value.ElementAtOrDefault(1) == "KpiActual").Select(x => Int32.Parse(x.Value.ElementAt(0))).ToArray();
             var kpiTargets = labelDictionaries.Where(x => x.Value.ElementAtOrDefault(1) == "KpiTarget").Select(x => Int32.Parse(x.Value.ElementAt(0))).ToArray();
+            var kpiEconomics = labelDictionaries.Where(x => x.Value.ElementAtOrDefault(1) == "KpiEconomic").Select(x => Int32.Parse(x.Value.ElementAt(0))).ToArray();
             var dataActuals = _kpiAchievementService.GetKpiAchievements(kpiActuals, start, end, periodeType);
             var dataTargets = _kpiTargetService.GetKpiTargets(kpiTargets, start, end, periodeType);
+            var dataEconomics = _kpiAchievementService.GetKpiEconomics(kpiEconomics, start, end, periodeType);
 
             //var existedTargetKpis = dataTargets.KpiTargets.GroupBy(x => x.KpiId).Select(g => g.First()).ToList();
 
@@ -3432,6 +3434,12 @@ namespace DSLNG.PEAR.Services
             {
                 exportData.Add(new ExportSettingData { Periode = x.Periode, KpiId = x.KpiId, KpiName = x.KpiName, MeasurementName = x.MeasurementName, Value = x.Value, ValueAxes = ValueAxis.KpiTarget.ToString() });
             }
+
+            foreach (var x in dataEconomics.KpiAchievements)
+            {
+                exportData.Add(new ExportSettingData { Periode = x.Periode, KpiId = x.Kpi.Id, KpiName = x.Kpi.Name, MeasurementName = x.Kpi.KpiMeasurement, Value = x.Value, ValueAxes = ValueAxis.KpiEconomic.ToString() });
+            }
+
 
             return exportData;
         }
