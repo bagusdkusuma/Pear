@@ -1702,7 +1702,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 idx++;
 
-                ws.Cells[rowStart, idx].Value = row.Periode;
+                ws.Cells[rowStart, idx].Value = row.Periode.ToString();
                 ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 ws.Cells[rowStart, idx].Style.Font.Bold = false;
                 ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;

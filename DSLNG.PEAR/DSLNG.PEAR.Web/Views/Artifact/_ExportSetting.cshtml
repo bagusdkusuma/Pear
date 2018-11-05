@@ -22,18 +22,18 @@
             </div>
 
             <div>
-                <div class="form-group form-list">
+                <div class="form-group form-list kpis">
                     @Html.LabelFor(model => model.KpiId)
                     @Html.DropDownList("KpiIds", Model.Kpis, new { @class = "select2-multiple2", @style = "width: 200px" })
                     @Html.ValidationMessageFor(model => model.KpiId)
                 </div>
-                <div class="form-group form-list">
+                <div class="form-group form-list from">
                     @Html.LabelFor(model => model.StartInDisplay)
                     @Html.TextBoxFor(model => model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control", autocomplete = "off" })
                     @Html.ValidationMessageFor(model => model.StartInDisplay)
                 </div>
 
-                <div class="form-group form-list">
+                <div class="form-group form-list to">
                     @Html.LabelFor(model => model.EndInDisplay)
                     <input autocomplete="off" class="datepicker form-control valid" data-provide="datepicker" data-val="true" data-val-required="The To field is required." id="EndInDisplay" name="EndInDisplay" type="text" value="@Model.StartInDisplay">
                     @*@Html.TextBox("EndInDisplay", Model.StartInDisplay, new { data_provide = "datepicker", @class = "datepicker form-control", autocomplete = "off" })*@
@@ -76,6 +76,16 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var totalKpi = @Model.Kpis.Count;
+        var graphicType = $('#GraphicType').val();
+        if (graphicType == 'tank' || graphicType == 'tabular' || graphicType == 'pie') {
+            $('.from').css('visibility', 'hidden').css('position', 'absolute');
+            $('.to').css('visibility', 'hidden').css('position', 'absolute');
+        }
+
+        if (graphicType == 'tabular') {
+            $('.kpis').css('visibility', 'hidden').css('position', 'absolute');
+            $('.kpis').css('visibility', 'hidden').css('position', 'absolute');
+        }
 
         $('.select2-multiple2').prepend(`<option value="*">Select All</option>`);
         $('.select2-multiple2').select2MultiCheckboxes({
