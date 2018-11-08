@@ -6543,18 +6543,13 @@ Number.prototype.format = function (n, x) {
         })
     });
 
-    //$('#export-setting').on('submit', '#export-setting-form', function (e) {
-    //    e.preventDefault();
-
-    //    alert('as');
-    //    $('#export-setting').modal('hide');
-    //});
-
     $('.btn-export').click(function (e) {
         e.preventDefault();
 
-        //alert('as');
-        $('#export-setting').modal('hide');
+        setTimeout(function () {
+            $('#export-setting').modal('hide');
+
+        }, 1000);
         $('#export-setting-form').submit();
     });
     

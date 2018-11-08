@@ -146,6 +146,8 @@
         $('.modal-title-export').html('@Model.Name');
         setTimeout(function () {
             $('#StartInDisplay').data("DateTimePicker").minDate(moment("@Model.StartAfterParsed"));
+            $('#StartInDisplay').data("DateTimePicker").maxDate(moment("@Model.EndAfterParsed"));
+            $('#EndInDisplay').data("DateTimePicker").minDate(moment("@Model.StartAfterParsed"));
             $('#EndInDisplay').data("DateTimePicker").maxDate(moment("@Model.EndAfterParsed"));
             $('#StartInDisplay.datepicker').on('dp.change', function (e) {
                 $('#EndInDisplay').data("DateTimePicker").minDate(e.date);

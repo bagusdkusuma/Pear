@@ -1444,6 +1444,7 @@ namespace DSLNG.PEAR.Web.Controllers
             var exportKpis = ModifyKpis(viewModel.KpiIds);
             IDictionary<DateTime, IDictionary<string, ExportSettingData>> dataDictionary = new Dictionary<DateTime, IDictionary<string, ExportSettingData>>();
             IList<DateTime> existedPeriodes = new List<DateTime>();
+            dateTimePeriodes = FilterPeriodes(dateTimePeriodes, viewModel.EndAfterParsed);
             foreach (var periode in dateTimePeriodes)
             {
                 var data = new Dictionary<string, ExportSettingData>();
@@ -1569,15 +1570,13 @@ namespace DSLNG.PEAR.Web.Controllers
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
-            ws.Cells["A3"].Value = "Date";
-            ws.Cells["B3"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
+            ws.Cells["A3"].Value = "Extracted Date";
+            ws.Cells["B3"].Value = ": " + string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
             ws.Cells["C3"].Value = "By: " + UserProfile().Name;
 
             ws.Cells["A4"].Value = "Dashboard Name";
             ws.Cells["B4"].Value = ": " + viewModel.Name;
 
-            ws.Cells["A3"].Value = "Date";
-            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy}", DateTimeOffset.Now);
 
             ws.Cells["A6:A7"].Value = "Periode";
             ws.Cells["A6:A7"].Merge = true;
@@ -1645,12 +1644,22 @@ namespace DSLNG.PEAR.Web.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        private IList<DateTime> FilterPeriodes(IList<DateTime> dateTimePeriodes, DateTime? endAfterParsed)
+        {
+            if(!endAfterParsed.HasValue)
+            {
+                return dateTimePeriodes;
+            }
+
+            return dateTimePeriodes.Where(x => x <= endAfterParsed).ToList();            
+        }
+
         private ActionResult ExportTabular(GetTabularDataResponse data, string graphicName, string fileName)
         {
             ExcelPackage pck = new ExcelPackage();
             ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
-            ws.Cells["A3"].Value = "Date";
+            ws.Cells["A3"].Value = "Extracted Date";
             ws.Cells["B3"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
             ws.Cells["C3"].Value = "By: " + UserProfile().Name;
 
