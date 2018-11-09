@@ -15,7 +15,8 @@ namespace DSLNG.PEAR.Services
 {
     public class KpiTransformationLogService : BaseService, IKpiTransformationLogService
     {
-        public KpiTransformationLogService(IDataContext dataContext) : base(dataContext) {
+        public KpiTransformationLogService(IDataContext dataContext) : base(dataContext)
+        {
 
         }
 
@@ -33,11 +34,12 @@ namespace DSLNG.PEAR.Services
                 Logs = data.ToList().MapTo<GetKpiTransformationLogsResponse.KpiTransformationLogResponse>()
             };
         }
-        private IEnumerable<KpiTransformationLog> SortData(string search, IDictionary<string, SortOrder> sortingDictionary,int scheduleId, out int TotalRecords)
+        private IEnumerable<KpiTransformationLog> SortData(string search, IDictionary<string, SortOrder> sortingDictionary, int scheduleId, out int TotalRecords)
         {
             var data = DataContext.KpiTransformationLogs.Include(x => x.Schedule.KpiTransformation).Include(x => x.Kpi).Include(x => x.Kpi.Measurement)
                 .Where(x => x.Schedule.Id == scheduleId).AsQueryable();
-            if (!string.IsNullOrEmpty(search)) {
+            if (!string.IsNullOrEmpty(search))
+            {
                 data = data.Where(x => x.Kpi.Name.Contains(search));
             }
             if (sortingDictionary != null && sortingDictionary.Count > 0)
@@ -75,35 +77,45 @@ namespace DSLNG.PEAR.Services
 
         public SaveKpiTransformationLogResponse Save(SaveKpiTransformationLogRequest request)
         {
-            var kpiTransformationLog = request.MapTo<KpiTransformationLog>();
-            var kpiTransformationSchedule = DataContext.KpiTransformationSchedules.Local.FirstOrDefault(x => x.Id == request.KpiTransformationScheduleId);
-            if (kpiTransformationSchedule == null) {
-                kpiTransformationSchedule = new KpiTransformationSchedule { Id = request.KpiTransformationScheduleId };
-                DataContext.KpiTransformationSchedules.Attach(kpiTransformationSchedule);
-            } 
-            kpiTransformationLog.Schedule = kpiTransformationSchedule;
-            var kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.KpiId);
-            if (kpi == null) {
-                kpi = new Kpi { Id = request.KpiId };
-                DataContext.Kpis.Attach(kpi);
-            } 
-            kpiTransformationLog.Kpi = kpi;
-            DataContext.KpiTransformationLogs.Add(kpiTransformationLog);
-
-            //remove related kpi if error
-            if (request.Status == Data.Enums.KpiTransformationStatus.Error && request.MethodId == 1 && request.NeedCleanRowWhenError)
+            try
             {
-                var achievements = DataContext.KpiAchievements.Where(
-                   x => x.Kpi.Id == request.KpiId && x.Periode == request.Periode && x.PeriodeType == request.PeriodeType).ToList();
-                foreach (var achievement in achievements)
+                var kpiTransformationLog = request.MapTo<KpiTransformationLog>();
+                var kpiTransformationSchedule = DataContext.KpiTransformationSchedules.Local.FirstOrDefault(x => x.Id == request.KpiTransformationScheduleId);
+                if (kpiTransformationSchedule == null)
                 {
-                    DataContext.KpiAchievements.Remove(achievement);
+                    kpiTransformationSchedule = new KpiTransformationSchedule { Id = request.KpiTransformationScheduleId };
+                    DataContext.KpiTransformationSchedules.Attach(kpiTransformationSchedule);
                 }
-                DataContext.SaveChanges();
-            }
+                kpiTransformationLog.Schedule = kpiTransformationSchedule;
+                var kpi = DataContext.Kpis.Local.FirstOrDefault(x => x.Id == request.KpiId);
+                if (kpi == null)
+                {
+                    kpi = new Kpi { Id = request.KpiId };
+                    DataContext.Kpis.Attach(kpi);
+                }
+                kpiTransformationLog.Kpi = kpi;
+                DataContext.KpiTransformationLogs.Add(kpiTransformationLog);
 
-            DataContext.SaveChanges();
-            return new SaveKpiTransformationLogResponse { IsSuccess = true, Message = "You have been successfully saved kpi transformation log" };
+                //remove related kpi if error
+                if (request.Status == Data.Enums.KpiTransformationStatus.Error && request.MethodId == 1 && request.NeedCleanRowWhenError)
+                {
+                    var achievements = DataContext.KpiAchievements.Where(
+                       x => x.Kpi.Id == request.KpiId && x.Periode == request.Periode && x.PeriodeType == request.PeriodeType).ToList();
+                    foreach (var achievement in achievements)
+                    {
+                        DataContext.KpiAchievements.Remove(achievement);
+                    }
+                    DataContext.SaveChanges();
+                }
+
+                DataContext.SaveChanges();
+                return new SaveKpiTransformationLogResponse { IsSuccess = true, Message = "You have been successfully saved kpi transformation log" };
+
+            }
+            catch (Exception ex)
+            {
+                return new SaveKpiTransformationLogResponse { IsSuccess = false, Message = "Error when saving kpi transformation log" + ex.Message };
+            }
         }
     }
 }

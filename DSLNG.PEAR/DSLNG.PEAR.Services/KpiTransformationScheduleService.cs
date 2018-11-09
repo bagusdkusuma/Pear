@@ -108,9 +108,17 @@ namespace DSLNG.PEAR.Services
 
         public void UpdateStatus(int id, KpiTransformationStatus status)
         {
-            var schedule = DataContext.KpiTransformationSchedules.Single(x => x.Id == id);
-            schedule.Status = status;
-            DataContext.SaveChanges();
+            try
+            {
+                var schedule = DataContext.KpiTransformationSchedules.Single(x => x.Id == id);
+                schedule.Status = status;
+                DataContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                //DataContext.KpiTransformationLogs.Add(new KpiTransformationLog { })
+            }
+            
         }
 
         public GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse Get(int Id)
