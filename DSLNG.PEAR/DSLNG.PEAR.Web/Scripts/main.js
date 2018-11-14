@@ -161,10 +161,10 @@ function round(value, exp, x) {
  */
 Number.prototype.format = function (n, x) {
     var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
-    if (parseFloat(this % 1) == parseFloat(0) ) {       
+    if (parseFloat(this % 1) == parseFloat(0)) {
         return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
     }
-    var y = round(this, n, x);    
+    var y = round(this, n, x);
     if (parseFloat(y % 1) == parseFloat(0)) {
         return parseFloat(y).toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
     }
@@ -3885,7 +3885,7 @@ Number.prototype.format = function (n, x) {
             var btn = '<div class="btn-group chart-button">' +
                 '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
                 '<ul class="dropdown-menu pull-right">' +
-                '<li><a class="tank-subtitle" href="javascript:;">Change Periode</a></li>' + 
+                '<li><a class="tank-subtitle" href="javascript:;">Change Periode</a></li>' +
                 '<li><a class="tank-export" href="javascript:;">Export To Excel</a></li>';
             if ($('#user-profile-session-data').data('issuperadmin') == true) {
                 btn += '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>';
@@ -6330,13 +6330,11 @@ Number.prototype.format = function (n, x) {
             }
         });
     }
-    var getExportChart = function (el) {        
+    var getExportChart = function (el) {
         var artifactHolder = el.closest('.artifact-holder');
         _artifactHolder = artifactHolder;
         _highchartsContainter = el.closest('.highcharts-container');
-        console.log('as');
-        console.log(artifactHolder);
-        console.log(_highchartsContainer);
+
 
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
@@ -6478,18 +6476,117 @@ Number.prototype.format = function (n, x) {
                 rangeControl();
                 rangeDatePicker();
                 specificDate();
-                var search = searchArtifactConfig(_configs, artifactId);
-                if (search.isExisted == true) {
-                    $('.export-setting-content #PeriodeType').val(search.config.PeriodeType).change();
-                    $('.export-setting-content #RangeFilter').val(search.config.RangeFilter).change();
-                    $('.datepicker').datetimepicker({
-                        format: search.dateformat,
-                    });
-                    $('.export-setting-content #StartInDisplay').val(search.config.StartInDisplay);
-                    $('.export-setting-content #EndInDisplay').val(search.config.EndInDisplay);
-                    $('#range-holder').removeClass();
-                    $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
+
+                if ($('.filename').val().length < 7) {
+                    $('.export').prop('disabled', true);
                 }
+
+                $('.filename').keyup(function () {
+                    if ($(this).val().length >= 7) {
+                        $('.export').prop('disabled', false);
+                    } else {
+                        $('.export').prop('disabled', true);
+                    }
+                });
+
+                setTimeout(function () {
+                    var search = searchArtifactConfig(_configs, artifactId);
+                    console.log(_configs); console.log(search);
+                    if (search.isExisted == true) {
+                        var currentTime = new Date(2018, 9, 28);
+                        var currentDay = currentTime.getDate()
+                        var currentMonth = ("0" + (currentTime.getMonth() + 1)).slice(-2);
+                        var currentYear = currentTime.getFullYear();
+                        var firstDayOfWeek = currentTime.getDate() - currentTime.getDay();
+                        var lastDayOfWeek = firstDayOfWeek + 6;
+                        //firstDayOfWeek = ("0" + (firstDayOfWeek)).slice(-2);
+                        //lastDayOfWeek = ("0" + (lastDayOfWeek)).slice(-2);
+
+                        //console.log(firstDayOfWeek.format(formatDate));
+                        //console.log(lastDayOfWeek.format(formatDate));
+
+                       
+
+                        var startOfWeek = moment().startOf('week');
+                        var endOfWeek = moment().endOf('week');
+
+                        var startOfMonth = moment().startOf('month');
+                        var endOfMonth = moment().endOf('month');
+
+                        var current = moment();
+
+                        var startOfYear = moment().startOf('year');
+                        var endOfYear = moment().endOf('year');
+
+                        console.log(current);
+                        console.log(startOfYear);
+                        console.log(startOfMonth);
+
+                        var startInDisplay = '';
+                        var endInDisplay = '';
+
+                        switch (search.config.PeriodeType.toLowerCase())
+                        {
+                            case "daily":
+                                var formatDaily = "MM/DD/YYYY";
+                                if (search.config.RangeFilter.toLowerCase() == "currentweek") {
+                                    startInDisplay = startOfWeek.format(formatDaily);
+                                    endInDisplay = endOfWeek.format(formatDaily);
+                                } else if (search.config.RangeFilter.toLowerCase() == "currentmonth") {
+                                    startInDisplay = startOfMonth.format(formatDaily);
+                                    endInDisplay = endOfMonth.format(formatDaily);
+                                } else if (search.config.RangeFilter.toLowerCase() == "mtd") {
+                                    startInDisplay = startOfMonth.format(formatDaily);
+                                    endInDisplay = current.format(formatDaily);
+                                } else if (search.config.RangeFilter.toLowerCase() == "ytd") {
+                                    startInDisplay = startOfYear.format(formatDaily);
+                                    endInDisplay = current.format(formatDaily);
+                                } else if (search.config.RangeFilter.toLowerCase() == "specificday") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
+                                }
+                                break;
+                            case "monthly":
+                                var formatMonthly = "MM/YYYY";
+                                if (search.config.RangeFilter.toLowerCase() == "currentyear") {
+                                    startInDisplay = startOfYear.format(formatMonthly);
+                                    endInDisplay = endOfYear.format(formatMonthly);
+                                } else if (search.config.RangeFilter.toLowerCase() == "ytd") {
+                                    startInDisplay = startOfYear.format(formatMonthly);
+                                    endInDisplay = current.format(formatMonthly);
+                                } else if (search.config.RangeFilter.toLowerCase() == "specificmonth") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
+                                }
+                                break;
+                            case "yearly":
+                                var formatYearly = "YYYY";
+                                if (search.config.RangeFilter.toLowerCase() == "currentyear") {
+                                    startInDisplay = startOfYear.format(formatYearly);
+                                    endInDisplay = endOfYear.format(formatYearly);
+                                } else if (search.config.RangeFilter.toLowerCase() == "specificyear") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
+                                }
+                        }
+                        console.log(startInDisplay);
+                        console.log(endInDisplay);
+                        $('.export-setting-content #PeriodeType').val(search.config.PeriodeType).change();
+                        $('.export-setting-content #RangeFilter').val(search.config.RangeFilter).change();
+                        $('.datepicker').datetimepicker({
+                            format: search.dateformat,
+                        });
+
+                        $('.export-setting-content #StartInDisplay').val(startInDisplay);
+                        $('.export-setting-content #EndInDisplay').val(endInDisplay);
+
+                        $('#range-holder').removeClass();
+                        $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
+                    }
+
+                }, 1000);
+
+
             }
         });
     }
@@ -6552,7 +6649,7 @@ Number.prototype.format = function (n, x) {
         }, 1000);
         $('#export-setting-form').submit();
     });
-    
+
     $('#highlight-setting').on('submit', '#highlight-setting-form', function (e) {
         e.preventDefault();
         $.ajax({
@@ -6617,7 +6714,7 @@ Number.prototype.format = function (n, x) {
                 getGraphicSetting($(this.renderTo));
             }
         });
-        
+
     }
 
     if ($('#user-profile-session-data').length > 0 && $('#user-profile-session-data').data('issuperadmin') == true) {
