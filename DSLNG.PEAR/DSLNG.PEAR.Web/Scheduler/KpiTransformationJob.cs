@@ -12,12 +12,52 @@ using NCalc;
 using DSLNG.PEAR.Data.Persistence;
 using DSLNG.PEAR.Services;
 using DSLNG.PEAR.Services.Requests.KpiTransformationLog;
+using System.Web.Hosting;
 
 namespace DSLNG.PEAR.Web.Scheduler
 {
-    public class KpiTransformationJob : IKpiTransformationJob
+    public class KpiTransformationJob : IKpiTransformationJob, IRegisteredObject
     {
+        private readonly object _lock = new object();
+
+        private bool _shuttingDown;
+
+        public KpiTransformationJob()
+        {
+            HostingEnvironment.RegisterObject(this);
+        }
+
         public void Process(SaveKpiTransformationScheduleResponse kpiTransformationSchedule)
+        {
+            try
+            {
+                lock (_lock)
+                {
+                    if (_shuttingDown)
+                        return;
+
+                    Execute(kpiTransformationSchedule);
+                }
+            }
+            finally
+            {
+                // Always unregister the job when done.
+                HostingEnvironment.UnregisterObject(this);
+            }
+        }
+
+        public void Stop(bool immediate)
+        {
+            // Locking here will wait for the lock in Execute to be released until this code can continue.
+            lock (_lock)
+            {
+                _shuttingDown = true;
+            }
+
+            HostingEnvironment.UnregisterObject(this);
+        }
+
+        private void Execute(SaveKpiTransformationScheduleResponse kpiTransformationSchedule)
         {
             var action = new DSLNG.PEAR.Data.Entities.BaseAction
             {
