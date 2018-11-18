@@ -387,18 +387,42 @@ namespace DSLNG.PEAR.Web.Scheduler
                                     {
                                         if (meetRequirements)
                                         {
-                                            var request = new UpdateKpiAchievementItemRequest
+                                             var request = new UpdateKpiAchievementItemRequest
                                             {
                                                 Periode = date,
                                                 PeriodeType = kpiTransformationSchedule.PeriodeType,
                                                 Id = existingKpiActual.IsSuccess ? existingKpiActual.Id : 0,
                                                 KpiId = kpi.Id,
                                                 UserId = kpiTransformationSchedule.UserId,
-                                                Value = new Expression(kpiTransformed).Evaluate().ToString(),
                                                 ControllerName = action.ControllerName,
                                                 ActionName = action.ActionName
                                             };
+                                            var val = new Expression(kpiTransformed).Evaluate().ToString();
+                                         
+                                            if (!Double.IsInfinity(double.Parse(val)) && !Double.IsNaN(double.Parse(val)))
+                                            {
+                                                request.Value = val; //new Expression(kpiTransformed).Evaluate().ToString();
+                                            }
+                                            else
+                                            {
+                                                var logRequest = new SaveKpiTransformationLogRequest
+                                                {
+                                                    KpiId = kpi.Id,
+                                                    KpiTransformationScheduleId = kpiTransformationSchedule.Id,
+                                                    PeriodeType = kpiTransformationSchedule.PeriodeType,
+                                                    Periode = date,
+                                                    Status = KpiTransformationStatus.Error,
+                                                    MethodId = kpi.MethodId,
+                                                    Notes = "Infinite Result",
+                                                    NeedCleanRowWhenError = true
+                                                };
+                                                logService.Save(logRequest);
+                                                complete = false;
+                                                continue;
+                                            }
+
                                             var resp = kpiAchievementService.UpdateOriginalData(request);
+
                                             if (resp.IsSuccess)
                                             {
                                                 //if(kpi.YtdFormula == YtdFormula.NaN)
