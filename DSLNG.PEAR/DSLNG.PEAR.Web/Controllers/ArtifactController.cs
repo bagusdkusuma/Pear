@@ -1377,12 +1377,13 @@ namespace DSLNG.PEAR.Web.Controllers
                     viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, artifact.End);
                     break;
             }
-            //SetPeriodeTypes(viewModel.PeriodeTypes);
-            //SetRangeFilters(viewModel.RangeFilters);
-            //SetValueAxes(viewModel.ValueAxes);
-            //artifact.MapPropertiesToInstance<ArtifactDesignerViewModel>(viewModel);
 
             return PartialView("_ExportSetting", viewModel);
+        }
+
+        public ActionResult ExportSettingPreview()
+        {
+            return Content("as");
         }
 
         [HttpPost]

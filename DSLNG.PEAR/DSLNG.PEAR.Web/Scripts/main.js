@@ -6499,14 +6499,7 @@ Number.prototype.format = function (n, x) {
                         var currentYear = currentTime.getFullYear();
                         var firstDayOfWeek = currentTime.getDate() - currentTime.getDay();
                         var lastDayOfWeek = firstDayOfWeek + 6;
-                        //firstDayOfWeek = ("0" + (firstDayOfWeek)).slice(-2);
-                        //lastDayOfWeek = ("0" + (lastDayOfWeek)).slice(-2);
-
-                        //console.log(firstDayOfWeek.format(formatDate));
-                        //console.log(lastDayOfWeek.format(formatDate));
-
-                       
-
+                        
                         var startOfWeek = moment().startOf('week');
                         var endOfWeek = moment().endOf('week');
 
@@ -6517,11 +6510,7 @@ Number.prototype.format = function (n, x) {
 
                         var startOfYear = moment().startOf('year');
                         var endOfYear = moment().endOf('year');
-
-                        console.log(current);
-                        console.log(startOfYear);
-                        console.log(startOfMonth);
-
+                        
                         var startInDisplay = '';
                         var endInDisplay = '';
 
@@ -6569,8 +6558,253 @@ Number.prototype.format = function (n, x) {
                                     endInDisplay = search.config.EndInDisplay;
                                 }
                         }
-                        console.log(startInDisplay);
-                        console.log(endInDisplay);
+                        $('.export-setting-content #PeriodeType').val(search.config.PeriodeType).change();
+                        $('.export-setting-content #RangeFilter').val(search.config.RangeFilter).change();
+                        $('.datepicker').datetimepicker({
+                            format: search.dateformat,
+                        });
+
+                        $('.export-setting-content #StartInDisplay').val(startInDisplay);
+                        $('.export-setting-content #EndInDisplay').val(endInDisplay);
+
+                        $('#range-holder').removeClass();
+                        $('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
+                    }
+
+                }, 1000);
+
+
+            }
+        });
+    }
+
+    var getExportChartPreview = function (el) {
+        var artifactHolder = el.closest('.artifact-holder');
+        _artifactHolder = artifactHolder;
+        _highchartsContainter = el.closest('.highcharts-container');
+
+
+        var artifactId = artifactHolder.attr('data-artifact-id');
+        var chart = artifactHolder.highcharts();
+        console.log(chart);
+        var url = '/Artifact/ExportSetting/' + artifactId;
+
+        $('body').append($('<div/>').addClass('modal-loader').css({
+            position: 'fixed',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            backgroundColor: 'rgba(0,0,0,.5)',
+            backgroundImage: 'url("/Content/img/ajax-loader2.gif")',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            zIndex: 1000,
+        }));
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            success: function (data) {
+                $('.export-setting-content').hide();
+                $('.export-setting-content').html(data);
+                $("form").removeData("validator");
+                $("form").removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse("form");
+                $('.export-setting-content').append('<input type="hidden" value="' + artifactId + '" name="Id" />');
+
+                $('.export-setting-content').show();
+                $('#export-setting').modal('show');
+
+                function rangeDatePicker() {
+                    var format = $('#datetime-attr').attr('data-datepickerformat');
+                    $('.datepicker').datetimepicker({
+                        format: format,
+                    });
+                    $('.datepicker').change(function (e) {
+                    });
+                    $('#PeriodeType').change(function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        var clearValue = $('.datepicker').each(function (i, val) {
+                            $(val).val('');
+                            if ($(val).data("DateTimePicker") !== undefined) {
+                                $(val).data("DateTimePicker").destroy();
+                            }
+                        });
+                        switch ($this.val().toLowerCase().trim()) {
+                            case 'hourly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY hh:00 A"
+                                });
+                                break;
+                            case 'daily':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY"
+                                });
+                                break;
+                            case 'weekly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/DD/YYYY",
+                                    daysOfWeekDisabled: [0, 2, 3, 4, 5, 6]
+                                });
+                                break;
+                            case 'monthly':
+                                $('.datepicker').datetimepicker({
+                                    format: "MM/YYYY"
+                                });
+                                break;
+                            case 'yearly':
+                                $('.datepicker').datetimepicker({
+                                    format: "YYYY"
+                                });
+                                break;
+                            default:
+
+                        }
+                    });
+                };
+                function rangeControl() {
+                    $('#general-graphic-settings').on('change', '#RangeFilter', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+                        $('#range-holder').prop('class', $this.val().toLowerCase().trim());
+                    });
+                    var original = $('#RangeFilter').clone(true);
+                    var rangeFilterSetup = function (periodeType) {
+                        var graphicType = $('#graphic-type').val();
+                        var toRemove = {};
+                        switch (graphicType) {
+                            case "tabular":
+                            case "tank":
+                            case "speedometer":
+                            case "traffic":
+                            case "pie":
+                                toRemove.hourly = ['AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentWeek', 'CurrentYear', 'DTD', 'MTD', 'YTD', 'CurrentMonth', 'YTD', 'Interval', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'DTD', 'MTD', 'CurrentYear', 'YTD', 'Interval', 'SpecificDay', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'Interval', 'SpecificDay', 'SpecificMonth', 'AllExistingYears'];
+                                break;
+                            default:
+                                toRemove.hourly = ['CurrentWeek', 'CurrentMonth', 'CurrentYear', 'YTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.daily = ['CurrentHour', 'CurrentDay', 'CurrentYear', 'DTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.weekly = ['CurrentHour', 'CurrentDay', 'DTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.monthly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                toRemove.yearly = ['CurrentHour', 'CurrentDay', 'CurrentWeek', 'CurrentMonth', 'DTD', 'MTD', 'YTD', 'SpecificDay', 'SpecificMonth', 'SpecificYear', 'AllExistingYears'];
+                                break;
+                        }
+                        var originalClone = original.clone(true);
+                        originalClone.find('option').each(function (i, val) {
+                            if (toRemove[periodeType].indexOf(originalClone.find(val).val()) > -1) {
+                                originalClone.find(val).remove();
+                            }
+                        });
+                        $('#RangeFilter').replaceWith(originalClone);
+                    };
+
+                    rangeFilterSetup($('#PeriodeType').val().toLowerCase().trim());
+                    $('#general-graphic-settings').on('change', '#PeriodeType', function (e) {
+                        e.preventDefault();
+                        var $this = $(this);
+
+                        rangeFilterSetup($this.val().toLowerCase().trim());
+                        $('.graphic-setting-content #RangeFilter option:eq(0)').attr('selected', 'selected');
+                        $('#range-holder').removeAttr('class');
+                    });
+
+                };
+                function specificDate() {
+                    $(".datepicker").on("dp.change", function (e) {
+                        if ($('#RangeFilter').val().toLowerCase().indexOf('specific') > -1 && e.target.id === 'StartInDisplay') {
+                            $('#EndInDisplay').val($('#StartInDisplay').val());
+                        }
+                    });
+                };
+                rangeControl();
+                rangeDatePicker();
+                specificDate();
+
+                if ($('.filename').val().length < 7) {
+                    $('.export').prop('disabled', true);
+                }
+
+                $('.filename').keyup(function () {
+                    if ($(this).val().length >= 7) {
+                        $('.export').prop('disabled', false);
+                    } else {
+                        $('.export').prop('disabled', true);
+                    }
+                });
+
+                setTimeout(function () {
+                    var search = searchArtifactConfig(_configs, artifactId);
+                    console.log(_configs); console.log(search);
+                    if (search.isExisted == true) {
+                        var currentTime = new Date(2018, 9, 28);
+                        var currentDay = currentTime.getDate()
+                        var currentMonth = ("0" + (currentTime.getMonth() + 1)).slice(-2);
+                        var currentYear = currentTime.getFullYear();
+                        var firstDayOfWeek = currentTime.getDate() - currentTime.getDay();
+                        var lastDayOfWeek = firstDayOfWeek + 6;
+
+                        var startOfWeek = moment().startOf('week');
+                        var endOfWeek = moment().endOf('week');
+
+                        var startOfMonth = moment().startOf('month');
+                        var endOfMonth = moment().endOf('month');
+
+                        var current = moment();
+
+                        var startOfYear = moment().startOf('year');
+                        var endOfYear = moment().endOf('year');
+
+                        var startInDisplay = '';
+                        var endInDisplay = '';
+
+                        switch (search.config.PeriodeType.toLowerCase()) {
+                            case "daily":
+                                var formatDaily = "MM/DD/YYYY";
+                                if (search.config.RangeFilter.toLowerCase() == "currentweek") {
+                                    startInDisplay = startOfWeek.format(formatDaily);
+                                    endInDisplay = endOfWeek.format(formatDaily);
+                                } else if (search.config.RangeFilter.toLowerCase() == "currentmonth") {
+                                    startInDisplay = startOfMonth.format(formatDaily);
+                                    endInDisplay = endOfMonth.format(formatDaily);
+                                } else if (search.config.RangeFilter.toLowerCase() == "mtd") {
+                                    startInDisplay = startOfMonth.format(formatDaily);
+                                    endInDisplay = current.format(formatDaily);
+                                } else if (search.config.RangeFilter.toLowerCase() == "ytd") {
+                                    startInDisplay = startOfYear.format(formatDaily);
+                                    endInDisplay = current.format(formatDaily);
+                                } else if (search.config.RangeFilter.toLowerCase() == "specificday") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
+                                }
+                                break;
+                            case "monthly":
+                                var formatMonthly = "MM/YYYY";
+                                if (search.config.RangeFilter.toLowerCase() == "currentyear") {
+                                    startInDisplay = startOfYear.format(formatMonthly);
+                                    endInDisplay = endOfYear.format(formatMonthly);
+                                } else if (search.config.RangeFilter.toLowerCase() == "ytd") {
+                                    startInDisplay = startOfYear.format(formatMonthly);
+                                    endInDisplay = current.format(formatMonthly);
+                                } else if (search.config.RangeFilter.toLowerCase() == "specificmonth") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
+                                }
+                                break;
+                            case "yearly":
+                                var formatYearly = "YYYY";
+                                if (search.config.RangeFilter.toLowerCase() == "currentyear") {
+                                    startInDisplay = startOfYear.format(formatYearly);
+                                    endInDisplay = endOfYear.format(formatYearly);
+                                } else if (search.config.RangeFilter.toLowerCase() == "specificyear") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
+                                }
+                        }
                         $('.export-setting-content #PeriodeType').val(search.config.PeriodeType).change();
                         $('.export-setting-content #RangeFilter').val(search.config.RangeFilter).change();
                         $('.datepicker').datetimepicker({
@@ -6701,13 +6935,9 @@ Number.prototype.format = function (n, x) {
         $('.highlight-setting-content').html('');
     });
 
+    
+
     if ($('#user-profile-session-data').length > 0) {
-        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
-            text: "Export To Excel",
-            onclick: function () {
-                getExportChart($(this.renderTo));
-            }
-        });
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
             text: "Change Periode",
             onclick: function () {
@@ -6715,6 +6945,19 @@ Number.prototype.format = function (n, x) {
             }
         });
 
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
+            text: "Export To Excel",
+            onclick: function () {
+                getExportChart($(this.renderTo));
+            }
+        });
+    } else {
+        Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
+            text: "Export To Excel Preview",
+            onclick: function () {
+                getExportChart($(this.renderTo));
+            }
+        });
     }
 
     if ($('#user-profile-session-data').length > 0 && $('#user-profile-session-data').data('issuperadmin') == true) {
