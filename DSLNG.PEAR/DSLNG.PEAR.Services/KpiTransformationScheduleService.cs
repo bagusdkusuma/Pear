@@ -20,7 +20,12 @@ namespace DSLNG.PEAR.Services
 {
     public class KpiTransformationScheduleService : BaseService, IKpiTransformationScheduleService
     {
-        public KpiTransformationScheduleService(IDataContext dataContext) : base(dataContext) { }
+        //private IKpiTransformationLogService _logService;
+
+        public KpiTransformationScheduleService(IDataContext dataContext) : base(dataContext)
+        {
+           // _logService = logService;
+        }
 
         public GetKpiTransformationSchedulesResponse Get(GetKpiTransformationSchedulesRequest request)
         {
@@ -108,9 +113,19 @@ namespace DSLNG.PEAR.Services
 
         public void UpdateStatus(int id, KpiTransformationStatus status)
         {
-            var schedule = DataContext.KpiTransformationSchedules.Single(x => x.Id == id);
-            schedule.Status = status;
-            DataContext.SaveChanges();
+            try
+            {
+                var schedule = DataContext.KpiTransformationSchedules.Single(x => x.Id == id);
+                schedule.Status = status;
+                DataContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                var schedule = DataContext.KpiTransformationSchedules.Single(x => x.Id == id);
+                DataContext.KpiTransformationLogs.Add(new KpiTransformationLog { Periode = DateTime.Now, Status = KpiTransformationStatus.Error, Kpi = null, Notes = "Error When Update Status " + ex.Message, Schedule = schedule });
+                DataContext.SaveChanges();
+            }
+
         }
 
         public GetKpiTransformationSchedulesResponse.KpiTransformationScheduleResponse Get(int Id)
