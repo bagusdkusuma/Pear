@@ -1,0 +1,152 @@
+﻿@using DSLNG.PEAR.Data.Enums
+@model DSLNG.PEAR.Web.ViewModels.Artifact.ExportSettingViewModel
+<style>
+    label {
+        width: 120px;
+    }
+</style>
+<div class="form-inline whitebox">
+    @Html.HiddenFor(model => model.PeriodeType, new { @class = "form-control" })
+    @Html.HiddenFor(model => model.RangeFilter)
+    @Html.HiddenFor(model => model.GraphicType)
+    @Html.HiddenFor(model => model.AsNetBackChart)
+    @Html.HiddenFor(model => model.Name)
+    @Html.HiddenFor(model => model.ArtifactId)
+    <div class="form-inline whitebox">
+        <div id="general-export-settings">
+            <div class="form-group form-list">
+                <hr />
+            </div>
+            <div>
+                <div class="form-group form-list kpis">
+                    @Html.LabelFor(model => model.KpiId)
+                    @Html.DropDownList("KpiIds", Model.Kpis, new { @class = "select2-multiple2", @style = "width: 200px" })
+                    @Html.ValidationMessageFor(model => model.KpiId)
+                </div>
+                <div class="form-group form-list from">
+                    @Html.LabelFor(model => model.StartInDisplay)
+                    <input autocomplete="off" class="datepicker form-control" data-provide="datepicker" data-val="true" data-val-required="The To field is required." id="StartInDisplay" name="StartInDisplay" type="text" value="@Model.StartInDisplay" />
+                    @Html.ValidationMessageFor(model => model.StartInDisplay)
+                </div>
+
+                <div class="form-group form-list to">
+                    @Html.LabelFor(model => model.EndInDisplay)
+                    <input autocomplete="off" class="datepicker form-control" data-provide="datepicker" data-val="true" data-val-required="The To field is required." id="EndInDisplay" name="EndInDisplay" type="text" value="@Model.EndInDisplay" />
+                    @Html.ValidationMessageFor(model => model.EndInDisplay)
+                </div>
+                <div class="form-group form-list">
+                    @Html.LabelFor(model => model.FileName)
+                    @Html.TextBoxFor(model => model.FileName, new { @class = "filename" })
+                    @Html.ValidationMessageFor(model => model.FileName)
+                </div>
+            </div>
+        </div>
+
+        @{
+            if (Model.PeriodeType == PeriodeType.Yearly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Monthly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Weekly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Daily.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY"></span>
+            }
+            else if (Model.PeriodeType == PeriodeType.Hourly.ToString())
+            {
+                <span id="datetime-attr" data-datepickerformat="MM/DD/YYYY hh:00 A"></span>
+            }
+        }
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var totalKpi = @Model.Kpis.Count;
+        var graphicType = $('#GraphicType').val();
+        $('.kpis').css('visibility', 'hidden').css('position', 'absolute');
+        $('.from').css('visibility', 'hidden').css('position', 'absolute');
+        $('.to').css('visibility', 'hidden').css('position', 'absolute');
+
+        if (graphicType == 'tabular') {
+            $('.kpis').css('visibility', 'hidden').css('position', 'absolute');
+            $('.kpis').css('visibility', 'hidden').css('position', 'absolute');
+        }
+
+        $('.select2-multiple2').prepend(`<option value="*">Select All</option>`);
+        $('.select2-multiple2').select2MultiCheckboxes({
+            placeholder: "Choose KPI",
+            templateSelection: function (selected, total) {
+                return "Selected " + totalKpi + " of " + totalKpi;
+            }
+        });
+        $('.select2-multiple2 > option').prop('selected', true);
+        var select2Value = $('#KpiIds').val();
+
+        $('.select2-multiple2').change(function () {
+            var value = $(this).val();
+            if (value) {
+                var counter = value.length;
+                if (select2Value.indexOf('*') > -1 && value.indexOf('*') == -1) {
+                    $(this).val([]);
+                    var counter = 0;
+                }
+
+                if (select2Value.indexOf('*') == -1 && value.indexOf('*') > -1) {
+                    var selected = [];
+                    $(this).find("option").each(function (i, e) {
+                        selected[selected.length] = $(e).attr("value");
+                    });
+                    $(this).val(selected);
+                    counter = selected.length - 1;
+                }
+
+                if (select2Value.indexOf('*') > -1 && value.indexOf('*') > -1) {
+                    value.splice(value.indexOf('*'), 1);
+                    $(this).val(value);
+                    counter = value.length;
+                }
+            } else {
+                $(this).val([]);
+                var counter = 0;
+                value = [];
+            }
+
+            select2Value = value;
+            $('.select2-selection__rendered').text("Selected " + counter + " of " + totalKpi);
+        });
+
+
+        if ($('.filename').val().length < 7) {
+            $('.export').prop('disabled', true);
+        }
+
+        $('.filename').keyup(function () {
+            if ($(this).val().length >= 7) {
+                $('.export').prop('disabled', false);
+            } else {
+                $('.export').prop('disabled', true);
+            }
+        });
+
+        $('.modal-title-export').html('@Model.Name');
+        @*setTimeout(function () {
+            $('#StartInDisplay').data("DateTimePicker").minDate(moment("@Model.StartAfterParsed"));
+            $('#StartInDisplay').data("DateTimePicker").maxDate(moment("@Model.EndAfterParsed"));
+            $('#EndInDisplay').data("DateTimePicker").minDate(moment("@Model.StartAfterParsed"));
+            $('#EndInDisplay').data("DateTimePicker").maxDate(moment("@Model.EndAfterParsed"));
+            $('#StartInDisplay.datepicker').on('dp.change', function (e) {
+                $('#EndInDisplay').data("DateTimePicker").minDate(e.date);
+            });
+        }, 100);*@
+
+    });
+</script>

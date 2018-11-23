@@ -1253,6 +1253,7 @@
     <Content Include="Views\DerLayout\LayoutType\_OilGrease.Edit.cshtml" />
     <Content Include="Views\Der\Display\_EnvironmentalPartialView.cshtml" />
     <Content Include="Views\Artifact\_ExportSetting.cshtml" />
+    <Content Include="Views\Artifact\_ExportSettingPreview.cshtml" />
     <None Include="Views\Der\Index.cshtml.old" />
     <Content Include="Views\Der\_ManageItem.cshtml" />
     <Content Include="Views\Der\_DialogManageItem.cshtml" />

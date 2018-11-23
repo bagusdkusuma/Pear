@@ -5,7 +5,7 @@
     ViewBag.Title = "Artifact - Designer";
 }
 <div class="row artifact-edit">
-    @using (Html.BeginForm("Edit", "Artifact"))
+    @using (Html.BeginForm("Edit", "Artifact", FormMethod.Post, new { @class="artifact-form"}))
     {
         @Html.HiddenFor(model => model.Id)
         @Html.AntiForgeryToken()
@@ -191,6 +191,33 @@
             </div>
             <div class="modal-body">
                 <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="export-setting" role="dialog">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding-left: 0">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title-export"></h3>
+                </div>
+                <div class="modal-body">
+                    <form action="@Url.Action("ExportSetting", "Artifact")" method="post" id="export-setting-form" class="form-horizontal">
+                        <div class="export-setting-content">
+                            <p>&nbsp;</p>
+                        </div>
+                        <div class="form-group form-list">
+                            <label>&nbsp;</label>
+                            <input type="submit" class="btn btn-primary-alt export" value="Export" style="visibility:hidden; position:absolute" />
+                            <input type="button" class="btn-export btn btn-primary-alt export" value="Export" />
+                            <button type="button" class="btn btn-danger-alt btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

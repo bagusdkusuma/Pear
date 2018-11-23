@@ -776,211 +776,7 @@ namespace DSLNG.PEAR.Web.Controllers
         [HttpPost]
         public ActionResult Preview(ArtifactDesignerViewModel viewModel)
         {
-            var previewViewModel = new ArtifactPreviewViewModel();
-            previewViewModel.FractionScale = viewModel.FractionScale;
-            previewViewModel.MaxFractionScale = viewModel.MaxFractionScale;
-            switch (viewModel.GraphicType)
-            {
-                case "line":
-                    {
-                        var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
-                        viewModel.LineChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
-                        var chartData = _artifactServie.GetChartData(cartesianRequest);
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                        {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
-                        });
-                        previewViewModel.PeriodeType = viewModel.PeriodeType;
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.LineChart = new LineChartDataViewModel();
-                        previewViewModel.LineChart.Title = viewModel.HeaderTitle;
-                        previewViewModel.LineChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.LineChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-                        previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.LineChart.Periodes = chartData.Periodes;
-                    }
-                    break;
-                case "area":
-                    {
-                        var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
-                        viewModel.AreaChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
-                        var chartData = _artifactServie.GetChartData(cartesianRequest);
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                        {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
-                        });
-                        previewViewModel.PeriodeType = viewModel.PeriodeType;
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.AreaChart = new AreaChartDataViewModel();
-                        previewViewModel.AreaChart.Title = viewModel.HeaderTitle;
-                        previewViewModel.AreaChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.AreaChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-                        previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.AreaChart.Periodes = chartData.Periodes;
-                        previewViewModel.AreaChart.SeriesType = chartData.SeriesType;
-                    }
-                    break;
-                case "speedometer":
-                    {
-                        var request = viewModel.MapTo<GetSpeedometerChartDataRequest>();
-                        viewModel.SpeedometerChart.MapPropertiesToInstance<GetSpeedometerChartDataRequest>(request);
-                        var chartData = _artifactServie.GetSpeedometerChartData(request);
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
-                        previewViewModel.SpeedometerChart.Title = viewModel.HeaderTitle;
-                        previewViewModel.SpeedometerChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.SpeedometerChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-                        previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
-                    }
-                    break;
-                case "trafficlight":
-                    {
-                        var request = viewModel.MapTo<GetTrafficLightChartDataRequest>();
-                        viewModel.TrafficLightChart.MapPropertiesToInstance<GetTrafficLightChartDataRequest>(request);
-                        var chartData = _artifactServie.GetTrafficLightChartData(request);
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
-                        previewViewModel.TrafficLightChart.Title = viewModel.HeaderTitle;
-                        previewViewModel.TrafficLightChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.TrafficLightChart.ValueAxisTitle =
-                            _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId })
-                                               .Name;
-                        previewViewModel.TrafficLightChart.Series =
-                            chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.TrafficLightChart.PlotBands =
-                            chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
-                    }
-                    break;
-                case "tabular":
-                    {
-                        var request = viewModel.MapTo<GetTabularDataRequest>();
-                        /*request.Rows = new List<GetTabularDataRequest.RowRequest>();
-                        foreach (var rowViewModel in viewModel.Tabular.Rows)
-                        {
-                            request.Rows.Add(new GetTabularDataRequest.RowRequest
-                                {
-                                    End = rowViewModel.EndAfterParsed,
-                                    KpiId = rowViewModel.KpiId,
-                                    PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), rowViewModel.PeriodeType),
-                                    KpiName = rowViewModel.KpiName,
-                                    RangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), rowViewModel.RangeFilter),
-                                    Start = rowViewModel.StartAfterParsed
-                                });
-                        }*/
-
-                        viewModel.Tabular.MapPropertiesToInstance<GetTabularDataRequest>(request);
-
-                        var chartData = _artifactServie.GetTabularData(request);
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.Tabular = new TabularDataViewModel();
-                        chartData.MapPropertiesToInstance<TabularDataViewModel>(previewViewModel.Tabular);
-                        previewViewModel.Tabular.Title = viewModel.HeaderTitle;
-                    }
-                    break;
-                case "tank":
-                    {
-                        var request = viewModel.MapTo<GetTankDataRequest>();
-                        //viewModel.Tank.MapPropertiesToInstance<GetTankDataRequest>(request);
-                        var chartData = _artifactServie.GetTankData(request);
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.Tank = new TankDataViewModel();
-                        chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
-                        previewViewModel.Tank.Title = viewModel.HeaderTitle;
-                        previewViewModel.Tank.Subtitle = chartData.Subtitle;
-                    }
-                    break;
-                case "multiaxis":
-                    {
-                        var request = viewModel.MapTo<GetMultiaxisChartDataRequest>();
-                        viewModel.MultiaxisChart.MapPropertiesToInstance<GetMultiaxisChartDataRequest>(request);
-                        var chartData = _artifactServie.GetMultiaxisChartData(request);
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                        {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
-                        });
-                        previewViewModel.PeriodeType = viewModel.PeriodeType;
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
-                        chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
-                        previewViewModel.MultiaxisChart.Title = viewModel.HeaderTitle;
-
-                    }
-                    break;
-                case "combo":
-                    {
-                        var request = viewModel.MapTo<GetComboChartDataRequest>();
-                        viewModel.ComboChart.MapPropertiesToInstance<GetComboChartDataRequest>(request);
-                        var chartData = _artifactServie.GetComboChartData(request);
-                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                        {
-                            TimePeriodes = chartData.TimePeriodes,
-                            Type = "Overall",
-                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
-                        });
-                        previewViewModel.PeriodeType = viewModel.PeriodeType;
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.ComboChart = new ComboChartDataViewModel();
-                        chartData.MapPropertiesToInstance<ComboChartDataViewModel>(previewViewModel.ComboChart);
-                        previewViewModel.ComboChart.Title = viewModel.HeaderTitle;
-
-                    }
-                    break;
-                case "pie":
-                    {
-                        var request = viewModel.MapTo<GetPieDataRequest>();
-                        viewModel.Pie.MapPropertiesToInstance<GetPieDataRequest>(request);
-                        var pieData = _artifactServie.GetPieData(request);
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.Pie = pieData.MapTo<PieDataViewModel>();
-                        previewViewModel.Pie.Is3D = request.Is3D;
-                        previewViewModel.Pie.ShowLegend = request.ShowLegend;
-                    }
-                    break;
-
-                default:
-                    {
-                        var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
-                        viewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
-                        var chartData = _artifactServie.GetChartData(cartesianRequest);
-                        if (!viewModel.AsNetbackChart)
-                        {
-                            var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
-                            {
-                                TimePeriodes = chartData.TimePeriodes,
-                                Type = "Overall",
-                                PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
-                            });
-                            previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
-                        }
-                        previewViewModel.AsNetbackChart = viewModel.AsNetbackChart;
-                        previewViewModel.PeriodeType = viewModel.PeriodeType;
-                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                        previewViewModel.GraphicType = viewModel.GraphicType;
-                        previewViewModel.BarChart = new BarChartDataViewModel();
-                        previewViewModel.BarChart.Title = viewModel.HeaderTitle;
-                        previewViewModel.BarChart.Subtitle = chartData.Subtitle;
-                        previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
-                        previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
-                        previewViewModel.BarChart.Periodes = chartData.Periodes;
-                        previewViewModel.BarChart.SeriesType = chartData.SeriesType;
-                    }
-                    break;
-            }
+            var previewViewModel = GetPreview(viewModel);
             return Json(previewViewModel);
         }
 
@@ -1346,313 +1142,434 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Name = artifact.HeaderTitle;
             viewModel.ArtifactId = artifact.Id;
 
-            var currentYear = DateTime.Now.Date.Year;
-            var currentMonth = DateTime.Now.Month;
-            var currentDay = DateTime.Now.Day;
-            switch (artifact.RangeFilter)
-            {
-
-                case RangeFilter.MTD:
-                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, 1));
-                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, currentDay));
-                    break;
-                case RangeFilter.YTD:
-                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, 1, 1));
-                    viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, 1));
-                    break;
-                case RangeFilter.CurrentDay:
-                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, currentDay));
-                    viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, currentDay));
-                    break;
-                case RangeFilter.CurrentMonth:
-                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, 1));
-                    viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, currentMonth, 1));
-                    break;
-                case RangeFilter.CurrentYear:
-                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, 1, 1));
-                    viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, new DateTime(currentYear, 12, 1));
-                    break;
-                default:
-                    viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, artifact.Start);
-                    viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, artifact.End);
-                    break;
-            }
+            GetStartAndEnd(artifact.PeriodeType, artifact.RangeFilter, viewModel);
 
             return PartialView("_ExportSetting", viewModel);
         }
 
-        public ActionResult ExportSettingPreview()
+        [HttpPost]
+        public ActionResult ExportSettingPreview(ArtifactDesignerViewModel designerViewModel)
         {
-            return Content("as");
+            var previewViewModel = GetPreview(designerViewModel);
+            var kpis = new List<SelectListItem>();
+            switch (previewViewModel.GraphicType.ToLowerInvariant())
+            {
+                case "tank":
+                    {
+                        var daysToTankTop = _kpiService.GetKpi(new GetKpiRequest { Id = designerViewModel.Tank.DaysToTankTopId });
+                        var volumeInventory = _kpiService.GetKpi(new GetKpiRequest { Id = designerViewModel.Tank.VolumeInventoryId });
+                        kpis.Add(new SelectListItem
+                        {
+                            Value =
+                                string.Format(@"{0}|{1}|{2}|{3}", designerViewModel.Tank.DaysToTankTopId.ToString(), ValueAxis.KpiActual, designerViewModel.Tank.DaysToTankTopTitle, "days"),
+                            Text = string.IsNullOrEmpty(designerViewModel.Tank.DaysToTankTopTitle) ? designerViewModel.Tank.DaysToTankTopTitle : daysToTankTop.Name
+                        });
+
+                        kpis.Add(new SelectListItem
+                        {
+                            Value =
+                                string.Format(@"{0}|{1}|{2}|{3}", designerViewModel.Tank.VolumeInventoryId.ToString(), ValueAxis.KpiActual, volumeInventory.Name, "volume"),
+                            Text = volumeInventory.Name
+                        });
+                        break;
+
+                    }
+
+                case "pie":
+                    {
+                        foreach (var serie in designerViewModel.Pie.Series)
+                        {
+
+                            kpis.Add(new SelectListItem
+                            {
+                                Value =
+                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), designerViewModel.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? designerViewModel.ValueAxis : designerViewModel.ValueAxis, serie.Label, designerViewModel.GraphicType),
+                                Text = serie.Label
+                            });
+
+                        }
+                        break;
+                    }
+                case "line":
+                    foreach (var serie in designerViewModel.LineChart.Series)
+                    {
+                        kpis.Add(new SelectListItem
+                        {
+                            Value =
+                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), designerViewModel.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : designerViewModel.ValueAxis, serie.Label, designerViewModel.GraphicType),
+                            Text = serie.Label
+                        });
+                    }
+                    break;
+                case "multiaxis":
+                    foreach (var chart in designerViewModel.MultiaxisChart.Charts)
+                    {
+                        foreach (var kpi in GetKpisAsSelectListItem(chart))
+                        {
+                            kpis.Add(new SelectListItem { Value = kpi.Value, Text = kpi.Text });
+                        }
+                    }
+                    break;
+                case "combo":
+                    foreach (var chart in designerViewModel.ComboChart.Charts)
+                    {
+                        foreach (var kpi in GetKpisAsSelectListItem(chart))
+                        {
+                            kpis.Add(new SelectListItem { Value = kpi.Value, Text = kpi.Text });
+                        }
+                    }
+                    break;
+                case "area":
+                    foreach (var serie in designerViewModel.AreaChart.Series)
+                    {
+                        if (serie.Stacks.Count > 0)
+                        {
+                            foreach (var stack in serie.Stacks)
+                            {
+                                kpis.Add(new SelectListItem
+                                {
+                                    Value = string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), designerViewModel.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : designerViewModel.ValueAxis, stack.Label, designerViewModel.GraphicType),
+                                    Text = stack.Label
+                                });
+                            }
+                        }
+                        else
+                        {
+                            kpis.Add(new SelectListItem
+                            {
+                                Value =
+                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), designerViewModel.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : designerViewModel.ValueAxis, serie.Label, designerViewModel.GraphicType),
+                                Text = serie.Label
+                            });
+                        }
+                    }
+                    break;
+                case "bar":
+                case "baraccumulative":
+                case "barachievement":
+                case "barhorizontal":
+                    foreach (var serie in designerViewModel.BarChart.Series)
+                    {
+                        if (serie.Stacks.Count > 0)
+                        {
+                            foreach (var stack in serie.Stacks)
+                            {
+                                kpis.Add(new SelectListItem
+                                {
+                                    Value = string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), designerViewModel.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : designerViewModel.ValueAxis, stack.Label, designerViewModel.GraphicType),
+                                    Text = stack.Label
+                                });
+                            }
+                        }
+                        else
+                        {
+                            kpis.Add(new SelectListItem
+                            {
+                                Value =
+                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), designerViewModel.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : designerViewModel.ValueAxis, serie.Label, designerViewModel.GraphicType),
+                                Text = serie.Label
+                            });
+                        }
+                    }
+                    break;
+            }
+            var viewModel = new ExportSettingViewModel();
+            viewModel.Kpis = kpis;
+            viewModel.PeriodeType = designerViewModel.PeriodeType.ToString();
+            viewModel.RangeFilter = designerViewModel.RangeFilter.ToString();
+            viewModel.GraphicType = designerViewModel.GraphicType;
+            viewModel.AsNetBackChart = designerViewModel.AsNetbackChart;
+            viewModel.Name = string.IsNullOrEmpty(designerViewModel.HeaderTitle) ? "Simulated Data Extraction" : designerViewModel.HeaderTitle;
+            viewModel.ArtifactId = designerViewModel.Id;
+
+
+            var rangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), designerViewModel.RangeFilter);
+            var periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), designerViewModel.PeriodeType);
+
+            viewModel.StartInDisplay = designerViewModel.StartInDisplay;
+            viewModel.EndInDisplay = designerViewModel.EndInDisplay;
+
+            GetStartAndEnd(periodeType, rangeFilter, viewModel);
+
+            return PartialView("_ExportSettingPreview", viewModel);
         }
 
         [HttpPost]
         public ActionResult ExportSetting(ExportSettingViewModel viewModel)
         {
-            viewModel.KpiIds = viewModel.KpiIds.Select(x => x).Where(x => x != "*").ToArray();
-
-            var labelDictionaries = new Dictionary<string, List<string>>();
-            if (viewModel.KpiIds != null)
+            try
             {
-                foreach (var item in viewModel.KpiIds)
+                viewModel.KpiIds = viewModel.KpiIds.Select(x => x).Where(x => x != "*").ToArray();
+
+                var labelDictionaries = new Dictionary<string, List<string>>();
+                if (viewModel.KpiIds != null)
                 {
-                    var split = item.Split('|');
-                    if (split.Length > 2)
+                    foreach (var item in viewModel.KpiIds)
                     {
-                        var kpiIndex = split[0] + "|" + split[1];
-                        if (!labelDictionaries.Keys.Contains(kpiIndex))
+                        var split = item.Split('|');
+                        if (split.Length > 2)
                         {
-                            labelDictionaries.Add(kpiIndex, new List<string> { split[0], split[1], split[2], split[3] });
-                        }
-                        else
-                        {
-                            labelDictionaries[kpiIndex] = new List<string> { split[0], split[1], split[2], split[3] };
-                        }
-                    }
-                }
-            }
-
-            var periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType);
-            var rangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), viewModel.RangeFilter);
-
-            IList<DateTime> dateTimePeriodes = new List<DateTime>();
-            string timeInformation;
-
-            IList<ExportSettingData> exportData = new List<ExportSettingData>();
-            switch (viewModel.GraphicType.ToLowerInvariant())
-            {
-                case "tabular":
-                    var artifact = _artifactServie.GetArtifact(new GetArtifactRequest { Id = viewModel.ArtifactId });
-                    var request = new GetTabularDataRequest();
-                    request.Actual = artifact.Actual;
-                    request.Target = artifact.Target;
-                    request.Rows = artifact.Rows.Select(x => new GetTabularDataRequest.RowRequest { KpiId = x.KpiId, End = x.End, KpiName = x.KpiName, PeriodeType = x.PeriodeType, RangeFilter = x.RangeFilter, Start = x.Start }).ToList();
-                    var data = _artifactServie.GetTabularData(request);
-                    return ExportTabular(data, viewModel.Name, viewModel.FileName);
-                    break;
-                case "pie":
-                    exportData = _artifactServie.GetExportExcelPieData(labelDictionaries, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
-                    break;
-                case "tank":
-                    exportData = _artifactServie.GetExportExcelTankData(labelDictionaries, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
-                    break;
-                default:
-                    _artifactServie.GetPeriodes(periodeType, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, out dateTimePeriodes, out timeInformation);
-                    exportData = _artifactServie.GetExportExcelData(labelDictionaries, viewModel.StartAfterParsed, viewModel.EndAfterParsed, viewModel.PeriodeType);
-                    break;
-            }
-
-            var exportKpis = ModifyKpis(viewModel.KpiIds);
-            IDictionary<DateTime, IDictionary<string, ExportSettingData>> dataDictionary = new Dictionary<DateTime, IDictionary<string, ExportSettingData>>();
-            IList<DateTime> existedPeriodes = new List<DateTime>();
-            dateTimePeriodes = FilterPeriodes(dateTimePeriodes, viewModel.EndAfterParsed);
-            foreach (var periode in dateTimePeriodes)
-            {
-                var data = new Dictionary<string, ExportSettingData>();
-                foreach (var exportKpi in exportKpis)
-                {
-                    if (exportKpi.KpiName == "Previous Accumulation")
-                    {
-                        var previousIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
-                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
-                        item.Value = existedPeriodes.Count == 0 ? 0 : exportData.Where(x => existedPeriodes.Contains(x.Periode) && x.KpiId == exportKpi.KpiReferenceId && x.ValueAxes == exportKpi.ValueAxes).Sum(x => x.Value.Value);
-                        data.Add(previousIndex, item);
-                    }
-                    else if (exportKpi.KpiName == "Total")
-                    {
-                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
-                        var previousIndex = string.Format(@"{0}|{1}", (_prevIndex - exportKpi.KpiReferenceId).ToString(), exportKpi.ValueAxes);
-                        var totalIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
-                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
-                        if (data[previousIndex].Value.HasValue && data[currentIndex].Value.HasValue)
-                        {
-                            item.Value = (data[previousIndex].Value) + (data[currentIndex].Value);
-                        }
-
-                        data.Add(totalIndex, item);
-                    }
-                    else if (exportKpi.KpiName == "Remain")
-                    {
-                        var target = _kpiTargetService.GetKpiTarget(exportKpi.KpiReferenceId, periode, periodeType);
-                        var remainIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
-                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
-                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
-                        item.Value = 0;
-                        if (target.Value.HasValue && data[currentIndex].Value.HasValue)
-                        {
-                            if ((target.Value.Value) - (data[currentIndex].Value) > 0)
+                            var kpiIndex = split[0] + "|" + split[1];
+                            if (!labelDictionaries.Keys.Contains(kpiIndex))
                             {
-                                item.Value = (target.Value.Value) - (data[currentIndex].Value);
-                            }
-                        }
-                        data.Add(remainIndex, item);
-                    }
-                    else if (exportKpi.KpiName == "Exceed")
-                    {
-                        var target = _kpiTargetService.GetKpiTarget(exportKpi.KpiReferenceId, periode, periodeType);
-                        var exceedIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
-                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
-                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
-                        item.Value = 0;
-                        if (target.Value.HasValue && data[currentIndex].Value.HasValue)
-                        {
-                            if ((target.Value.Value) - (data[currentIndex].Value) < 0)
-                            {
-                                item.Value = -((target.Value.Value) - (data[currentIndex].Value));
-                            }
-                        }
-                        data.Add(exceedIndex, item);
-                    }
-                    else if (exportKpi.KpiName == "Percentage")
-                    {
-                        var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
-                        var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
-                        item.Value = 0;
-                        if (data[currentIndex].Value.HasValue)
-                        {
-                            item.Value = (data[currentIndex].Value / exportData.Select(x => x.Value).Sum()) * 100;
-                        }
-                    }
-                    else
-                    {
-                        if (!viewModel.AsNetBackChart)
-                        {
-                            var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
-                            var val = exportData.Where(x => x.Periode == periode && x.KpiId == exportKpi.KpiId && x.ValueAxes == exportKpi.ValueAxes).FirstOrDefault();
-                            if (val == null)
-                            {
-                                var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
-                                data.Add(currentIndex, item);
+                                labelDictionaries.Add(kpiIndex, new List<string> { split[0], split[1], split[2], split[3] });
                             }
                             else
                             {
-                                data.Add(currentIndex, val);
+                                labelDictionaries[kpiIndex] = new List<string> { split[0], split[1], split[2], split[3] };
+                            }
+                        }
+                    }
+                }
+
+                var periodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType);
+                var rangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), viewModel.RangeFilter);
+
+                IList<DateTime> dateTimePeriodes = new List<DateTime>();
+                string timeInformation;
+
+                IList<ExportSettingData> exportData = new List<ExportSettingData>();
+                switch (viewModel.GraphicType.ToLowerInvariant())
+                {
+                    case "tabular":
+                        var artifact = _artifactServie.GetArtifact(new GetArtifactRequest { Id = viewModel.ArtifactId });
+                        var request = new GetTabularDataRequest();
+                        request.Actual = artifact.Actual;
+                        request.Target = artifact.Target;
+                        request.Rows = artifact.Rows.Select(x => new GetTabularDataRequest.RowRequest { KpiId = x.KpiId, End = x.End, KpiName = x.KpiName, PeriodeType = x.PeriodeType, RangeFilter = x.RangeFilter, Start = x.Start }).ToList();
+                        var data = _artifactServie.GetTabularData(request);
+                        return ExportTabular(data, viewModel.Name, viewModel.FileName);
+                    case "pie":
+                        exportData = _artifactServie.GetExportExcelPieData(labelDictionaries, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
+                        break;
+                    case "tank":
+                        exportData = _artifactServie.GetExportExcelTankData(labelDictionaries, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, periodeType, ArtifactValueInformation.AsOf, out dateTimePeriodes, out timeInformation);
+                        break;
+                    default:
+                        _artifactServie.GetPeriodes(periodeType, rangeFilter, viewModel.StartAfterParsed, viewModel.EndAfterParsed, out dateTimePeriodes, out timeInformation);
+                        exportData = _artifactServie.GetExportExcelData(labelDictionaries, viewModel.StartAfterParsed, viewModel.EndAfterParsed, viewModel.PeriodeType);
+                        break;
+                }
+
+                var exportKpis = ModifyKpis(viewModel.KpiIds);
+                IDictionary<DateTime, IDictionary<string, ExportSettingData>> dataDictionary = new Dictionary<DateTime, IDictionary<string, ExportSettingData>>();
+                IList<DateTime> existedPeriodes = new List<DateTime>();
+                dateTimePeriodes = FilterPeriodes(dateTimePeriodes, viewModel.EndAfterParsed);
+                foreach (var periode in dateTimePeriodes)
+                {
+                    var data = new Dictionary<string, ExportSettingData>();
+                    foreach (var exportKpi in exportKpis)
+                    {
+                        if (exportKpi.KpiName == "Previous Accumulation")
+                        {
+                            var previousIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                            item.Value = existedPeriodes.Count == 0 ? 0 : exportData.Where(x => existedPeriodes.Contains(x.Periode) && x.KpiId == exportKpi.KpiReferenceId && x.ValueAxes == exportKpi.ValueAxes).Sum(x => x.Value.Value);
+                            data.Add(previousIndex, item);
+                        }
+                        else if (exportKpi.KpiName == "Total")
+                        {
+                            var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
+                            var previousIndex = string.Format(@"{0}|{1}", (_prevIndex - exportKpi.KpiReferenceId).ToString(), exportKpi.ValueAxes);
+                            var totalIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                            if (data[previousIndex].Value.HasValue && data[currentIndex].Value.HasValue)
+                            {
+                                item.Value = (data[previousIndex].Value) + (data[currentIndex].Value);
+                            }
+
+                            data.Add(totalIndex, item);
+                        }
+                        else if (exportKpi.KpiName == "Remain")
+                        {
+                            var target = _kpiTargetService.GetKpiTarget(exportKpi.KpiReferenceId, periode, periodeType);
+                            var remainIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                            var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
+                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                            item.Value = 0;
+                            if (target.Value.HasValue && data[currentIndex].Value.HasValue)
+                            {
+                                if ((target.Value.Value) - (data[currentIndex].Value) > 0)
+                                {
+                                    item.Value = (target.Value.Value) - (data[currentIndex].Value);
+                                }
+                            }
+                            data.Add(remainIndex, item);
+                        }
+                        else if (exportKpi.KpiName == "Exceed")
+                        {
+                            var target = _kpiTargetService.GetKpiTarget(exportKpi.KpiReferenceId, periode, periodeType);
+                            var exceedIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                            var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
+                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                            item.Value = 0;
+                            if (target.Value.HasValue && data[currentIndex].Value.HasValue)
+                            {
+                                if ((target.Value.Value) - (data[currentIndex].Value) < 0)
+                                {
+                                    item.Value = -((target.Value.Value) - (data[currentIndex].Value));
+                                }
+                            }
+                            data.Add(exceedIndex, item);
+                        }
+                        else if (exportKpi.KpiName == "Percentage")
+                        {
+                            var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiReferenceId.ToString(), exportKpi.ValueAxes);
+                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiReferenceId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                            item.Value = 0;
+                            if (data[currentIndex].Value.HasValue)
+                            {
+                                item.Value = (data[currentIndex].Value / exportData.Select(x => x.Value).Sum()) * 100;
                             }
                         }
                         else
                         {
-                            var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
-                            var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
-                            item.Value = exportData.Where(x => x.KpiId == exportKpi.KpiId && x.ValueAxes == exportKpi.ValueAxes).Average(x => x.Value);
-                            data.Add(currentIndex, item);
+                            if (!viewModel.AsNetBackChart)
+                            {
+                                var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                                var val = exportData.Where(x => x.Periode == periode && x.KpiId == exportKpi.KpiId && x.ValueAxes == exportKpi.ValueAxes).FirstOrDefault();
+                                if (val == null)
+                                {
+                                    var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                                    data.Add(currentIndex, item);
+                                }
+                                else
+                                {
+                                    data.Add(currentIndex, val);
+                                }
+                            }
+                            else
+                            {
+                                var currentIndex = string.Format(@"{0}|{1}", exportKpi.KpiId.ToString(), exportKpi.ValueAxes);
+                                var item = new ExportSettingData { KpiId = exportKpi.KpiId, KpiName = exportKpi.KpiName, KpiReferenceId = exportKpi.KpiId, MeasurementName = exportKpi.MeasurementName, Periode = periode, ValueAxes = exportKpi.ValueAxes };
+                                item.Value = exportData.Where(x => x.KpiId == exportKpi.KpiId && x.ValueAxes == exportKpi.ValueAxes).Average(x => x.Value);
+                                data.Add(currentIndex, item);
+                            }
                         }
                     }
+                    dataDictionary.Add(periode, data);
+                    existedPeriodes.Add(periode);
                 }
-                dataDictionary.Add(periode, data);
-                existedPeriodes.Add(periode);
-            }
-            string newDateTimeInformation = string.Empty;
-            if (viewModel.AsNetBackChart)
-            {
-                var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MinValue : dateTimePeriodes[0];
-                var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MaxValue : dateTimePeriodes[dateTimePeriodes.Count - 1];
-                switch (periodeType)
+                string newDateTimeInformation = string.Empty;
+                if (viewModel.AsNetBackChart)
                 {
-                    case PeriodeType.Hourly:
-                        newDateTimeInformation = start.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
-                        break;
-                    case PeriodeType.Daily:
-                        newDateTimeInformation = start.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd MMM yy", CultureInfo.InvariantCulture);
-                        break;
-                    case PeriodeType.Monthly:
-                        newDateTimeInformation = start.ToString("MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("MMM yy", CultureInfo.InvariantCulture);
-                        break;
-                    case PeriodeType.Yearly:
-                        newDateTimeInformation = start.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
-                        break;
+                    var start = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MinValue : dateTimePeriodes[0];
+                    var end = rangeFilter == RangeFilter.AllExistingYears ? DateTime.MaxValue : dateTimePeriodes[dateTimePeriodes.Count - 1];
+                    switch (periodeType)
+                    {
+                        case PeriodeType.Hourly:
+                            newDateTimeInformation = start.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Hourly, CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Daily:
+                            newDateTimeInformation = start.ToString("dd MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("dd MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Monthly:
+                            newDateTimeInformation = start.ToString("MMM yy", CultureInfo.InvariantCulture) + " - " + end.ToString("MMM yy", CultureInfo.InvariantCulture);
+                            break;
+                        case PeriodeType.Yearly:
+                            newDateTimeInformation = start.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture) + " - " + end.ToString(DateFormat.Yearly, CultureInfo.InvariantCulture);
+                            break;
+                    }
                 }
-            }
 
-            if (viewModel.GraphicType.ToLowerInvariant() == "pie")
-            {
-                newDateTimeInformation = string.IsNullOrEmpty(timeInformation) ? timeInformation : string.Empty;
-            }
-
-            ExcelPackage pck = new ExcelPackage();
-            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
-
-            ws.Cells["A3"].Value = "Extracted Date";
-            ws.Cells["B3"].Value = ": " + string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
-            ws.Cells["C3"].Value = "By: " + UserProfile().Name;
-
-            ws.Cells["A4"].Value = "Dashboard Name";
-            ws.Cells["B4"].Value = ": " + viewModel.Name;
-
-
-            ws.Cells["A6:A7"].Value = "Periode";
-            ws.Cells["A6:A7"].Merge = true;
-            ws.Cells["A6:A7"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            ws.Cells["A6:A7"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Cells["A6:A7"].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-            ws.Cells["A6:A7"].Style.Font.Bold = true;
-
-            int kpiRowStart = 8;
-            int kpiColStart = 2;
-            IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
-
-            foreach (var dictionary in dataDictionary)
-            {
-                foreach (var kpi in dictionary.Value)
+                if (viewModel.GraphicType.ToLowerInvariant() == "pie")
                 {
-                    ws.Cells[6, kpiColStart].Value = kpi.Value.KpiId > 0 ?
-                        string.Format("{0}, {1} ({2})", kpi.Value.KpiId, kpi.Value.KpiName, kpi.Value.MeasurementName) :
-                        string.Format("{0} ({1})", kpi.Value.KpiName, kpi.Value.MeasurementName);
-                    ws.Cells[6, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                    ws.Cells[6, kpiColStart].Style.Font.Bold = true;
-                    ws.Cells[6, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    ws.Cells[7, kpiColStart].Value = kpi.Value.KpiId > 0 ?
-                        labelDictionaries.Single(x => x.Key == kpi.Value.KpiId + "|" + kpi.Value.ValueAxes).Value[2] : string.Empty;
-                    ws.Cells[7, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                    ws.Cells[7, kpiColStart].Style.Font.Bold = true;
-                    ws.Cells[7, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    kpiColStart++;
+                    newDateTimeInformation = string.IsNullOrEmpty(timeInformation) ? timeInformation : string.Empty;
+                }
+
+                ExcelPackage pck = new ExcelPackage();
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+                ws.Cells["A1"].Value = "Extracted Date";
+                ws.Cells["B1"].Value = ": " + string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
+                ws.Cells["C1"].Value = "By: " + UserProfile().Name;
+
+                ws.Cells["A2"].Value = "Dashboard Name";
+                ws.Cells["B2"].Value = ": " + viewModel.Name;
+
+
+                ws.Cells["A4:A5"].Value = "Periode";
+                ws.Cells["A4:A5"].Merge = true;
+                ws.Cells["A4:A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells["A4:A5"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                ws.Cells["A4:A5"].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                ws.Cells["A4:A5"].Style.Font.Bold = true;
+
+                int kpiRowStart = 6;
+                int kpiColStart = 2;
+                IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
+
+                foreach (var dictionary in dataDictionary)
+                {
+                    foreach (var kpi in dictionary.Value)
+                    {
+                        ws.Cells[4, kpiColStart].Value = kpi.Value.KpiId > 0 ?
+                            string.Format("{0}, {1} ({2})", kpi.Value.KpiId, kpi.Value.KpiName, kpi.Value.MeasurementName) :
+                            string.Format("{0} ({1})", kpi.Value.KpiName, kpi.Value.MeasurementName);
+                        ws.Cells[4, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        ws.Cells[4, kpiColStart].Style.Font.Bold = true;
+                        ws.Cells[4, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        ws.Cells[5, kpiColStart].Value = kpi.Value.KpiId > 0 ?
+                            labelDictionaries.Single(x => x.Key == kpi.Value.KpiId + "|" + kpi.Value.ValueAxes).Value[2] : string.Empty;
+                        ws.Cells[5, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        ws.Cells[5, kpiColStart].Style.Font.Bold = true;
+                        ws.Cells[5, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        kpiColStart++;
+
+                    }
+                    break;
 
                 }
-                break;
 
-            }
-
-            kpiColStart = 1;
-            foreach (var dictionary in dataDictionary)
-            {
-                ws.Cells[kpiRowStart, kpiColStart].Value = string.IsNullOrEmpty(newDateTimeInformation) ? FormatDate(dictionary.Key, viewModel.PeriodeType) : newDateTimeInformation;
-                ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                foreach (var val in dictionary.Value)
+                kpiColStart = 1;
+                foreach (var dictionary in dataDictionary)
                 {
-                    kpiColStart++;
-                    ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
-                    ws.Cells[kpiRowStart, kpiColStart].Value = val.Value.Value;
+                    ws.Cells[kpiRowStart, kpiColStart].Value = string.IsNullOrEmpty(newDateTimeInformation) ? FormatDate(dictionary.Key, viewModel.PeriodeType) : newDateTimeInformation;
                     ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    foreach (var val in dictionary.Value)
+                    {
+                        kpiColStart++;
+                        ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
+                        ws.Cells[kpiRowStart, kpiColStart].Value = val.Value.Value;
+                        ws.Cells[kpiRowStart, kpiColStart].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        ws.Cells[kpiRowStart, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    }
+                    kpiRowStart++;
+                    kpiColStart = 1;
+                    if (viewModel.AsNetBackChart) break;
+
                 }
-                kpiRowStart++;
-                kpiColStart = 1;
-                if (viewModel.AsNetBackChart) break;
+
+                ws.Cells["A:AZ"].AutoFitColumns();
+
+                Response.Clear();
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment; filename=" + viewModel.FileName + ".xls");
+                Response.BinaryWrite(pck.GetAsByteArray());
+                var result = new BaseResponse { IsSuccess = true };
+                return Json(result, JsonRequestBehavior.AllowGet);
 
             }
-
-            ws.Cells["A:AZ"].AutoFitColumns();
-
-            Response.Clear();
-            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("content-disposition", "attachment; filename=" + viewModel.FileName + ".xls");
-            Response.BinaryWrite(pck.GetAsByteArray());
-            Response.End();
-
-
-            var result = new BaseResponse { IsSuccess = true };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            catch (Exception ex)
+            {
+                var result = new BaseResponse { IsSuccess = false, Message = ex.Message };
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                Response.End();
+            }
         }
 
         private IList<DateTime> FilterPeriodes(IList<DateTime> dateTimePeriodes, DateTime? endAfterParsed)
         {
-            if(!endAfterParsed.HasValue)
+            if (!endAfterParsed.HasValue)
             {
                 return dateTimePeriodes;
             }
 
-            return dateTimePeriodes.Where(x => x <= endAfterParsed).ToList();            
+            return dateTimePeriodes.Where(x => x <= endAfterParsed).ToList();
         }
 
         private ActionResult ExportTabular(GetTabularDataResponse data, string graphicName, string fileName)
@@ -1669,11 +1586,11 @@ namespace DSLNG.PEAR.Web.Controllers
 
             ws.Cells["A3"].Value = "Date";
             ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
-            
+
             int kpiRowStart = 8;
             int kpiColStart = 2;
             IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
-            
+
 
             var labels = new List<string>();
             labels.Add("KPI Name");
@@ -1693,7 +1610,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 labels.Add("Remark");
             }
             var headerIndex = 1;
-            foreach(var label in labels)
+            foreach (var label in labels)
             {
                 ws.Cells[6, headerIndex].Value = label;
                 ws.Cells[6, headerIndex].Style.Border.BorderAround(ExcelBorderStyle.Thin);
@@ -1999,6 +1916,173 @@ namespace DSLNG.PEAR.Web.Controllers
             return kpis;
         }
 
+        private IList<SelectListItem> GetKpisAsSelectListItem(MultiaxisChartViewModel.ChartViewModel chart)
+        {
+            var kpis = new List<SelectListItem>();
+            switch (chart.GraphicType.ToLowerInvariant())
+            {
+                case "bar":
+                case "barachievement":
+                    {
+                        foreach (var serie in chart.BarChart.Series)
+                        {
+                            if (serie.Stacks.Count > 0)
+                            {
+                                foreach (var stack in serie.Stacks)
+                                {
+                                    kpis.Add(new SelectListItem
+                                    {
+                                        Value = string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, stack.Label, chart.GraphicType),
+                                        Text = stack.Label
+                                    });
+                                }
+                            }
+                            else
+                            {
+                                kpis.Add(new SelectListItem
+                                {
+                                    Value =
+                                    string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, serie.Label, chart.GraphicType),
+                                    Text = serie.Label
+                                });
+                            }
+                        }
+
+                        return kpis;
+                    }
+                case "line":
+                    {
+                        foreach (var serie in chart.LineChart.Series)
+                        {
+
+                            kpis.Add(new SelectListItem
+                            {
+                                Value =
+                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, serie.Label, chart.GraphicType),
+                                Text = serie.Label
+                            });
+
+                        }
+
+                        return kpis;
+                    }
+                case "area":
+                    {
+                        foreach (var serie in chart.AreaChart.Series)
+                        {
+                            if (serie.Stacks.Count > 0)
+                            {
+                                foreach (var stack in serie.Stacks)
+                                {
+                                    kpis.Add(new SelectListItem
+                                    {
+                                        Value = string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, stack.Label, chart.GraphicType),
+                                        Text = stack.Label
+                                    });
+                                }
+                            }
+                            else
+                            {
+                                kpis.Add(new SelectListItem
+                                {
+                                    Value =
+                                    string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, serie.Label, chart.GraphicType),
+                                    Text = serie.Label
+                                });
+                            }
+                        }
+
+                        return kpis;
+                    }
+            }
+
+            return new List<SelectListItem>();
+        }
+
+        private IList<SelectListItem> GetKpisAsSelectListItem(ComboChartViewModel.ChartViewModel chart)
+        {
+            var kpis = new List<SelectListItem>();
+            switch (chart.GraphicType.ToLowerInvariant())
+            {
+                case "bar":
+                case "barachievement":
+                    {
+                        foreach (var serie in chart.BarChart.Series)
+                        {
+                            if (serie.Stacks.Count > 0)
+                            {
+                                foreach (var stack in serie.Stacks)
+                                {
+                                    kpis.Add(new SelectListItem
+                                    {
+                                        Value = string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, stack.Label, chart.GraphicType),
+                                        Text = stack.Label
+                                    });
+                                }
+                            }
+                            else
+                            {
+                                kpis.Add(new SelectListItem
+                                {
+                                    Value =
+                                    string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, serie.Label, chart.GraphicType),
+                                    Text = serie.Label
+                                });
+                            }
+                        }
+
+                        return kpis;
+                    }
+                case "line":
+                    {
+                        foreach (var serie in chart.LineChart.Series)
+                        {
+
+                            kpis.Add(new SelectListItem
+                            {
+                                Value =
+                                string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, serie.Label, chart.GraphicType),
+                                Text = serie.Label
+                            });
+
+                        }
+
+                        return kpis;
+                    }
+                case "area":
+                    {
+                        foreach (var serie in chart.AreaChart.Series)
+                        {
+                            if (serie.Stacks.Count > 0)
+                            {
+                                foreach (var stack in serie.Stacks)
+                                {
+                                    kpis.Add(new SelectListItem
+                                    {
+                                        Value = string.Format(@"{0}|{1}|{2}|{3}", stack.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, stack.Label, chart.GraphicType),
+                                        Text = stack.Label
+                                    });
+                                }
+                            }
+                            else
+                            {
+                                kpis.Add(new SelectListItem
+                                {
+                                    Value =
+                                    string.Format(@"{0}|{1}|{2}|{3}", serie.KpiId.ToString(), chart.ValueAxis.ToLowerInvariant() == ValueAxis.Custom.ToString().ToLowerInvariant() ? serie.ValueAxis : chart.ValueAxis, serie.Label, chart.GraphicType),
+                                    Text = serie.Label
+                                });
+                            }
+                        }
+
+                        return kpis;
+                    }
+            }
+
+            return new List<SelectListItem>();
+        }
+
+
         private string ParseDateToString(PeriodeType periodeType, DateTime? date)
         {
             switch (periodeType)
@@ -2184,6 +2268,319 @@ namespace DSLNG.PEAR.Web.Controllers
                     break;
             }
             return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        private ArtifactPreviewViewModel GetPreview(ArtifactDesignerViewModel viewModel)
+        {
+
+            var previewViewModel = new ArtifactPreviewViewModel();
+            previewViewModel.FractionScale = viewModel.FractionScale;
+            previewViewModel.MaxFractionScale = viewModel.MaxFractionScale;
+            switch (viewModel.GraphicType)
+            {
+                case "line":
+                    {
+                        var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
+                        viewModel.LineChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
+                        var chartData = _artifactServie.GetChartData(cartesianRequest);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.LineChart = new LineChartDataViewModel();
+                        previewViewModel.LineChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.LineChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.LineChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                        previewViewModel.LineChart.Series = chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.LineChart.Periodes = chartData.Periodes;
+                    }
+                    break;
+                case "area":
+                    {
+                        var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
+                        viewModel.AreaChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
+                        var chartData = _artifactServie.GetChartData(cartesianRequest);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.AreaChart = new AreaChartDataViewModel();
+                        previewViewModel.AreaChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.AreaChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.AreaChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                        previewViewModel.AreaChart.Series = chartData.Series.MapTo<AreaChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.AreaChart.Periodes = chartData.Periodes;
+                        previewViewModel.AreaChart.SeriesType = chartData.SeriesType;
+                    }
+                    break;
+                case "speedometer":
+                    {
+                        var request = viewModel.MapTo<GetSpeedometerChartDataRequest>();
+                        viewModel.SpeedometerChart.MapPropertiesToInstance<GetSpeedometerChartDataRequest>(request);
+                        var chartData = _artifactServie.GetSpeedometerChartData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.SpeedometerChart = new SpeedometerChartDataViewModel();
+                        previewViewModel.SpeedometerChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.SpeedometerChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.SpeedometerChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                        previewViewModel.SpeedometerChart.Series = chartData.Series.MapTo<SpeedometerChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.SpeedometerChart.PlotBands = chartData.PlotBands.MapTo<SpeedometerChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "trafficlight":
+                    {
+                        var request = viewModel.MapTo<GetTrafficLightChartDataRequest>();
+                        viewModel.TrafficLightChart.MapPropertiesToInstance<GetTrafficLightChartDataRequest>(request);
+                        var chartData = _artifactServie.GetTrafficLightChartData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.TrafficLightChart = new TrafficLightChartDataViewModel();
+                        previewViewModel.TrafficLightChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.TrafficLightChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.TrafficLightChart.ValueAxisTitle =
+                            _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId })
+                                               .Name;
+                        previewViewModel.TrafficLightChart.Series =
+                            chartData.Series.MapTo<TrafficLightChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.TrafficLightChart.PlotBands =
+                            chartData.PlotBands.MapTo<TrafficLightChartDataViewModel.PlotBandViewModel>();
+                    }
+                    break;
+                case "tabular":
+                    {
+                        var request = viewModel.MapTo<GetTabularDataRequest>();
+                        /*request.Rows = new List<GetTabularDataRequest.RowRequest>();
+                        foreach (var rowViewModel in viewModel.Tabular.Rows)
+                        {
+                            request.Rows.Add(new GetTabularDataRequest.RowRequest
+                                {
+                                    End = rowViewModel.EndAfterParsed,
+                                    KpiId = rowViewModel.KpiId,
+                                    PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), rowViewModel.PeriodeType),
+                                    KpiName = rowViewModel.KpiName,
+                                    RangeFilter = (RangeFilter)Enum.Parse(typeof(RangeFilter), rowViewModel.RangeFilter),
+                                    Start = rowViewModel.StartAfterParsed
+                                });
+                        }*/
+
+                        viewModel.Tabular.MapPropertiesToInstance<GetTabularDataRequest>(request);
+
+                        var chartData = _artifactServie.GetTabularData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.Tabular = new TabularDataViewModel();
+                        chartData.MapPropertiesToInstance<TabularDataViewModel>(previewViewModel.Tabular);
+                        previewViewModel.Tabular.Title = viewModel.HeaderTitle;
+                    }
+                    break;
+                case "tank":
+                    {
+                        var request = viewModel.MapTo<GetTankDataRequest>();
+                        //viewModel.Tank.MapPropertiesToInstance<GetTankDataRequest>(request);
+                        var chartData = _artifactServie.GetTankData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.Tank = new TankDataViewModel();
+                        chartData.MapPropertiesToInstance<TankDataViewModel>(previewViewModel.Tank);
+                        previewViewModel.Tank.Title = viewModel.HeaderTitle;
+                        previewViewModel.Tank.Subtitle = chartData.Subtitle;
+                    }
+                    break;
+                case "multiaxis":
+                    {
+                        var request = viewModel.MapTo<GetMultiaxisChartDataRequest>();
+                        viewModel.MultiaxisChart.MapPropertiesToInstance<GetMultiaxisChartDataRequest>(request);
+                        var chartData = _artifactServie.GetMultiaxisChartData(request);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.MultiaxisChart = new MultiaxisChartDataViewModel();
+                        chartData.MapPropertiesToInstance<MultiaxisChartDataViewModel>(previewViewModel.MultiaxisChart);
+                        previewViewModel.MultiaxisChart.Title = viewModel.HeaderTitle;
+
+                    }
+                    break;
+                case "combo":
+                    {
+                        var request = viewModel.MapTo<GetComboChartDataRequest>();
+                        viewModel.ComboChart.MapPropertiesToInstance<GetComboChartDataRequest>(request);
+                        var chartData = _artifactServie.GetComboChartData(request);
+                        var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                        {
+                            TimePeriodes = chartData.TimePeriodes,
+                            Type = "Overall",
+                            PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                        });
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.ComboChart = new ComboChartDataViewModel();
+                        chartData.MapPropertiesToInstance<ComboChartDataViewModel>(previewViewModel.ComboChart);
+                        previewViewModel.ComboChart.Title = viewModel.HeaderTitle;
+
+                    }
+                    break;
+                case "pie":
+                    {
+                        var request = viewModel.MapTo<GetPieDataRequest>();
+                        viewModel.Pie.MapPropertiesToInstance<GetPieDataRequest>(request);
+                        var pieData = _artifactServie.GetPieData(request);
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.Pie = pieData.MapTo<PieDataViewModel>();
+                        previewViewModel.Pie.Is3D = request.Is3D;
+                        previewViewModel.Pie.ShowLegend = request.ShowLegend;
+                    }
+                    break;
+
+                default:
+                    {
+                        var cartesianRequest = viewModel.MapTo<GetCartesianChartDataRequest>();
+                        viewModel.BarChart.MapPropertiesToInstance<GetCartesianChartDataRequest>(cartesianRequest);
+                        var chartData = _artifactServie.GetChartData(cartesianRequest);
+                        if (!viewModel.AsNetbackChart)
+                        {
+                            var reportHighlights = _highlightService.GetReportHighlights(new GetReportHighlightsRequest
+                            {
+                                TimePeriodes = chartData.TimePeriodes,
+                                Type = "Overall",
+                                PeriodeType = (PeriodeType)Enum.Parse(typeof(PeriodeType), viewModel.PeriodeType)
+                            });
+                            previewViewModel.Highlights = reportHighlights.Highlights.MapTo<ArtifactPreviewViewModel.HighlightViewModel>();
+                        }
+                        previewViewModel.AsNetbackChart = viewModel.AsNetbackChart;
+                        previewViewModel.PeriodeType = viewModel.PeriodeType;
+                        previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                        previewViewModel.GraphicType = viewModel.GraphicType;
+                        previewViewModel.BarChart = new BarChartDataViewModel();
+                        previewViewModel.BarChart.Title = viewModel.HeaderTitle;
+                        previewViewModel.BarChart.Subtitle = chartData.Subtitle;
+                        previewViewModel.BarChart.ValueAxisTitle = _measurementService.GetMeasurement(new GetMeasurementRequest { Id = viewModel.MeasurementId }).Name;
+                        previewViewModel.BarChart.Series = chartData.Series.MapTo<BarChartDataViewModel.SeriesViewModel>();
+                        previewViewModel.BarChart.Periodes = chartData.Periodes;
+                        previewViewModel.BarChart.SeriesType = chartData.SeriesType;
+                    }
+                    break;
+            }
+
+            return previewViewModel;
+        }
+
+        private DateTime StartOfWeek()
+        {
+            DateTime dt = DateTime.Now;
+            int diff = dt.DayOfWeek - DayOfWeek.Sunday;
+            if (diff < 0)
+            {
+                diff += 7;
+            }
+            return dt.AddDays(-1 * diff).Date;
+        }
+
+        private void GetStartAndEnd(PeriodeType periodeType, RangeFilter rangeFilter, ExportSettingViewModel viewModel)
+        {
+            var currentYear = DateTime.Now.Date.Year;
+            var currentMonth = DateTime.Now.Month;
+            var currentDay = DateTime.Now.Day;
+            switch (periodeType)
+            {
+                case PeriodeType.Daily:
+                    {
+                        switch (rangeFilter)
+                        {
+                            case RangeFilter.CurrentDay:
+                                {
+                                    var currentDays = DateTime.Now.Date;
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, currentDays);
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, currentDays);
+                                    break;
+                                }
+                            case RangeFilter.CurrentWeek:
+                                {
+                                    var startDay = StartOfWeek();
+                                    var endDay = startDay.AddDays(6);
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, startDay);
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, endDay);
+                                    break;
+                                }
+                            case RangeFilter.CurrentMonth:
+                                {
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)));
+                                    break;
+                                }
+                            case RangeFilter.MTD:
+                                {
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, currentMonth, 1));
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, DateTime.Now);
+                                    break;
+                                }
+                            case RangeFilter.YTD:
+                                {
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, 1, 1));
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, DateTime.Now);
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case PeriodeType.Monthly:
+                    {
+                        switch (rangeFilter)
+                        {
+                            case RangeFilter.CurrentMonth:
+                                {
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, DateTime.Now.Date);
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, DateTime.Now.Date);
+                                }
+                                break;
+                            case RangeFilter.CurrentYear:
+                                {
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, 1, 1));
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, 12, 1));
+                                }
+                                break;
+                            case RangeFilter.YTD:
+                                {
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, 1, 1));
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1));
+                                }
+                                break;
+                        }
+                        break;
+                    }
+
+                case PeriodeType.Yearly:
+                    {
+                        switch (rangeFilter)
+                        {
+                            case RangeFilter.CurrentYear:
+                                {
+                                    viewModel.StartInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, 1, 1));
+                                    viewModel.EndInDisplay = ParseDateToString(periodeType, new DateTime(DateTime.Now.Year, 12, 1));
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+
+            }
         }
     }
 }
