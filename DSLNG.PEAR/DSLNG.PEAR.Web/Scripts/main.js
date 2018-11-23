@@ -6343,7 +6343,6 @@ Number.prototype.format = function (n, x) {
 
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
-        console.log(chart);
         var url = '/Artifact/ExportSetting/' + artifactId;
 
         $('body').append($('<div/>').addClass('modal-loader').css({
@@ -6496,7 +6495,6 @@ Number.prototype.format = function (n, x) {
 
                 setTimeout(function () {
                     var search = searchArtifactConfig(_configs, artifactId);
-                    console.log(_configs); console.log(search);
                     if (search.isExisted == true) {
                         var currentTime = new Date(2018, 9, 28);
                         var currentDay = currentTime.getDate()
@@ -6584,7 +6582,6 @@ Number.prototype.format = function (n, x) {
     }
 
     var getExportChartPreview = function (el) {
-        console.log('sini');
         var artifactHolder = el.closest('.artifact-holder');
         _artifactHolder = artifactHolder;
         _highchartsContainter = el.closest('.highcharts-container');
@@ -6592,7 +6589,6 @@ Number.prototype.format = function (n, x) {
 
         var artifactId = artifactHolder.attr('data-artifact-id');
         var chart = artifactHolder.highcharts();
-        console.log(chart);
         var url = '/Artifact/ExportSettingPreview/';
 
         $('body').append($('<div/>').addClass('modal-loader').css({
@@ -6613,7 +6609,6 @@ Number.prototype.format = function (n, x) {
             data: $('.artifact-form').serialize(),
             method: 'POST',
             success: function (data) {
-                console.log(data);
                 $('.export-setting-content').hide();
                 $('.export-setting-content').html(data);
                 $("form").removeData("validator");

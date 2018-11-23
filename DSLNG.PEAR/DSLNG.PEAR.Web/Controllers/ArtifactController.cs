@@ -1558,7 +1558,7 @@ namespace DSLNG.PEAR.Web.Controllers
             }
             finally
             {
-                Response.End();
+                Response.Flush();
             }
         }
 
