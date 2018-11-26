@@ -1142,6 +1142,9 @@ namespace DSLNG.PEAR.Web.Controllers
             viewModel.Name = artifact.HeaderTitle;
             viewModel.ArtifactId = artifact.Id;
 
+            viewModel.StartInDisplay = ParseDateToString(artifact.PeriodeType, artifact.Start);
+            viewModel.EndInDisplay = ParseDateToString(artifact.PeriodeType, artifact.End);
+
             GetStartAndEnd(artifact.PeriodeType, artifact.RangeFilter, viewModel);
 
             return PartialView("_ExportSetting", viewModel);
@@ -1543,22 +1546,30 @@ namespace DSLNG.PEAR.Web.Controllers
 
                 ws.Cells["A:AZ"].AutoFitColumns();
 
-                Response.Clear();
-                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.AddHeader("content-disposition", "attachment; filename=" + viewModel.FileName + ".xls");
-                Response.BinaryWrite(pck.GetAsByteArray());
-                var result = new BaseResponse { IsSuccess = true };
-                return Json(result, JsonRequestBehavior.AllowGet);
-
+                string handle = Guid.NewGuid().ToString();
+                TempData[handle] = pck.GetAsByteArray();
+                
+                return Json(new { FileGuid = handle, FileName = viewModel.FileName + ".xls", IsSuccess = true });
             }
             catch (Exception ex)
             {
-                var result = new BaseResponse { IsSuccess = false, Message = ex.Message };
-                return Json(result, JsonRequestBehavior.AllowGet);
+                return Json(new { Message = ex.Message, IsSuccess = false });
             }
-            finally
+        }
+
+        [HttpGet]
+        public virtual ActionResult DownloadExportToExcel(string fileGuid, string fileName)
+        {
+            if (TempData[fileGuid] != null)
             {
-                Response.Flush();
+                byte[] data = TempData[fileGuid] as byte[];
+                return File(data, "application/vnd.ms-excel", fileName);
+            }
+            else
+            {
+                // Problem - Log the error, generate a blank file,
+                //           redirect to another controller action - whatever fits with your application
+                return new EmptyResult();
             }
         }
 

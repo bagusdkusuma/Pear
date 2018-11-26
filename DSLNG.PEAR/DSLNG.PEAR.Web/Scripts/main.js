@@ -6814,12 +6814,21 @@ Number.prototype.format = function (n, x) {
 
     $('.btn-export').click(function (e) {
         e.preventDefault();
-
-        setTimeout(function () {
-            $('#export-setting').modal('hide');
-
-        }, 1000);
-        $('#export-setting-form').submit();
+        $.ajax({
+            type: 'POST',
+            cache: false,
+            url: '/Artifact/ExportSetting',
+            data: $('#export-setting-form').serialize(),
+            success: function (data) {
+                if (data.IsSuccess) {
+                    window.location = '/Artifact/DownloadExportToExcel?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    $('#export-setting').modal('hide');
+                } else {
+                    alert("Download Failed : " + data.Message);
+                }
+            }
+        });
     });
 
     $('#highlight-setting').on('submit', '#highlight-setting-form', function (e) {
