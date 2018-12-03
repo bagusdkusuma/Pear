@@ -3709,7 +3709,7 @@ Number.prototype.format = function (n, x) {
             '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
             '<ul class="dropdown-menu pull-right">' +
             '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>' +
-            
+            '<li><a href="javascript:;" class="tabular-export" target="_blank">Export To Excel</a></li>' +
             '</ul>' +
             '</div >';
         var title = data.Tabular.Title;
