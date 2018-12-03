@@ -52,14 +52,14 @@ namespace DSLNG.PEAR.Web.Controllers
         private readonly IDerLoadingScheduleService _derLoadingScheduleService;
         public static IDictionary<string, string> Contents { get; set; }
 
-        public DerController(IDerService derService, 
-            IDropdownService dropdownService, 
-            IArtifactService artifactService, 
-            IHighlightService highlightService, 
-            IWeatherService weatherService, 
-            IKpiAchievementService kpiAchievementService, 
-            IKpiTargetService kpiTargetService, 
-            IVesselScheduleService vesselScheduleService, 
+        public DerController(IDerService derService,
+            IDropdownService dropdownService,
+            IArtifactService artifactService,
+            IHighlightService highlightService,
+            IWeatherService weatherService,
+            IKpiAchievementService kpiAchievementService,
+            IKpiTargetService kpiTargetService,
+            IVesselScheduleService vesselScheduleService,
             IWaveService waveService,
             IDerLoadingScheduleService derLoadingScheduleService,
             IUserService userService)
@@ -76,7 +76,7 @@ namespace DSLNG.PEAR.Web.Controllers
             _derLoadingScheduleService = derLoadingScheduleService;
             _userService = userService;
         }
-        
+
         [AuthorizeUser(AccessLevel = "AllowView")]
         public ActionResult Index()
         {
@@ -229,46 +229,46 @@ namespace DSLNG.PEAR.Web.Controllers
                 #endregion
                 #region line
                 case "line":
-                    //{
+                //{
 
-                    //    var request = new GetCartesianChartDataRequest();
-                    //    request.Start = date.AddDays(-6);
-                    //    request.End = date;
-                    //    request.HeaderTitle = layout.Artifact.HeaderTitle;
-                    //    request.MeasurementId = layout.Artifact.MeasurementId;
-                    //    request.PeriodeType = PeriodeType.Daily;
-                    //    request.RangeFilter = RangeFilter.Interval;
-                    //    request.ValueAxis = ValueAxis.KpiActual;
+                //    var request = new GetCartesianChartDataRequest();
+                //    request.Start = date.AddDays(-6);
+                //    request.End = date;
+                //    request.HeaderTitle = layout.Artifact.HeaderTitle;
+                //    request.MeasurementId = layout.Artifact.MeasurementId;
+                //    request.PeriodeType = PeriodeType.Daily;
+                //    request.RangeFilter = RangeFilter.Interval;
+                //    request.ValueAxis = ValueAxis.KpiActual;
 
-                    //    var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
-                    //    {
-                    //        Color = x.Color,
-                    //        KpiId = x.KpiId,
-                    //        Label = x.Label
-                    //    }).ToList();
-                    //    request.Series = series;
-                    //    var chartData = _artifactService.GetChartData(request);
+                //    var series = layout.Artifact.Series.Select(x => new GetCartesianChartDataRequest.SeriesRequest
+                //    {
+                //        Color = x.Color,
+                //        KpiId = x.KpiId,
+                //        Label = x.Label
+                //    }).ToList();
+                //    request.Series = series;
+                //    var chartData = _artifactService.GetChartData(request);
 
-                    //    var previewViewModel = new ArtifactPreviewViewModel();
-                    //    previewViewModel.PeriodeType = "Daily";
-                    //    previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
-                    //    for (DateTime counter = request.Start.Value;
-                    //         counter <= request.End.Value;
-                    //         counter = counter.AddDays(1))
-                    //    {
-                    //        previewViewModel.Highlights.Add(null);
-                    //    }
-                    //    previewViewModel.TimePeriodes = chartData.TimePeriodes;
-                    //    previewViewModel.GraphicType = layout.Type;
-                    //    previewViewModel.LineChart = new LineChartDataViewModel();
-                    //    previewViewModel.LineChart.Title = layout.Artifact.HeaderTitle;
-                    //    previewViewModel.LineChart.Subtitle = chartData.Subtitle;
-                    //    previewViewModel.LineChart.ValueAxisTitle = layout.Artifact.MeasurementName;
-                    //    previewViewModel.LineChart.Series =
-                    //        chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
-                    //    previewViewModel.LineChart.Periodes = chartData.Periodes;
-                    //    return Json(previewViewModel, JsonRequestBehavior.AllowGet);
-                    //}
+                //    var previewViewModel = new ArtifactPreviewViewModel();
+                //    previewViewModel.PeriodeType = "Daily";
+                //    previewViewModel.Highlights = new List<ArtifactPreviewViewModel.HighlightViewModel>();
+                //    for (DateTime counter = request.Start.Value;
+                //         counter <= request.End.Value;
+                //         counter = counter.AddDays(1))
+                //    {
+                //        previewViewModel.Highlights.Add(null);
+                //    }
+                //    previewViewModel.TimePeriodes = chartData.TimePeriodes;
+                //    previewViewModel.GraphicType = layout.Type;
+                //    previewViewModel.LineChart = new LineChartDataViewModel();
+                //    previewViewModel.LineChart.Title = layout.Artifact.HeaderTitle;
+                //    previewViewModel.LineChart.Subtitle = chartData.Subtitle;
+                //    previewViewModel.LineChart.ValueAxisTitle = layout.Artifact.MeasurementName;
+                //    previewViewModel.LineChart.Series =
+                //        chartData.Series.MapTo<LineChartDataViewModel.SeriesViewModel>();
+                //    previewViewModel.LineChart.Periodes = chartData.Periodes;
+                //    return Json(previewViewModel, JsonRequestBehavior.AllowGet);
+                //}
                 #endregion
                 #region multiaxis
                 case "multiaxis":
@@ -368,7 +368,8 @@ namespace DSLNG.PEAR.Web.Controllers
                             KpiId = layout.Artifact.CustomSerie.Id,
                             Label = layout.Artifact.CustomSerie.Name
                         };
-                        if (layout.Artifact.Series.Count > 0) {
+                        if (layout.Artifact.Series.Count > 0)
+                        {
                             request.LabelSeries = new GetSpeedometerChartDataRequest.SeriesRequest
                             {
                                 KpiId = layout.Artifact.Series[0].KpiId,
@@ -815,18 +816,21 @@ namespace DSLNG.PEAR.Web.Controllers
                 #region Economic Indicator
                 case "economic-indicator":
                     {
-                        var viewModel = GetGeneralDerKpiInformations(15, layout, date, PeriodeType.Daily);
+                        var viewModel = GetGeneralDerKpiInformations(16, layout, date, PeriodeType.Daily);
                         viewModel.DateInfo = date;
-                        //var jccPrice = layout.KpiInformations.Where(x => x.Position == 3).FirstOrDefault();
-                        //if(jccPrice != null)
-                        //{
-                        //    var monhtlyDate = new DateTime(date.Year, date.Month, 1);
-                        //    var monthly = _kpiAchievementService.GetKpiAchievement(jccPrice.Kpi.Id, monhtlyDate, PeriodeType.Monthly);
-                        //    if(monthly.Value.HasValue)
-                        //    {
-                        //        viewModel.KpiInformationViewModels.First(x => x.Position == 3).DerItemValue.Value = monthly.Value.Value.ToString();
-                        //    }
-                        //}
+                        int highlightId = 0;
+                        if (layout.KpiInformations.SingleOrDefault(x => x.Position == 15) != null && layout.KpiInformations.Single(x => x.Position == 15).SelectOption != null)
+                        {
+                            highlightId = layout.KpiInformations.Single(x => x.Position == 15).SelectOption.Id;
+                        }
+                        var highlight =
+                            _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+                            {
+                                Date = date,
+                                HighlightTypeId = highlightId
+                            });
+                        viewModel.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Value =
+                            highlight.Message;
 
                         TempData["month"] = date.ToString("MMM", CultureInfo.InvariantCulture);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_EconomicIndicator.cshtml", viewModel);
@@ -1141,7 +1145,7 @@ namespace DSLNG.PEAR.Web.Controllers
             });
             if (response.IsSuccess)
             {
-                return RedirectToAction("Index", new { year = theDate.Year, month = theDate.Month});
+                return RedirectToAction("Index", new { year = theDate.Year, month = theDate.Month });
             }
 
             return base.ErrorPage(response.Message);
@@ -1241,7 +1245,8 @@ namespace DSLNG.PEAR.Web.Controllers
                         {
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, new DateTime(date.Year, date.Month, 1), PeriodeType.Monthly);
                         }
-                        else if (item.Kpi.Id == 519 && originalDate.HasValue) {
+                        else if (item.Kpi.Id == 519 && originalDate.HasValue)
+                        {
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, originalDate.Value, PeriodeType.Daily);
                         }
                         else if (item.Kpi.Id == 385)
@@ -1258,7 +1263,8 @@ namespace DSLNG.PEAR.Web.Controllers
                             achievement = _kpiAchievementService.GetKpiAchievement(item.Kpi.Id, date, periodeType);
                         }
                         kpiInformationVm.DerItemValue = achievement.MapTo<DerItemValueViewModel>();
-                        if (specialAchievement != null) {
+                        if (specialAchievement != null)
+                        {
                             kpiInformationVm.DerItemValue = specialAchievement.MapTo<DerItemValueViewModel>();
                         }
                     }
@@ -1363,7 +1369,7 @@ namespace DSLNG.PEAR.Web.Controllers
         private ArtifactPreviewViewModel ChangePeriodes(ArtifactPreviewViewModel data, DateTime date)
         {
             int month = 0 - data.MultiaxisChart.Periodes.Count();
-            for(int i = 1; i <= data.MultiaxisChart.Periodes.Count(); i++)
+            for (int i = 1; i <= data.MultiaxisChart.Periodes.Count(); i++)
             {
                 data.MultiaxisChart.Periodes[i - 1] = date.AddMonths(month + i).ToString("MMM yy");
             }

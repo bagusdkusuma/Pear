@@ -1,24 +1,42 @@
 ﻿@model DSLNG.PEAR.Web.ViewModels.DerLayout.DerLayoutItemViewModel
 
 @{
-    var labels = new List<string> { "Dubai ", "Brent FUT (Economic Indicator)", "Nephta FOB Sing (Economic Indicator)", "JCC Crude (Economic Indicator)", "LNG Spot DES JKM(Economic Indicator)", "Nat Gas Henry Hub (Economic Indicator)", "ICP-Ind Crude Prc (Economic Indicator)", "Dubai Crude (FX rate)", "Brent FUT (FX rate)", "Nephta FOB Sing (FX rate)", "JCC Crude (FX rate)", "LNG Spot DES JKM(FX rate)", "Nat Gas Henry Hub (FX rate)", "ICP-Ind Crude Prc (FX rate)", "LNG Shipping Cost benchmark" };
+    var labels = new List<string> { "Dubai ", "Brent FUT (Economic Indicator)", "Nephta FOB Sing (Economic Indicator)", "JCC Crude (Economic Indicator)", "LNG Spot DES JKM(Economic Indicator)", "Nat Gas Henry Hub (Economic Indicator)", "ICP-Ind Crude Prc (Economic Indicator)", "Dubai Crude (FX rate)", "Brent FUT (FX rate)", "Nephta FOB Sing (FX rate)", "JCC Crude (FX rate)", "LNG Spot DES JKM(FX rate)", "Nat Gas Henry Hub (FX rate)", "ICP-Ind Crude Prc (FX rate)", "LNG Shipping Cost benchmark", "LNG Spot Price-Delivery Month" };
     for (int i = 0; i < Model.KpiInformations.Count; i++)
     {
         var posIndex = Model.KpiInformations.FirstOrDefault(x => x.Position == i);
         if (posIndex != null)
         {
-            <div class="form-group row">
-                <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
-                <div class="col-md-10">
-                    @*@Model.KpiInformations[i].Position*@
-                    @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> {new SelectListItem {Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName}}, new {@class = "kpi-list form-control", style = "width:180px"})
-                    @Html.HiddenFor(model => model.KpiInformations[i].Position)
-                    @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new {style = "visibility: hidden"})
-                    @Html.HiddenFor(model => model.KpiInformations[i].Id)
-
-                    <input type="hidden" name="KpiInformations.Index" value="@i"/>
+            if (i == 15)
+            {
+               <div class="form-group row">
+                    <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, new SelectList(Model.Highlights, "Value", "Text", Model.KpiInformations[i].HighlightId), "Select Highlight", new {@class = "form-control"})
+                        @*@Html.DropDownListFor(model => model.KpiInformations[i].HighlightId, new SelectList(Model.Highlights, "Value", "Text", Model.KpiInformations[i].HighlightId), new {style = "width:180px"})*@
+                        @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                        @Html.HiddenFor(model => model.KpiInformations[i].Id)
+                        @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new {style = "visibility: hidden"})
+                        <input type="hidden" name="KpiInformations.Index" value="@i"/>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="form-group row">
+                    <label class="control-label col-md-2">@labels.ElementAtOrDefault(i)</label>
+                    <div class="col-md-10">
+                        @*@Model.KpiInformations[i].Position*@
+                        @Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "width:180px" })
+                        @Html.HiddenFor(model => model.KpiInformations[i].Position)
+                        @Html.DropDownListFor(model => model.KpiInformations[i].ConfigType, Model.ConfigTypes, new { style = "visibility: hidden" })
+                        @Html.HiddenFor(model => model.KpiInformations[i].Id)
+
+                        <input type="hidden" name="KpiInformations.Index" value="@i" />
+                    </div>
+                </div>
+            }
+
         }
     }
 }

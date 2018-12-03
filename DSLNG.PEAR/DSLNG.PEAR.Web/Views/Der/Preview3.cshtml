@@ -1101,14 +1101,14 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                                 <div class="co-macro-eco">
                                     <div class="community highlight-style-12">
                                         <img align="right" src="@Url.Content("~/content/images/icon-operation.png")">
-                                        <h5 style="text-decoration: underline;font-size:12px">Community relation and government engagement highlight</h5>
+                                        <h5 style="text-decoration: underline;font-size:12px">sCommunity relation and government engagement highlight</h5>
                                         <p>
                                             @{
                                                 var row14Col2 = Model.Items.FirstOrDefault(x => x.Row == 14 && x.Column == 2);
                                                 if (row14Col2 != null)
                                                 {
 
-                                                    <div data-url="@Url.Action("LayoutItem", "DerImage", new { id = row14Col2.Id })" class="layout-item"></div>
+                                                    <div style="width:567px" data-url="@Url.Action("LayoutItem", "DerImage", new { id = row14Col2.Id })" class="layout-item"></div>
                                                 }
                                             }
                                         </p>

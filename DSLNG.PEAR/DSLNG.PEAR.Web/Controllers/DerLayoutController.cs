@@ -304,7 +304,9 @@ namespace DSLNG.PEAR.Web.Controllers
                         
                     case "economic-indicator":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 15);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 16);
+                            var result = _selectService.GetHighlightTypesDropdown();
+                            editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
                             break;
                         }
                     case "lng-and-cds":

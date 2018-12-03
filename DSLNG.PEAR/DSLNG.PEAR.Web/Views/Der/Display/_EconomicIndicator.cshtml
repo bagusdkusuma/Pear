@@ -14,12 +14,12 @@
                 <div class="dubai-crude"> Dubai Crude (DME OQD FUT)</div>
             </td>
             <td>
-                    <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation)"></i></span>
-                    @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "USD/bbl")
+                <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Deviation)"></i></span>
+                @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 0).KpiMeasurement, "USD/bbl")
             </td>
             <td style="width: 30%">
-                    <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Deviation)"></i></span>
-                    USD/SDR @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 4)
+                <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Deviation)"></i></span>
+                USD/SDR @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, string.Empty, string.Empty, "N/A", true, 4)
             </td>
         </tr>
         <tr>
@@ -57,7 +57,7 @@
             </td>
         </tr>
         <tr>
-            <td><div class="next-row">LNG Spot DES JKM&nbsp;</div></td>
+            <td><div class="next-row">LNG Spot DES JKM (@Model.KpiInformationViewModels.Single(x => x.Position == 15).DerItemValue.Value)&nbsp;</div></td>
             <td>
                 <span class="comparison left-side"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayCompleteDerValue(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, Model.KpiInformationViewModels.Single(x => x.Position == 4).KpiMeasurement, "USD/MMbtu", "N/A", true, 3)
@@ -100,103 +100,3 @@
         </tr>
     </tbody>
 </table>
-@*
-    @model DSLNG.PEAR.Web.ViewModels.Der.Display.DisplayEconomicIndicatorViewModel
-
-    <table class="der-table all-border">
-        <thead>
-            <tr>
-                <th colspan="2" style="width: 18.75%">
-                    Economic Indicator
-                </th>
-                <th style="width: 12.5%">
-                    FX rate
-                    SDR:IMF major ccy basket index
-                </th>
-            </tr>
-        </thead>
-
-        @{
-            var pos0 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 0);
-            var pos1 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 1);
-            var pos2 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 2);
-            var pos3 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 3);
-            var pos4 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 4);
-            var pos5 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 5);
-            var pos6 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 6);
-            var pos7 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 7);
-            var pos8 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 8);
-            var pos9 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 9);
-            var pos10 = Model.EconomicIndicatorViewModels.Single(x => x.Position == 10);
-
-            <tbody>
-                <tr>
-                    <td>
-                        Dubai Crude
-                        (DME OQD FUT)
-                    </td>
-                    <td>
-                        @pos0.Progress @pos0.Daily @pos0.Measurement
-                    </td>
-                    <td>
-                        @pos5.Progress @pos5.Daily @pos5.Measurement
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        BRENT FUT
-                    </td>
-                    <td>
-                        @pos1.Progress @pos1.Daily @pos1.Measurement
-                    </td>
-                    <td>
-                        @pos6.Progress @pos6.Daily @pos6.Measurement
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Naphta FOB Sing
-                    </td>
-                    <td>
-                        @pos2.Progress @pos2.Daily @pos2.Measurement
-                    </td>
-                    <td>
-                        @pos7.Progress @pos7.Daily @pos7.Measurement
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Naphta FOB Sing
-                    </td>
-                    <td>
-                        @pos3.Progress @pos3.Daily @pos3.Measurement
-                    </td>
-                    <td>
-                        @pos8.Progress @pos8.Daily @pos8.Measurement
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Naphta FOB Sing
-                    </td>
-                    <td>
-                        @pos4.Progress @pos4.Daily @pos4.Measurement
-                    </td>
-                    <td>
-                        @pos9.Progress @pos9.Daily @pos9.Measurement
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        LNG Shipping Cost benchmark
-                        (Jap-Kor-Aus)
-                    </td>
-                    <td>
-                        @pos10.Progress @pos10.Daily@pos10.Measurement
-                    </td>
-                </tr>
-            </tbody>
-        }
-
-    </table>
-*@
