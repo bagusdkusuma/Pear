@@ -1642,7 +1642,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     idx++;
 
-                    ws.Cells[rowStart, idx].Value = row.Periode.ToString();
+                    ws.Cells[rowStart, idx].Value = string.Format("{0}", row.Periode.ToString());
                     ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                     ws.Cells[rowStart, idx].Style.Font.Bold = false;
                     ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -1654,7 +1654,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                         ws.Cells[rowStart, idx].Style.Font.Bold = false;
                         ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        ws.Cells[rowStart, idx].Style.Numberformat.Format = FormatNumber.DecimalFormat;
+                        ws.Cells[rowStart, idx].Style.Numberformat.Format = "#,##0.00";
                     }
 
                     if (data.Target)
@@ -1664,7 +1664,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                         ws.Cells[rowStart, idx].Style.Font.Bold = false;
                         ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        ws.Cells[rowStart, idx].Style.Numberformat.Format = FormatNumber.DecimalFormat;
+                        ws.Cells[rowStart, idx].Style.Numberformat.Format = "#,##0.00";
                     }
 
                     if (data.Remark)
@@ -1674,7 +1674,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                         ws.Cells[rowStart, idx].Style.Font.Bold = false;
                         ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        ws.Cells[rowStart, idx].Style.Numberformat.Format = FormatNumber.DecimalFormat;
+                        ws.Cells[rowStart, idx].Style.Numberformat.Format = "#,##0.00";
                     }
                     rowStart++;
 
