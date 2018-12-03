@@ -478,6 +478,7 @@
     <Content Include="Content\select2\dist\js\select2.full.min.js" />
     <Content Include="Content\select2\dist\js\select2.js" />
     <Content Include="Content\select2\dist\js\select2.min.js" />
+    <Content Include="Content\select2\dist\js\select2.multi-checkboxes.js" />
     <Content Include="Content\style-der.css" />
     <Content Include="Content\style-regawa.css" />
     <Content Include="Content\style.css" />
