@@ -3707,15 +3707,22 @@ Number.prototype.format = function (n, x) {
         wrapper.addClass('tabular-wrapper');
         var btn = '<div class="btn-group chart-button">' +
             '<a class="tabular-wrapper-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="/Content/img/printer_3.png" width="32" height="32" ></img></a>' +
-            '<ul class="dropdown-menu pull-right">' +
-            '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>' +
-            
+            '<ul class="dropdown-menu pull-right">';
+        if ($('#user-profile-session-data').length > 0) {
+            if ($('#user-profile-session-data').data('issuperadmin') == true) {
+                btn += '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>';
+            }
+            btn +=
+                '<li><a href="javascript:;" class="tabular-export" target="_blank">Export To Excel</a></li>';
+        } else {
+            btn += '<li><a href="javascript:;" class="tabular-export-preview" target="_blank">Export To Excel</a></li>';
+        }
+        btn +=
             '</ul>' +
             '</div >';
         var title = data.Tabular.Title;
-        if ($('#user-profile-session-data').data('issuperadmin') == true) {
-            wrapper.append(btn);
-        }
+        wrapper.append(btn);
+        
 
         wrapper.append($('<h3>').html(title));
 
@@ -3891,7 +3898,7 @@ Number.prototype.format = function (n, x) {
             } else {
                 btn += '<li><a class="tank-export-preview" href="javascript:;">Export To Excel</a></li>';
             }
-               
+
             if ($('#user-profile-session-data').data('issuperadmin') == true) {
                 btn += '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>';
             }
@@ -6502,7 +6509,7 @@ Number.prototype.format = function (n, x) {
                         var currentYear = currentTime.getFullYear();
                         var firstDayOfWeek = currentTime.getDate() - currentTime.getDay();
                         var lastDayOfWeek = firstDayOfWeek + 6;
-                        
+
                         var startOfWeek = moment().startOf('week');
                         var endOfWeek = moment().endOf('week');
 
@@ -6513,12 +6520,11 @@ Number.prototype.format = function (n, x) {
 
                         var startOfYear = moment().startOf('year');
                         var endOfYear = moment().endOf('year');
-                        
+
                         var startInDisplay = '';
                         var endInDisplay = '';
 
-                        switch (search.config.PeriodeType.toLowerCase())
-                        {
+                        switch (search.config.PeriodeType.toLowerCase()) {
                             case "daily":
                                 var formatDaily = "MM/DD/YYYY";
                                 if (search.config.RangeFilter.toLowerCase() == "currentweek") {
@@ -6752,7 +6758,7 @@ Number.prototype.format = function (n, x) {
                 //$('#range-holder').removeClass();
                 //$('#range-holder').addClass(search.config.RangeFilter.toLowerCase());
 
-                
+
 
 
             }
@@ -6770,6 +6776,11 @@ Number.prototype.format = function (n, x) {
     $('#container').on('click', '.tank-export-preview', function () {
         getExportChartPreview($(this));
     });
+
+    $('#container').on('click', '.tabular-export-preview', function () {
+        getExportChartPreview($(this));
+    });
+
 
     $('.artifact-holder').on('click', '.tabular-export', function () {
         getExportChart($(this));
@@ -6882,7 +6893,7 @@ Number.prototype.format = function (n, x) {
         $('.highlight-setting-content').html('');
     });
 
-    
+
     if ($('#user-profile-session-data').length > 0) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
             text: "Change Periode",

@@ -1585,110 +1585,112 @@ namespace DSLNG.PEAR.Web.Controllers
 
         private ActionResult ExportTabular(GetTabularDataResponse data, string graphicName, string fileName)
         {
-            ExcelPackage pck = new ExcelPackage();
-            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
-
-            ws.Cells["A3"].Value = "Extracted Date";
-            ws.Cells["B3"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
-            ws.Cells["C3"].Value = "By: " + UserProfile().Name;
-
-            ws.Cells["A4"].Value = "Dashboard Name";
-            ws.Cells["B4"].Value = ": " + graphicName;
-
-            ws.Cells["A3"].Value = "Date";
-            ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
-
-            int kpiRowStart = 8;
-            int kpiColStart = 2;
-            IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
-
-
-            var labels = new List<string>();
-            labels.Add("KPI Name");
-            labels.Add("Periode");
-            if (data.Actual)
+            try
             {
-                labels.Add("Actual");
-            }
+                ExcelPackage pck = new ExcelPackage();
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
-            if (data.Target)
-            {
-                labels.Add("Target");
-            }
+                ws.Cells["A3"].Value = "Extracted Date";
+                ws.Cells["B3"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
+                ws.Cells["C3"].Value = "By: " + UserProfile().Name;
 
-            if (data.Remark)
-            {
-                labels.Add("Remark");
-            }
-            var headerIndex = 1;
-            foreach (var label in labels)
-            {
-                ws.Cells[6, headerIndex].Value = label;
-                ws.Cells[6, headerIndex].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                ws.Cells[6, headerIndex].Style.Font.Bold = true;
-                ws.Cells[6, headerIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                headerIndex++;
-            }
+                ws.Cells["A4"].Value = "Dashboard Name";
+                ws.Cells["B4"].Value = ": " + graphicName;
 
-            int rowStart = 7;
-            foreach (var row in data.Rows)
-            {
-                int idx = 1;
-                ws.Cells[rowStart, idx].Value = string.Format("{0}, {1} ({2})", row.KpiId, row.KpiName, row.Measurement);
-                ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                ws.Cells[rowStart, idx].Style.Font.Bold = false;
-                ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                idx++;
+                ws.Cells["A3"].Value = "Date";
+                ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
 
-                ws.Cells[rowStart, idx].Value = row.Periode.ToString();
-                ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                ws.Cells[rowStart, idx].Style.Font.Bold = false;
-                ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                int kpiRowStart = 8;
+                int kpiColStart = 2;
+                IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
 
+
+                var labels = new List<string>();
+                labels.Add("KPI Name");
+                labels.Add("Periode");
                 if (data.Actual)
                 {
-                    idx++;
-                    ws.Cells[rowStart, idx].Value = row.Actual;
-                    ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                    ws.Cells[rowStart, idx].Style.Font.Bold = false;
-                    ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
+                    labels.Add("Actual");
                 }
 
                 if (data.Target)
                 {
-                    idx++;
-                    ws.Cells[rowStart, idx].Value = row.Target;
-                    ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                    ws.Cells[rowStart, idx].Style.Font.Bold = false;
-                    ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
+                    labels.Add("Target");
                 }
 
                 if (data.Remark)
                 {
-                    idx++;
-                    ws.Cells[rowStart, idx].Value = row.Remark;
+                    labels.Add("Remark");
+                }
+                var headerIndex = 1;
+                foreach (var label in labels)
+                {
+                    ws.Cells[6, headerIndex].Value = label;
+                    ws.Cells[6, headerIndex].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[6, headerIndex].Style.Font.Bold = true;
+                    ws.Cells[6, headerIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    headerIndex++;
+                }
+
+                int rowStart = 7;
+                foreach (var row in data.Rows)
+                {
+                    int idx = 1;
+                    ws.Cells[rowStart, idx].Value = string.Format("{0}, {1} ({2})", row.KpiId, row.KpiName, row.Measurement);
                     ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                     ws.Cells[rowStart, idx].Style.Font.Bold = false;
                     ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    ws.Cells[kpiRowStart, kpiColStart].Style.Numberformat.Format = "#,##0.00";
+                    idx++;
+
+                    ws.Cells[rowStart, idx].Value = string.Format("{0}", row.Periode.ToString());
+                    ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                    ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                    if (data.Actual)
+                    {
+                        idx++;
+                        ws.Cells[rowStart, idx].Value = row.Actual;
+                        ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                        ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        ws.Cells[rowStart, idx].Style.Numberformat.Format = "#,##0.00";
+                    }
+
+                    if (data.Target)
+                    {
+                        idx++;
+                        ws.Cells[rowStart, idx].Value = row.Target;
+                        ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                        ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        ws.Cells[rowStart, idx].Style.Numberformat.Format = "#,##0.00";
+                    }
+
+                    if (data.Remark)
+                    {
+                        idx++;
+                        ws.Cells[rowStart, idx].Value = row.Remark;
+                        ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                        ws.Cells[rowStart, idx].Style.Font.Bold = false;
+                        ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        ws.Cells[rowStart, idx].Style.Numberformat.Format = "#,##0.00";
+                    }
+                    rowStart++;
+
                 }
-                rowStart++;
 
+                ws.Cells["A:AZ"].AutoFitColumns();
+
+                string handle = Guid.NewGuid().ToString();
+                TempData[handle] = pck.GetAsByteArray();
+
+                return Json(new { FileGuid = handle, FileName = fileName + ".xls", IsSuccess = true });
             }
-
-            ws.Cells["A:AZ"].AutoFitColumns();
-
-            Response.Clear();
-            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            Response.AddHeader("content-disposition", "attachment; filename=" + fileName + ".xls");
-            Response.BinaryWrite(pck.GetAsByteArray());
-            Response.End();
-
-
-            var result = new BaseResponse { IsSuccess = true };
-            return Json(result, JsonRequestBehavior.AllowGet);
+            catch (Exception ex)
+            {
+                return Json(new { Message = ex.Message, IsSuccess = false });
+            }
         }
 
         private List<ExportSettingData> GetExistedKpis(IList<ExportSettingData> existedKpis)
