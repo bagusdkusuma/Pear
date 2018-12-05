@@ -348,7 +348,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
         </div>
     </div>
     <div class="col-md-12" style="margin-bottom: 30px;">
-        <a tabindex="283" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
+        <a tabindex="284" href="javascript:void(0)" onclick="callDerPreview()" class="btn btn-master-rgw btn-primary"><i class="fa fa-file-archive-o"></i> DER Preview</a>
         <label class="labletop">Batch :</label>
         @Html.DropDownList("Batch_Id", (IEnumerable<SelectListItem>)ViewBag.KpiTransformations, new { @class = "btn btn-master-rgw btn-primary" })
         <button type="submit" class="btn btn-master-rgw btn-primary submit-process"><i class="fa fa-cogs"></i> Process</button>
@@ -510,7 +510,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
             });
 
             var openNextTab = function ($latInput, nextIndex) {
-                var nextIndexs = [23, 35, 171, 178, 218, 267, 283];
+                var nextIndexs = [24, 36, 172, 179, 219, 268, 284];
                 if (nextIndexs.indexOf(nextIndex) > -1) {
                     var $collapse = $latInput.closest('.collapse');
                     var $row = $collapse.closest('.row');
@@ -632,7 +632,7 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
                             var nextTabindex = parseInt(tabindex) + 1;
 
                             //special cases;
-                            if (nextTabindex == 136) {
+                            if (nextTabindex == 137) {
                                 nextTabindex += 1;
                             }
 

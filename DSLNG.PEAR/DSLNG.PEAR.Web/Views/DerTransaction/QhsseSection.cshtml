@@ -9,7 +9,7 @@
                 <td><label class="control-label">Last DAFWC</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 273, 218, "text date", "prev", "daily-actual-dafwc", "remark", "datepicker")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 273, 219, "text date", "prev", "daily-actual-dafwc", "remark", "datepicker")
                     </span>
                 </td>
             </tr>
@@ -17,7 +17,7 @@
                 <td><label class="control-label">Last Plant LOPC (Tier 4 & 5)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 274, 219, "text date", "prev", "daily-actual-dafwc", "remark", "datepicker")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 274, 220, "text date", "prev", "daily-actual-dafwc", "remark", "datepicker")
                     </span>
                 </td>
             </tr>
@@ -28,7 +28,7 @@
                 <td style="width: 163px;"><label class="control-label">as of</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 275, 220, "text date", "prev", "daily-actual", "remark", "datepicker")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 275, 221, "text date", "prev", "daily-actual", "remark", "datepicker")
                     </span>
                 </td>
             </tr>
@@ -36,7 +36,7 @@
                 <td><label class="control-label">Safe man-hours</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 275, 221, "hours", "prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 275, 222, "hours", "prev")
                     </span>
                 </td>
             </tr>
@@ -49,7 +49,7 @@
                 <td><label class="control-label">as of</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 514, 222, "text date", "prev", "daily-actual", "remark", "datepicker")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 514, 223, "text date", "prev", "daily-actual", "remark", "datepicker")
                     </span>
                 </td>
             </tr>
@@ -57,7 +57,7 @@
                 <td><label class="control-label">RIF (actual)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 514, 223, "number", "prev", "daily-actual")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 514, 224, "number", "prev", "daily-actual")
                     </span>
                 </td>
             </tr>
@@ -65,7 +65,7 @@
                 <td><label class="control-label">RIF (target) <</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 514, 224, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 514, 225, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -76,7 +76,7 @@
                 <td><label class="control-label">as of</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 515, 225, "text date", "prev", "daily-actual", "remark", "datepicker")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 515, 226, "text date", "prev", "daily-actual", "remark", "datepicker")
                     </span>
                 </td>
             </tr>
@@ -84,7 +84,7 @@
                 <td><label class="control-label">DCS Alarm Rate (actual)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 515, 226, "number", "prev", "daily-actual")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 515, 227, "number", "prev", "daily-actual")
                     </span>
                 </td>
             </tr>
@@ -92,7 +92,7 @@
                 <td><label class="control-label">DCS Alarm Rate (target)</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 515, 227, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 515, 228, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -150,7 +150,7 @@
                 <td><label class="control-label">Weather</label></td>
                 <td>
                     <!--234-->
-                    @Html.DisplayWeatherList(Model.Weather, 228)
+                    @Html.DisplayWeatherList(Model.Weather, 229)
                 </td>
             </tr>
             <tr>
@@ -161,20 +161,20 @@
                    new SelectListItem { Value="Slight wave & Accessible",Text="Slight wave & Accessible" },
                     new SelectListItem { Value="Moderate wave & Caution",Text="Moderate wave & Caution" },
                      new SelectListItem { Value="Rough wave & Closed Acces",Text="Rough wave & Closed Acces" }
-              }, "tide", 229)
+              }, "tide", 230)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Wind Direct</label></td>
                 <td>
-                    @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "wind-direction", 230)
+                    @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "wind-direction", 231)
                 </td>
             </tr>
             <tr>
                 <td><label class="control-label">Wind Speed (Km/h)</label></td>
                 <td>
                     <span class="col-sm-17">
-                        @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "speed", 231)
+                        @Html.DisplayWaveList(Model.Wave, Model.Wave.Values, "speed", 232)
                     </span>
                 </td>
             </tr>
@@ -191,7 +191,7 @@
                 <td><label class="control-label">SLC submitted 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 504, 232, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 504, 233, "number")
                     </span>
                 </td>
             </tr>
@@ -199,7 +199,7 @@
                 <td><label class="control-label">Near-Miss Report 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 285, 233, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 285, 234, "number")
                     </span>
                 </td>
             </tr>
@@ -207,7 +207,7 @@
                 <td><label class="control-label">No of PTW Audit 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 506, 234, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 506, 235, "number")
                     </span>
                 </td>
             </tr>
@@ -215,7 +215,7 @@
                 <td><label class="control-label">Fatality/Disability 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 1, 235, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 1, 236, "number")
                     </span>
                 </td>
             </tr>
@@ -223,7 +223,7 @@
                 <td><label class="control-label">DAFW 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 236, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 237, "number")
                     </span>
                 </td>
             </tr>
@@ -231,7 +231,7 @@
                 <td><label class="control-label">RWC + MTC (no of injury) 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 507, 237, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 507, 238, "number")
                     </span>
                 </td>
             </tr>
@@ -239,7 +239,7 @@
                 <td><label class="control-label">First Aid 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 238, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 239, "number")
                     </span>
                 </td>
             </tr>
@@ -247,7 +247,7 @@
                 <td><label class="control-label">LOPC minor</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 239, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 240, "number")
                     </span>
                 </td>
             </tr>
@@ -256,7 +256,7 @@
                 <td><label class="control-label">Overdue SCE Inspection 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 508, 240, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 508, 241, "number")
                     </span>
                 </td>
             </tr>
@@ -264,7 +264,7 @@
                 <td><label class="control-label">Process override w/o approval 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 509, 241, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 509, 242, "number")
                     </span>
                 </td>
             </tr>
@@ -272,7 +272,7 @@
                 <td><label class="control-label">PS incident investigation compliance 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 518, 242, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 518, 243, "number")
                     </span>
                 </td>
             </tr>
@@ -280,7 +280,7 @@
                 <td><label class="control-label">Overdue temp MOC 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 511, 243, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 511, 244, "number")
                     </span>
                 </td>
             </tr>
@@ -294,7 +294,7 @@
                 <td><label class="control-label">SLC-PSLC submitted 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 504, 244, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 504, 245, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -302,7 +302,7 @@
                 <td><label class="control-label">Near-Miss Report 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 505, 245, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 505, 246, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -310,7 +310,7 @@
                 <td><label class="control-label">No of PTW Audit 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 506, 246, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 506, 247, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -318,7 +318,7 @@
                 <td><label class="control-label">Fatality/Disability 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 1, 247, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 1, 248, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -326,7 +326,7 @@
                 <td><label class="control-label">DAFW 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 248, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 177, 249, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -334,7 +334,7 @@
                 <td><label class="control-label">RWC + MTC (no of injury) 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 507, 249, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 507, 250, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -343,7 +343,7 @@
                 <td><label class="control-label">First Aid 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 250, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 276, 251, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -351,7 +351,7 @@
                 <td><label class="control-label">LOPC minor</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 251, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 422, 252, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -359,7 +359,7 @@
                 <td><label class="control-label">Overdue SCE Inspection 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 508, 252, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 508, 253, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -367,7 +367,7 @@
                 <td><label class="control-label">Process override w/o approval 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 509, 253, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 509, 254, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -375,7 +375,7 @@
                 <td><label class="control-label">PS incident investigation compliance 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 518, 254, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 518, 255, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -383,7 +383,7 @@
                 <td><label class="control-label">Overdue temp MOC 24H</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 511, 255, "number", "empty", "yearly-target")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 511, 256, "number", "empty", "yearly-target")
                     </span>
                 </td>
             </tr>
@@ -396,7 +396,7 @@
                 <td><label class="control-label">pH</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 512, 256, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 512, 257, "number")
                     </span>
                 </td>
             </tr>
@@ -404,7 +404,7 @@
                 <td><label class="control-label">Oil & Grease</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 513, 257, "number")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 513, 258, "number")
                     </span>
                 </td>
             </tr>
@@ -416,7 +416,7 @@
                 <td>
                     <!--254-->
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 435, 258, "0")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 435, 259, "0")
                     </span>
                 </td>
             </tr>
@@ -424,7 +424,7 @@
                 <td><label class="control-label">Road Blockade</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 356, 259, "0")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 356, 260, "0")
                     </span>
                 </td>
             </tr>
@@ -432,7 +432,7 @@
                 <td><label class="control-label">Theft/Criminal</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 436, 260, "0")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 436, 261, "0")
                     </span>
                 </td>
             </tr>
@@ -440,7 +440,7 @@
                 <td><label class="control-label">Fighting/Violence</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 359, 261, "0")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 359, 262, "0")
                     </span>
                 </td>
             </tr>
@@ -448,7 +448,7 @@
                 <td><label class="control-label">Prop Dest/Vandalism</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 286, 262, "0")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 286, 263, "0")
                     </span>
                 </td>
             </tr>
@@ -456,7 +456,7 @@
                 <td><label class="control-label">Others</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 292, 263, "0")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 292, 264, "0")
                     </span>
                 </td>
             </tr>
@@ -464,7 +464,7 @@
                 <td><label class="control-label">Security Alert Condition </label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayHighlightDropdownList(Model.Highlights, 7, Model.AlertOptions, 264, "prev")
+                        @Html.DisplayHighlightDropdownList(Model.Highlights, 7, Model.AlertOptions, 265, "prev")
                     </span>
                 </td>
             </tr>
@@ -494,7 +494,7 @@
             </tr>
             <tr>
                 <td>
-                    @Html.DisplayHighlightTextarea(Model.Highlights, 18, 265, "Plant Operated Safely")
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 18, 266, "Plant Operated Safely")
                 </td>
             </tr>
         </table>
@@ -506,7 +506,7 @@
             </tr>
             <tr>
                 <td>
-                    @Html.DisplayHighlightTextarea(Model.Highlights, 13, 266, "Plant and Surroundings are condusive (calm and secure)")
+                    @Html.DisplayHighlightTextarea(Model.Highlights, 13, 267, "Plant and Surroundings are condusive (calm and secure)")
                 </td>
             </tr>
         </table>

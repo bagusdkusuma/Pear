@@ -143,7 +143,7 @@
                 <td><label class="control-label">JKSE</label></td>
                 <td>
                     <span class="col-sm-17">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 392, 16,"index","prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 392, 16, "index", "prev")
                     </span>
                 </td>
             </tr>
@@ -151,7 +151,7 @@
                 <td><label class="control-label">DJIA</label></td>
                 <td>
                     <span class="col-sm-17">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 393, 17,"index","prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 393, 17, "index", "prev")
                     </span>
                 </td>
             </tr>
@@ -159,7 +159,7 @@
                 <td><label class="control-label">Nikkei</label></td>
                 <td>
                     <span class="col-sm-17">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 394, 18,"index","prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 394, 18, "index", "prev")
                     </span>
                 </td>
             </tr>
@@ -167,7 +167,15 @@
                 <td><label class="control-label">SSEC</label></td>
                 <td>
                     <span class="col-sm-17">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 395, 19,"index","prev")
+                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 395, 19, "index", "prev")
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="control-label">LNG Spot Price-Delivery Month</label></td>
+                <td>
+                    <span class="col-sm-17">
+                        @Html.DisplayHighlightInput(Model.Highlights, 83, 20, string.Empty, "prev")
                     </span>
                 </td>
             </tr>
@@ -175,17 +183,14 @@
     </div>
 </div>
 <div class="col-md-12" style="margin-top: 30px;">
-    <div class="col-md-6">
-        @*@{
-            var layoutItem3 = Model.DerLayoutItems.First(x => x.Column == 1 && x.Row == 15);
-        }*@
+    <div class="col-md-6">        
         <table border="0">
             <tr>
                 <td><label class="control-label subtitle">Macro Economic/Market Flash:</label></td>
             </tr>
             <tr>
                 <td>
-                    @Html.DisplayHighlightTextarea(Model.Highlights,15,20)
+                    @Html.DisplayHighlightTextarea(Model.Highlights,15,21)
                 </td>
             </tr>
         </table>
@@ -202,7 +207,7 @@
                         new SelectListItem { Value = "1", Text = "Bullish" },
                         new SelectListItem { Value = "0", Text = "Mixed" },
                         new SelectListItem { Value = "-1", Text = "Bearish" },
-                    },21)
+                    },22)
                 </td>
             </tr>
         </table>
@@ -212,9 +217,15 @@
             <tr>
                 <td align="left"><label class="control-label">Monthly Bunker Price (USD/MT)</label></td>
                 <td align="left">
-                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 397, 22, "USD/MT", "prev", "monthly-actual-bunker")
+                    @Html.DisplayKpiInformationInput(Model.KpiInformations, 397, 23, "USD/MT", "prev", "monthly-actual-bunker")
                 </td>
             </tr>
         </table>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('input[data-highlight-type-id="83"]').attr('maxlength', 3)
+    })
+</script>
