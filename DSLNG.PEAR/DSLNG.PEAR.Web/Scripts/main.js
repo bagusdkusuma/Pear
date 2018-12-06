@@ -6523,7 +6523,9 @@ Number.prototype.format = function (n, x) {
 
                         var startInDisplay = '';
                         var endInDisplay = '';
-
+                        var startAfterParsed = '';
+                        var endAfterParsed = '';
+                        
                         switch (search.config.PeriodeType.toLowerCase()) {
                             case "daily":
                                 var formatDaily = "MM/DD/YYYY";
@@ -6542,7 +6544,12 @@ Number.prototype.format = function (n, x) {
                                 } else if (search.config.RangeFilter.toLowerCase() == "specificday") {
                                     startInDisplay = search.config.StartInDisplay;
                                     endInDisplay = search.config.EndInDisplay;
+                                } else if (search.config.RangeFilter.toLowerCase() == "interval") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
                                 }
+                                startAfterParsed = startInDisplay;
+                                endAfterParsed = endInDisplay;
                                 break;
                             case "monthly":
                                 var formatMonthly = "MM/YYYY";
@@ -6555,7 +6562,12 @@ Number.prototype.format = function (n, x) {
                                 } else if (search.config.RangeFilter.toLowerCase() == "specificmonth") {
                                     startInDisplay = search.config.StartInDisplay;
                                     endInDisplay = search.config.EndInDisplay;
+                                } else if (search.config.RangeFilter.toLowerCase() == "interval") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
                                 }
+                                startAfterParsed = startInDisplay.split('/')[0] + "/01/" + startInDisplay.split('/')[1];
+                                endAfterParsed = endInDisplay.split('/')[0] + "/01/" + endInDisplay.split('/')[1];
                                 break;
                             case "yearly":
                                 var formatYearly = "YYYY";
@@ -6565,13 +6577,33 @@ Number.prototype.format = function (n, x) {
                                 } else if (search.config.RangeFilter.toLowerCase() == "specificyear") {
                                     startInDisplay = search.config.StartInDisplay;
                                     endInDisplay = search.config.EndInDisplay;
+                                } else if (search.config.RangeFilter.toLowerCase() == "interval") {
+                                    startInDisplay = search.config.StartInDisplay;
+                                    endInDisplay = search.config.EndInDisplay;
                                 }
+                                startAfterParsed = "01/01/" + startInDisplay;
+                                endAfterParsed = "01/01/" + endInDisplay;
+                                break;
                         }
                         $('.export-setting-content #PeriodeType').val(search.config.PeriodeType).change();
                         $('.export-setting-content #RangeFilter').val(search.config.RangeFilter).change();
                         $('.datepicker').datetimepicker({
-                            format: search.dateformat,
+                            format: search.dateformat                         
                         });
+
+                      
+                        //setTimeout(function () {
+                        $('#StartInDisplay').data("DateTimePicker").minDate(moment(startAfterParsed));
+                        $('#StartInDisplay').data("DateTimePicker").maxDate(moment(endAfterParsed));
+                        $('#EndInDisplay').data("DateTimePicker").minDate(moment(startAfterParsed));
+                        $('#EndInDisplay').data("DateTimePicker").maxDate(moment(endAfterParsed));
+                            $('#StartInDisplay.datepicker').on('dp.change', function (e) {
+                                $('#EndInDisplay').data("DateTimePicker").minDate(e.date);
+                            });
+                        //}, 100);
+
+                        console.log(startInDisplay);
+                        console.log(endInDisplay);
 
                         $('.export-setting-content #StartInDisplay').val(startInDisplay);
                         $('.export-setting-content #EndInDisplay').val(endInDisplay);
