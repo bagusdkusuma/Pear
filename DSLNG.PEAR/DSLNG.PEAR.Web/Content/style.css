@@ -3637,7 +3637,7 @@ tr.der-transaction-error {
 /* not required css */
 
 .row {
-    padding: 10px;
+    /*padding: 10px;*/
 }
 
 .select2-multiple, .select2-multiple2 {
