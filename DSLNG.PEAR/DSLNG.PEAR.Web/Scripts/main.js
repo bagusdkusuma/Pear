@@ -3713,9 +3713,9 @@ Number.prototype.format = function (n, x) {
                 btn += '<li><a href="/Artifact/Edit/' + data.Id + '" target="_blank">Edit Chart</a></li>';
             }
             btn +=
-                '<li><a href="javascript:;" class="tabular-export" target="_blank">Export To Excel</a></li>';
+                '<li><a href="javascript:;" class="tabular-export">Export To Excel</a></li>';
         } else {
-            btn += '<li><a href="javascript:;" class="tabular-export-preview" target="_blank">Export To Excel</a></li>';
+            btn += '<li><a href="javascript:;" class="tabular-export-preview">Export To Excel</a></li>';
         }
         btn +=
             '</ul>' +
@@ -6368,9 +6368,12 @@ Number.prototype.format = function (n, x) {
         $.ajax({
             url: url,
             method: 'GET',
+            cached: false,
             success: function (data) {
+                console.log(data);
                 $('.export-setting-content').hide();
-                $('.export-setting-content').html(data);
+                $('.export-setting-content').empty().html(data);
+                
                 $("form").removeData("validator");
                 $("form").removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse("form");
@@ -6590,20 +6593,15 @@ Number.prototype.format = function (n, x) {
                         $('.datepicker').datetimepicker({
                             format: search.dateformat                         
                         });
-
-                      
-                        //setTimeout(function () {
+                                              
                         $('#StartInDisplay').data("DateTimePicker").minDate(moment(startAfterParsed));
                         $('#StartInDisplay').data("DateTimePicker").maxDate(moment(endAfterParsed));
                         $('#EndInDisplay').data("DateTimePicker").minDate(moment(startAfterParsed));
                         $('#EndInDisplay').data("DateTimePicker").maxDate(moment(endAfterParsed));
-                            $('#StartInDisplay.datepicker').on('dp.change', function (e) {
-                                $('#EndInDisplay').data("DateTimePicker").minDate(e.date);
-                            });
-                        //}, 100);
-
-                        console.log(startInDisplay);
-                        console.log(endInDisplay);
+                        $('#StartInDisplay.datepicker').on('dp.change', function (e) {
+                            $('#EndInDisplay').data("DateTimePicker").minDate(e.date);
+                        });
+                        
 
                         $('.export-setting-content #StartInDisplay').val(startInDisplay);
                         $('.export-setting-content #EndInDisplay').val(endInDisplay);

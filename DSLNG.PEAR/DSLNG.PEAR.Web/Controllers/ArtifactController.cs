@@ -1357,7 +1357,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 var exportKpis = ModifyKpis(viewModel.KpiIds);
                 IDictionary<DateTime, IDictionary<string, ExportSettingData>> dataDictionary = new Dictionary<DateTime, IDictionary<string, ExportSettingData>>();
                 IList<DateTime> existedPeriodes = new List<DateTime>();
-                dateTimePeriodes = FilterPeriodes(dateTimePeriodes, viewModel.EndAfterParsed);
+                dateTimePeriodes = FilterPeriodes(dateTimePeriodes, viewModel.StartAfterParsed, viewModel.EndAfterParsed);
                 foreach (var periode in dateTimePeriodes)
                 {
                     var data = new Dictionary<string, ExportSettingData>();
@@ -1487,7 +1487,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 ws.Cells["B1"].Value = ": " + string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
                 ws.Cells["C1"].Value = "By: " + UserProfile().Name;
 
-                ws.Cells["A2"].Value = "Dashboard Name";
+                ws.Cells["A2"].Value = "Artifact Name";
                 ws.Cells["B2"].Value = ": " + viewModel.Name;
 
 
@@ -1507,7 +1507,7 @@ namespace DSLNG.PEAR.Web.Controllers
                     foreach (var kpi in dictionary.Value)
                     {
                         ws.Cells[4, kpiColStart].Value = kpi.Value.KpiId > 0 ?
-                            string.Format("{0}, {1} ({2})", kpi.Value.KpiId, kpi.Value.KpiName, kpi.Value.MeasurementName) :
+                            string.Format("KPI ID {0}, {1} ({2})", kpi.Value.KpiId, kpi.Value.KpiName, kpi.Value.MeasurementName) :
                             string.Format("{0} ({1})", kpi.Value.KpiName, kpi.Value.MeasurementName);
                         ws.Cells[4, kpiColStart].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                         ws.Cells[4, kpiColStart].Style.Font.Bold = true;
@@ -1549,7 +1549,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 string handle = Guid.NewGuid().ToString();
                 TempData[handle] = pck.GetAsByteArray();
                 
-                return Json(new { FileGuid = handle, FileName = viewModel.FileName + ".xls", IsSuccess = true });
+                return Json(new { FileGuid = handle, FileName = viewModel.FileName + ".xlsx", IsSuccess = true });
             }
             catch (Exception ex)
             {
@@ -1563,7 +1563,7 @@ namespace DSLNG.PEAR.Web.Controllers
             if (TempData[fileGuid] != null)
             {
                 byte[] data = TempData[fileGuid] as byte[];
-                return File(data, "application/vnd.ms-excel", fileName);
+                return File(data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
             }
             else
             {
@@ -1573,14 +1573,15 @@ namespace DSLNG.PEAR.Web.Controllers
             }
         }
 
-        private IList<DateTime> FilterPeriodes(IList<DateTime> dateTimePeriodes, DateTime? endAfterParsed)
+        private IList<DateTime> FilterPeriodes(IList<DateTime> dateTimePeriodes, DateTime? startAfterParsed, DateTime? endAfterParsed)
         {
-            if (!endAfterParsed.HasValue)
+            if(startAfterParsed.HasValue && endAfterParsed.HasValue)
             {
-                return dateTimePeriodes;
+                return dateTimePeriodes.Where(x => x <= endAfterParsed && x >= startAfterParsed).ToList();
             }
 
-            return dateTimePeriodes.Where(x => x <= endAfterParsed).ToList();
+            return dateTimePeriodes;
+
         }
 
         private ActionResult ExportTabular(GetTabularDataResponse data, string graphicName, string fileName)
@@ -1590,21 +1591,20 @@ namespace DSLNG.PEAR.Web.Controllers
                 ExcelPackage pck = new ExcelPackage();
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
 
-                ws.Cells["A3"].Value = "Extracted Date";
-                ws.Cells["B3"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
-                ws.Cells["C3"].Value = "By: " + UserProfile().Name;
+                ws.Cells["A1"].Value = "Extracted Date";
+                ws.Cells["B1"].Value = ": " + DateTime.Now.ToString("dd/MMMM/yyyy");
+                ws.Cells["C1"].Value = "By: " + UserProfile().Name;
 
-                ws.Cells["A4"].Value = "Dashboard Name";
-                ws.Cells["B4"].Value = ": " + graphicName;
+                ws.Cells["A2"].Value = "Artifact Name";
+                ws.Cells["B2"].Value = ": " + graphicName;
 
-                ws.Cells["A3"].Value = "Date";
-                ws.Cells["B3"].Value = string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
+                ws.Cells["A1"].Value = "Date";
+                ws.Cells["B1"].Value = string.Format("{0:dd MMMM yyyy hh:mm tt}", DateTimeOffset.Now);
 
-                int kpiRowStart = 8;
+                int kpiRowStart = 6;
                 int kpiColStart = 2;
                 IDictionary<int, string> kpiDictionaries = new Dictionary<int, string>();
-
-
+                
                 var labels = new List<string>();
                 labels.Add("KPI Name");
                 labels.Add("Periode");
@@ -1625,18 +1625,18 @@ namespace DSLNG.PEAR.Web.Controllers
                 var headerIndex = 1;
                 foreach (var label in labels)
                 {
-                    ws.Cells[6, headerIndex].Value = label;
-                    ws.Cells[6, headerIndex].Style.Border.BorderAround(ExcelBorderStyle.Thin);
-                    ws.Cells[6, headerIndex].Style.Font.Bold = true;
-                    ws.Cells[6, headerIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ws.Cells[4, headerIndex].Value = label;
+                    ws.Cells[4, headerIndex].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                    ws.Cells[4, headerIndex].Style.Font.Bold = true;
+                    ws.Cells[4, headerIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     headerIndex++;
                 }
 
-                int rowStart = 7;
+                int rowStart = 5;
                 foreach (var row in data.Rows)
                 {
                     int idx = 1;
-                    ws.Cells[rowStart, idx].Value = string.Format("{0}, {1} ({2})", row.KpiId, row.KpiName, row.Measurement);
+                    ws.Cells[rowStart, idx].Value = string.Format("KPI ID {0}, {1} ({2})", row.KpiId, row.KpiName, row.Measurement);
                     ws.Cells[rowStart, idx].Style.Border.BorderAround(ExcelBorderStyle.Thin);
                     ws.Cells[rowStart, idx].Style.Font.Bold = false;
                     ws.Cells[rowStart, idx].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -1685,7 +1685,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 string handle = Guid.NewGuid().ToString();
                 TempData[handle] = pck.GetAsByteArray();
 
-                return Json(new { FileGuid = handle, FileName = fileName + ".xls", IsSuccess = true });
+                return Json(new { FileGuid = handle, FileName = fileName + ".xlsx", IsSuccess = true });
             }
             catch (Exception ex)
             {
