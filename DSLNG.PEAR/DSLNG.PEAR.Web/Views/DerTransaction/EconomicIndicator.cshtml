@@ -190,7 +190,7 @@
             </tr>
             <tr>
                 <td>
-                    @Html.DisplayHighlightTextarea(Model.Highlights,15,21)
+                    @Html.DisplayHighlightTextarea(Model.Highlights,15,21, "mmm")
                 </td>
             </tr>
         </table>
@@ -226,6 +226,8 @@
 
 <script>
     $(document).ready(function () {
-        $('input[data-highlight-type-id="83"]').attr('maxlength', 3)
+        $('input[data-highlight-type-id="83"]').attr('maxlength', 3);
+        $('input[data-highlight-type-id="83"]').css('width', 100).css('text-align','right');
+        $('input[data-highlight-type-id="83"]').attr('placeholder', 'mmm');
     })
 </script>
