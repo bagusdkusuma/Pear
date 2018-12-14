@@ -1169,17 +1169,19 @@ namespace DSLNG.PEAR.Web.Helpers
                 if (property == "wind-direction")
                 {
                     value = viewModel.ValueId.ToString();
+                    derValueType = viewModel.WindDirectValueType;
                 }
                 else if (property == "tide")
                 {
                     value = viewModel.Tide;
+                    derValueType = viewModel.TideValueType;
                 }
                 else
                 {
                     value = viewModel.Speed;
+                    derValueType = viewModel.SpeedValueType;
                 }
                 id = viewModel.Id;
-                derValueType = viewModel.DerValueType;
             }
             if (property == "speed")
             {

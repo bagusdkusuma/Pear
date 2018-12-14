@@ -162,7 +162,20 @@ namespace DSLNG.PEAR.Web.Controllers
             if (wave.Id != 0)
             {
                 viewModel.Wave = wave.MapTo<WaveViewModel>();
-                viewModel.Wave.DerValueType = "now";
+                if (viewModel.Wave.ValueId != 0)
+                {
+                    viewModel.Wave.WindDirectValueType = "now";
+                }
+
+                if (!string.IsNullOrEmpty(viewModel.Wave.Tide))
+                {
+                    viewModel.Wave.TideValueType = "now";
+                }
+
+                if (!string.IsNullOrEmpty(viewModel.Wave.Speed))
+                {
+                    viewModel.Wave.SpeedValueType = "now";
+                }
             }
             else
             {
@@ -171,10 +184,14 @@ namespace DSLNG.PEAR.Web.Controllers
                     Date = theDate.AddDays(-1),
                     ByDate = true
                 });
+
                 if (wave.Id != 0)
                 {
                     viewModel.Wave = wave.MapTo<WaveViewModel>();
-                    viewModel.Wave.DerValueType = "prev";
+                    
+                    viewModel.Wave.WindDirectValueType = "prev";
+                    viewModel.Wave.TideValueType = "prev";
+                    viewModel.Wave.SpeedValueType = "prev";
                     viewModel.Wave.Id = 0;
                 }
             }
@@ -288,70 +305,70 @@ namespace DSLNG.PEAR.Web.Controllers
                ));
         }
 
-        public ActionResult QhsseSection2(string date)
-        {
-            var viewModel = GetDerValuesPerSection(date,
-               new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436 }, //actual KpiIds 
-               new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
-               new int[] { 18, 13, 20, 7, 80, 59 }  //highlightTypeIds
-               );
-            var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
-            var wave = _waveService.GetWave(new GetWaveRequest
-            {
-                Date = theDate,
-                ByDate = true
-            });
-            if (wave.Id != 0)
-            {
-                viewModel.Wave = wave.MapTo<WaveViewModel>();
-                viewModel.Wave.DerValueType = "now";
-            }
-            else
-            {
-                wave = _waveService.GetWave(new GetWaveRequest
-                {
-                    Date = theDate.AddDays(-1),
-                    ByDate = true
-                });
-                if (wave.Id != 0)
-                {
-                    viewModel.Wave = wave.MapTo<WaveViewModel>();
-                    viewModel.Wave.DerValueType = "prev";
-                }
-            }
-            if (viewModel.Wave == null) viewModel.Wave = new WaveViewModel();
-            viewModel.Wave.Values = _selectService.GetSelect(new GetSelectRequest { Name = "wave-values" }).Options
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
-            var weather = _weatherService.GetWeather(new GetWeatherRequest
-            {
-                Date = theDate,
-                ByDate = true
-            });
-            if (weather.Id != 0)
-            {
-                viewModel.Weather = weather.MapTo<WeatherViewModel>();
-                viewModel.Weather.DerValueType = "now";
-            }
-            else
-            {
-                weather = _weatherService.GetWeather(new GetWeatherRequest
-                {
-                    Date = theDate.AddDays(-1),
-                    ByDate = true
-                });
-                if (wave.Id != 0)
-                {
-                    viewModel.Weather = weather.MapTo<WeatherViewModel>();
-                    viewModel.Weather.DerValueType = "prev";
-                }
-            }
-            if (viewModel.Weather == null) viewModel.Weather = new WeatherViewModel();
-            viewModel.Weather.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
-                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
-            viewModel.AlertOptions = _selectService.GetSelect(new GetSelectRequest { ParentName = "highlight-types", ParentOptionId = 7 }).Options
-                .Select(x => new SelectListItem { Value = x.Value, Text = x.Text }).ToList();
-            return View(viewModel);
-        }
+        //public ActionResult QhsseSection2(string date)
+        //{
+        //    var viewModel = GetDerValuesPerSection(date,
+        //       new int[] { 273, 274, 275, 276, 1, 177, 278, 277, 285, 356, 4, 359, 286, 292, 421, 422, 284, 357, 358, 435, 436 }, //actual KpiIds 
+        //       new int[] { 1, 177, 278, 277, 276, 285, 421, 422, 284, 357, 358 }, //target KpiIds
+        //       new int[] { 18, 13, 20, 7, 80, 59 }  //highlightTypeIds
+        //       );
+        //    var theDate = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+        //    var wave = _waveService.GetWave(new GetWaveRequest
+        //    {
+        //        Date = theDate,
+        //        ByDate = true
+        //    });
+        //    if (wave.Id != 0)
+        //    {
+        //        viewModel.Wave = wave.MapTo<WaveViewModel>();
+        //        viewModel.Wave.DerValueType = "now";
+        //    }
+        //    else
+        //    {
+        //        wave = _waveService.GetWave(new GetWaveRequest
+        //        {
+        //            Date = theDate.AddDays(-1),
+        //            ByDate = true
+        //        });
+        //        if (wave.Id != 0)
+        //        {
+        //            viewModel.Wave = wave.MapTo<WaveViewModel>();
+        //            viewModel.Wave.DerValueType = "prev";
+        //        }
+        //    }
+        //    if (viewModel.Wave == null) viewModel.Wave = new WaveViewModel();
+        //    viewModel.Wave.Values = _selectService.GetSelect(new GetSelectRequest { Name = "wave-values" }).Options
+        //        .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+        //    var weather = _weatherService.GetWeather(new GetWeatherRequest
+        //    {
+        //        Date = theDate,
+        //        ByDate = true
+        //    });
+        //    if (weather.Id != 0)
+        //    {
+        //        viewModel.Weather = weather.MapTo<WeatherViewModel>();
+        //        viewModel.Weather.DerValueType = "now";
+        //    }
+        //    else
+        //    {
+        //        weather = _weatherService.GetWeather(new GetWeatherRequest
+        //        {
+        //            Date = theDate.AddDays(-1),
+        //            ByDate = true
+        //        });
+        //        if (wave.Id != 0)
+        //        {
+        //            viewModel.Weather = weather.MapTo<WeatherViewModel>();
+        //            viewModel.Weather.DerValueType = "prev";
+        //        }
+        //    }
+        //    if (viewModel.Weather == null) viewModel.Weather = new WeatherViewModel();
+        //    viewModel.Weather.Values = _selectService.GetSelect(new GetSelectRequest { Name = "weather-values" }).Options
+        //        .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Text }).ToList();
+        //    viewModel.AlertOptions = _selectService.GetSelect(new GetSelectRequest { ParentName = "highlight-types", ParentOptionId = 7 }).Options
+        //        .Select(x => new SelectListItem { Value = x.Value, Text = x.Text }).ToList();
+        //    return View(viewModel);
+        //}
 
         public ActionResult EnablerSection2(string date)
         {
