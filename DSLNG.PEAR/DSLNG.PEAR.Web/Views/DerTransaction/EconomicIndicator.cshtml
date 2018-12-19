@@ -229,5 +229,8 @@
         $('input[data-highlight-type-id="83"]').attr('maxlength', 3);
         $('input[data-highlight-type-id="83"]').css('width', 100).css('text-align','right');
         $('input[data-highlight-type-id="83"][tabindex="20"]').attr('placeholder', 'mmm');
+        $('input[data-highlight-type-id="83"][tabindex="20"]').focus(function (e) {
+            $(this).select();
+        });
     })
 </script>
