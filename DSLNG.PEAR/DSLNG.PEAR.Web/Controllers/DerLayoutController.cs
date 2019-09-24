@@ -294,6 +294,12 @@ namespace DSLNG.PEAR.Web.Controllers
                             break;
                         }
                     case "global-stock-market":
+                        {
+                           editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 7);
+                           var result = _selectService.GetHighlightTypesDropdown();
+                           editViewModel.Highlights = result.Select(item => new SelectListItem() { Text = item.Text, Value = item.Value }).ToList();
+                           break;
+                        }
                     case "table-tank":
                         {
                             editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 15);

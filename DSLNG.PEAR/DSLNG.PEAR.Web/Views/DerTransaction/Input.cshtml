@@ -510,6 +510,8 @@ var d = DateTime.ParseExact(date, "MM/dd/yyyy", System.Globalization.CultureInfo
             });
 
             var openNextTab = function ($latInput, nextIndex) {
+                //debugger;
+                //alert(nextIndex);
                 var nextIndexs = [24, 36, 172, 179, 219, 268, 284];
                 if (nextIndexs.indexOf(nextIndex) > -1) {
                     var $collapse = $latInput.closest('.collapse');

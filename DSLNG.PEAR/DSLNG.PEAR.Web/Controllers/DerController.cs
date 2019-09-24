@@ -871,19 +871,10 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "global-stock-market":
                     {
                         var viewModel = GetGeneralDerKpiInformations(13, layout, date, PeriodeType.Daily);
-                        int highlightId = 0;
-                        if (layout.KpiInformations.SingleOrDefault(x => x.Position == 8) != null && layout.KpiInformations.Single(x => x.Position == 8).SelectOption != null)
-                        {
-                            highlightId = layout.KpiInformations.Single(x => x.Position == 8).SelectOption.Id;
-                        }
-                        var highlight =
-                            _highlightService.GetHighlightByPeriode(new GetHighlightRequest
-                            {
-                                Date = date,
-                                HighlightTypeId = highlightId
-                            });
-                        viewModel.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value =
-                            highlight.Message;
+
+                        viewModel.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value = GetHighlightMessage(4, layout, date);
+                        viewModel.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value = GetHighlightMessage(5, layout, date);
+                        viewModel.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value = GetHighlightMessage(6, layout, date);
                         var view = RenderPartialViewToString("~/Views/Der/Display/_GlobalStockMarket.cshtml", viewModel);
                         var json = new { type = layout.Type.ToLowerInvariant(), view };
                         return Json(json, JsonRequestBehavior.AllowGet);
@@ -1010,6 +1001,22 @@ namespace DSLNG.PEAR.Web.Controllers
                     }
             }
             return Content("Switch case does not matching");
+        }
+
+        private string GetHighlightMessage(int position, GetDerLayoutitemResponse layout, DateTime date)
+        {
+            int highlightId = 0;
+            if (layout.KpiInformations.SingleOrDefault(x => x.Position == position) != null && layout.KpiInformations.Single(x => x.Position == position).SelectOption != null)
+            {
+                highlightId = layout.KpiInformations.Single(x => x.Position == position).SelectOption.Id;
+            }
+            var highlight = _highlightService.GetHighlightByPeriode(new GetHighlightRequest
+            {
+                Date = date,
+                HighlightTypeId = highlightId
+            });
+
+            return highlight.Message;
         }
 
         public ActionResult OriginalData(int id, string currentDate)

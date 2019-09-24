@@ -106,7 +106,7 @@ namespace DSLNG.PEAR.Web.Controllers
             return View(GetDerValuesPerSection(date,
                 new int[] { 386, 79, 80, 128, 388, 389, 390, 383, 64, 384, 65, 385, 62, 63, 391, 392, 393, 394, 395, 397, 409, 410, 411, 412, 413, 414, 415, 416 }, //actual KpiIds 
                 new int[] { }, //target KpiIds
-                new int[] { 63 }  //highlightTypeIds
+                new int[] { 63, 84, 85 }  //highlightTypeIds
                 ));
         }
 

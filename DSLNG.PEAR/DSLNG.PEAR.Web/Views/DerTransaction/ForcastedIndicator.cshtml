@@ -9,37 +9,33 @@
     <div class="col-md-3">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">USD/JPY :</label></td>
+                <td><label class="control-label">LNG Spot Market :</label></td>
             </tr>
             <tr>
-                <td><label class="control-label">1m</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 409, 24, "rate","prev")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 84, 24, 0, "label")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">3m</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 410,  25, "rate","prev")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 84, 25, 1, "label")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">6m</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 411,  26, "rate","prev")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 84, 26, 2, "label")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">1yr</label></td>
                 <td>
                     <span class="col-sm-8">
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 412,  27, "rate","prev")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 84, 27, 3, "label")
                     </span>
                 </td>
             </tr>
@@ -55,12 +51,7 @@
                     <span class="col-sm-8">
                         @Html.DisplayBrenfutHighlight(Model.Highlights,63,28,0,"label")
                     </span>
-                </td>
-                @*<td hidden="hidden">
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 2888,0)
-                    </span>
-                </td>*@
+                </td>              
             </tr>
             <tr>
                 <td>
@@ -68,11 +59,7 @@
                         @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 29, 1, "label")
                     </span>
                 </td>
-                @*<td hidden="hidden">
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 3000, 1)
-                    </span>
-                </td>*@
+                
             </tr>
             <tr>
                 <td>
@@ -80,11 +67,7 @@
                         @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 30, 2, "label")
                     </span>
                 </td>
-                @*<td hidden="hidden">
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 3200, 2)
-                    </span>
-                </td>*@
+               
             </tr>
             <tr>
                 <td>
@@ -92,49 +75,40 @@
                         @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 31, 3, "label")
                     </span>
                 </td>
-                @*<td hidden="hidden">
-                    <span>
-                        @Html.DisplayBrenfutHighlight(Model.Highlights, 63, 3400, 3)
-                    </span>
-                </td>*@
+               
             </tr>
         </table>
     </div>
     <div class="col-md-4">
         <table border="0" style="border-collapse: separate; border-spacing: 10px 10px;">
             <tr>
-                <td><label class="control-label">USD/IDR :</label></td>
+                <td><label class="control-label">LNG Spot Market : </label></td>
             </tr>
             <tr>
-                <td><label class="control-label">1m</label></td>
                 <td>
                     <span class="col-sm-8">
-                            <!-- 37 -->
-                        @Html.DisplayKpiInformationInput(Model.KpiInformations, 413,  32, "rate","prev")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 85, 32, 0, "label")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">3m</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 414  ,33, "rate","prev")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 85, 33, 1, "label")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">6m</label></td>
                 <td>
                     <span class="col-sm-8">
-                      @Html.DisplayKpiInformationInput(Model.KpiInformations, 415,  34, "rate","prev")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 85, 34, 2, "label")
                     </span>
                 </td>
             </tr>
             <tr>
-                <td><label class="control-label">1yr</label></td>
                 <td>
                     <span class="col-sm-8">
-                       @Html.DisplayKpiInformationInput(Model.KpiInformations, 416,  35, "rate","prev")
+                        @Html.DisplayBrenfutHighlight(Model.Highlights, 85, 35, 3, "label")
                     </span>
                 </td>
             </tr>

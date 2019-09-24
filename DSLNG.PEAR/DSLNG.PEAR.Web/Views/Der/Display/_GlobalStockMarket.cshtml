@@ -15,9 +15,9 @@
             <td colspan="3" style="vertical-align: middle;font-size:12px">Forecasted Market Indicator</td>
         </tr>
         <tr>
-            <td style="width:78px">USD/JPY</td>
+            <td style="width:84px">LNG Spot Market</td>
             <td>LNG Spot Market</td>
-            <td style="width:30%">USD/IDR</td>
+            <td style="width:30%">LNG Spot Market</td>
         </tr>
     </thead>
     <tbody>
@@ -28,19 +28,9 @@
                     @Html.DisplayDerValueWithLabelAtFront("JKSE", Model.KpiInformationViewModels.Single(x => x.Position == 0).DerItemValue.Value, "JSKE")
                 </div>
             </td>
-            <td>
-                <span class="comparison absolute">
-                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Deviation)"></i>
-                </span>
-                @Html.DisplayDerValueWithLabelAtFront("1M:", Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value, "1M:")
-            </td>
-            <td class="brentfut-col brenfut-first" style="border-bottom:none;"></td>
-            <td>
-                <span class="comparison left-side">
-                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Deviation)"></i>
-                </span>
-                @Html.DisplayDerValueWithLabelAtFront("1 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 9).DerItemValue.Value, "1 Month:", "N/A", true, 0)
-            </td>
+            <td class="brenfut1-first" style="border-bottom:none;"></td>
+            <td class="brenfut-first" style="border-bottom:none;"></td>
+            <td class="brenfut3-first" style="border-bottom:none;"></td>
         </tr>
         <tr>
             <td>
@@ -49,38 +39,18 @@
                     @Html.DisplayDerValueWithLabelAtFront("DJIA", Model.KpiInformationViewModels.Single(x => x.Position == 1).DerItemValue.Value, "DJIA")
                 </div>
             </td>
-            <td>
-                <span class="comparison absolute">
-                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Deviation)"></i>
-                </span>
-                @Html.DisplayDerValueWithLabelAtFront("3M:", Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value, "3M:")
-            </td>
-            <td class="brentfut-col brenfut-second" style="border-bottom:none;">
-            <td>
-                <span class="comparison left-side">
-                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Deviation)"></i>
-                </span>
-                @Html.DisplayDerValueWithLabelAtFront("3 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 10).DerItemValue.Value, "3 Month:", "N/A", true, 0)
-            </td>
+            <td class="brenfut1-second" style="border-bottom:none;"></td>
+            <td class="brenfut-second" style="border-bottom:none;"></td>
+            <td class="brenfut3-second" style="border-bottom:none;"></td>
         </tr>
         <tr>
             <td>
                 <span class="comparison absolute"><i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Deviation)"></i></span>
                 @Html.DisplayDerValueWithLabelAtFront("Nikkei 225:", Model.KpiInformationViewModels.Single(x => x.Position == 2).DerItemValue.Value, "Nikkei 225:")
             </td>
-            <td>
-                <span class="comparison absolute">
-                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Deviation)"></i>
-                </span>
-                @Html.DisplayDerValueWithLabelAtFront("6M:", Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value, "6M:")
-            </td>
-            <td class="brentfut-col brenfut-third" style="border-bottom:none;">
-            <td>
-                <span class="comparison left-side">
-                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Deviation)"></i>
-                </span>
-                @Html.DisplayDerValueWithLabelAtFront("6 Month:", Model.KpiInformationViewModels.Single(x => x.Position == 11).DerItemValue.Value, "6 Month:", "N/A", true, 0)
-            </td>
+            <td class="brenfut1-third" style="border-bottom:none;"></td>
+            <td class="brenfut-third" style="border-bottom:none;"></td>
+            <td class="brenfut3-third" style="border-bottom:none;"></td>
         </tr>
         <tr>
             <td>
@@ -88,35 +58,41 @@
                 @Html.DisplayDerValueWithLabelAtFront("Shanghai SEC:", Model.KpiInformationViewModels.Single(x => x.Position == 3).DerItemValue.Value, "Shanghai SEC:")
 
             </td>
-            <td>
-                <span class="comparison absolute">
-                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Deviation)"></i>
-                </span>
-                @Html.DisplayDerValueWithLabelAtFront("1Yr:", Model.KpiInformationViewModels.Single(x => x.Position == 7).DerItemValue.Value, "1Yr:", "N/A", true, 2)
-            </td>
-            <td class="brentfut-col brenfut-fourth" style="border-bottom:none;">
-            <td>
-                <span class="comparison left-side">
-                    <i class="fa @Html.DisplayDerDeviation(Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Deviation)"></i>
-                </span>
-                @Html.DisplayDerValueWithLabelAtFront("1 Year:", Model.KpiInformationViewModels.Single(x => x.Position == 12).DerItemValue.Value, "1 Year:", "N/A", true, 0)
-            </td>
+            <td class="brenfut1-fourth" style="border-bottom:none;"></td>
+            <td class="brenfut-fourth" style="border-bottom:none;"></td>
+            <td class="brenfut3-fourth" style="border-bottom:none;"></td>
         </tr>
     </tbody>
 </table>
-<span id="brenfut" data-val="@Model.KpiInformationViewModels.Single(x => x.Position == 8).DerItemValue.Value"></span>
-<script type="text/javascript">
-    $(document).ready(function () {
+<span id="brenfut" data-val="@Model.KpiInformationViewModels.Single(x => x.Position == 5).DerItemValue.Value"></span>
+    <span id="brenfut1" data-val="@Model.KpiInformationViewModels.Single(x => x.Position == 4).DerItemValue.Value"></span>
+    <span id="brenfut3" data-val="@Model.KpiInformationViewModels.Single(x => x.Position == 6).DerItemValue.Value"></span>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var brenfut = $('#brenfut').data('val');
+            if (brenfut != '') {
+                $('.brenfut-first').append(brenfut.a.label);
+                $('.brenfut-second').append(brenfut.b.label);
+                $('.brenfut-third').append(brenfut.c.label);
+                $('.brenfut-fourth').append(brenfut.d.label);
+            }
 
-        var brenfut = $('#brenfut').data('val');
-        console.log(brenfut);
-        if (brenfut != '') {
-            $('.brenfut-first').append(brenfut.a.label);
-            $('.brenfut-second').append(brenfut.b.label);
-            $('.brenfut-third').append(brenfut.c.label);
-            $('.brenfut-fourth').append(brenfut.d.label);
-        }
+            var brenfut1 = $('#brenfut1').data('val');
+            console.log(brenfut1);
+            if (brenfut1 != '') {
+                $('.brenfut1-first').append(brenfut1.a.label);
+                $('.brenfut1-second').append(brenfut1.b.label);
+                $('.brenfut1-third').append(brenfut1.c.label);
+                $('.brenfut1-fourth').append(brenfut1.d.label);
+            }
 
-
-    });
-</script>
+            var brenfut3 = $('#brenfut3').data('val');
+            console.log(brenfut3);
+            if (brenfut3 != '') {
+                $('.brenfut3-first').append(brenfut3.a.label);
+                $('.brenfut3-second').append(brenfut3.b.label);
+                $('.brenfut3-third').append(brenfut3.c.label);
+                $('.brenfut3-fourth').append(brenfut3.d.label);
+            }
+        });
+    </script>
