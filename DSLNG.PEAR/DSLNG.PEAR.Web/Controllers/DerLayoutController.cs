@@ -290,7 +290,7 @@ namespace DSLNG.PEAR.Web.Controllers
                         }
                     case "safety":
                         {
-                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 14);
+                            editViewModel.KpiInformations = AddEmptyKpiInformations(editViewModel.KpiInformations, 17);
                             break;
                         }
                     case "global-stock-market":
@@ -701,7 +701,7 @@ namespace DSLNG.PEAR.Web.Controllers
                 case "safety":
                     {
                         var viewModel = new DerLayoutItemViewModel();
-                        viewModel.KpiInformations = GetKpiInformations(14);
+                        viewModel.KpiInformations = GetKpiInformations(17);
                         return PartialView("LayoutType/_SafetyTable", viewModel);
                     }
                 case "security":

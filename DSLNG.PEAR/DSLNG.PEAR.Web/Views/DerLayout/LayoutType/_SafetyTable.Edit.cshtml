@@ -6,13 +6,13 @@
     string[] label = { "SLC-PSLC submitted", "Near Miss 24H (Actual Daily)", "No of PTW audited", "Fatality/Disability", "DAFW (Days Away From Work)"
             , "RWC + MTC (no of injury)", "LOPC tier 3; <=0.3bbl/50kg", "First Aid"
             , "Overdue SCE inspection ", "Process override w/o appr", "PS Incident Closure", "Overdue Temp MOC", "DCS Alarm Rate-Per Panel Operator per Hour",
-    "Near Miss 24H (Target Yearly)"};
+    "Near Miss 24H (Target Yearly)", "PS Incident Closure (MTD)",  "PS Incident Closure(YTD)", "PS Incident Closure (ITD)"};
     var a = 0;
     for (int i = 0; i < Model.KpiInformations.Count; i++)
     {
         <div class="form-group row">
             <label class="control-label col-md-2">@label[i]</label>
-            <div class="col-md-4">@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "margin:0 auto" })</div>
+            <div class="col-md-4">@Html.DropDownListFor(model => model.KpiInformations[i].KpiId, new List<SelectListItem> { new SelectListItem { Value = Model.KpiInformations[i].KpiId.ToString(), Text = Model.KpiInformations[i].KpiName } }, new { @class = "kpi-list form-control", style = "min-width: 300px; margin:0 auto" })</div>
             <div>
                 @Html.HiddenFor(model => model.KpiInformations[i].Position)
                 @Html.HiddenFor(model => model.KpiInformations[i].Id)
